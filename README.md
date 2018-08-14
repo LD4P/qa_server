@@ -47,16 +47,16 @@ There are a few authorities that are part of the QA gem.  All directly access th
   * TEST QUERY: _not supported_
   * TEST FETCH: http://localhost:3000/qa/show/linked_data/loc/no2002053226
   
-### Predefined Configurations in ld4p/linked_data_authorities
+### Predefined Configurations in LD4P/linked_data_authorities
 
-All authorities defined in [ld4p/linked_data_authorities](https://github.com/ld4p/linked_data_authorities) are included in this engine.
+All authorities defined in [LD4P/linked_data_authorities](https://github.com/LD4P/linked_data_authorities) are included in this engine.
 
 Configurations exist for a number of other common authorities that can be used by your QA Server.  When possible, each configuration comes in two varieties...
 
 * _AUTHORITY_NAME__direct - configuration can be used as is to access the external authority directly
 * _AUTHORITY_NAME__ld4l_cache - configuration can be used as is to access the authorities through the cache created as part of the Linked Data for Libraries Labs grant and continuing to be expanded under the Linked Data for Production 2 grant.
 
-Configurations define how to access an authority and how to decode the ontology predicates to extract and convert the data to normalized data.  The predefined configurations live in [qa_server/config/authorities/linked_data](https://github.com/ld4p/qa_server/tree/master/config/authorities/linked_data).
+Configurations define how to access an authority and how to decode the ontology predicates to extract and convert the data to normalized data.  The predefined configurations live in [qa_server/config/authorities/linked_data](https://github.com/LD4P/qa_server/tree/master/config/authorities/linked_data).
 
 ### Write your own configuration
 
@@ -128,7 +128,7 @@ Validations come in two flavors...
 * connection validation - PASS if a request gets back a specified minimum size result set from an authority; otherwise, FAIL.  
 * accuracy test - PASS if a specific result is returned by a specified position (e.g. uri is in the top 10 results); otherwise, FAIL.
 
-The validations can be defined in a file with a matching file name in the [scenarios directory](https://github.com/ld4p/qa_server/tree/master/config/authorities/linked_data/scenarios).  For example, direct access to the AgroVoc authority, access is configured in [config/authorities/linked_data/agrovoc_direct.json](https://github.com/ld4p/qa_server/blob/master/config/authorities/linked_data/agrovoc_direct.json) and the validations are defined in [config/authorities/linked_data/scenarios/agrovoc_direct_validation.yml](https://github.com/ld4p/qa_server/blob/master/config/authorities/linked_data/scenarios/agrovoc_direct_validation.yml)
+The validations can be defined in a file with a matching file name in the [scenarios directory](https://github.com/LD4P/qa_server/tree/master/config/authorities/linked_data/scenarios).  For example, direct access to the AgroVoc authority, access is configured in [config/authorities/linked_data/agrovoc_direct.json](https://github.com/LD4P/qa_server/blob/master/config/authorities/linked_data/agrovoc_direct.json) and the validations are defined in [config/authorities/linked_data/scenarios/agrovoc_direct_validation.yml](https://github.com/LD4P/qa_server/blob/master/config/authorities/linked_data/scenarios/agrovoc_direct_validation.yml)
 
 The UI for qa_server provides access to running connection validation and accuracy tests in the Check Status navigation menu item.
 
