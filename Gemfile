@@ -13,3 +13,5 @@ gemspec
 
 # To use a debugger
 # gem 'byebug', group: [:development, :test]
+
+gem 'qa', github: 'samvera/questioning_authority', branch: 'min_context'
