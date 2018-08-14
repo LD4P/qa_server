@@ -1,0 +1,78 @@
+<div class="page-description">
+  <h2><%= t('monitor_status.summary.title') %></h2>
+
+  <table class="monitor-status-status">
+    <tr>
+      <th><%= t('monitor_status.summary.authorities') %></th>
+      <th><%= t('monitor_status.summary.authorities_with_failures') %></th>
+      <th><%= t('monitor_status.summary.passing_tests') %></th>
+      <th><%= t('monitor_status.summary.failing_tests') %></th>
+      <th><%= t('monitor_status.summary.total_tests') %></th>
+    </tr>
+    <tr>
+      <td><%= @presenter.authorities_count %></td>
+      <td class="<%= @presenter.authorities_count_style %>"><%= @presenter.failing_authorities_count %></td>
+      <td><%= @presenter.passing_tests_count%></td>
+      <td class="<%= @presenter.failing_tests_style %>"><%= @presenter.failing_tests_count %></td>
+      <td><%= @presenter.tests_count %></td>
+    </tr>
+  </table>
+  <p class="status-update-dtstamp"><%= t('monitor_status.summary.last_updated', date: @presenter.last_updated) %></p>
+
+  <% if @presenter.failures? %>
+    <div id="status-section" class="status-section">
+      <h2><%= t('monitor_status.failures.title') %></h2>
+
+      <p><b><%= t('warning.chrome_unencoding_msg') %></b></p>
+      <table class="status">
+        <tr>
+          <th><%= t('monitor_status.failures.status') %></th>
+          <th><%= t('monitor_status.failures.authority') %></th>
+          <th><%= t('monitor_status.failures.subauthority') %></th>
+          <th><%= t('monitor_status.failures.service') %></th>
+          <th><%= t('monitor_status.failures.action') %></th>
+          <th><%= t('monitor_status.failures.url') %></th>
+          <th><%= t('monitor_status.failures.errmsg') %></th>
+        </tr>
+        <% @status_data.each do |status| %>
+            <tr>
+              <td class="<%= "status-#{status[:status].to_s}" %>"><%= status[:status_label] %></td>
+              <td><%= status[:authority_name] %></td>
+              <td><%= status[:subauthority_name] %></td>
+              <td><%= status[:service] %></td>
+              <td><%= status[:action] %></td>
+              <td><a href="<%= status[:url] %>"><%= status[:url] %></a></td>
+              <td><%= status[:err_message] %></td>
+            </tr>
+        <% end %>
+      </table>
+    </div>
+  <% end %>
+
+  <% if @presenter.history? %>
+      <div id="status-section" class="status-section">
+        <h2><%= t('monitor_status.history.title') %></h2>
+
+        <h3><%= t('monitor_status.history.since', date: @presenter.first_updated) %></h3>
+
+        <table class="status">
+          <tr>
+            <th><%= t('monitor_status.history.days_failing') %></th>
+            <th><%= t('monitor_status.history.authority') %></th>
+            <th><%= t('monitor_status.history.subauthority') %></th>
+            <th><%= t('monitor_status.history.service') %></th>
+            <th><%= t('monitor_status.history.action') %></th>
+          </tr>
+          <% @presenter.history.each do |entry| %>
+              <tr>
+                <td><%= entry[:days_failing] %></td>
+                <td><%= entry[:authority_name] %></td>
+                <td><%= entry[:subauthority_name] %></td>
+                <td><%= entry[:service] %></td>
+                <td><%= entry[:action] %></td>
+              </tr>
+          <% end %>
+        </table>
+      </div>
+  <% end %>
+</div>

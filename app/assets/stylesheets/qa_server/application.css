@@ -13,3 +13,211 @@
  *= require_tree .
  *= require_self
  */
+
+.container {
+    padding-left: 0px;
+    padding-right: 0px;
+}
+
+.ld4l-identity .container {
+    background: #303d4d none repeat scroll 0 0;
+}
+
+img.header-logo {
+    float: left;
+    margin-top: 12px;
+    margin-left: 15px;
+    margin-bottom: 8px;
+    height: 64px;
+}
+
+img.footer-logo {
+    margin-top: 12px;
+    margin-bottom: 20px;
+    margin-left: 10px;
+    margin-right: 20px;
+    height: 32px;
+}
+
+div.footer-logos {
+    width: 100%;
+    text-align: center;
+}
+
+div.footer-logos a {
+    border: none;
+}
+
+footer {
+    margin-top: 50px;
+}
+
+div#content-wrapper {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+hr {
+    display: block;
+    height: 1px;
+    border: 0;
+    border-top: 1px solid #ccc;
+    margin: 1em 0;
+    padding: 0;
+    margin-top: 40px;
+}
+
+h4 {
+    margin-top: 40px;
+}
+
+/* Banner */
+.navbar-brand {
+    margin-top: 18px;
+}
+
+.institution-name {
+    color: whitesmoke;
+    font-size: 2em;
+    vertical-align: bottom;
+}
+
+div.navbar-header {
+    width: 100%;
+}
+
+ul.nav-menu, ul.nav-right-menu {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #222;
+    width: 100%
+}
+
+ul.nav-menu li.left-menu {
+    float: left;
+}
+
+ul.nav-menu li.right-menu {
+    float: right;
+}
+
+ul.nav-menu li a, ul.nav-right-menu li a {
+    display: inline-block;
+    color: lightgrey;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+
+ul.nav-menu li a:hover, ul.nav-right-menuli a:hover {
+    background-color: dimgray;
+}
+
+/* homepage */
+div.page-description {
+    padding-bottom: 50px;
+}
+
+p.welcome, p.welcome2 {
+    padding-top: 50px;
+    padding-left: 225px;
+    padding-right: 225px;
+    font-size: 1.2em;
+    text-align: justify;
+}
+
+p.welcome2 {
+    padding-top: 10px;
+}
+
+/* Dashboard page */
+table.dashboard-status td {
+    text-align: center;
+}
+
+a.dashboard-refresh {
+    margin-left: 20px;
+    color: #0088cc;
+}
+
+p.status-update-dtstamp {
+    color: darkred;
+    font-style: italic;
+}
+
+/* Status page */
+
+div.wait-message {
+    display: none;
+    font-family: "Arial", sans-serif;
+    margin-top: 50px;
+    margin-bottom: 50px;
+    margin-left: 90px;
+    margin-right: 90px;
+    border: 1px solid #b30000;
+    padding: 20px;
+    text-align: center;
+    background-color: #ffffe6;
+    color: #4d0000;
+    font-weight: bold;
+    font-size: 1.1em;
+}
+
+div#example-url-warning {
+    font-family: "Arial", sans-serif;
+    margin-top: 50px;
+    margin-bottom: 0px;
+    margin-left: 20px;
+    margin-right: 20px;
+    border: 1px solid #b30000;
+    padding: 10px;
+    color: #4d0000;
+}
+
+div.status-section {
+    margin-top: 50px;
+}
+
+div.validation-types {
+    margin-top: 20px;
+}
+
+table {
+    border-collapse: collapse;
+    margin-bottom: 20px;
+    background-color: white;
+}
+table, th, td {
+    border: 1px solid darkgray;
+    padding: 5px;
+}
+
+th {
+    background-color: #a1b1c4;
+    color: black;
+}
+
+td.position {
+    text-align: center;
+}
+
+.status-good {
+    text-align: center;
+    background-color: #ccffcc;
+}
+
+.status-unknown {
+    text-align: center;
+    background-color: #ffff99;
+}
+
+.status-bad {
+    text-align: center;
+    background-color: #ffcccc;
+}
+
+label.horizontal-list {
+    padding-right: 15px;
+}

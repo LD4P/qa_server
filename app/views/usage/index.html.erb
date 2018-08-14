@@ -1,0 +1,106 @@
+<div class="page-description">
+
+  <h2>Usage:</h2>
+  <h3>To search for matching terms:</h3>
+
+  <p>The query parameter <b>q</b> is required.  All other parameters are optional.  Some authorities support different
+  optional parameters, but attempts were made to keep optional parameter names consistent between authorities.</p>
+
+  <h4>Without subauthority:</h4>
+  <pre>http://localhost:3000/qa/search/linked_data/locnames_ld4l_cache?q=mark%20twain&maxRecords=4&lang=en</pre>
+
+  where,
+  <ul>
+    <li>search (required) - indicates this is a query for terms</li>
+    <li>locnames_ld4l_cache (required) - the name of the authority</li>
+    <li>q=mark twain (required) - the query for which to search</li>
+    <li>maxRecords=4 (optional) - the number of results to return</li>
+    <li>lang=en (optional) - if the authority returns language encoded literals, results will be filtered for English
+  </ul>
+
+  <h4>With subauthority</h4>
+  <pre>http://localhost:3000/qa/search/linked_data/locnames_ld4l_cache/person?q=mark%20twain&maxRecords=4&lang=en</pre>
+
+  where,
+  <ul>
+    <li>search (required) - indicates this is a query for terms</li>
+    <li>locnames_ld4l_cache (required) - the name of the authority</li>
+    <li>person (optional) - limits results to this subauthority (meaning of subauthoritites is authority dependent)</li>
+    <li>q=mark twain (required) - the query for which to search</li>
+    <li>maxRecords=4 (optional) - the number of results to return</li>
+    <li>lang=en (optional) - if the authority returns language encoded literals, results will be filtered for the specified language
+  </ul>
+
+  <h4>Results format:</h4>
+  <p>The results minimally contain the uri, id, and label for each result found.  The uri and id may be the same, but not
+  in all cases.</p>
+
+  <p>Example of results with two terms found:</p>
+  <pre>
+[
+  {
+    "uri":"http://id.loc.gov/authorities/names/n92016188",
+    "id":"http://id.loc.gov/authorities/names/n92016188",
+    "label":"Twain, Mark, 1835-1910. Mark Twain papers"
+  },
+  {
+    "uri":"http://id.loc.gov/authorities/names/n42025440",
+    "id":"http://id.loc.gov/authorities/names/n42025440",
+    "label":"Twain, Mark, 1835-1910. Mark Twain library"
+  }
+]</pre>
+
+<hr>
+  <h3>To fetch a single term:</h3>
+
+  <p>The data after the authority name is required and should be the URI or the ID of the term being retrieved.
+  Which value to use depends on the authority configuration.  All other parameters are optional.  Some
+  authorities support different optional parameters, but attempts were made to keep optional parameter names
+  consistent between authorities.</p>
+
+  <h4>Fetch by URI</h4>
+  <pre>http://localhost:3000/qa/show/linked_data/locnames_ld4l_cache/http%3A%2F%2Fid%2Eloc%2Egov%2Fauthorities%2Fnames%2Fn92016188</pre>
+  <p><b><%= t('authority_status.chrome_unencoding_msg') %></b></p>
+
+  where,
+  <ul>
+    <li>show (required) - indicates this is a fetch of a single term</li>
+    <li>locnames_ld4l_cache (required) - the name of the authority</li>
+    <li>http%3A%2F%2Fid%2Eloc%2Egov%2Fauthorities%2Fnames%2Fn92016188 (required) - the encoded uri of the term to fetch</li>
+    <li>lang=en (optional) - if the authority returns language encoded literals, results will be filtered for the specified language</li>
+  </ul>
+
+  <h4>Fetch by ID</h4>
+  <pre>http://localhost:3000/qa/show/linked_data/oclcfast_ld4l_cache/1914919?lang=en</pre>
+
+  where,
+  <ul>
+    <li>show (required) - indicates this is a fetch of a single term</li>
+    <li>oclcfast_ld4l_cache (required) - the name of the authority</li>
+    <li>1914919 (required) - the id of the term to fetch</li>
+    <li>lang=en (optional) - if the authority returns language encoded literals, results will be filtered for the specified language
+  </ul>
+
+  <h4>Results format:</h4>
+  <p>The results minimally contain the uri, id, and label of the term.  The uri and id may be the same, but not
+  in all cases.  All predicate and object values where the term is the subject are also returned in the predicates list.</p>
+
+  <p>Example results for a fetch of a term:</p>
+  <pre>
+{
+  "uri":"http://id.worldcat.org/fast/530369",
+  "id":"530369",
+  "label":"Cornell University",
+  "altlabel":["Ithaca (N.Y.). Cornell University"],
+  "sameas":["http://id.loc.gov/authorities/names/n79021621","https://viaf.org/viaf/126293486"],
+  "predicates":{
+    "http://purl.org/dc/terms/identifier":"530369",
+    "http://www.w3.org/2004/02/skos/core#inScheme":["http://id.worldcat.org/fast/ontology/1.0/#fast","http://id.worldcat.org/fast/ontology/1.0/#facet-Corporate"],
+    "http://www.w3.org/1999/02/22-rdf-syntax-ns#type":"http://schema.org/Organization",
+    "http://www.w3.org/2004/02/skos/core#prefLabel":"Cornell University",
+    "http://schema.org/name":["Cornell University","Ithaca (N.Y.). Cornell University"],
+    "http://www.w3.org/2004/02/skos/core#altLabel":["Ithaca (N.Y.). Cornell University"],
+    "http://schema.org/sameAs":["http://id.loc.gov/authorities/names/n79021621","https://viaf.org/viaf/126293486"]
+  }
+}</pre>
+</div>

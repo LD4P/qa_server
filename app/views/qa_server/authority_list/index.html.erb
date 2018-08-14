@@ -1,0 +1,27 @@
+<div class="page-description">
+
+  <h2><%= t('authority_list.title') %></h2>
+  <p><%= t('authority_list.see_check_status_html', href: "#{main_app.root_path}check_status") %></p>
+
+  <div id="status-section" class="status-section">
+    <p><b><%= t('warning.chrome_unencoding_msg') %></b></p>
+    <table class="status">
+      <tr>
+        <th><%= t('authority_list.data.authority') %></th>
+        <th><%= t('authority_list.data.subauthority') %></th>
+        <th><%= t('authority_list.data.service') %></th>
+        <th><%= t('authority_list.data.action') %></th>
+        <th><%= t('authority_list.data.url') %></th>
+      </tr>
+      <% @presenter.urls_data.each do |entry| %>
+          <tr>
+            <td><%= entry[:authority_name] %></td>
+            <td><%= entry[:subauthority_name] %></td>
+            <td><%= entry[:service] %></td>
+            <td><%= entry[:action] %></td>
+            <td><a href="<%= entry[:url] %>"><%= entry[:url] %></a></td>
+          </tr>
+      <% end %>
+    </table>
+  </div>
+</div>
