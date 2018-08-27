@@ -15,8 +15,8 @@ if coverage_needed?
     add_filter '/lib/generators'
     add_filter '/spec'
     add_filter '/tasks'
-    add_filter '/lib/qa_version/version.rb'
-    add_filter '/lib/qa_version/engine.rb'
+    add_filter '/lib/qa_server/version.rb'
+    add_filter '/lib/qa_server/engine.rb'
   end
   SimpleCov.command_name 'spec'
 end

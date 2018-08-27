@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Authority Lookup Server</title>
+
+  <!-- Latest compiled and minified CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <!-- jQuery library -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <!-- Latest compiled JavaScript -->
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+  <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+
+  <%= csrf_meta_tags %>
+
+</head>
+
+<body>
+<section class="ld4l-identity" aria-label="Cornell" role="banner">
+  <div id="skiptocontent"><a href="#maincontent">skip to main content</a></div>
+  <div class="container">
+    <a href="<%= main_app.root_path %>"><img src="<%= image_url('qa_server/LD4L-bg.png') %>" class="header-logo"></a>
+    <a id="logo" class="navbar-brand" href="<%= main_app.root_path %>" data-no-turbolink="true">
+      <span class="institution-name"><%= t("qa_server.application_name") %></span>
+    </a>
+  </div> <!-- /container -->
+</section>
+
+<div class="container">
+  <nav id="masthead" class="navbar navbar-inverse navbar-static-top" role="navigation">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <ul class="nav-menu">
+          <li class="left-menu"><%= link_to t("qa_server.menu.home"), main_app.root_path %></li>
+          <li class="left-menu"><%= link_to t("qa_server.menu.usage"), qa_server.usage_index_path %></li>
+          <li class="left-menu"><%= link_to t("qa_server.menu.authorities"), qa_server.authority_list_index_path %></li>
+          <li class="left-menu"><%= link_to t("qa_server.menu.check_status"), qa_server.check_status_index_path %></li>
+          <li class="left-menu"><%= link_to t("qa_server.menu.monitor_status"), qa_server.monitor_status_index_path %></li>
+          <li class="right-menu"><%= link_to "LD4L Gateway", "http://ld4l.org/" %></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+</div>
+</div>
+
+<div id="content-wrapper" class="container" role="main">
+  <a name="skip_to_content"></a>
+  <%# = render '/flash_msg' %>
+  <% if content_for?(:page_header) %>
+      <div class="row">
+        <div class="col-xs-12 main-header">
+          <%= yield(:page_header) %>
+        </div>
+      </div>
+  <% end %>
+
+  <%= content_for?(:content) ? yield(:content) : yield %>
+</div><!-- /#content-wrapper -->
+<%= render 'shared/footer' %>
+<%# = render 'shared/ajax_modal' %>
+</body>
+</html>

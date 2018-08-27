@@ -1,0 +1,72 @@
+div.wait-message {
+  display: none;
+  font-family: "Arial", sans-serif;
+  margin-top: 50px;
+  margin-bottom: 50px;
+  margin-left: 90px;
+  margin-right: 90px;
+  border: 1px solid #b30000;
+  padding: 20px;
+  text-align: center;
+  background-color: #ffffe6;
+  color: #4d0000;
+  font-weight: bold;
+  font-size: 1.1em;
+}
+
+div#example-url-warning {
+  font-family: "Arial", sans-serif;
+  margin-top: 50px;
+  margin-bottom: 0px;
+  margin-left: 20px;
+  margin-right: 20px;
+  border: 1px solid #b30000;
+  padding: 10px;
+  color: #4d0000;
+}
+
+div.status-section {
+  margin-top: 50px;
+}
+
+div.validation-types {
+  margin-top: 20px;
+}
+
+table {
+  border-collapse: collapse;
+  margin-bottom: 20px;
+  background-color: white;
+}
+table, th, td {
+  border: 1px solid darkgray;
+  padding: 5px;
+}
+
+th {
+  background-color: #a1b1c4;
+  color: black;
+}
+
+td.position {
+  text-align: center;
+}
+
+.status-good {
+  text-align: center;
+  background-color: #ccffcc;
+}
+
+.status-unknown {
+  text-align: center;
+  background-color: #ffff99;
+}
+
+.status-bad {
+  text-align: center;
+  background-color: #ffcccc;
+}
+
+label.horizontal-list {
+  padding-right: 15px;
+}

@@ -1,5 +1,6 @@
-require "qa_server/engine"
+require 'qa_server/engine'
+require 'qa_server/version'
 
 module QaServer
-  # Your code goes here...
+  QA_ENGINE_MOUNT = 'authorities'
 end

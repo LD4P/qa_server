@@ -1,0 +1,68 @@
+---
+en:
+  qa_server:
+    menu:
+      home:            Home
+      usage:           Usage
+      authorities:     Authorities
+      check_status:    Check Status
+      monitor_status:  Monitor Status
+    warning:
+      chrome_unencoding_msg: "NOTE: Sample URLs with an encoded URI for term fetch do not work in Chrome for Mac or Windows and do not work in IE for Window.  This is because Chrome and IE unencode the periods.  Firefox on Windows and Mac and Safari on Mac are known to work."
+    authority_list:
+      title:           Authority List
+      see_check_status_html: 'See <a href="%{href}">Check Status</a> to test whether an authority is online.'
+      data:
+        authority:     Authority
+        subauthority:  Subauthority
+        service:       Service
+        action:        Action
+        url:           Sample URL
+    check_status:
+      title:            Check Status
+      select_authority: Select authority...
+      show_all:         ALL Authorities (SLOW)
+      connections:      Check Connection Status only
+      accuracy:         Check Accuracy only
+      all_checks:       Run all checks
+      wait_message:     "Please wait while the status is verified.  This will be slow if you selected ALL Authorities."
+      connection_checks: Connection Checks
+      accuracy_checks:  Search Accuracy Checks
+      status_table:
+        action:         Action
+        actual_position: Actual Position
+        authority:      Authority
+        errmsg:         Errors
+        expected_by_position: Expected by Position
+        service:        Service
+        status:         Status
+        subauthority:   Subauthority
+        subject_uri:    Expected Subject
+        url:            Sample URL
+    monitor_status:
+      summary:
+        title:         Summary
+        authorities:   Authorities
+        authorities_with_failures: Authorities with Failures
+        passing_tests: Passing Tests
+        failing_tests: Failing Tests
+        total_tests:   TOTAL Tests
+        last_updated:  'Status last updated %{date} ET'
+      failures:
+        title:         Failures During Latest Status Update
+        status:        Status
+        authority:     Authority
+        subauthority:  Subauthority
+        service:       Service
+        action:        Action
+        url:           Sample URL
+        errmsg:        Errors
+      history:
+        title:         History
+        since:         'Since %{date} ET'
+        days_failing:  Days Failing
+        authority:     Authority
+        subauthority:  Subauthority
+        service:       Service
+        action:        Action
+        url:           Sample URL

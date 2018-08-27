@@ -1,0 +1,51 @@
+img.header-logo {
+  float: left;
+  margin-top: 12px;
+  margin-left: 15px;
+  margin-bottom: 8px;
+  height: 64px;
+}
+
+/* Banner */
+.navbar-brand {
+  margin-top: 18px;
+}
+
+.institution-name {
+  color: whitesmoke;
+  font-size: 2em;
+  vertical-align: bottom;
+}
+
+div.navbar-header {
+  width: 100%;
+}
+
+ul.nav-menu, ul.nav-right-menu {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background-color: #222;
+  width: 100%
+}
+
+ul.nav-menu li.left-menu {
+  float: left;
+}
+
+ul.nav-menu li.right-menu {
+  float: right;
+}
+
+ul.nav-menu li a, ul.nav-right-menu li a {
+  display: inline-block;
+  color: lightgrey;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+}
+
+ul.nav-menu li a:hover, ul.nav-right-menuli a:hover {
+  background-color: dimgray;
+}

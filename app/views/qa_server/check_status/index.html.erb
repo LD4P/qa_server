@@ -10,13 +10,13 @@
 
 <div class="page-description">
 
-  <h2><%= t('check_status.title') %></h2>
+  <h2><%= t('qa_server.check_status.title') %></h2>
 
   <%= form_tag({ action: 'index' }, { method: :get }) do %>
   <select name="authority" id="authority" class="string multi-value optional form-control form-control multi-text-field" value="" aria-labelledby="authority" onchange="validate_authority(this.form)">
-    <option value=""><%= t('check_status.select_authority') %></option>
+    <option value=""><%= t('qa_server.check_status.select_authority') %></option>
     <option disabled>──────────</option>
-    <option value="<%= @presenter.value_all_collections %>"><%= t('check_status.show_all') %></option>
+    <option value="<%= @presenter.value_all_collections %>"><%= t('qa_server.check_status.show_all') %></option>
     <option disabled>──────────</option>
     <% @authorities_list.each do |auth_name| %>
         <option value="<%= auth_name %>"><%= auth_name.upcase %></option>
@@ -24,35 +24,35 @@
   </select>
   <div class="validation-types">
     <%= radio_button_tag(@presenter.value_check_param, @presenter.value_check_connections, :selected) %>
-    <%= label_tag(@presenter.label_check_connections, t('check_status.connections'), class: 'horizontal-list') %>
+    <%= label_tag(@presenter.label_check_connections, t('qa_server.check_status.connections'), class: 'horizontal-list') %>
     <%= radio_button_tag(@presenter.value_check_param, @presenter.value_check_accuracy) %>
-    <%= label_tag(@presenter.label_check_accuracy, t('check_status.accuracy'), class: 'horizontal-list') %>
+    <%= label_tag(@presenter.label_check_accuracy, t('qa_server.check_status.accuracy'), class: 'horizontal-list') %>
     <%= radio_button_tag(@presenter.value_check_param, @presenter.value_all_checks) %>
-    <%= label_tag(@presenter.label_all_checks, t('check_status.all_checks'), class: 'horizontal-list') %>
+    <%= label_tag(@presenter.label_all_checks, t('qa_server.check_status.all_checks'), class: 'horizontal-list') %>
   </div>
   <% end %>
 
 
-<div id="status-loading-message" class="wait-message"><%= t('check_status.wait_message') %></div>
+<div id="status-loading-message" class="wait-message"><%= t('qa_server.check_status.wait_message') %></div>
 
 <% if @presenter.connection_status_data? || @presenter.accuracy_status_data? %>
   <div id="example-url-warning">
-      <p><b><%= t('warning.chrome_unencoding_msg') %></b></p>
+      <p><b><%= t('qa_server.warning.chrome_unencoding_msg') %></b></p>
   </div>
 <% end %>
 
 <% if @presenter.connection_status_data? %>
 <div id="connection-status-section" class="status-section">
-  <h3><%= t('check_status.connection_checks') %></h3>
+  <h3><%= t('qa_server.check_status.connection_checks') %></h3>
   <table class="status">
     <tr>
-      <th><%= t('check_status.status_table.status') %></th>
-      <th><%= t('check_status.status_table.authority') %></th>
-      <th><%= t('check_status.status_table.subauthority') %></th>
-      <th><%= t('check_status.status_table.service') %></th>
-      <th><%= t('check_status.status_table.action') %></th>
-      <th><%= t('check_status.status_table.url') %></th>
-      <th><%= t('check_status.status_table.errmsg') %></th>
+      <th><%= t('qa_server.check_status.status_table.status') %></th>
+      <th><%= t('qa_server.check_status.status_table.authority') %></th>
+      <th><%= t('qa_server.check_status.status_table.subauthority') %></th>
+      <th><%= t('qa_server.check_status.status_table.service') %></th>
+      <th><%= t('qa_server.check_status.status_table.action') %></th>
+      <th><%= t('qa_server.check_status.status_table.url') %></th>
+      <th><%= t('qa_server.check_status.status_table.errmsg') %></th>
     </tr>
     <% @presenter.connection_status_data.each do |status| %>
     <tr>
@@ -71,18 +71,18 @@
 
 <% if @presenter.accuracy_status_data? %>
 <div id="accuracy-status-section" class="status-section">
-  <h3><%= t('check_status.accuracy_checks') %></h3>
+  <h3><%= t('qa_server.check_status.accuracy_checks') %></h3>
   <table class="status">
     <tr>
-      <th><%= t('check_status.status_table.expected_by_position') %></th>
-      <th><%= t('check_status.status_table.actual_position') %></th>
-      <th><%= t('check_status.status_table.subject_uri') %></th>
-      <th><%= t('check_status.status_table.authority') %></th>
-      <th><%= t('check_status.status_table.subauthority') %></th>
-      <th><%= t('check_status.status_table.service') %></th>
-      <th><%= t('check_status.status_table.action') %></th>
-      <th><%= t('check_status.status_table.url') %></th>
-      <th><%= t('check_status.status_table.errmsg') %></th>
+      <th><%= t('qa_server.check_status.status_table.expected_by_position') %></th>
+      <th><%= t('qa_server.check_status.status_table.actual_position') %></th>
+      <th><%= t('qa_server.check_status.status_table.subject_uri') %></th>
+      <th><%= t('qa_server.check_status.status_table.authority') %></th>
+      <th><%= t('qa_server.check_status.status_table.subauthority') %></th>
+      <th><%= t('qa_server.check_status.status_table.service') %></th>
+      <th><%= t('qa_server.check_status.status_table.action') %></th>
+      <th><%= t('qa_server.check_status.status_table.url') %></th>
+      <th><%= t('qa_server.check_status.status_table.errmsg') %></th>
     </tr>
     <% @presenter.accuracy_status_data.each do |status| %>
     <tr>

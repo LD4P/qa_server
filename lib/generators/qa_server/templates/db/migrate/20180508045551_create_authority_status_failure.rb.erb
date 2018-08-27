@@ -1,0 +1,15 @@
+class CreateAuthorityStatusFailure < ActiveRecord::Migration<%= migration_version %>
+  def change
+    create_table :authority_status_failure do |t|
+      t.belongs_to :authority_status
+      t.string :status
+      t.string :status_label
+      t.string :authority_name
+      t.string :subauthority_name
+      t.string :service
+      t.string :action
+      t.string :url
+      t.string :err_message
+    end
+  end
+end

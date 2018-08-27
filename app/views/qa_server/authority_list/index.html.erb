@@ -1,17 +1,17 @@
 <div class="page-description">
 
-  <h2><%= t('authority_list.title') %></h2>
-  <p><%= t('authority_list.see_check_status_html', href: "#{main_app.root_path}check_status") %></p>
+  <h2><%= t('qa_server.authority_list.title') %></h2>
+  <p><%= t('qa_server.authority_list.see_check_status_html', href: "#{main_app.root_path}check_status") %></p>
 
   <div id="status-section" class="status-section">
-    <p><b><%= t('warning.chrome_unencoding_msg') %></b></p>
+    <p><b><%= t('qa_server.warning.chrome_unencoding_msg') %></b></p>
     <table class="status">
       <tr>
-        <th><%= t('authority_list.data.authority') %></th>
-        <th><%= t('authority_list.data.subauthority') %></th>
-        <th><%= t('authority_list.data.service') %></th>
-        <th><%= t('authority_list.data.action') %></th>
-        <th><%= t('authority_list.data.url') %></th>
+        <th><%= t('qa_server.authority_list.data.authority') %></th>
+        <th><%= t('qa_server.authority_list.data.subauthority') %></th>
+        <th><%= t('qa_server.authority_list.data.service') %></th>
+        <th><%= t('qa_server.authority_list.data.action') %></th>
+        <th><%= t('qa_server.authority_list.data.url') %></th>
       </tr>
       <% @presenter.urls_data.each do |entry| %>
           <tr>

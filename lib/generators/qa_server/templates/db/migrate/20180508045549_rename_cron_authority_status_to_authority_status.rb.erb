@@ -1,0 +1,5 @@
+class RenameCronAuthorityStatusToAuthorityStatus < ActiveRecord::Migration<%= migration_version %>
+  def change
+    rename_table :cron_authority_status, :authority_status
+  end
+end
