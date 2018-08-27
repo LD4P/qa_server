@@ -1,14 +1,26 @@
 # QaServer
-This rails engine can be installed into your app to serve as a Questioning Authority (QA) Server for accessing external authorities.  It is part of a larger architecture supporting linked data authority access.  See [ld4l:linked_data_authorities]() for more information on the full architecture.  From this engine, you can send a search query and get back multiple results OR you can fetch a single term.  The engine provides UI for monitoring connections to configured authorities and the ability to check the current status of a single authority to determine if it is up and running now. 
+This rails engine can be installed into your app to serve as a Questioning Authority (QA) Server for accessing external authorities.  It is part of a larger architecture supporting linked data authority access.  From this engine, you can send a search query and get back multiple results OR you can fetch a single term.  The engine provides UI for monitoring connections to configured authorities and the ability to check the current status of a single authority to determine if it is up and running now. 
+
+## Reference
+
+* [Architecture for Authority Lookup](https://wiki.duraspace.org/x/84E2BQ) document describes the authority access and normalization layer that provides applications with a consistent output for processing.
+* [Authority aggregation and indexing](https://wiki.duraspace.org/display/ld4lLABS/Authority+aggregation+and+indexing) document describes the technology used for caching authority data.
+* [samvera/questioning_authority](https://github.com/samvera/questioning_authority) (QA) is the gem that provides access to external authorities and normalizes the results.  See the [Linked Open Data (LOD) Authorities](https://github.com/samvera/questioning_authority#linked-open-data-lod-authorities) section for details on the primary part of QA that is used by this engine.
+* [LD4P/linked_data_authorities](https://github.com/LD4P/linked_data_authorities) holds predefined Questioning Authority configurations that work with this qa_server engine.
+
 
 ## Setup
 
 ### Compatibility
 
-* Ruby 2.4 or the latest 2.3 version is recommended. Later versions may also work.
-* Rails 5 is required. We recommend the latest Rails 5.0 release.
+Tested with...
+
+* Ruby 2.4.3
+* Rails 5.1.6
 
 ### Installation Instructions
+
+#### Adding the engine dependency
 
 Add this line to your application's Gemfile:
 
@@ -26,9 +38,11 @@ Or install it yourself as:
 $ gem install qa_server
 ```
 
-TODO: How to copy in migrations and run those?
+#### Install the engine and run migrations
 
-
+```bash
+$ bundle exec rails qa_server:install
+```
 
 
 ## Supported Authorities
@@ -49,7 +63,7 @@ There are a few authorities that are part of the QA gem.  All directly access th
   
 ### Predefined Configurations in LD4P/linked_data_authorities
 
-All authorities defined in [LD4P/linked_data_authorities](https://github.com/LD4P/linked_data_authorities) are included in this engine.
+All authorities defined in [LD4P/linked_data_authorities](https://github.com/LD4P/linked_data_authorities) are included in this engine.  When you run the install task, they will be copied to `config/authorities/linked_data`.  If you do not want to support a particular authority, you can remove it from this directory and the corresponding validation file in the `scenarios` sub-directory.
 
 Configurations exist for a number of other common authorities that can be used by your QA Server.  When possible, each configuration comes in two varieties...
 
@@ -145,7 +159,11 @@ This document addresses the use of QA Server app for access to linked data autho
 
 
 ## Contributing
-Contribution directions go here.
+
+*Have a suggestion for code improvements or new linked data authorities?*  Submit an issue with your request.  For new authorities, include links to the authority's linked data API and other access documentation.
+  
+*Have code improvements you've written or a configuration for a new authority you'd like to submit?* Submit a PR and your changes will be reviewed for possible inclussion.  If you want to make a substantial change, you may want to express your ideas in an issue first for discussion.
+
 
 ## License
 The gem is available as open source under the terms of the [Apache License](https://www.apache.org/licenses/LICENSE-2.0).
