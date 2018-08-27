@@ -41,9 +41,25 @@ $ gem install qa_server
 #### Install the engine and run migrations
 
 ```bash
-$ bundle exec rails qa_server:install
+$ rails g qa_server:install
+$ rake db:migrate
 ```
 
+#### Test the install
+
+* Start rails server with `rails s`
+* You should see the Home page.  Click the other nav menus to be sure you see content there as well.
+* On Authorities List, click the URL for one of the authorities to confirm you get data.
+* On Check Status, select one authority from the selection list and confirm that tests pass.
+* Clicking on Monitor Status will run all tests, which is very slow.  When it completes, it will have confirmed that the database tables are setup correctly.  You can expect all tests to pass, although, there is a possibility that one or more authorities are down at the moment you run the tests.  If all fail, there may be an installation problem.  If only a few fail, it is more likely a problem with the authority.
+
+#### Trouble Shooting
+
+Common problems:
+
+* If complaints about a table not existing, either the migrations were not copied over or have not run.
+* All tests fail could mean that the required gems were not installed.  Look for gems `qa` and `linkeddata`.
+* If some tests fail with a comment that the results are not RDF, confirm that gems `qa` and `linkeddata` are installed.  Confirm that `qa` gem is using the `min-context` branch.
 
 ## Supported Authorities
 

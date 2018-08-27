@@ -9,13 +9,18 @@ module QaServer
   3. Installs qa_server assets
          """
 
+    def banner
+      say_status('info', 'INSTALLING QA_SERVER', :blue)
+    end
+
     def run_required_generators
-      generate "qa_server:models#{options[:force] ? ' -f' : ''}"
       generate "qa_server:assets"
       generate "qa_server:config"
+      generate "qa_server:models#{options[:force] ? ' -f' : ''}"
     end
 
     def add_to_gemfile
+      say_status('info', '  -- adding qa_server required gems', :blue)
       gem 'qa', github: 'samvera/questioning_authority', branch: 'min_context'
       gem 'linkeddata'
 
@@ -26,8 +31,10 @@ module QaServer
 
     # The engine routes have to come after the devise routes so that /users/sign_in will work
     def inject_routes
-      # Remove root route that was added by blacklight generator
-      gsub_file 'config/routes.rb', /root (:to =>|to:) "catalog#index"/, ''
+      say_status('info', '  -- adding qa_server routes', :blue)
+
+      # # Remove root route that was added by blacklight generator
+      # gsub_file 'config/routes.rb', /root (:to =>|to:) "catalog#index"/, ''
 
       inject_into_file 'config/routes.rb', after: /Rails.application.routes.draw do\n/ do
         "  mount Qa::Engine => '/authorities'\n"\
@@ -38,6 +45,8 @@ module QaServer
     end
 
     def inject_bootstrap
+      say_status('info', '  -- adding bootstrap resources', :blue)
+
       inject_into_file 'app/views/layouts/application.html.erb', after: /<head>\n/ do
         "    <!-- Latest compiled and minified CSS -->\n"\
         "    <link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css'>\n"\
