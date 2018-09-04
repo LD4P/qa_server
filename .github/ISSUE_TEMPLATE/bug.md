@@ -1,0 +1,1 @@
+If this bug is related to the performance and accuracy of a particular vocabulary, please provide information related to existing tests, e.g. https://github.com/LD4P/qa_server/blob/master/lib/generators/qa_server/templates/config/authorities/linked_data/scenarios/locgenres_ld4l_cache_validation.yml#L74-L78
