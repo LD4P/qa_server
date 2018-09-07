@@ -1,9 +1,9 @@
 GIT
   remote: https://github.com/samvera/questioning_authority.git
-  revision: 7fc60a1a205430774d32cff9dea9993fe68fcb76
+  revision: e870fc07b991188053d2cd9eeb6a843b896911d8
   branch: min_context
   specs:
-    qa (2.0.1)
+    qa (2.1.1)
       activerecord-import
       deprecation
       faraday
@@ -12,7 +12,7 @@ GIT
       rdf
 
 PATH
-  remote: /Users/elr37/Documents/__DEVELOPMENT__/LD4L/_LD4L3/qa_server/LD4P/sprint/qa_server
+  remote: /Users/elr37/Documents/__DEVELOPMENT__/LD4L/_LD4L3/sprint/LD4P/qa_server
   specs:
     qa_server (0.1.99)
       linkeddata
@@ -67,7 +67,7 @@ GEM
     ast (2.4.0)
     bcp47 (0.3.3)
       i18n
-    better_errors (2.4.0)
+    better_errors (2.5.0)
       coderay (>= 1.0.0)
       erubi (>= 1.0.0)
       rack (>= 0.9.0)
@@ -335,7 +335,7 @@ GEM
       rdf-xsd (>= 2.2, < 4.0)
       sparql (>= 2.2, < 4.0)
       sxp (~> 1.0)
-    sparql (3.0.1)
+    sparql (3.0.2)
       builder (~> 3.2)
       ebnf (~> 1.1)
       rdf (~> 3.0)

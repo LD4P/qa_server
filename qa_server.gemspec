@@ -23,7 +23,7 @@ Gem::Specification.new do |spec|
   # Note: rails does not follow sem-ver conventions, it's
   # minor version releases can include breaking changes; see
   # http://guides.rubyonrails.org/maintenance_policy.html
-  spec.add_dependency 'rails', '5.1.6'
+  spec.add_dependency 'rails', '5.1.6' ### TODO: This shouldn't be this restrictive.  Why is it pinned to 5.1.6?
 
   # Required gems for QA and linked data access
   spec.add_dependency 'qa' # loaded specific branch in Gemfile
