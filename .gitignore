@@ -69,3 +69,5 @@ test/dummy/storage/
 test/dummy/tmp/
 
 .internal_test_app
+
+*.gem
