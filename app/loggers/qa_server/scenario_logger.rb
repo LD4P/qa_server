@@ -27,11 +27,13 @@ module QaServer
     # @option expected [Integer] the expected result (e.g. min size of result OR max position of subject within results)
     # @option actual [Integer] the actual result (e.g. actual size of results OR actual position of subject within results)
     # @option target [String] the expected target that was validated (e.g. subject_uri for query, pref label for term fetch)
-    def add(status_info) # rubocop:disable Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
+    # @option request_run_time [BigDecimal] the amount of time to retrieve data from the authority
+    # @option normalization_run_time [BigDecimal] the amount of time to normalize the retrieved data into json
+    def add(status_info) # rubocop:disable Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity, Metrics/MethodLength
       @test_count += 1
+      @failure_count += 1 unless status_info[:status] == PASS
       @log << { type: status_info[:validation_type] || '',
                 status: status_info[:status] || '',
-                status_label: status_label(status_info[:status]),
                 authority_name: status_info[:authority_name] || '',
                 subauthority_name: status_info[:subauth] || '',
                 service: status_info[:service] || '',
@@ -40,7 +42,9 @@ module QaServer
                 expected: status_info[:expected] || nil,
                 actual: status_info[:actual] || nil,
                 target: status_info[:target] || nil,
-                err_message: status_info[:error_message] || '' }
+                err_message: status_info[:error_message] || '',
+                request_run_time: status_info[:request_run_time] || nil,
+                normalization_run_time: status_info[:normalization_run_time] || nil }
     end
 
     # Delete from the log any tests that passed.

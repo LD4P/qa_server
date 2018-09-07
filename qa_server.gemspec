@@ -30,6 +30,9 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'qa' # loaded specific branch in Gemfile
   spec.add_development_dependency 'linkeddata'
 
+  # Produces dashboard charts on monitor status page
+  spec.add_dependency 'chartkick'
+
   spec.add_development_dependency 'bixby', '~> 1.0.0' # rubocop styleguide
   # spec.add_development_dependency 'capybara', '~> 2.13'
   spec.add_development_dependency 'engine_cart', '~> 2.0'

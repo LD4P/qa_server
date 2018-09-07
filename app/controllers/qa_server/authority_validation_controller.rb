@@ -3,8 +3,6 @@ module QaServer
   class AuthorityValidationController < ApplicationController
     layout 'qa_server'
 
-    attr_reader :status_data
-
     class_attribute :validator_class,
                     :lister_class,
                     :logger_class

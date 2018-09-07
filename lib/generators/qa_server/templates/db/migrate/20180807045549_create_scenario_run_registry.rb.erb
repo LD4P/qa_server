@@ -1,0 +1,7 @@
+class CreateScenarioRunRegistry < ActiveRecord::Migration<%= migration_version %>
+  def change
+    create_table :scenario_run_registry do |t|
+      t.datetime :dt_stamp
+    end
+  end
+end
