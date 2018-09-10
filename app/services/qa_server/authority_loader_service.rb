@@ -12,7 +12,7 @@ module QaServer
         return nil if authority.blank?
       rescue Exception => e
         status_log.add(authority_name: authority_name,
-                       status: ScenarioValidator::FAIL,
+                       status: QaServer::ScenarioValidator::FAIL,
                        error_message: "Unable to load authority '#{authority_name}'; cause: #{e.message}")
         return nil
       end
@@ -28,7 +28,7 @@ module QaServer
         authority = Qa::Authorities::LinkedData::GenericAuthority.new(authority_key(authority_name))
         if authority.blank?
           status_log.add(authority_name: authority_name,
-                         status: ScenarioValidator::FAIL,
+                         status: QaServer::ScenarioValidator::FAIL,
                          error_message: "Unable to load authority '#{authority_name}'; cause: UNKNOWN") unless authority.present?
           return nil
         end

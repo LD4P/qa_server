@@ -15,8 +15,6 @@ PATH
   remote: /Users/elr37/Documents/__DEVELOPMENT__/LD4L/_LD4L3/sprint/LD4P/qa_server
   specs:
     qa_server (0.1.99)
-      linkeddata
-      qa
       rails (= 5.1.6)
 
 GEM

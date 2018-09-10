@@ -15,10 +15,10 @@ module QaServer
         scenarios_config = load_config(authority_name, status_log)
         return nil if scenarios_config.blank?
 
-        scenarios = Scenarios.new(authority: authority, authority_name: authority_name, scenarios_config: scenarios_config)
+        scenarios = QaServer::Scenarios.new(authority: authority, authority_name: authority_name, scenarios_config: scenarios_config)
       rescue Exception => e
         status_log.add(authority_name: authority_name,
-                       status: ScenarioValidator::FAIL,
+                       status: QaServer::ScenarioValidator::FAIL,
                        error_message: "Unable to load scenarios for authority '#{authority_name}'; cause: #{e.message}")
         return nil
       end
@@ -28,14 +28,14 @@ module QaServer
     private
 
       def self.load_authority(authority_name, status_log)
-        AuthorityLoaderService.load(authority_name: authority_name, status_log: status_log)
+        QaServer::AuthorityLoaderService.load(authority_name: authority_name, status_log: status_log)
       end
 
       def self.load_config(authority_name, status_log)
         scenarios_config = YAML.load_file(scenario_path(authority_name))
         unless scenarios_config.present?
           status_log.add(authority_name: authority_name,
-                         status: ScenarioValidator::FAIL,
+                         status: QaServer::ScenarioValidator::FAIL,
                          error_message: "Unable to load scenarios for authority '#{authority_name}'; cause: UNKNOWN")
           return nil
         end
@@ -45,7 +45,7 @@ module QaServer
       def self.scenarios_exist?(authority_name, status_log)
         return true if File.exists?(scenario_path(authority_name))
         status_log.add(authority_name: authority_name,
-                       status: ScenarioValidator::FAIL,
+                       status: QaServer::ScenarioValidator::FAIL,
                        error_message: "Unable to load scenarios for authority '#{authority_name}'; cause: #{scenario_path} does not exist.")
         false
       end

@@ -26,8 +26,8 @@ Gem::Specification.new do |spec|
   spec.add_dependency 'rails', '5.1.6' ### TODO: This shouldn't be this restrictive.  Why is it pinned to 5.1.6?
 
   # Required gems for QA and linked data access
-  spec.add_dependency 'qa' # loaded specific branch in Gemfile
-  spec.add_dependency 'linkeddata'
+  spec.add_development_dependency 'qa' # loaded specific branch in Gemfile
+  spec.add_development_dependency 'linkeddata'
 
   spec.add_development_dependency 'bixby', '~> 1.0.0' # rubocop styleguide
   # spec.add_development_dependency 'capybara', '~> 2.13'
