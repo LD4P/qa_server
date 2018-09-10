@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 require 'rails/generators'
 
 class QaServer::ConfigGenerator < Rails::Generators::Base
@@ -8,6 +9,7 @@ class QaServer::ConfigGenerator < Rails::Generators::Base
     * authority configs
     * authority scenarios
     * i18n
+    * add default configuration initializer
        """
 
   def banner
@@ -27,5 +29,9 @@ class QaServer::ConfigGenerator < Rails::Generators::Base
   def inject_i18n
     say_status('info', '  -- adding i18n translations', :blue)
     copy_file 'config/locales/qa_server.en.yml'
+  end
+
+  def create_initializer_config_file
+    copy_file 'config/initializers/qa_server.rb'
   end
 end
