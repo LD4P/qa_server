@@ -6,10 +6,10 @@ module QaServer
                     :search_validator_class,
                     :scenarios_loader_class
 
-    self.validator_class = ScenarioValidator
-    self.term_validator_class = TermScenarioValidator
-    self.search_validator_class = SearchScenarioValidator
-    self.scenarios_loader_class = ScenariosLoaderService
+    self.validator_class = QaServer::ScenarioValidator
+    self.term_validator_class = QaServer::TermScenarioValidator
+    self.search_validator_class = QaServer::SearchScenarioValidator
+    self.scenarios_loader_class = QaServer::ScenariosLoaderService
 
     VALIDATE_CONNECTIONS = validator_class::VALIDATE_CONNECTION
     VALIDATE_ACCURACY = validator_class::VALIDATE_ACCURACY

@@ -1,14 +1,14 @@
 # Controller for Monitor Status header menu item
 module QaServer
-  class MonitorStatusController < AuthorityValidationController
+  class MonitorStatusController < QaServer::AuthorityValidationController
 
     class_attribute :presenter_class,
                     :authority_status_model_class,
                     :authority_status_failure_model_class
 
-    self.presenter_class = MonitorStatusPresenter
-    self.authority_status_model_class = AuthorityStatus
-    self.authority_status_failure_model_class = AuthorityStatusFailure
+    self.presenter_class = QaServer::MonitorStatusPresenter
+    self.authority_status_model_class = QaServer::AuthorityStatus
+    self.authority_status_failure_model_class = QaServer::AuthorityStatusFailure
 
     # Sets up presenter with data to display in the UI
     def index

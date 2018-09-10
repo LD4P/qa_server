@@ -8,9 +8,9 @@ module QaServer
                     :lister_class,
                     :logger_class
 
-    self.validator_class = AuthorityValidatorService
-    self.lister_class = AuthorityListerService
-    self.logger_class = ScenarioLogger
+    self.validator_class = QaServer::AuthorityValidatorService
+    self.lister_class = QaServer::AuthorityListerService
+    self.logger_class = QaServer::ScenarioLogger
 
     VALIDATION_TYPE_PARAM = :validation_type
     VALIDATE_CONNECTIONS = 'connections'.freeze

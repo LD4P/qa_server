@@ -3,9 +3,9 @@ module QaServer
   class ScenarioLogger
     attr_reader :test_count, :failure_count
 
-    PASS = ScenarioValidator::PASS
-    FAIL = ScenarioValidator::FAIL
-    UNKNOWN = ScenarioValidator::UNKNOWN
+    PASS = QaServer::ScenarioValidator::PASS
+    FAIL = QaServer::ScenarioValidator::FAIL
+    UNKNOWN = QaServer::ScenarioValidator::UNKNOWN
 
     def initialize(test_count = 0, failure_count = 0)
       @log = []

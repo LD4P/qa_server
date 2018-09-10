@@ -20,7 +20,7 @@ module QaServer
 
     # @return [String] date of first recorded test run
     def first_updated
-      AuthorityStatus.first.dt_stamp.in_time_zone("Eastern Time (US & Canada)").strftime("%m/%d/%y - %I:%M %p")
+      QaServer::AuthorityStatus.first.dt_stamp.in_time_zone("Eastern Time (US & Canada)").strftime("%m/%d/%y - %I:%M %p")
     end
 
     # @return [Integer] number of loaded authorities

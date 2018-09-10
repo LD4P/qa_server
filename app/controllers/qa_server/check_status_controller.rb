@@ -1,11 +1,11 @@
 # Controller for Check Status header menu item
 module QaServer
-  class CheckStatusController < AuthorityValidationController
+  class CheckStatusController < QaServer::AuthorityValidationController
 
     ALL_AUTHORITIES = '__all__'.freeze
 
     class_attribute :presenter_class
-    self.presenter_class = CheckStatusPresenter
+    self.presenter_class = QaServer::CheckStatusPresenter
 
     # Sets up presenter with data to display in the UI
     def index

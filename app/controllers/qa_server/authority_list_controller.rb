@@ -1,9 +1,9 @@
 # Controller for Authorities header menu item
 module QaServer
-  class AuthorityListController < AuthorityValidationController
+  class AuthorityListController < QaServer::AuthorityValidationController
 
     class_attribute :presenter_class
-    self.presenter_class = AuthorityListPresenter
+    self.presenter_class = QaServer::AuthorityListPresenter
 
     # Sets up presenter with data to display in the UI
     def index
