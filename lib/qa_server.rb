@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 require 'qa_server/engine'
 require 'qa_server/version'
 

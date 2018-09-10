@@ -1,7 +1,7 @@
+# frozen_string_literal: true
 # This class parses the search configuration from the yml file into the parts needed by the search scenario validator.
 module QaServer
   class SearchScenario < AuthorityScenario
-
     # @return [String] query being executed by this scenario
     attr_reader :query
 
@@ -14,8 +14,8 @@ module QaServer
     # @return [String] subject_uri, if specified, should be in the search results between position 1 and expected_by_position
     attr_reader :subject_uri
 
-    MAX_RECORDS = '4'.freeze
-    DEFAULT_REPLACEMENTS = { maxRecords: MAX_RECORDS }
+    MAX_RECORDS = '4'
+    DEFAULT_REPLACEMENTS = { maxRecords: MAX_RECORDS }.freeze
     DEFAULT_POSITION = nil
     DEFAULT_SUBJECT_URI = nil
 

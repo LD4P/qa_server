@@ -1,9 +1,10 @@
+# frozen_string_literal: true
 require 'json'
 
 # This class runs a single search scenario and logs the results.
 module QaServer
   class SearchScenarioValidator < ScenarioValidator
-    SEARCH_ACTION = 'search'.freeze
+    SEARCH_ACTION = 'search'
 
     # @param scenario [SearchScenario] the scenario to run
     # @param status_log [ScenarioLogger] logger for recording test results
@@ -38,17 +39,15 @@ module QaServer
 
       # Runs the accuracy test and log results
       def test_accuracy(subject_uri:, expected_by_position:)
-        begin
-          results = yield if block_given?
-          if results.blank?
-            log(status: UNKNOWN, errmsg: "Search position scenario failed; cause: no results found", expected: expected_by_position, target: subject_uri)
-            return
-          end
-
-          check_position(results, subject_uri, expected_by_position)
-        rescue Exception => e
-          log(status: FAIL, errmsg: "Exception executing search position scenario; cause: #{e.message}", expected: expected_by_position, target: subject_uri)
+        results = yield if block_given?
+        if results.blank?
+          log(status: UNKNOWN, errmsg: "Search position scenario failed; cause: no results found", expected: expected_by_position, target: subject_uri)
+          return
         end
+
+        check_position(results, subject_uri, expected_by_position)
+      rescue Exception => e
+        log(status: FAIL, errmsg: "Exception executing search position scenario; cause: #{e.message}", expected: expected_by_position, target: subject_uri)
       end
 
       def accuracy_scenario?
@@ -78,7 +77,7 @@ module QaServer
           return position if results[position][:uri] == subject_uri
         end
         log(status: UNKNOWN, errmsg: "Search position scenario failed; cause: subject uri (#{subject_uri}) not found in results", expected: scenario.expected_by_position, target: subject_uri)
-        return nil
+        nil
       end
   end
 end

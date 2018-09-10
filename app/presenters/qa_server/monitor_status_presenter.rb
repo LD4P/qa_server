@@ -1,7 +1,7 @@
+# frozen_string_literal: true
 # This presenter class provides all data needed by the view that monitors status of authorities.
 module QaServer
   class MonitorStatusPresenter
-
     # @param authority_count [Integer] number of loaded authorities
     # @param authority_status [AuthorityStatus] summary status of the latest run of test scenarios
     # @param current_data [Array<Hash>] current set of failures for the latest test run, if any

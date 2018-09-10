@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 # ABSTRACT class providing common methods for running a scenario of any type.
 module QaServer
   class ScenarioValidator
@@ -9,6 +10,8 @@ module QaServer
     VALIDATE_ACCURACY = :accuracy
     ALL_VALIDATIONS = :all_validations
     DEFAULT_VALIDATION_TYPE = VALIDATE_CONNECTION
+
+    attr_reader :status_log, :scenario, :validation_type
 
     # @param scenario [SearchScenario | TermScenario] the scenario to run
     # @param status_log [ScenarioLogger] logger for recording test results
@@ -58,15 +61,13 @@ module QaServer
       # Runs the test in the block passed by the specific scenario type.
       # @return [Symbol] :good (PASS) or :unknown (UNKNOWN) based on whether enough results were returned
       def test_connection(min_expected_size: MIN_EXPECTED_SIZE, scenario_type_name:)
-        begin
-          results = yield if block_given?
-          actual_size = results.to_s.length
-          status = actual_size > min_expected_size ? PASS : UNKNOWN
-          errmsg = (status == PASS) ? '' : "#{scenario_type_name.capitalize} scenario unknown status; cause: Results actual size (#{actual_size} < expected size (#{min_expected_size})"
-          log(status: status, errmsg: errmsg)
-        rescue Exception => e
-          log(status: FAIL, errmsg: "Exception executing #{scenario_type_name} scenario; cause: #{e.message}")
-        end
+        results = yield if block_given?
+        actual_size = results.to_s.length
+        status = actual_size > min_expected_size ? PASS : UNKNOWN
+        errmsg = status == PASS ? '' : "#{scenario_type_name.capitalize} scenario unknown status; cause: Results actual size (#{actual_size} < expected size (#{min_expected_size})"
+        log(status: status, errmsg: errmsg)
+      rescue Exception => e
+        log(status: FAIL, errmsg: "Exception executing #{scenario_type_name} scenario; cause: #{e.message}")
       end
 
       def authority
@@ -91,18 +92,6 @@ module QaServer
 
       def action
         # ABSTRACT - must be implemented by scenario validator for specific types
-      end
-
-      def status_log
-        @status_log
-      end
-
-      def scenario
-        @scenario
-      end
-
-      def validation_type
-        @validation_type
       end
 
       def scenario_validation_type

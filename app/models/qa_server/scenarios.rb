@@ -1,10 +1,10 @@
+# frozen_string_literal: true
 # Holds all scenarios for an authority.
 module QaServer
   class Scenarios
-
-    AUTHORITY_SCENARIO = 'authority'.freeze
-    TERM_SCENARIOS = 'term'.freeze
-    SEARCH_SCENARIOS = 'search'.freeze
+    AUTHORITY_SCENARIO = 'authority'
+    TERM_SCENARIOS = 'term'
+    SEARCH_SCENARIOS = 'search'
 
     # @return [Qa::Authorities::LinkedData::GenericAuthority] authority instance the scenarios run against
     attr_reader :authority
@@ -17,6 +17,9 @@ module QaServer
 
     # @return [Array<SearchScenario>] the search scenarios to run against the authority
     attr_reader :search_scenarios
+
+    # @return [Hash] configurations from the yml file for all scenarios for an authority
+    attr_reader :scenarios_config; private :scenarios_config # rubocop:disable Style/Semicolon
 
     # @param authority [Qa::Authorities::LinkedData::GenericAuthority] the instance of the QA authority
     # @param authoity_name [String] the name of the authority the scenario tests (e.g. "agrovoc_direct")
@@ -49,10 +52,6 @@ module QaServer
                                                             authority_scenario_config: authority_scenario_config,
                                                             scenario_config: search_scenario_config)
         end
-      end
-
-      def scenarios_config
-        @scenarios_config
       end
 
       def authority_scenario_config

@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 module QaServer
   class AuthorityValidationController < ApplicationController
     layout 'qa_server'
@@ -13,9 +14,9 @@ module QaServer
     self.logger_class = QaServer::ScenarioLogger
 
     VALIDATION_TYPE_PARAM = :validation_type
-    VALIDATE_CONNECTIONS = 'connections'.freeze
-    VALIDATE_ACCURACY = 'accuracy'.freeze
-    ALL_VALIDATIONS = 'all_checks'.freeze
+    VALIDATE_CONNECTIONS = 'connections'
+    VALIDATE_ACCURACY = 'accuracy'
+    ALL_VALIDATIONS = 'all_checks'
     DEFAULT_VALIDATION_TYPE = validator_class::VALIDATE_CONNECTIONS
 
     private
@@ -62,12 +63,12 @@ module QaServer
 
       def validation_type
         return @validation_type if @validation_type.present?
-        case
-        when params[VALIDATION_TYPE_PARAM] == ALL_VALIDATIONS
+        case params[VALIDATION_TYPE_PARAM]
+        when ALL_VALIDATIONS
           validator_class::ALL_VALIDATIONS
-        when params[VALIDATION_TYPE_PARAM] == VALIDATE_CONNECTIONS
+        when VALIDATE_CONNECTIONS
           validator_class::VALIDATE_CONNECTIONS
-        when params[VALIDATION_TYPE_PARAM] == VALIDATE_ACCURACY
+        when VALIDATE_ACCURACY
           validator_class::VALIDATE_ACCURACY
         else
           DEFAULT_VALIDATION_TYPE

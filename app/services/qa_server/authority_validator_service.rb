@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 # Provide service methods for running a a set of validation scenarios for an authority.
 module QaServer
   class AuthorityValidatorService
@@ -27,15 +28,14 @@ module QaServer
       run_searches(scenarios, status_log, validation_type)
     end
 
+    def self.run_terms(scenarios, status_log, validation_type)
+      scenarios.term_scenarios.each { |scenario| term_validator_class.new(scenario: scenario, status_log: status_log, validation_type: validation_type).run }
+    end
+    private_class_method :run_terms
 
-    private
-
-      def self.run_terms(scenarios, status_log, validation_type)
-        scenarios.term_scenarios.each { |scenario| term_validator_class.new(scenario: scenario, status_log: status_log, validation_type: validation_type).run }
-      end
-
-      def self.run_searches(scenarios, status_log, validation_type)
-        scenarios.search_scenarios.each { |scenario| search_validator_class.new(scenario: scenario, status_log: status_log, validation_type: validation_type).run }
-      end
+    def self.run_searches(scenarios, status_log, validation_type)
+      scenarios.search_scenarios.each { |scenario| search_validator_class.new(scenario: scenario, status_log: status_log, validation_type: validation_type).run }
+    end
+    private_class_method :run_searches
   end
 end
