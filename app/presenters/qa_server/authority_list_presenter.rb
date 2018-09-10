@@ -1,10 +1,8 @@
+# frozen_string_literal: true
 # This presenter class provides all data needed by the view that show the list of authorities.
 module QaServer
   class AuthorityListPresenter
-    def initialize(urls_data:)
-      @urls_data = urls_data
-    end
-
+    # rubocop:disable Style/AsciiComments
     # @return [Array<Hash>] A list of status data for each scenario tested.
     # @example
     #   { status: :PASS,
@@ -15,8 +13,11 @@ module QaServer
     #     action: 'search',
     #     url: '/qa/search/linked_data/locnames_ld4l_cache/person?q=mark twain&maxRecords=4',
     #     err_message: '' }
-    def urls_data
-      @urls_data
+    attr_reader :urls_data
+    # rubocop:enable Style/AsciiComments
+
+    def initialize(urls_data:)
+      @urls_data = urls_data
     end
   end
 end

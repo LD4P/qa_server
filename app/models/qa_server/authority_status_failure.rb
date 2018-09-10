@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 # Provide access to the authority_status_failure database table which tracks specific failures over time.
 module QaServer
   class AuthorityStatusFailure < ActiveRecord::Base

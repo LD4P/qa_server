@@ -1,0 +1,10 @@
+Lint/RescueException:
+  Exclude:
+    - 'app/services/qa_server/scenarios_loader_service.rb'
+    - 'app/services/qa_server/authority_loader_service.rb'
+    - 'app/validators/qa_server/scenario_validator.rb'
+    - 'app/validators/qa_server/search_scenario_validator.rb'
+
+Lint/UnusedMethodArgument:
+  Exclude:
+    - 'app/models/qa_server/authority_scenario.rb'

@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 # Provide a log of scenario data and test results
 module QaServer
   class ScenarioLogger
@@ -14,41 +15,32 @@ module QaServer
     end
 
     # Add a scenario to the log
-    # @param authority_name [String] name of the authority the scenario was run against
-    # @param status [Symbol] indicating whether the scenario passed, failed, or has unknown status (see PASS, FAIL, UNKNOWN constants)
-    # @param validation_type [Symbol] the type of validation this status data describes (e.g. :connection, :accuracy)
-    # @param subauth [String] name of the subauthority the scenario was run against
-    # @param service [String] identifies the primary service provider (e.g. 'ld4l_cache', 'direct', etc.)
-    # @param action [String] type of scenario (i.e. 'term', 'search')
-    # @param url [String] example url that was used to test a specific term fetch or search query
-    # @param error_message [String] error message if scenario failed
-    # @param expected [Integer] the expected result (e.g. min size of result OR max position of subject within results)
-    # @param actual [Integer] the actual result (e.g. actual size of results OR actual position of subject within results)
-    # @param target [String] the expected target that was validated (e.g. subject_uri for query, pref label for term fetch)
-    def add(authority_name:, validation_type: '', status:, subauth: '', service: '', action: '', url: '', error_message: '', expected: nil, actual: nil, target: nil)
+    # @param [Hash] status_info holding information to be logged
+    # @option authority_name [String] name of the authority the scenario was run against
+    # @option status [Symbol] indicating whether the scenario passed, failed, or has unknown status (see PASS, FAIL, UNKNOWN constants)
+    # @option validation_type [Symbol] the type of validation this status data describes (e.g. :connection, :accuracy)
+    # @option subauth [String] name of the subauthority the scenario was run against
+    # @option service [String] identifies the primary service provider (e.g. 'ld4l_cache', 'direct', etc.)
+    # @option action [String] type of scenario (i.e. 'term', 'search')
+    # @option url [String] example url that was used to test a specific term fetch or search query
+    # @option error_message [String] error message if scenario failed
+    # @option expected [Integer] the expected result (e.g. min size of result OR max position of subject within results)
+    # @option actual [Integer] the actual result (e.g. actual size of results OR actual position of subject within results)
+    # @option target [String] the expected target that was validated (e.g. subject_uri for query, pref label for term fetch)
+    def add(status_info) # rubocop:disable Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
       @test_count += 1
-      case status
-        when PASS
-          status_label = '√'
-        when UNKNOWN
-          status_label = '?'
-          @failure_count += 1
-        when FAIL
-          status_label = 'X'
-          @failure_count += 1
-      end
-      @log << { type: validation_type,
-                status: status,
-                status_label: status_label,
-                authority_name: authority_name,
-                subauthority_name: subauth,
-                service: service,
-                action: action,
-                url: url,
-                expected: expected,
-                actual: actual,
-                target: target,
-                err_message: error_message }
+      @log << { type: status_info[:validation_type] || '',
+                status: status_info[:status] || '',
+                status_label: status_label(status_info[:status]),
+                authority_name: status_info[:authority_name] || '',
+                subauthority_name: status_info[:subauth] || '',
+                service: status_info[:service] || '',
+                action: status_info[:action] || '',
+                url: status_info[:url] || '',
+                expected: status_info[:expected] || nil,
+                actual: status_info[:actual] || nil,
+                target: status_info[:target] || nil,
+                err_message: status_info[:error_message] || '' }
     end
 
     # Delete from the log any tests that passed.
@@ -78,7 +70,24 @@ module QaServer
 
     # @return the number of scenarios recorded in the log
     def size
-      to_a.size
+      @log.size
     end
+
+    private
+
+      def status_label(status)
+        case status
+        when PASS
+          '√'
+        when UNKNOWN
+          @failure_count += 1
+          '?'
+        when FAIL
+          @failure_count += 1
+          'X'
+        else
+          ''
+        end
+      end
   end
 end

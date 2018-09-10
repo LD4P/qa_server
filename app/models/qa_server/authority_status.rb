@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 # Provide access to the authority_status database table which tracks a summary of status data over time.
 module QaServer
   class AuthorityStatus < ActiveRecord::Base

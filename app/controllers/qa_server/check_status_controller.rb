@@ -1,8 +1,8 @@
+# frozen_string_literal: true
 # Controller for Check Status header menu item
 module QaServer
   class CheckStatusController < QaServer::AuthorityValidationController
-
-    ALL_AUTHORITIES = '__all__'.freeze
+    ALL_AUTHORITIES = '__all__'
 
     class_attribute :presenter_class
     self.presenter_class = QaServer::CheckStatusPresenter
@@ -27,12 +27,12 @@ module QaServer
 
       def authorities_to_validate
         return [] unless authority_name.present?
-        (authority_name == ALL_AUTHORITIES) ? authorities_list : [authority_name]
+        authority_name == ALL_AUTHORITIES ? authorities_list : [authority_name]
       end
 
       def authority_name
         return @authority_name if @authority_name.present?
-        @authority_name = (params.key? :authority) ? params[:authority].downcase : nil
+        @authority_name = (params.key? :authority) ? params[:authority].downcase : nil # rubocop:disable Style/TernaryParentheses
       end
   end
 end

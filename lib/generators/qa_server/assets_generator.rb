@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 require 'rails/generators'
 
 class QaServer::AssetsGenerator < Rails::Generators::Base

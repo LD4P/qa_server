@@ -1,7 +1,7 @@
+# frozen_string_literal: true
 # Controller for Authorities header menu item
 module QaServer
   class AuthorityListController < QaServer::AuthorityValidationController
-
     class_attribute :presenter_class
     self.presenter_class = QaServer::AuthorityListPresenter
 

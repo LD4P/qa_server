@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 module QaServer
   class Engine < ::Rails::Engine
     isolate_namespace QaServer
@@ -6,7 +7,7 @@ module QaServer
 
     # Force these models to be added to Legato's registry in development mode
     config.eager_load_paths += %W[
-    #{config.root}/app/models/qa_server/download.rb
+      #{config.root}/app/models/qa_server/download.rb
       #{config.root}/app/models/qa_server/pageview.rb
     ]
 

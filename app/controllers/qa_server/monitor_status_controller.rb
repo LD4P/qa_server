@@ -1,7 +1,7 @@
+# frozen_string_literal: true
 # Controller for Monitor Status header menu item
 module QaServer
   class MonitorStatusController < QaServer::AuthorityValidationController
-
     class_attribute :presenter_class,
                     :authority_status_model_class,
                     :authority_status_failure_model_class
@@ -25,7 +25,7 @@ module QaServer
                                        authority_status: @latest_authority_status,
                                        current_data: @status_data,
                                        historical_data: [])
-      render 'index', :status => :internal_server_error if authority_status.failure_count.positive?
+      render 'index', status: :internal_server_error if authority_status.failure_count.positive?
     end
 
     private

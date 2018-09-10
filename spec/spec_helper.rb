@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 ENV["RAILS_ENV"] ||= 'test'
 require "bundler/setup"
 
@@ -183,101 +184,100 @@ end
 #                                                  end
 #   end
 
-  # config.include(ControllerLevelHelpers, type: :view)
-  # config.before(:each, type: :view) { initialize_controller_helpers(view) }
-  #
-  # config.before(:all, type: :feature) do
-  #   # Assets take a long time to compile. This causes two problems:
-  #   # 1) the profile will show the first feature test taking much longer than it
-  #   #    normally would.
-  #   # 2) The first feature test will trigger rack-timeout
-  #   #
-  #   # Precompile the assets to prevent these issues.
-  #   visit "/assets/application.css"
-  #   visit "/assets/application.js"
-  # end
-  #
-  # config.after do
-  #   DatabaseCleaner.clean
-  # end
-  #
-  # # If true, the base class of anonymous controllers will be inferred
-  # # automatically. This will be the default behavior in future versions of
-  # # rspec-rails.
-  # config.infer_base_class_for_anonymous_controllers = false
-  #
-  # config.include Shoulda::Matchers::Independent
-  #
-  # if Devise::VERSION >= '4.2'
-  #   config.include Devise::Test::ControllerHelpers, type: :controller
-  # else
-  #   config.include Devise::TestHelpers, type: :controller
-  # end
-  #
-  # config.include EngineRoutes, type: :controller
-  # config.include Warden::Test::Helpers, type: :request
-  # config.include Warden::Test::Helpers, type: :feature
-  # config.after(:each, type: :feature) do
-  #   Warden.test_reset!
-  #   Capybara.reset_sessions!
-  #   page.driver.reset!
-  # end
-  #
-  # config.include Capybara::RSpecMatchers, type: :input
-  # config.include InputSupport, type: :input
-  # config.include FactoryBot::Syntax::Methods
-  # config.include OptionalExample
-  #
-  # config.infer_spec_type_from_file_location!
-  #
-  # config.expect_with :rspec do |expectations|
-  #   expectations.include_chain_clauses_in_custom_matcher_descriptions = true
-  # end
-  #
-  # config.formatter = 'LoggingFormatter'
-  # config.default_formatter = 'doc' if config.files_to_run.one?
-  #
-  # config.order = :random
-  # Kernel.srand config.seed
-  #
-  # config.shared_context_metadata_behavior = :apply_to_host_groups
-  #
-  # config.filter_run_when_matching :focus
-  #
-  # config.example_status_persistence_file_path = 'spec/examples.txt'
-  #
-  # config.profile_examples = 10
-  #
-  # # Use this example metadata when you want to perform jobs inline during testing.
-  # #
-  # #   describe '#my_method`, :perform_enqueued do
-  # #     ...
-  # #   end
-  # #
-  # # If you pass an `Array` of job classes, they will be treated as the filter list.
-  # #
-  # #   describe '#my_method`, perform_enqueued: [MyJobClass] do
-  # #     ...
-  # #   end
-  # #
-  # # Limit to specific job classes with:
-  # #
-  # #   ActiveJob::Base.queue_adapter.filter = [JobClass]
-  # #
-  # config.before(:example, :perform_enqueued) do |example|
-  #   ActiveJob::Base.queue_adapter.filter =
-  #     example.metadata[:perform_enqueued].try(:to_a)
-  #
-  #   ActiveJob::Base.queue_adapter.perform_enqueued_jobs    = true
-  #   ActiveJob::Base.queue_adapter.perform_enqueued_at_jobs = true
-  # end
-  #
-  # config.after(:example, :perform_enqueued) do
-  #   ActiveJob::Base.queue_adapter.filter         = nil
-  #   ActiveJob::Base.queue_adapter.enqueued_jobs  = []
-  #   ActiveJob::Base.queue_adapter.performed_jobs = []
-  #
-  #   ActiveJob::Base.queue_adapter.perform_enqueued_jobs    = false
-  #   ActiveJob::Base.queue_adapter.perform_enqueued_at_jobs = false
-  # end
-end
+# config.include(ControllerLevelHelpers, type: :view)
+# config.before(:each, type: :view) { initialize_controller_helpers(view) }
+#
+# config.before(:all, type: :feature) do
+#   # Assets take a long time to compile. This causes two problems:
+#   # 1) the profile will show the first feature test taking much longer than it
+#   #    normally would.
+#   # 2) The first feature test will trigger rack-timeout
+#   #
+#   # Precompile the assets to prevent these issues.
+#   visit "/assets/application.css"
+#   visit "/assets/application.js"
+# end
+#
+# config.after do
+#   DatabaseCleaner.clean
+# end
+#
+# # If true, the base class of anonymous controllers will be inferred
+# # automatically. This will be the default behavior in future versions of
+# # rspec-rails.
+# config.infer_base_class_for_anonymous_controllers = false
+#
+# config.include Shoulda::Matchers::Independent
+#
+# if Devise::VERSION >= '4.2'
+#   config.include Devise::Test::ControllerHelpers, type: :controller
+# else
+#   config.include Devise::TestHelpers, type: :controller
+# end
+#
+# config.include EngineRoutes, type: :controller
+# config.include Warden::Test::Helpers, type: :request
+# config.include Warden::Test::Helpers, type: :feature
+# config.after(:each, type: :feature) do
+#   Warden.test_reset!
+#   Capybara.reset_sessions!
+#   page.driver.reset!
+# end
+#
+# config.include Capybara::RSpecMatchers, type: :input
+# config.include InputSupport, type: :input
+# config.include FactoryBot::Syntax::Methods
+# config.include OptionalExample
+#
+# config.infer_spec_type_from_file_location!
+#
+# config.expect_with :rspec do |expectations|
+#   expectations.include_chain_clauses_in_custom_matcher_descriptions = true
+# end
+#
+# config.formatter = 'LoggingFormatter'
+# config.default_formatter = 'doc' if config.files_to_run.one?
+#
+# config.order = :random
+# Kernel.srand config.seed
+#
+# config.shared_context_metadata_behavior = :apply_to_host_groups
+#
+# config.filter_run_when_matching :focus
+#
+# config.example_status_persistence_file_path = 'spec/examples.txt'
+#
+# config.profile_examples = 10
+#
+# # Use this example metadata when you want to perform jobs inline during testing.
+# #
+# #   describe '#my_method`, :perform_enqueued do
+# #     ...
+# #   end
+# #
+# # If you pass an `Array` of job classes, they will be treated as the filter list.
+# #
+# #   describe '#my_method`, perform_enqueued: [MyJobClass] do
+# #     ...
+# #   end
+# #
+# # Limit to specific job classes with:
+# #
+# #   ActiveJob::Base.queue_adapter.filter = [JobClass]
+# #
+# config.before(:example, :perform_enqueued) do |example|
+#   ActiveJob::Base.queue_adapter.filter =
+#     example.metadata[:perform_enqueued].try(:to_a)
+#
+#   ActiveJob::Base.queue_adapter.perform_enqueued_jobs    = true
+#   ActiveJob::Base.queue_adapter.perform_enqueued_at_jobs = true
+# end
+#
+# config.after(:example, :perform_enqueued) do
+#   ActiveJob::Base.queue_adapter.filter         = nil
+#   ActiveJob::Base.queue_adapter.enqueued_jobs  = []
+#   ActiveJob::Base.queue_adapter.performed_jobs = []
+#
+#   ActiveJob::Base.queue_adapter.perform_enqueued_jobs    = false
+#   ActiveJob::Base.queue_adapter.perform_enqueued_at_jobs = false
+# end

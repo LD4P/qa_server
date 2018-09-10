@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 require 'erb'
 
 # This class parses the term configuration from the yml file into the parts needed by the term scenario validator.

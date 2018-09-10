@@ -1,7 +1,7 @@
+# frozen_string_literal: true
 # Provide service methods for getting a list of all authorities and scenarios for an authority.
 module QaServer
   class AuthorityListerService
-
     # Return a list of supported authorities
     # @return [Array<String>] list of authorities
     def self.authorities_list
@@ -18,14 +18,14 @@ module QaServer
       list_searches(scenarios, status_log)
     end
 
-    private
+    def self.list_terms(scenarios, status_log)
+      scenarios.term_scenarios.each { |scenario| QaServer::TermScenarioValidator.new(scenario: scenario, status_log: status_log).log_without_running }
+    end
+    private_class_method :list_terms
 
-      def self.list_terms(scenarios, status_log)
-        scenarios.term_scenarios.each { |scenario| QaServer::TermScenarioValidator.new(scenario: scenario, status_log: status_log).log_without_running }
-      end
-
-      def self.list_searches(scenarios, status_log)
-        scenarios.search_scenarios.each { |scenario| QaServer::SearchScenarioValidator.new(scenario: scenario, status_log: status_log).log_without_running }
-      end
+    def self.list_searches(scenarios, status_log)
+      scenarios.search_scenarios.each { |scenario| QaServer::SearchScenarioValidator.new(scenario: scenario, status_log: status_log).log_without_running }
+    end
+    private_class_method :list_searches
   end
 end

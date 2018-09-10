@@ -1,7 +1,8 @@
+# frozen_string_literal: true
 # This class runs a single term scenario and logs the results.
 module QaServer
   class TermScenarioValidator < ScenarioValidator
-    TERM_ACTION = 'term'.freeze
+    TERM_ACTION = 'term'
 
     # @param scenario [TermScenario] the scenario to run
     # @param status_log [ScenarioLogger] logger for recording test results
