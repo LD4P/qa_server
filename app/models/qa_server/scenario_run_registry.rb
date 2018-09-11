@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 # Provide access to the scenario_run_registry database table which registers each run of tests made over time.
 module QaServer
   class ScenarioRunRegistry < ActiveRecord::Base
@@ -25,10 +26,9 @@ module QaServer
       scenarios_results.each { |result| QaServer::ScenarioRunHistory.save_result(run_id: run.id, scenario_result: result) }
     end
 
-    private
-
-      def self.dt_stamp_now_et
-        Time.now.in_time_zone("Eastern Time (US & Canada)")
-      end
+    def self.dt_stamp_now_et
+      Time.now.in_time_zone("Eastern Time (US & Canada)")
+    end
+    private_class_method :dt_stamp_now_et
   end
 end

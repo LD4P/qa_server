@@ -59,17 +59,17 @@ module QaServer
       "status-#{status[:status]}"
     end
 
-  # @return [String] the name of the css style class to use for the status cell based on the status of the scenario test.
-  def status_label(status)
-    case status[:status]
-    when :good
-      QaServer::ScenarioRunHistory::GOOD_MARKER
-    when :bad
-      QaServer::ScenarioRunHistory::BAD_MARKER
-    when :unknown
-      QaServer::ScenarioRunHistory::UNKNOWN_MARKER
+    # @return [String] the name of the css style class to use for the status cell based on the status of the scenario test.
+    def status_label(status)
+      case status[:status]
+      when :good
+        QaServer::ScenarioRunHistory::GOOD_MARKER
+      when :bad
+        QaServer::ScenarioRunHistory::BAD_MARKER
+      when :unknown
+        QaServer::ScenarioRunHistory::UNKNOWN_MARKER
+      end
     end
-  end
 
     def value_all_collections
       QaServer::CheckStatusController::ALL_AUTHORITIES

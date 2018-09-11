@@ -81,7 +81,7 @@ module QaServer
     #   [ [ 'agrovoc', 24, 0 ],
     #     [ 'geonames_ld4l_cache', 24, 2 ] ... ]
     def historical_summary
-     @historical_summary_data
+      @historical_summary_data
     end
 
     # @return [Boolean] true if historical test data exists; otherwise false
@@ -92,18 +92,18 @@ module QaServer
 
     # @return [String] the name of the css style class to use for the status cell based on the status of the scenario test.
     def status_style_class(status)
-      "status-#{status[:status].to_s}"
+      "status-#{status[:status]}"
     end
 
     # @return [String] the name of the css style class to use for the status cell based on the status of the scenario test.
     def status_label(status)
       case status[:status]
-        when :good
-          QaServer::ScenarioRunHistory::GOOD_MARKER
-        when :bad
-          QaServer::ScenarioRunHistory::BAD_MARKER
-        when :unknown
-          QaServer::ScenarioRunHistory::UNKNOWN_MARKER
+      when :good
+        QaServer::ScenarioRunHistory::GOOD_MARKER
+      when :bad
+        QaServer::ScenarioRunHistory::BAD_MARKER
+      when :unknown
+        QaServer::ScenarioRunHistory::UNKNOWN_MARKER
       end
     end
   end

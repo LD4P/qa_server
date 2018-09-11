@@ -1,7 +1,7 @@
+# frozen_string_literal: true
 # Abstract class that parses the authority configuration from the yml file into the parts needed by inheriting scenario types.
 module QaServer
   class ScenarioRunSummary
-
     # @return [Integer] the id of the scenario run being summarized
     attr_reader :run_id
 
@@ -29,6 +29,7 @@ module QaServer
     # @param failing_authority_count [Integer] number of authorities in the run that had failing tests
     # @param passing_scenario_count [Integer] number of scenarios that passed during this run
     # @param failing_scenario_count [Integer] number of scenarios that failed during this run
+    # rubocop:disable Metrics/ParameterLists
     def initialize(run_id:, run_dt_stamp:, authority_count:, failing_authority_count:, passing_scenario_count:, failing_scenario_count:)
       @run_id = run_id
       @run_dt_stamp = run_dt_stamp
@@ -38,5 +39,6 @@ module QaServer
       @failing_scenario_count = failing_scenario_count
       @total_scenario_count = failing_scenario_count + passing_scenario_count
     end
+    # rubocop:enable Metrics/ParameterLists
   end
 end
