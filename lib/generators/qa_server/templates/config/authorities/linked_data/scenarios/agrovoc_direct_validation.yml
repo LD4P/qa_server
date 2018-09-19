@@ -4,6 +4,8 @@ authority:
 search:
   -
     query: milk
+  -
+    query: cow
 term:
   -
     identifier: "http://aims.fao.org/aos/agrovoc/c_9513"
