@@ -1,7 +1,11 @@
 # frozen_string_literal: true
+
+require 'fileutils'
+require 'gruff'
+
 # This presenter class provides all data needed by the view that monitors status of authorities.
 module QaServer
-  class MonitorStatusPresenter
+  class MonitorStatusPresenter # rubocop:disable Metrics/ClassLength
     # @param current_summary [ScenarioRunSummary] summary status of the latest run of test scenarios
     # @param current_data [Array<Hash>] current set of failures for the latest test run, if any
     # @param historical_summary_data [Array<Hash>] summary of past failuring runs per authority to drive chart
@@ -76,10 +80,10 @@ module QaServer
       failing_tests_count.positive?
     end
 
-    # @return [Array<Hash>] historical test data to be displayed
+    # @return [Array<Hash>] historical test data to be displayed (authname, failing, passing)
     # @example
-    #   [ [ 'agrovoc', 24, 0 ],
-    #     [ 'geonames_ld4l_cache', 24, 2 ] ... ]
+    #   [ [ 'agrovoc', 0, 24 ],
+    #     [ 'geonames_ld4l_cache', 2, 22 ] ... ]
     def historical_summary
       @historical_summary_data
     end
@@ -88,6 +92,19 @@ module QaServer
     def history?
       return true if @historical_summary_data.present?
       false
+    end
+
+    def historical_graph
+      # g = Gruff::SideStackedBar.new('800x400')
+      g = Gruff::SideStackedBar.new
+      graph_theme(g)
+      g.title = ''
+      historical_data = rework_historical_data_for_gruff
+      g.labels = historical_data[0]
+      g.data('Fail', historical_data[1])
+      g.data('Pass', historical_data[2])
+      g.write historical_graph_full_path
+      File.join(historical_graph_relative_path, historical_graph_filename)
     end
 
     # @return [String] the name of the css style class to use for the status cell based on the status of the scenario test.
@@ -106,5 +123,42 @@ module QaServer
         QaServer::ScenarioRunHistory::UNKNOWN_MARKER
       end
     end
+
+    private
+
+      def graph_theme(g)
+        g.theme_pastel
+        g.colors = ['#ffcccc', '#ccffcc']
+        g.marker_font_size = 12
+        g.x_axis_increment = 10
+      end
+
+      def historical_graph_full_path
+        path = Rails.root.join('app', 'assets', 'images', historical_graph_relative_path)
+        FileUtils.mkdir_p path
+        File.join(path, historical_graph_filename)
+      end
+
+      def historical_graph_relative_path
+        File.join('qa_server', 'charts')
+      end
+
+      def historical_graph_filename
+        'historical_side_stacked_bar.png'
+      end
+
+      def rework_historical_data_for_gruff
+        labels = {}
+        pass_data = []
+        fail_data = []
+        i = 0
+        historical_summary.each do |data|
+          labels[i] = data[0]
+          i += 1
+          fail_data << data[1]
+          pass_data << data[2]
+        end
+        [labels, fail_data, pass_data]
+      end
   end
 end

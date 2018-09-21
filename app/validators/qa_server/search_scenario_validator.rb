@@ -70,9 +70,12 @@ module QaServer
 
         actual_position += 1
         if actual_position <= expected_by_position
-          log(status: PASS, expected: expected_by_position, actual: actual_position, target: subject_uri, normalization_run_time: run_time) # TODO: need to get run times from results
+          log(status: PASS, expected: expected_by_position, actual: actual_position, target: subject_uri,
+              normalization_run_time: run_time) # TODO: need to get run times from results
         else
-          log(status: UNKNOWN, errmsg: 'Subject URI not found by the expected position.', expected: expected_by_position, actual: actual_position, target: subject_uri, normalization_run_time: total_run_time) # TODO: need to get run times from results
+          log(status: UNKNOWN, errmsg: 'Subject URI not found by the expected position.',
+              expected: expected_by_position, actual: actual_position, target: subject_uri,
+              normalization_run_time: total_run_time) # TODO: need to get run times from results
         end
       end
 

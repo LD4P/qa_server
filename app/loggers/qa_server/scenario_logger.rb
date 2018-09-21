@@ -2,6 +2,11 @@
 # Provide a log of scenario data and test results
 module QaServer
   class ScenarioLogger
+    include Enumerable
+
+    # @return the number of scenarios recorded in the log
+    delegate :size, :each, to: :@log
+
     attr_reader :test_count, :failure_count
 
     PASS = QaServer::ScenarioValidator::PASS
@@ -71,27 +76,5 @@ module QaServer
     def to_a
       @log
     end
-
-    # @return the number of scenarios recorded in the log
-    def size
-      @log.size
-    end
-
-    private
-
-      def status_label(status)
-        case status
-        when PASS
-          '√'
-        when UNKNOWN
-          @failure_count += 1
-          '?'
-        when FAIL
-          @failure_count += 1
-          'X'
-        else
-          ''
-        end
-      end
   end
 end

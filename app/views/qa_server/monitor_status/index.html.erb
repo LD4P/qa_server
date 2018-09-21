@@ -54,9 +54,9 @@
   <% if @presenter.history? %>
       <div id="status-section" class="status-section">
         <h2><%= t('qa_server.monitor_status.history.title') %></h2>
-
-        <p class="status-update-dtstamp"><%= t('monitor_status.history.since', date: @presenter.first_updated) %></p>
+        <p class="status-update-dtstamp"><%= t('qa_server.monitor_status.history.since', date: @presenter.first_updated) %></p>
         <%#= column_chart @presenter.historical_summary, stacked: true, colors: ["green", "red"], xtitle: 'Authority', ytitle: 'Pass-Fail', legend: 'bottom' %>
+        <%= image_tag(@presenter.historical_graph, alt: 'History Graph Unavailable') %>
 
 <!--
         <table class="status">

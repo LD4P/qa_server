@@ -41,7 +41,7 @@ module QaServer
     #     authority_count: 22,
     #     failing_authority_count: 1 }
     def self.run_summary(scenario_run:)
-      return nil unless scenario_run && scenario_run.id
+      return nil unless scenario_run&.id
       status = status_counts_in_run(run_id: scenario_run.id)
       summary_class.new(run_id: scenario_run.id,
                         run_dt_stamp: scenario_run.dt_stamp,
@@ -123,10 +123,10 @@ module QaServer
     end
 
     # Get a summary level of historical data
-    # @returns [Array<Hash>] scenario details for any failing scenarios in the run
+    # @returns [Array<Hash>] scenario details for any failing scenarios in the run (auth_name, failing, passing)
     # @example
-    #   [ [ 'agrovoc', 24, 0 ],
-    #     [ 'geonames_ld4l_cache', 24, 2 ] ... ]
+    #   [ [ 'agrovoc', 0, 24 ],
+    #     [ 'geonames_ld4l_cache', 2, 22 ] ... ]
     def self.historical_summary
       runs = all_runs_per_authority
       failures = failing_runs_per_authority
@@ -135,7 +135,7 @@ module QaServer
       runs.each do |auth_name, run_count|
         auth_data = []
         auth_data[0] = auth_name
-        failure_count = (failures.key? auth_name) ? failures[auth_name] : 0
+        failure_count = (failures.key? auth_name) ? failures[auth_name] : 0 # rubocop:disable Style/TernaryParentheses
         auth_data[1] = failure_count
         auth_data[2] = run_count - failure_count # passing
         data << auth_data
@@ -143,41 +143,47 @@ module QaServer
       data
     end
 
-    private
-      def self.authorities_in_run(run_id:)
-        QaServer::ScenarioRunHistory.where(scenario_run_registry_id: run_id).pluck(:authority_name).uniq
-      end
+    def self.authorities_in_run(run_id:)
+      QaServer::ScenarioRunHistory.where(scenario_run_registry_id: run_id).pluck(:authority_name).uniq
+    end
+    private_class_method :authorities_in_run
 
-      def self.authorities_with_failures_in_run(run_id:)
-        QaServer::ScenarioRunHistory.where(scenario_run_registry_id: run_id).where.not(status: 'good').pluck('authority_name').uniq
-      end
+    def self.authorities_with_failures_in_run(run_id:)
+      QaServer::ScenarioRunHistory.where(scenario_run_registry_id: run_id).where.not(status: 'good').pluck('authority_name').uniq
+    end
+    private_class_method :authorities_with_failures_in_run
 
-      def self.status_counts_in_run(run_id:)
-        status = QaServer::ScenarioRunHistory.group('status').where(scenario_run_registry_id: run_id).count
-        status["good"] = 0 unless status.key? "good"
-        status["bad"] = 0 unless status.key? "bad"
-        status["unknown"] = 0 unless status.key? "unknown"
-        status
-      end
+    def self.status_counts_in_run(run_id:)
+      status = QaServer::ScenarioRunHistory.group('status').where(scenario_run_registry_id: run_id).count
+      status["good"] = 0 unless status.key? "good"
+      status["bad"] = 0 unless status.key? "bad"
+      status["unknown"] = 0 unless status.key? "unknown"
+      status
+    end
+    private_class_method :status_counts_in_run
 
-      def self.all_runs_per_authority
-        authority_runs = QaServer::ScenarioRunHistory.pluck(:authority_name, :scenario_run_registry_id).uniq
-        runs_per_authority(authority_runs)
-      end
+    def self.all_runs_per_authority
+      # TODO: Really want to only get one run per day.  Preferably the first run of the day.
+      authority_runs = QaServer::ScenarioRunHistory.pluck(:authority_name, :scenario_run_registry_id).uniq # rubocop:disable Rails/UniqBeforePluck
+      runs_per_authority(authority_runs)
+    end
+    private_class_method :all_runs_per_authority
 
-      def self.failing_runs_per_authority
-        failing_authority_runs = QaServer::ScenarioRunHistory.where.not(status: 'good').pluck(:authority_name, :scenario_run_registry_id).uniq
-        runs_per_authority(failing_authority_runs)
-      end
+    def self.failing_runs_per_authority
+      failing_authority_runs = QaServer::ScenarioRunHistory.where.not(status: 'good').pluck(:authority_name, :scenario_run_registry_id).uniq
+      runs_per_authority(failing_authority_runs)
+    end
+    private_class_method :failing_runs_per_authority
 
-      def self.runs_per_authority(authority_runs)
-        runs_per_authority = {}
-        authority_runs.each do |auth_run|
-          auth_name = auth_run[0]
-          runs_per_authority[auth_name] = 0 unless runs_per_authority.key? auth_name
-          runs_per_authority[auth_name] += 1
-        end
-        runs_per_authority
+    def self.runs_per_authority(authority_runs)
+      runs_per_authority = {}
+      authority_runs.each do |auth_run|
+        auth_name = auth_run[0]
+        runs_per_authority[auth_name] = 0 unless runs_per_authority.key? auth_name
+        runs_per_authority[auth_name] += 1
       end
+      runs_per_authority
+    end
+    private_class_method :runs_per_authority
   end
 end

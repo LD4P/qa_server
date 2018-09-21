@@ -36,20 +36,16 @@ module QaServer
     private
 
       # Log the structure of the scenario and status of a test run.
-      def log(status: nil, errmsg: nil, expected: nil, actual: nil, target: nil, request_run_time: nil, normalization_run_time: nil)
-        status_log.add(authority_name: authority_name,
-                       status: status,
-                       validation_type: scenario_validation_type,
-                       subauth: subauthority_name,
-                       service: service,
-                       action: action,
-                       url: url,
-                       error_message: errmsg,
-                       expected: expected,
-                       actual: actual,
-                       target: target,
-                       request_run_time: request_run_time,
-                       normalization_run_time: normalization_run_time)
+      # @param [Hash] status_info holding information to be logged
+      # @see QaServer::ScenarioLogger
+      def log(status_info = {})
+        status_info[:authority_name] = authority_name
+        status_info[:validation_type] = scenario_validation_type
+        status_info[:subauth] = subauthority_name
+        status_info[:service] = service
+        status_info[:action] = action
+        status_info[:url] = url
+        status_log.add(status_info)
       end
 
       def run_accuracy_scenario

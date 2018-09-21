@@ -18,6 +18,10 @@ Tested with...
 * Ruby 2.4.3
 * Rails 5.1.6
 
+### Prerequisites
+
+1. [ImageMagick](http://www.imagemagick.org/)
+
 ### Installation Instructions
 
 #### Adding the engine dependency
