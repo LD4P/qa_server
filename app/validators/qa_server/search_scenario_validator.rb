@@ -39,15 +39,19 @@ module QaServer
 
       # Runs the accuracy test and log results
       def test_accuracy(subject_uri:, expected_by_position:)
+        dt_start = Time.now.utc
         results = yield if block_given?
+        dt_end = Time.now.utc
         if results.blank?
-          log(status: UNKNOWN, errmsg: "Search position scenario failed; cause: no results found", expected: expected_by_position, target: subject_uri)
+          log(status: UNKNOWN, errmsg: "Search position scenario failed; cause: no results found", expected: expected_by_position, target: subject_uri, request_run_time: (dt_end - dt_start))
           return
         end
 
-        check_position(results, subject_uri, expected_by_position)
+        check_position(results, subject_uri, expected_by_position, total_run_time: (dt_end - dt_start)) # TODO: need to get run times from results
       rescue Exception => e
-        log(status: FAIL, errmsg: "Exception executing search position scenario; cause: #{e.message}", expected: expected_by_position, target: subject_uri)
+        dt_end = Time.now.utc
+        log(status: FAIL, errmsg: "Exception executing search position scenario; cause: #{e.message}",
+            expected: expected_by_position, target: subject_uri, request_run_time: (dt_end - dt_start))
       end
 
       def accuracy_scenario?
@@ -60,23 +64,27 @@ module QaServer
         !accuracy_scenario?
       end
 
-      def check_position(results, subject_uri, expected_by_position)
-        actual_position = subject_position(results, subject_uri)
+      def check_position(results, subject_uri, expected_by_position, total_run_time)
+        actual_position = subject_position(results, subject_uri, total_run_time)
         return if actual_position.blank?
 
         actual_position += 1
         if actual_position <= expected_by_position
-          log(status: PASS, expected: expected_by_position, actual: actual_position, target: subject_uri)
+          log(status: PASS, expected: expected_by_position, actual: actual_position, target: subject_uri,
+              normalization_run_time: run_time) # TODO: need to get run times from results
         else
-          log(status: UNKNOWN, errmsg: 'Subject URI not found by the expected position.', expected: expected_by_position, actual: actual_position, target: subject_uri)
+          log(status: UNKNOWN, errmsg: 'Subject URI not found by the expected position.',
+              expected: expected_by_position, actual: actual_position, target: subject_uri,
+              normalization_run_time: total_run_time) # TODO: need to get run times from results
         end
       end
 
-      def subject_position(results, subject_uri)
+      def subject_position(results, subject_uri, total_run_time)
         0.upto(results.size - 1) do |position|
           return position if results[position][:uri] == subject_uri
         end
-        log(status: UNKNOWN, errmsg: "Search position scenario failed; cause: subject uri (#{subject_uri}) not found in results", expected: scenario.expected_by_position, target: subject_uri)
+        log(status: UNKNOWN, errmsg: "Search position scenario failed; cause: subject uri (#{subject_uri}) not found in results",
+            expected: scenario.expected_by_position, target: subject_uri, normalization_run_time: total_run_time) # TODO: need to get run times from results
         nil
       end
   end

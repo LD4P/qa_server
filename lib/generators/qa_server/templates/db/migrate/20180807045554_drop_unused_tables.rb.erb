@@ -1,0 +1,6 @@
+class DropUnusedTables < ActiveRecord::Migration<%= migration_version %>
+  def change
+    drop_table :authority_status_failure
+    drop_table :authority_status
+  end
+end

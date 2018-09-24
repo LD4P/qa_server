@@ -56,7 +56,7 @@
     </tr>
     <% @presenter.connection_status_data.each do |status| %>
     <tr>
-      <td class="<%= @presenter.status_style_class(status) %>"><%= status[:status_label] %></td>
+      <td class="<%= @presenter.status_style_class(status) %>"><%= @presenter.status_label(status) %></td>
       <td><%= status[:authority_name] %></td>
       <td><%= status[:subauthority_name] %></td>
       <td><%= status[:service] %></td>

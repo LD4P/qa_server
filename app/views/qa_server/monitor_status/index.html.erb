@@ -1,3 +1,5 @@
+<%= javascript_include_tag "https://www.gstatic.com/charts/loader.js" %>
+
 <div class="page-description">
   <h2><%= t('qa_server.monitor_status.summary.title') %></h2>
 
@@ -36,7 +38,7 @@
         </tr>
         <% @status_data.each do |status| %>
             <tr>
-              <td class="<%= "status-#{status[:status].to_s}" %>"><%= status[:status_label] %></td>
+              <td class="<%= @presenter.status_style_class(status) %>"><%= @presenter.status_label(status) %></td>
               <td><%= status[:authority_name] %></td>
               <td><%= status[:subauthority_name] %></td>
               <td><%= status[:service] %></td>
@@ -52,9 +54,11 @@
   <% if @presenter.history? %>
       <div id="status-section" class="status-section">
         <h2><%= t('qa_server.monitor_status.history.title') %></h2>
+        <p class="status-update-dtstamp"><%= t('qa_server.monitor_status.history.since', date: @presenter.first_updated) %></p>
+        <%#= column_chart @presenter.historical_summary, stacked: true, colors: ["green", "red"], xtitle: 'Authority', ytitle: 'Pass-Fail', legend: 'bottom' %>
+        <%= image_tag(@presenter.historical_graph, alt: 'History Graph Unavailable') %>
 
-        <h3><%= t('qa_server.monitor_status.history.since', date: @presenter.first_updated) %></h3>
-
+<!--
         <table class="status">
           <tr>
             <th><%= t('qa_server.monitor_status.history.days_failing') %></th>
@@ -63,16 +67,17 @@
             <th><%= t('qa_server.monitor_status.history.service') %></th>
             <th><%= t('qa_server.monitor_status.history.action') %></th>
           </tr>
-          <% @presenter.history.each do |entry| %>
+          <%# @presenter.history.each do |entry| %>
               <tr>
-                <td><%= entry[:days_failing] %></td>
-                <td><%= entry[:authority_name] %></td>
-                <td><%= entry[:subauthority_name] %></td>
-                <td><%= entry[:service] %></td>
-                <td><%= entry[:action] %></td>
+                <td><%#= entry[:days_failing] %></td>
+                <td><%#= entry[:authority_name] %></td>
+                <td><%#= entry[:subauthority_name] %></td>
+                <td><%#= entry[:service] %></td>
+                <td><%#= entry[:action] %></td>
               </tr>
-          <% end %>
+          <%# end %>
         </table>
+-->
       </div>
   <% end %>
 </div>
