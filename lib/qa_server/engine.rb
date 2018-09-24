@@ -5,6 +5,14 @@ module QaServer
 
     require 'qa'
 
+    def self.engine_mount
+      QaServer::Engine.routes.find_script_name({})
+    end
+
+    def self.qa_engine_mount
+      Qa::Engine.routes.find_script_name({})
+    end
+
     # Force these models to be added to Legato's registry in development mode
     config.eager_load_paths += %W[
       #{config.root}/app/models/qa_server/download.rb

@@ -19,12 +19,10 @@ Gem::Specification.new do |spec|
   spec.version       = QaServer::VERSION
   spec.license       = 'Apache-2.0'
 
-  # spec.required_ruby_version = '>= 2.3'
-
   # Note: rails does not follow sem-ver conventions, it's
   # minor version releases can include breaking changes; see
   # http://guides.rubyonrails.org/maintenance_policy.html
-  spec.add_dependency 'rails', '5.1.6' ### TODO: This shouldn't be this restrictive.  Why is it pinned to 5.1.6?
+  spec.add_dependency 'rails', '~> 5.0' # Keep in sync with version supported by Hyrax
 
   # Required gems for QA and linked data access
   spec.add_development_dependency 'qa' # loaded specific branch in Gemfile
