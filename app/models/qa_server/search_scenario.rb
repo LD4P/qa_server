@@ -37,7 +37,7 @@ module QaServer
     # @return [String] the example URL
     def url
       subauth = "/#{subauthority_name}" if subauthority?
-      prefix = "/#{QaServer.config.qa_engine_mount_path}/search/linked_data/#{authority_name.downcase}#{subauth}"
+      prefix = "#{QaServer::Engine.qa_engine_mount}/search/linked_data/#{authority_name.downcase}#{subauth}"
       "#{prefix}?q=#{query}#{url_replacements}"
     end
 

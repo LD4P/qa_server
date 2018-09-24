@@ -24,7 +24,7 @@ module QaServer
     # @return [String] the example URL
     def url
       subauth = "/#{subauthority_name}" if subauthority_name.present?
-      prefix = "/#{QaServer.config.qa_engine_mount_path}/show/linked_data/#{authority_name.downcase}#{subauth}"
+      prefix = "#{QaServer::Engine.qa_engine_mount}/show/linked_data/#{authority_name.downcase}#{subauth}"
       "#{prefix}/#{url_identifier}"
     end
 
