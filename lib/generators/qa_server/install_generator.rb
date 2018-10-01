@@ -57,5 +57,10 @@ module QaServer
         "    <script src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js'></script>\n"
       end
     end
+
+    def create_location_for_charts
+      say_status('info', '  -- creating directory to hold dynamically generated charts', :blue)
+      copy_file 'app/assets/images/qa_server/charts/.keep'
+    end
   end
 end

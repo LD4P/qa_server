@@ -21,7 +21,7 @@ Tested with...
 
 ### Prerequisites
 
-1. [ImageMagick](http://www.imagemagick.org/)
+1. [ImageMagick](http://www.imagemagick.org/) - Used to generate status charts.  Generated charts will be saved in `app/assets/images/qa_server/charts` directory.
 
 ### Installation Instructions
 
@@ -31,12 +31,7 @@ Add this line to your application's Gemfile:
 
 ```ruby
 gem 'qa_server'
-gem 'qa'
-gem 'linkeddata'
 ```
-
-NOTE: The linkeddata gem is recommended.  The [ruby-rdf/linkeddata](https://github.com/ruby-rdf/linkeddata) library provides support for a wide range of RDF formats.  You can optionally include gems separately that process each RDF format individually.  See the README for ruby-rdf/linkeddata for a list of individual gems.
-
 
 And then execute:
 ```bash
@@ -54,6 +49,8 @@ $ gem install qa_server
 $ rails g qa_server:install
 $ rake db:migrate
 ```
+
+If upgrading instead of installing, see the Release notes for steps you may need to take manually since you won't be running the installer.
 
 #### Test the install
 
