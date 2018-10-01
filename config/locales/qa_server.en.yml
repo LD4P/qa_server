@@ -60,6 +60,7 @@ en:
       history:
         title:         History
         since:         'Since %{date} ET'
+        authority:     Authority
         days_failing:  Days Failing
         days_passing:  Days Passing
         days_tested:   Days Tested
