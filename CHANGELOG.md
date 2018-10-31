@@ -1,3 +1,9 @@
+### 1.1.0 (2018-10-31)
+
+* allow historical data to be displayed as graph or datatable (configuration)
+* drive main nav menu from navmenu_presenter (configuration)
+* Add better install instructions in README
+
 ### 1.0.0 (2018-09-24)
 
 * drive URL base host path from qa engine mount location

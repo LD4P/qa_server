@@ -1,7 +1,7 @@
 ---
 en:
   qa_server:
-    application_version: "0.1.0"
+    application_version: "YOUR APPS VERSION"
     application_name:  "My Institution Lookup Service"
     footer:
       copyright_html:  "<strong>Copyright &copy; 2018 Cornell</strong> Licensed under the Apache License, Version 2.0"
