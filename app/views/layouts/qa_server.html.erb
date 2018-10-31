@@ -33,17 +33,16 @@
     <div class="container-fluid">
       <div class="navbar-header">
         <ul class="nav-menu">
-          <li class="left-menu"><%= link_to t("qa_server.menu.home"), main_app.root_path %></li>
-          <li class="left-menu"><%= link_to t("qa_server.menu.usage"), qa_server.usage_index_path %></li>
-          <li class="left-menu"><%= link_to t("qa_server.menu.authorities"), qa_server.authority_list_index_path %></li>
-          <li class="left-menu"><%= link_to t("qa_server.menu.check_status"), qa_server.check_status_index_path %></li>
-          <li class="left-menu"><%= link_to t("qa_server.menu.monitor_status"), qa_server.monitor_status_index_path %></li>
-          <li class="right-menu"><%= link_to "LD4L Gateway", "http://ld4l.org/" %></li>
+          <% QaServer.config.navmenu_presenter.leftmenu_items.each do |item| %>
+            <li class='left-menu'><%= link_to item[:label], item[:url] %></li>
+          <% end %>
+          <% QaServer.config.navmenu_presenter.rightmenu_items.each do |item| %>
+            <li class='right-menu'><%= link_to item[:label], item[:url] %></li>
+          <% end %>
         </ul>
       </div>
     </div>
   </nav>
-</div>
 </div>
 
 <div id="content-wrapper" class="container" role="main">
