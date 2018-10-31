@@ -61,8 +61,6 @@ en:
         title:         History
         since:         'Since %{date} ET'
         days_failing:  Days Failing
-        authority:     Authority
-        subauthority:  Subauthority
-        service:       Service
-        action:        Action
-        url:           Sample URL
+        days_passing:  Days Passing
+        days_tested:   Days Tested
+        percent_failing: Percent Failing
