@@ -6,6 +6,10 @@ require 'gruff'
 # This presenter class provides all data needed by the view that monitors status of authorities.
 module QaServer
   class MonitorStatusPresenter # rubocop:disable Metrics/ClassLength
+    HISTORICAL_AUTHORITY_NAME_IDX = 0
+    HISTORICAL_FAILURE_COUNT_IDX = 1
+    HISTORICAL_PASSING_COUNT_IDX = 2
+
     # @param current_summary [ScenarioRunSummary] summary status of the latest run of test scenarios
     # @param current_data [Array<Hash>] current set of failures for the latest test run, if any
     # @param historical_summary_data [Array<Hash>] summary of past failuring runs per authority to drive chart
@@ -122,6 +126,53 @@ module QaServer
       when :unknown
         QaServer::ScenarioRunHistory::UNKNOWN_MARKER
       end
+    end
+
+    def historical_data_authority_name(historical_entry)
+      historical_entry[QaServer::MonitorStatusPresenter::HISTORICAL_AUTHORITY_NAME_IDX]
+    end
+
+    def days_authority_passing(historical_entry)
+      historical_entry[QaServer::MonitorStatusPresenter::HISTORICAL_PASSING_COUNT_IDX]
+    end
+
+    def days_authority_failing(historical_entry)
+      historical_entry[QaServer::MonitorStatusPresenter::HISTORICAL_FAILURE_COUNT_IDX]
+    end
+
+    def days_authority_tested(historical_entry)
+      days_authority_passing(historical_entry) + days_authority_failing(historical_entry)
+    end
+
+    def percent_authority_failing(historical_entry)
+      days_authority_failing(historical_entry).to_f / days_authority_tested(historical_entry)
+    end
+
+    def percent_authority_failing_str(historical_entry)
+      "#{percent_authority_failing(historical_entry) * 100}%"
+    end
+
+    def failure_style_class(historical_entry)
+      return "status-neutral" if days_authority_failing(historical_entry) <= 0
+      return "status-unknown" if percent_authority_failing(historical_entry) < 0.1
+      "status-bad"
+    end
+
+    def passing_style_class(historical_entry)
+      return "status-bad" if days_authority_passing(historical_entry) <= 0
+      "status-good"
+    end
+
+    def display_history_details?
+      display_historical_graph? || display_historical_datatable?
+    end
+
+    def display_historical_graph?
+      QaServer.config.display_historical_graph?
+    end
+
+    def display_historical_datatable?
+      QaServer.config.display_historical_datatable?
     end
 
     private
