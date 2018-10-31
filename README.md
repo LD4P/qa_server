@@ -6,6 +6,7 @@ This rails engine can be installed into your app to serve as a Questioning Autho
 * [Architecture for Authority Lookup](https://wiki.duraspace.org/x/84E2BQ) document describes the authority access and normalization layer that provides applications with a consistent output for processing.
 * [Authority aggregation and indexing](https://wiki.duraspace.org/display/ld4lLABS/Authority+aggregation+and+indexing) document describes the technology used for caching authority data.
 * [samvera/questioning_authority](https://github.com/samvera/questioning_authority) (QA) is the gem that provides access to external authorities and normalizes the results.  See the [Linked Open Data (LOD) Authorities](https://github.com/samvera/questioning_authority#linked-open-data-lod-authorities) section for details on the primary part of QA that is used by this engine.
+* [ruby-rdf/linkeddata](https://github.com/ruby-rdf/linkeddata) is a gem that processes linked data in a number of RDF formats.
 * [LD4P/linked_data_authorities](https://github.com/LD4P/linked_data_authorities) holds predefined Questioning Authority configurations that work with this qa_server engine.
 
 
@@ -20,7 +21,7 @@ Tested with...
 
 ### Prerequisites
 
-1. [ImageMagick](http://www.imagemagick.org/)
+1. [ImageMagick](http://www.imagemagick.org/) - Used to generate status charts.  Generated charts will be saved in `app/assets/images/qa_server/charts` directory.
 
 ### Installation Instructions
 
@@ -48,6 +49,8 @@ $ gem install qa_server
 $ rails g qa_server:install
 $ rake db:migrate
 ```
+
+If upgrading instead of installing, see the Release notes for steps you may need to take manually since you won't be running the installer.
 
 #### Test the install
 
