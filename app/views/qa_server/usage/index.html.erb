@@ -51,31 +51,31 @@
 ]</pre>
 
 <hr>
-  <h3>To fetch a single term:</h3>
+  <h3>To retrieve a single term:</h3>
 
   <p>The data after the authority name is required and should be the URI or the ID of the term being retrieved.
   Which value to use depends on the authority configuration.  All other parameters are optional.  Some
   authorities support different optional parameters, but attempts were made to keep optional parameter names
   consistent between authorities.</p>
 
-  <h4>Fetch by URI</h4>
-  <pre><%= QaServer::Engine.qa_engine_mount %>/show/linked_data/locnames_ld4l_cache/http%3A%2F%2Fid%2Eloc%2Egov%2Fauthorities%2Fnames%2Fn92016188</pre>
+  <h4>Retrieve Term by URI</h4>
+  <pre><%= QaServer::Engine.qa_engine_mount %>/fetch/linked_data/locnames_ld4l_cache?uri=http%3A%2F%2Fid%2Eloc%2Egov%2Fauthorities%2Fnames%2Fn92016188</pre>
   <p><b><%= t('qa_server.warning.chrome_unencoding_msg') %></b></p>
 
   where,
   <ul>
-    <li>show (required) - indicates this is a fetch of a single term</li>
+    <li>fetch (required) - indicates this is retrieves a single term by URI</li>
     <li>locnames_ld4l_cache (required) - the name of the authority</li>
-    <li>http%3A%2F%2Fid%2Eloc%2Egov%2Fauthorities%2Fnames%2Fn92016188 (required) - the encoded uri of the term to fetch</li>
+    <li>uri=http%3A%2F%2Fid%2Eloc%2Egov%2Fauthorities%2Fnames%2Fn92016188 (required) - the encoded uri of the term to fetch</li>
     <li>lang=en (optional) - if the authority returns language encoded literals, results will be filtered for the specified language</li>
   </ul>
 
-  <h4>Fetch by ID</h4>
+  <h4>Retrieve Term by ID</h4>
   <pre><%= QaServer::Engine.qa_engine_mount %>/show/linked_data/oclcfast_ld4l_cache/1914919?lang=en</pre>
 
   where,
   <ul>
-    <li>show (required) - indicates this is a fetch of a single term</li>
+    <li>show (required) - indicates this retrieves a single term by ID</li>
     <li>oclcfast_ld4l_cache (required) - the name of the authority</li>
     <li>1914919 (required) - the id of the term to fetch</li>
     <li>lang=en (optional) - if the authority returns language encoded literals, results will be filtered for the specified language
