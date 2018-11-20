@@ -1,3 +1,7 @@
+### 1.2.1 (2018-11-20)
+
+* update Usage page to describe fetch and show options for retrieving a single term
+
 ### 1.2.0 (2018-11-20)
 
 * update QA which includes...
