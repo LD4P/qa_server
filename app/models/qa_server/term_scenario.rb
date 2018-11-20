@@ -23,12 +23,27 @@ module QaServer
     # Generate an example URL that can be called in a browser or through curl
     # @return [String] the example URL
     def url
-      subauth = "/#{subauthority_name}" if subauthority_name.present?
-      prefix = "#{QaServer::Engine.qa_engine_mount}/show/linked_data/#{authority_name.downcase}#{subauth}"
-      "#{prefix}/#{url_identifier}"
+      authority.auth_config.term.term_id_expects_uri? ? fetch_url : show_url
     end
 
     private
+
+      # Generate an example URL that can be called in a browser or through curl
+      # @return [String] the example URL
+      def show_url
+        "#{prefix_for_url('show')}/#{url_identifier}"
+      end
+
+      # Generate an example URL that can be called in a browser or through curl
+      # @return [String] the example URL
+      def fetch_url
+        "#{prefix_for_url('fetch')}?uri=#{url_identifier}"
+      end
+
+      def prefix_for_url(action)
+        subauth = "/#{subauthority_name}" if subauthority_name.present?
+        prefix = "#{QaServer::Engine.qa_engine_mount}/#{action}/linked_data/#{authority_name.downcase}#{subauth}"
+      end
 
       # Convert identifier into URL safe version with encoding if needed.
       def url_identifier
