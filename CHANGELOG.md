@@ -1,3 +1,8 @@
+### 1.2.0 (2018-11-20)
+
+* update QA which includes extended QA API and terms returned as json-ld
+* update dependencies for security vulnerabilities
+
 ### 1.1.0 (2018-10-31)
 
 * allow historical data to be displayed as graph or datatable (configuration)
