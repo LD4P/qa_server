@@ -5,7 +5,7 @@ module QaServer
     # Return a list of supported authorities
     # @return [Array<String>] list of authorities
     def self.authorities_list
-      LINKED_DATA_AUTHORITIES_CONFIG.keys.sort
+      Qa::Authorities::LinkedData::AuthorityService.authority_names
     end
 
     # Fill in status_log with data about each scenario for an authority
