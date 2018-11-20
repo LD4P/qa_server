@@ -1,7 +1,12 @@
 ### 1.2.0 (2018-11-20)
 
-* update QA which includes extended QA API and terms returned as json-ld
+* update QA which includes...
+    * extended QA API (e.g. list, reload, fetch)
+    * fetch/show terms optionally returned as json-ld (default = json for backward compatibility)
 * update dependencies for security vulnerabilities
+* fix accuracy tests
+* default term tests to use fetch instead of show when term identifier is a URI
+* get list of authority names from QA AuthorityService
 
 ### 1.1.0 (2018-10-31)
 

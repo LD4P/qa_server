@@ -22,7 +22,7 @@ module QaServer
 
     def add_to_gemfile
       say_status('info', '  -- adding qa_server required gems', :blue)
-      gem 'qa', github: 'samvera/questioning_authority', branch: 'min_context'
+      gem 'qa', github: 'samvera/questioning_authority', tag: '496aaa34c4aba6d97d11737b229ea66ea4c64639'
       gem 'linkeddata'
 
       Bundler.with_clean_env do
