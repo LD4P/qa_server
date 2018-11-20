@@ -70,4 +70,8 @@ test/dummy/tmp/
 
 .internal_test_app
 
+# do not keep the built gem
 *.gem
+
+# do not keep Gemfile.lock for engines
+Gemfile.lock
