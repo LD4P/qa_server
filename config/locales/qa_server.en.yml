@@ -2,66 +2,67 @@
 en:
   qa_server:
     menu:
-      home:            Home
-      usage:           Usage
-      authorities:     Authorities
-      check_status:    Check Status
-      monitor_status:  Monitor Status
-    warning:
-      chrome_unencoding_msg: "NOTE: Sample URLs with an encoded URI for term fetch do not work in Chrome for Mac or Windows and do not work in IE for Window.  This is because Chrome and IE unencode the periods.  Firefox on Windows and Mac and Safari on Mac are known to work."
+      home:              Home
+      usage:             Usage
+      authorities:       Authorities
+      check_status:      Check Status
+      monitor_status:    Monitor Status
     authority_list:
-      title:           Authority List
+      title:             Authority List
       see_check_status_html: 'See <a href="%{href}">Check Status</a> to test whether an authority is online.'
       data:
-        authority:     Authority
-        subauthority:  Subauthority
-        service:       Service
-        action:        Action
-        url:           Sample URL
+        subauthority:    Authority/Subauthority
+        service:         Service
+        action:          Action
+        url:             Sample URL
     check_status:
-      title:            Check Status
-      select_authority: Select authority...
-      show_all:         ALL Authorities (SLOW)
-      connections:      Check Connection Status only
-      accuracy:         Check Accuracy only
-      all_checks:       Run all checks
-      wait_message:     "Please wait while the status is verified.  This will be slow if you selected ALL Authorities."
+      title:             Check Status
+      select_authority:  Select authority...
+      show_all:          ALL Authorities (SLOW)
+      connections:       Check Connection Status only
+      accuracy:          Check Accuracy only
+      all_checks:        Run all checks
+      wait_message:      "Please wait while the status is verified.  This will be slow if you selected ALL Authorities."
       connection_checks: Connection Checks
-      accuracy_checks:  Search Accuracy Checks
+      accuracy_checks:   Accuracy Checks for Search Results
       status_table:
-        action:         Action
+        action:          Action
         actual_position: Actual Position
-        authority:      Authority
-        errmsg:         Errors
+        authority:       Authority
+        errmsg:          Errors
         expected_by_position: Expected by Position
-        service:        Service
-        status:         Status
-        subauthority:   Subauthority
-        subject_uri:    Expected Subject
-        url:            Sample URL
+        service:         Service
+        status:          Status
+        subauthority:    Subauthority
+        subject_uri:     Expected Subject
+        url:             Sample URL
     monitor_status:
+      title:             Monitor Status
       summary:
-        title:         Summary
-        authorities:   Authorities
+        title:           Latest Monitored Status
+        summary_table:   Summary
+        authorities:     Authorities
         authorities_with_failures: Authorities with Failures
-        passing_tests: Passing Tests
-        failing_tests: Failing Tests
-        total_tests:   TOTAL Tests
-        last_updated:  'Status last updated %{date} ET'
+        passing_tests:   Passing Tests
+        failing_tests:   Failing Tests
+        total_tests:     TOTAL Tests
+        last_updated:    'Status last updated %{date} ET'
       failures:
-        title:         Failures During Latest Status Update
-        status:        Status
-        authority:     Authority
-        subauthority:  Subauthority
-        service:       Service
-        action:        Action
-        url:           Sample URL
-        errmsg:        Errors
+        title:           Failures During Latest Status Update
+        status:          Status
+        authority:       Authority
+        subauthority:    Subauthority
+        service:         Service
+        action:          Action
+        url:             Sample URL
+        errmsg:          Errors
       history:
-        title:         History
-        since:         'Since %{date} ET'
-        authority:     Authority
-        days_failing:  Days Failing
-        days_passing:  Days Passing
-        days_tested:   Days Tested
+        title:           Authority Connection History
+        since:           'Since %{date} ET'
+        authority:       Authority
+        days_failing:    Days Failing
+        days_passing:    Days Passing
+        days_tested:     Days Tested
         percent_failing: Percent Failing
+    usage:
+      title:             Usage
