@@ -1,6 +1,7 @@
 <div class="page-description">
 
-  <h2>Usage:</h2>
+  <h2><%= t('qa_server.usage.title') %></h2>
+
   <h3>To search for matching terms:</h3>
 
   <p>The query parameter <b>q</b> is required.  All other parameters are optional.  Some authorities support different
@@ -60,7 +61,6 @@
 
   <h4>Retrieve Term by URI</h4>
   <pre><%= QaServer::Engine.qa_engine_mount %>/fetch/linked_data/locnames_ld4l_cache?uri=http%3A%2F%2Fid%2Eloc%2Egov%2Fauthorities%2Fnames%2Fn92016188</pre>
-  <p><b><%= t('qa_server.warning.chrome_unencoding_msg') %></b></p>
 
   where,
   <ul>

@@ -1,21 +1,26 @@
 <div class="page-description">
 
   <h2><%= t('qa_server.authority_list.title') %></h2>
+
   <p><%= t('qa_server.authority_list.see_check_status_html', href: "#{main_app.root_path}check_status") %></p>
 
   <div id="status-section" class="status-section">
-    <p><b><%= t('qa_server.warning.chrome_unencoding_msg') %></b></p>
     <table class="status">
       <tr>
-        <th><%= t('qa_server.authority_list.data.authority') %></th>
         <th><%= t('qa_server.authority_list.data.subauthority') %></th>
         <th><%= t('qa_server.authority_list.data.service') %></th>
         <th><%= t('qa_server.authority_list.data.action') %></th>
         <th><%= t('qa_server.authority_list.data.url') %></th>
       </tr>
-      <% @presenter.urls_data.each do |entry| %>
+      <% current_authority = nil %>
+        <% @presenter.urls_data.each do |entry| %>
+          <% unless entry[:authority_name] == current_authority %>
+            <% current_authority = entry[:authority_name] %>
+            <tr>
+              <td class="table_subheading" colspan="4"><%= current_authority %></td>
+            </tr>
+          <% end %>
           <tr>
-            <td><%= entry[:authority_name] %></td>
             <td><%= entry[:subauthority_name] %></td>
             <td><%= entry[:service] %></td>
             <td><%= entry[:action] %></td>

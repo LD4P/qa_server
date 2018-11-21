@@ -35,35 +35,34 @@
 
 <div id="status-loading-message" class="wait-message"><%= t('qa_server.check_status.wait_message') %></div>
 
-<% if @presenter.connection_status_data? || @presenter.accuracy_status_data? %>
-  <div id="example-url-warning">
-      <p><b><%= t('qa_server.warning.chrome_unencoding_msg') %></b></p>
-  </div>
-<% end %>
-
 <% if @presenter.connection_status_data? %>
 <div id="connection-status-section" class="status-section">
   <h3><%= t('qa_server.check_status.connection_checks') %></h3>
   <table class="status">
     <tr>
       <th><%= t('qa_server.check_status.status_table.status') %></th>
-      <th><%= t('qa_server.check_status.status_table.authority') %></th>
       <th><%= t('qa_server.check_status.status_table.subauthority') %></th>
       <th><%= t('qa_server.check_status.status_table.service') %></th>
       <th><%= t('qa_server.check_status.status_table.action') %></th>
       <th><%= t('qa_server.check_status.status_table.url') %></th>
       <th><%= t('qa_server.check_status.status_table.errmsg') %></th>
     </tr>
+    <% current_authority = nil %>
     <% @presenter.connection_status_data.each do |status| %>
-    <tr>
-      <td class="<%= @presenter.status_style_class(status) %>"><%= @presenter.status_label(status) %></td>
-      <td><%= status[:authority_name] %></td>
-      <td><%= status[:subauthority_name] %></td>
-      <td><%= status[:service] %></td>
-      <td><%= status[:action] %></td>
-      <td><a href="<%= status[:url] %>"><%= status[:url] %></a></td>
-      <td><%= status[:err_message] %></td>
-    </tr>
+      <% unless status[:authority_name] == current_authority %>
+          <% current_authority = status[:authority_name] %>
+          <tr>
+            <td class="table_subheading" colspan="6"><%= current_authority %></td>
+          </tr>
+      <% end %>
+      <tr>
+        <td class="<%= @presenter.status_style_class(status) %>"><%= @presenter.status_label(status) %></td>
+        <td><%= status[:subauthority_name] %></td>
+        <td><%= status[:service] %></td>
+        <td><%= status[:action] %></td>
+        <td><a href="<%= status[:url] %>"><%= status[:url] %></a></td>
+        <td><%= status[:err_message] %></td>
+      </tr>
     <% end %>
   </table>
 </div>
