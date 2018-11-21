@@ -1,3 +1,8 @@
+### 1.2.2 (2018-11-21)
+
+* update data tables to make authority names more prominent
+* use consistent titles on each page to make it easier to tell where you are in the app
+
 ### 1.2.1 (2018-11-20)
 
 * update Usage page to describe fetch and show options for retrieving a single term
