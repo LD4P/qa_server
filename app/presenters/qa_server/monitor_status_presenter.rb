@@ -62,7 +62,7 @@ module QaServer
 
     # @return [String] css style class representing whether all tests passed or any failed
     def failing_tests_style
-      failures? ? 'status-bad' : 'status-good'
+      failures? ? 'summary-status-bad' : 'status-good'
     end
 
     # @return [Array<Hash>] A list of failures data in the latest test run, if any
