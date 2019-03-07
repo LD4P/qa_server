@@ -1,3 +1,9 @@
+### 1.2.3 (2019-03-07)
+
+* change css class for failing tests to allow pingdom to check for the css class and notify sysop
+* temporarily disable direct access to AGROVOC
+* add vocabs: locperformance_ld4l_cache and locdemographics_ld4l_cache
+
 ### 1.2.2 (2018-11-21)
 
 * update data tables to make authority names more prominent
