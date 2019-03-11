@@ -25,7 +25,7 @@ Gem::Specification.new do |spec|
   spec.add_dependency 'rails', '~> 5.0' # Keep in sync with version supported by Hyrax
 
   # Required gems for QA and linked data access
-  spec.add_development_dependency 'qa' # loaded specific branch in Gemfile
+  spec.add_development_dependency 'qa', '4.0.0.rc3'
   spec.add_development_dependency 'linkeddata'
 
   # Produces dashboard charts on monitor status page

@@ -24,6 +24,7 @@ search:
   -
     query: Cayuga
     subauth: road
+    result_size: 150
   -
     query: Cayuga
     subauth: spot

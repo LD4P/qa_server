@@ -65,10 +65,10 @@ module QaServer
         actual_size = results.to_s.length
         status = actual_size > min_expected_size ? PASS : UNKNOWN
         errmsg = status == PASS ? '' : "#{scenario_type_name.capitalize} scenario unknown status; cause: Results actual size (#{actual_size} < expected size (#{min_expected_size})"
-        log(status: status, errmsg: errmsg, normalization_run_time: (dt_end - dt_start)) # TODO: need to get run times from results
+        log(status: status, error_message: errmsg, normalization_run_time: (dt_end - dt_start)) # TODO: need to get run times from results
       rescue Exception => e
         dt_end = Time.now.utc
-        log(status: FAIL, errmsg: "Exception executing #{scenario_type_name} scenario; cause: #{e.message}", request_run_time: (dt_end - dt_start))
+        log(status: FAIL, error_message: "Exception executing #{scenario_type_name} scenario; cause: #{e.message}", request_run_time: (dt_end - dt_start))
       end
 
       def authority
