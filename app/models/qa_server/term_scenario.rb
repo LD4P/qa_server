@@ -23,7 +23,7 @@ module QaServer
     # Generate an example URL that can be called in a browser or through curl
     # @return [String] the example URL
     def url
-      authority.auth_config.term.term_id_expects_uri? ? fetch_url : show_url
+      authority.term_id_expects_uri? ? fetch_url : show_url
     end
 
     private
@@ -56,7 +56,7 @@ module QaServer
       end
 
       def encode?
-        authority.auth_config.term.term_id_expects_uri?
+        authority.term_id_expects_uri?
       end
 
       def uri_encode(uri)

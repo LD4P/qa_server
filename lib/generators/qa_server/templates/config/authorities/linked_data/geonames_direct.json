@@ -1,9 +1,10 @@
 {
+  "QA_CONFIG_VERSION": "2.0",
   "term": {
     "url": {
       "@context": "http://www.w3.org/ns/hydra/context.jsonld",
       "@type":    "IriTemplate",
-      "template": "{?term_uri}",
+      "template": "{term_uri}",
       "variableRepresentation": "BasicRepresentation",
       "mapping": [
         {
@@ -30,7 +31,7 @@
     "url": {
       "@context": "http://www.w3.org/ns/hydra/context.jsonld",
       "@type": "IriTemplate",
-      "template": "http://api.geonames.org/search?q={?query}&maxRows={?maximumRecords}&username={?username}&type=rdf",
+      "template": "http://api.geonames.org/search?q={query}&maxRows={maximumRecords}&{?username}&type=rdf",
       "variableRepresentation": "BasicRepresentation",
       "mapping": [
         {
@@ -43,8 +44,8 @@
           "@type": "IriTemplateMapping",
           "variable": "username",
           "property": "hydra:freetextQuery",
-          "required": true,
-          "default": "elrayle"
+          "required": false,
+          "default": "YOUR_GEONAMES_USERNAME"
         },
         {
           "@type": "IriTemplateMapping",

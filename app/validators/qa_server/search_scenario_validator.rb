@@ -22,9 +22,10 @@ module QaServer
       # Run the connection test and log results
       def run_connection_scenario
         test_connection(min_expected_size: scenario.min_result_size, scenario_type_name: 'search') do
+          replacements = scenario.replacements.dup
           authority.search(scenario.query,
                            subauth: scenario.subauthority_name,
-                           replacements: scenario.replacements)
+                           replacements: replacements)
         end
       end
 
