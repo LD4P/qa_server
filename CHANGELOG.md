@@ -1,3 +1,8 @@
+### 2.0.0 (2019-03-12)
+
+* update code to work with qa 4.0.0
+* update configs to QA_CONFIG_VERSION 2.0
+
 ### 1.2.3 (2019-03-07)
 
 * change css class for failing tests to allow pingdom to check for the css class and notify sysop
