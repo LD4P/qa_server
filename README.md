@@ -19,26 +19,32 @@ Tested with...
 * Ruby 2.4.3
 * Rails 5.1.6
 
-### Prerequisites
+### Optional Prerequisites
 
-1. [ImageMagick](http://www.imagemagick.org/) - Used to generate status charts.  Generated charts will be saved in `app/assets/images/qa_server/charts` directory.
+Only required if you want to generate status charts.  Generated charts will be saved in 
+`app/assets/images/qa_server/charts` directory.  By default status is displayed in a table.
+
+1. [ImageMagick](http://www.imagemagick.org/)
 
 ### Installation Instructions
 
-#### Adding the engine dependency
+#### Adding the engine dependencies
 
-Add this line to your application's Gemfile:
+Add these lines to your application's Gemfile:
 
 ```ruby
 gem 'qa_server'
+gem 'qa'
 ```
 
 And then execute:
+
 ```bash
 $ bundle
 ```
 
 Or install it yourself as:
+
 ```bash
 $ gem install qa_server
 ```
