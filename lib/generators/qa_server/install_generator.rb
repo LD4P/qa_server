@@ -20,15 +20,6 @@ module QaServer
       generate "qa_server:models#{options[:force] ? ' -f' : ''}"
     end
 
-    def add_to_gemfile
-      say_status('info', '  -- adding qa_server required gems', :blue)
-      gem 'linkeddata'
-
-      Bundler.with_clean_env do
-        run "bundle install"
-      end
-    end
-
     # The engine routes have to come after the devise routes so that /users/sign_in will work
     def inject_routes
       say_status('info', '  -- adding qa_server routes', :blue)
