@@ -1,5 +1,5 @@
 ---
-name: 'Request a New Dataset for QA:'
+name: 'Request a New Dataset for Sinopia:'
 about: This issue template is for LD4P2 requests for a new data source to be added to QA.
 
 ---
