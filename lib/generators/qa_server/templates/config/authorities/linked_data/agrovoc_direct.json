@@ -1,9 +1,12 @@
 {
+  "QA_CONFIG_VERSION": "2.0",
+  "prefixes": {
+  },
   "term": {
     "url": {
       "@context": "http://www.w3.org/ns/hydra/context.jsonld",
       "@type":    "IriTemplate",
-      "template": "http://artemide.art.uniroma2.it:8081/agrovoc/rest/v1/data?uri={?term_uri}",
+      "template": "http://agrovoc.uniroma2.it/agrovoc/rest/v1/data/?uri={term_uri}",
       "variableRepresentation": "BasicRepresentation",
       "mapping": [
         {
@@ -32,7 +35,7 @@
     "url": {
       "@context": "http://www.w3.org/ns/hydra/context.jsonld",
       "@type":    "IriTemplate",
-      "template": "http://artemide.art.uniroma2.it:8081/agrovoc/rest/v1/search/?query=*{?query}*&lang={?lang}&maxhits={?maxRecords}",
+      "template": "http://agrovoc.uniroma2.it/agrovoc/rest/v1/search/?query=*{query}*&{?lang}&maxhits={maxRecords}",
       "variableRepresentation": "BasicRepresentation",
       "mapping": [
         {
@@ -62,7 +65,6 @@
       "query": "query"
     },
     "results": {
-      "id_predicate":       "http://purl.org/dc/terms/identifier",
       "label_predicate":    "http://www.w3.org/2004/02/skos/core#prefLabel",
       "sort_predicate":     "http://www.w3.org/2004/02/skos/core#prefLabel"
     }
