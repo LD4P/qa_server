@@ -28,8 +28,13 @@ module QaServer
       @authority = authority
       @authority_name = authority_name
       @service = authority_scenario_config['service']
+      @context = authority_scenario_config.fetch('context', false)
       @subauthority_name = DEFAULT_SUBAUTH
       @min_result_size = MIN_EXPECTED_SIZE
+    end
+
+    def context?
+      @context
     end
   end
 end
