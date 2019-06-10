@@ -1,7 +1,6 @@
 {
   "QA_CONFIG_VERSION": "2.1",
   "prefixes": {
-    "dcterms": "http://purl.org/dc/terms/",
     "getty":   "http://vocab.getty.edu/ontology#",
     "vivo":    "http://vivoweb.org/ontology/core#"
   },
@@ -26,6 +25,7 @@
     },
     "term_id": "URI",
     "results": {
+      "id_ldpath":    "dc:identifier ::xsd:string",
       "label_ldpath":    "skos:prefLabel ::xsd:string",
       "altlabel_ldpath": "skos:altLabel ::xsd:string",
       "broader_ldpath":  "skos:broader ::xsd:anyURI",
@@ -67,7 +67,7 @@
       "query":   "query"
     },
     "results": {
-      "id_ldpath":    "dcterms:identifier ::xsd:string",
+      "id_ldpath":    "dc:identifier ::xsd:string",
       "label_ldpath": "skos:prefLabel ::xsd:string",
       "sort_ldpath":  "vivo:rank ::xsd:string"
     },
