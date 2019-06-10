@@ -1,6 +1,7 @@
 ---
 authority:
-    service: ld4l_cache
+  service: ld4l_cache
+  context: true
 search:
   -
     query: milk
