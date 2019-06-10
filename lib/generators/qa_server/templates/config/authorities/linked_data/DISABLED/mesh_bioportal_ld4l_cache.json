@@ -1,5 +1,9 @@
 {
-  "QA_CONFIG_VERSION": "2.0",
+  "QA_CONFIG_VERSION": "2.1",
+  "prefixes": {
+    "biomesh": "http://purl.bioontology.org/ontology/MESH/",
+    "vivo": "http://vivoweb.org/ontology/core#"
+  },
   "term": {
     "url": {
       "@context": "http://www.w3.org/ns/hydra/context.jsonld",
@@ -20,11 +24,11 @@
     },
     "term_id": "URI",
     "results": {
-      "id_predicate":       "http://www.w3.org/2004/02/skos/core#notation",
-      "label_predicate":    "http://www.w3.org/2004/02/skos/core#prefLabel",
-      "altlabel_predicate": "http://www.w3.org/2004/02/skos/core#altLabel",
-      "broader_predicate":  "http://purl.bioontology.org/ontology/MESH/mapped_to",
-      "narrower_predicate": "http://purl.bioontology.org/ontology/MESH/mapped_from"
+      "id_ldpath":       "skos:notation",
+      "label_ldpath":    "skos:prefLabel",
+      "altlabel_ldpath": "skos:altLabel",
+      "broader_ldpath":  "biomesh:mapped_to",
+      "narrower_ldpath": "biomesh:mapped_from"
     }
   },
   "search": {
@@ -61,12 +65,20 @@
       "query":   "query"
     },
     "results": {
-      "id_predicate":       "http://www.w3.org/2004/02/skos/core#notation",
-      "label_predicate":    "http://www.w3.org/2004/02/skos/core#prefLabel",
-      "sort_predicate":     "http://vivoweb.org/ontology/core#rank",
-      "context": {
-        "Definition":   "http://www.w3.org/2004/02/skos/core#definition"
-      }
+      "id_ldpath": "skos:notation",
+      "label_ldpath": "skos:prefLabel",
+      "sort_ldpath": "vivo:rank"
+    },
+    "context": {
+      "properties": [
+        {
+          "property_label_i18n": "qa.linked_data.authority.mesh_ld4l_cache.definition",
+          "property_label_default": "Definition",
+          "ldpath": "skos:definition :: xsd:string",
+          "selectable": false,
+          "drillable": false
+        }
+      ]
     }
   }
 }

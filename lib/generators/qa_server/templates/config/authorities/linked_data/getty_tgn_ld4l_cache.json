@@ -1,5 +1,10 @@
 {
-  "QA_CONFIG_VERSION": "2.0",
+  "QA_CONFIG_VERSION": "2.1",
+  "prefixes": {
+    "dcterms": "http://purl.org/dc/terms/",
+    "getty":   "http://vocab.getty.edu/ontology#",
+    "vivo":    "http://vivoweb.org/ontology/core#"
+  },
   "term": {
     "url": {
       "@context": "http://www.w3.org/ns/hydra/context.jsonld",
@@ -21,11 +26,11 @@
     },
     "term_id": "URI",
     "results": {
-      "label_predicate":    "http://www.w3.org/2004/02/skos/core#prefLabel",
-      "altlabel_predicate": "http://www.w3.org/2004/02/skos/core#altLabel",
-      "broader_predicate":  "http://www.w3.org/2004/02/skos/core#broader",
-      "narrower_predicate": "http://www.w3.org/2004/02/skos/core#narrower",
-      "sameas_predicate":   "http://www.w3.org/2004/02/skos/core#exactMatch"
+      "label_ldpath":    "skos:prefLabel ::xsd:string",
+      "altlabel_ldpath": "skos:altLabel ::xsd:string",
+      "broader_ldpath":  "skos:broader ::xsd:anyURI",
+      "narrower_ldpath": "skos:narrower ::xsd:anyURI",
+      "sameas_ldpath":   "skos:exactMatch ::xsd:anyURI"
     }
   },
   "search": {
@@ -62,12 +67,20 @@
       "query":   "query"
     },
     "results": {
-      "id_predicate":       "http://purl.org/dc/terms/identifier",
-      "label_predicate":    "http://www.w3.org/2004/02/skos/core#prefLabel",
-      "sort_predicate":     "http://vivoweb.org/ontology/core#rank",
-      "context": {
-        "Parent": "http://vocab.getty.edu/ontology#parentString"
-      }
+      "id_ldpath":    "dcterms:identifier ::xsd:string",
+      "label_ldpath": "skos:prefLabel ::xsd:string",
+      "sort_ldpath":  "vivo:rank ::xsd:string"
+    },
+    "context": {
+      "properties": [
+        {
+          "property_label_i18n": "qa.linked_data.authority.getty_tgn_ld4l_cache.parent_string",
+          "property_label_default": "Parent",
+          "ldpath": "getty:parentString :: xsd:string",
+          "selectable": false,
+          "drillable": false
+        }
+      ]
     }
   }
 }

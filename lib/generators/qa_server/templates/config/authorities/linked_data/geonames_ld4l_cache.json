@@ -1,8 +1,9 @@
 {
-  "QA_CONFIG_VERSION": "2.0",
+  "QA_CONFIG_VERSION": "2.1",
   "prefixes": {
+    "geo":      "http://www.w3.org/2003/01/geo/wgs84_pos#",
     "geonames": "http://www.geonames.org/ontology#",
-    "geo": "http://www.w3.org/2003/01/geo/wgs84_pos#"
+    "vivo":     "http://vivoweb.org/ontology/core#"
   },
   "term": {
     "url": {
@@ -25,10 +26,10 @@
     },
     "term_id": "URI",
     "results": {
-      "label_predicate":    "http://www.geonames.org/ontology#name",
-      "altlabel_predicate": "http://www.geonames.org/ontology#countryCode",
-      "broader_predicate":  "http://www.geonames.org/ontology#parentFeature",
-      "sameas_predicate":   "http://www.w3.org/2000/01/rdf-schema#seeAlso"
+      "label_ldpath":    "geonames:name ::xsd:string",
+      "altlabel_ldpath": "geonames:countryCode ::xsd:string",
+      "broader_ldpath":  "geonames:parentFeature ::xsd:string",
+      "sameas_ldpath":   "rdfs:seeAlso ::xsd:anyURI"
     }
   },
   "search": {
@@ -74,10 +75,9 @@
     },
     "language": ["en"],
     "results": {
-      "id_predicate":       ":subject_uri",
-      "label_predicate":    "http://www.geonames.org/ontology#name",
-      "altlabel_predicate": "http://www.geonames.org/ontology#countryCode",
-      "sort_predicate":     "http://vivoweb.org/ontology/core#rank"
+      "label_ldpath":    "geonames:name ::xsd:string",
+      "altlabel_ldpath": "geonames:countryCode ::xsd:string",
+      "sort_ldpath":     "vivo:rank ::xsd:string"
     },
     "context": {
       "properties": [

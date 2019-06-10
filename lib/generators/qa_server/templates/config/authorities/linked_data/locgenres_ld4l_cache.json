@@ -1,10 +1,9 @@
 {
-  "QA_CONFIG_VERSION": "2.0",
+  "QA_CONFIG_VERSION": "2.1",
   "prefixes": {
+    "loc":     "http://id.loc.gov/vocabulary/identifiers/",
     "madsrdf": "http://www.loc.gov/mads/rdf/v1#",
-    "schema": "http://www.w3.org/2000/01/rdf-schema#",
-    "skos": "http://www.w3.org/2004/02/skos/core#",
-    "loc": "http://id.loc.gov/vocabulary/identifiers/"
+    "vivo":    "http://vivoweb.org/ontology/core#"
   },
   "term": {
     "url": {
@@ -27,12 +26,12 @@
     },
     "term_id": "URI",
     "results": {
-      "id_predicate": "http://id.loc.gov/vocabulary/identifiers/lccn",
-      "label_predicate": "http://www.w3.org/2004/02/skos/core#prefLabel",
-      "altlabel_predicate": "http://www.w3.org/2004/02/skos/core#altLabel",
-      "broader_predicate":  "http://www.w3.org/2004/02/skos/core#broader",
-      "narrower_predicate": "http://www.w3.org/2004/02/skos/core#narrower",
-      "sameas_predicate": "http://www.w3.org/2004/02/skos/core#exactMatch"
+      "id_ldpath":       "loc:lccn ::xsd:string",
+      "label_ldpath":    "skos:prefLabel ::xsd:string",
+      "altlabel_ldpath": "skos:altLabel ::xsd:string",
+      "broader_ldpath":  "skos:broader ::xsd:anyURI",
+      "narrower_ldpath": "skos:narrower ::xsd:anyURI",
+      "sameas_ldpath":   "skos:exactMatch ::xsd:anyURI"
     }
   },
   "search": {
@@ -84,9 +83,9 @@
       "subauth": "entity"
     },
     "results": {
-      "id_predicate":       "http://id.loc.gov/vocabulary/identifiers/lccn",
-      "label_predicate":    "http://www.loc.gov/mads/rdf/v1#authoritativeLabel",
-      "sort_predicate":     "http://vivoweb.org/ontology/core#rank"
+      "id_ldpath":    "loc:lccn ::xsd:string",
+      "label_ldpath": "madsrdf:authoritativeLabel ::xsd:string",
+      "sort_ldpath":  "vivo:rank ::xsd:string"
     },
     "context": {
       "groups": {
