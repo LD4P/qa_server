@@ -1,5 +1,9 @@
 {
-  "QA_CONFIG_VERSION": "2.0",
+  "QA_CONFIG_VERSION": "2.1",
+  "prefixes": {
+    "nlmmesh": "http://id.nlm.nih.gov/mesh/vocab#",
+    "vivo": "http://vivoweb.org/ontology/core#"
+  },
   "term": {
     "url": {
       "@context": "http://www.w3.org/ns/hydra/context.jsonld",
@@ -20,8 +24,8 @@
     },
     "term_id": "URI",
     "results": {
-      "id_predicate":    "http://id.nlm.nih.gov/mesh/vocab#identifier",
-      "label_predicate": "http://id.nlm.nih.gov/mesh/vocab#prefLabel"
+      "id_ldpath":    "nlmmesh:identifier ::xsd:string",
+      "label_ldpath": "nlmmesh:prefLabel ::xsd:string"
     }
   },
   "search": {
@@ -58,9 +62,9 @@
       "query":   "query"
     },
     "results": {
-      "id_predicate":    "http://id.nlm.nih.gov/mesh/vocab#identifier",
-      "label_predicate": "http://id.nlm.nih.gov/mesh/vocab#prefLabel",
-      "sort_predicate":  "http://vivoweb.org/ontology/core#rank"
+      "id_ldpath":    "nlmmesh:identifier ::xsd:string",
+      "label_ldpath": "nlmmesh:prefLabel ::xsd:string",
+      "sort_ldpath":  "vivo:rank ::xsd:string"
     },
     "context": {
       "properties": [

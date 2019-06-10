@@ -1,5 +1,7 @@
 {
-  "QA_CONFIG_VERSION": "2.0",
+  "QA_CONFIG_VERSION": "2.1",
+  "prefixes": {
+  },
   "term": {
     "url": {
       "@context": "http://www.w3.org/ns/hydra/context.jsonld",
@@ -22,11 +24,11 @@
     "term_id": "URI",
     "language": ["en"],
     "results": {
-      "label_predicate":    "http://www.w3.org/2004/02/skos/core#prefLabel",
-      "altlabel_predicate": "http://www.w3.org/2004/02/skos/core#altLabel",
-      "broader_predicate":  "http://www.w3.org/2004/02/skos/core#broader",
-      "narrower_predicate": "http://www.w3.org/2004/02/skos/core#narrower",
-      "sameas_predicate":   "http://www.w3.org/2004/02/skos/core#exactMatch"
+      "label_ldpath":    "skos:prefLabel ::xsd:string",
+      "altlabel_ldpath": "skos:altLabel ::xsd:string",
+      "broader_ldpath":  "skos:broader ::xsd:anyURI",
+      "narrower_ldpath": "skos:narrower ::xsd:anyURI",
+      "sameas_ldpath":   "skos:exactMatch ::xsd:anyURI"
     }
   },
   "search": {}
