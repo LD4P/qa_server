@@ -103,14 +103,14 @@
         {
           "property_label_i18n": "qa.linked_data.authority.locnames_ld4l_cache.field_of_activity",
           "property_label_default": "Field of Activity",
-          "ldpath": "(madsrdf:fieldOfActivity/schema:label) | (madsrdf:fieldOfActivity/madsrdf:authoritativeLabel) :: xsd:string",
+          "ldpath": "(madsrdf:identifiesRWO/madsrdf:fieldOfActivity/rdfs:label) | (madsrdf:identifiesRWO/madsrdf:fieldOfActivity/madsrdf:authoritativeLabel) :: xsd:string",
           "selectable": false,
           "drillable": false
         },
         {
           "property_label_i18n": "qa.linked_data.authority.locnames_ld4l_cache.occupation",
           "property_label_default": "Occupation",
-          "ldpath": "madsrdf:occupation/madsrdf:authoritativeLabel :: xsd:string",
+          "ldpath": "madsrdf:identifiesRWO/madsrdf:occupation/madsrdf:authoritativeLabel :: xsd:string",
           "selectable": false,
           "drillable": false
         },
@@ -118,7 +118,7 @@
           "group_id": "dates",
           "property_label_default": "Birth: ",
           "property_label_i18n": "qa.linked_data.authority.locnames_ld4l_cache.birth_date",
-          "ldpath": "madsrdf:identifiesRWO/madsrdf:birthDate/schema:label :: xsd:string",
+          "ldpath": "madsrdf:identifiesRWO/madsrdf:birthDate/rdfs:label :: xsd:string",
           "selectable": false,
           "drillable": false
         },
@@ -126,7 +126,7 @@
           "group_id": "dates",
           "property_label_default": "Death: ",
           "property_label_i18n": "qa.linked_data.authority.locnames_ld4l_cache.death_date",
-          "ldpath": "madsrdf:identifiesRWO/madsrdf:deathDate/schema:label :: xsd:string",
+          "ldpath": "madsrdf:identifiesRWO/madsrdf:deathDate/rdfs:label :: xsd:string",
           "selectable": false,
           "drillable": false
         },
@@ -134,7 +134,7 @@
           "group_id": "dates",
           "property_label_default": "Start: ",
           "property_label_i18n": "qa.linked_data.authority.locnames_ld4l_cache.activity_state_date",
-          "ldpath": "madsrdf:identifiesRWO/madsrdf:activityStartDate/schema:label :: xsd:string",
+          "ldpath": "madsrdf:identifiesRWO/madsrdf:activityStartDate/rdfs:label :: xsd:string",
           "selectable": false,
           "drillable": false
         },
@@ -142,7 +142,7 @@
           "group_id": "dates",
           "property_label_default": "End: ",
           "property_label_i18n": "qa.linked_data.authority.locnames_ld4l_cache.activity_end_date",
-          "ldpath": "madsrdf:identifiesRWO/madsrdf:activityEndDate/schema:label :: xsd:string",
+          "ldpath": "madsrdf:identifiesRWO/madsrdf:activityEndDate/rdfs:label :: xsd:string",
           "selectable": false,
           "drillable": false
         }
