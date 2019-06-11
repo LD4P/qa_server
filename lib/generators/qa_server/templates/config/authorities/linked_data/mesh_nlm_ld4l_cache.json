@@ -65,17 +65,6 @@
       "id_ldpath":    "nlmmesh:identifier ::xsd:string",
       "label_ldpath": "nlmmesh:prefLabel ::xsd:string",
       "sort_ldpath":  "vivo:rank ::xsd:string"
-    },
-    "context": {
-      "properties": [
-        {
-          "property_label_i18n": "qa.linked_data.authority.mesh_ld4l_cache.definition",
-          "property_label_default": "Definition",
-          "ldpath": "skos:definition :: xsd:string",
-          "selectable": false,
-          "drillable": false
-        }
-      ]
     }
   }
 }
