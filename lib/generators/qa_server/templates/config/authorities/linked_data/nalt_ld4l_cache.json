@@ -98,8 +98,7 @@
           "ldpath": "skos:narrower :: xsd:string",
           "selectable": true,
           "drillable": true,
-          "expansion_label_ldpath": "skos:prefLabel ::xsd:string",
-          "expansion_id_ldpath": "loc:lccn ::xsd:string"
+          "expansion_label_ldpath": "skos:prefLabel ::xsd:string"
         },
         {
           "group_id": "hierarchy",
@@ -108,8 +107,7 @@
           "ldpath": "skos:broader :: xsd:string",
           "selectable": true,
           "drillable": true,
-          "expansion_label_ldpath": "skos:prefLabel ::xsd:string",
-          "expansion_id_ldpath": "loc:lccn ::xsd:string"
+          "expansion_label_ldpath": "skos:prefLabel ::xsd:string"
         }
       ]
     },

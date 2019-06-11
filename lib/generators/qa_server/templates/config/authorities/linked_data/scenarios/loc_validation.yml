@@ -12,6 +12,9 @@ term:
     identifier: gf2011026370
     subauth: genre
   -
+    identifier: 'KF26'
+    subauth: classification
+  -
     identifier: 'KF26.L383'
     subauth: classification
   -
@@ -20,3 +23,6 @@ term:
   -
     identifier: dg2015060550
     subauth: demographic
+  -
+    identifier: mp2013015171
+    subauth: music_performance
