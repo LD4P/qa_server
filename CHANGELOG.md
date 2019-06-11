@@ -1,3 +1,17 @@
+### 2.1.0 (2019-06-10)
+
+* remove context from mesh_nlm; add direct match to locnames
+* fix missing getty ids in linked data auth
+* update ldpaths for locnames extended context
+* fix oclcfast linked data config to properly configure passing uri instead of id 
+* update code to work with qa 4.2.0
+* update configs to QA_CONFIG_VERSION 2.1
+* allow scenarios to specify whether the authority supports extended context for search
+* add `encode: true` to search query param for all 2.0 configs
+* Update locperformance_ld4l_cache_validation.yml
+* add parentheses to complex ldpath to fix parse error
+* update instructions to work with latest rails new command 
+
 ### 2.0.0 (2019-03-12)
 
 * update code to work with qa 4.0.0
