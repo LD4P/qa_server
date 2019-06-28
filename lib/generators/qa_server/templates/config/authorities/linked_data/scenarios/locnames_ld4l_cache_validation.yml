@@ -12,6 +12,12 @@ search:
     query: 'Twain, Mark, 1835-1910'
     subauth: person
   -
+    query: Boston Mass
+    position: 3
+    subject_uri: "http://id.loc.gov/authorities/names/n79045553"
+    replacements:
+      maxRecords: '10'
+  -
     query: 'mark twain'
     subauth: organization
   -
