@@ -6,24 +6,6 @@ search:
   -
     query: animation
   -
-    query: animation
-    subauth: person
-  -
-    query: animation
-    subauth: organization
-  -
-    query: animation
-    subauth: place
-  -
-    query: animation
-    subauth: intangible
-  -
-    query: animation
-    subauth: geocoordinates
-  -
-    query: animation
-    subauth: work
-  -
     query: Preliminary documents (Treaties)
     position: 10
     subject_uri: "http://id.loc.gov/authorities/genreForms/gf2011026703"
