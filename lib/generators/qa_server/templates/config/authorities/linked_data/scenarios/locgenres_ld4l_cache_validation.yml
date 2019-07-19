@@ -36,6 +36,12 @@ search:
     replacements:
       maxRecords: '20'
   -
+    query: Casebooks (Law)
+    position: 3
+    subject_uri: "http://id.loc.gov/authorities/genreForms/gf2011026115"
+    replacements:
+      maxRecords: '10'
+   -
     query: Casebooks
     position: 10
     subject_uri: "http://id.loc.gov/authorities/genreForms/gf2011026115"
