@@ -18,6 +18,12 @@ search:
     query: Cayuga
     subauth: place
   -
+    query: Tweedy, Jeff
+    position: 5
+    subject_uri: "http://id.loc.gov/authorities/names/no98126226"
+    replacements:
+      maxRecords: '20'
+  -
     query: Cayuga
     subauth: intangible
   -
