@@ -11,6 +11,11 @@ search:
     expect: 'http://sws.geonames.org/261707/'
     postion: 10
   -
+    query: Chicago
+    subauth: populated place
+    expect: 'http://sws.geonames.org/4887398/'
+    postion: 10
+  -
     query: Ithaca
     subauth: place
   -
