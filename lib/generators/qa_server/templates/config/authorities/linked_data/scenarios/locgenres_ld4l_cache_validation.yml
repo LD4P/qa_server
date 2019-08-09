@@ -6,23 +6,13 @@ search:
   -
     query: animation
   -
-    query: animation
-    subauth: person
+    query: Basketball television programs
   -
     query: animation
-    subauth: organization
+    subauth: active
   -
-    query: animation
-    subauth: place
-  -
-    query: animation
-    subauth: intangible
-  -
-    query: animation
-    subauth: geocoordinates
-  -
-    query: animation
-    subauth: work
+    query: Basketball television programs
+    subauth: deprecated
   -
     query: Preliminary documents (Treaties)
     position: 10
@@ -95,6 +85,15 @@ search:
     subject_uri: "http://id.loc.gov/authorities/genreForms/gf2011026136"
     replacements:
       maxRecords: '20'
+  -
+    query: Basketball television programs
+    subauth: deprecated
+    position: 10
+    subject_uri: "http://id.loc.gov/authorities/genreForms/gf2011026080"
+    replacements:
+      maxRecords: '20'
 term:
   -
     identifier: "http://id.loc.gov/authorities/genreForms/gf2011026141"
+  -
+    identifier: "http://id.loc.gov/authorities/genreForms/gf2011026080"
