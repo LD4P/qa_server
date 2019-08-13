@@ -7,6 +7,7 @@ en:
       authorities:       Authorities
       check_status:      Check Status
       monitor_status:    Monitor Status
+      fetch_term:        Fetch Term
     authority_list:
       title:             Authority List
       see_check_status_html: 'See <a href="%{href}">Check Status</a> to test whether an authority is online.'
@@ -36,6 +37,15 @@ en:
         subauthority:    Subauthority
         subject_uri:     Expected Subject
         url:             Sample URL
+    fetch:
+      title:             Fetch a Term
+      authority_field_label: Authority
+      select_authority:      Select authority...
+      format_field_label:    Format
+      uri_field_label:       URI
+      submit_button:     Fetch Term
+      wait_message:      Fetching term...
+      term_results:      Results
     monitor_status:
       title:             Monitor Status
       summary:

@@ -10,4 +10,5 @@ QaServer::Engine.routes.draw do
   resources :check_status, only: 'index'
   resources :monitor_status, only: 'index'
   resources :authority_list, only: 'index'
+  resources :fetch, only: 'index'
 end
