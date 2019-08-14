@@ -11,3 +11,37 @@ p.status-update-dtstamp {
   color: darkred;
   font-style: italic;
 }
+
+div.right-menu-section {
+  padding-top: 50px;
+}
+
+ul.right-menu {
+  list-style-type: none;
+  li.clickable {
+    display: inline;
+    padding-right: 30px;
+    color: #337ab7;
+  }
+  li.clickable:hover {
+    color: #23527c;
+    text-decoration: underline;
+  }
+  li.selected {
+    display: inline;
+    padding-right: 30px;
+    font-weight: bold;
+  }
+}
+
+div#performance-by-the-hour {
+  display: block;
+}
+
+div#performance-by-the-day {
+  display: none;
+}
+
+div#performance-by-the-month {
+  display: none;
+}

@@ -4,11 +4,13 @@ module QaServer
   class MonitorStatusController < QaServer::AuthorityValidationController
     class_attribute :presenter_class,
                     :scenario_run_registry_class,
-                    :scenario_history_class
+                    :scenario_history_class,
+                    :performance_history_class
 
     self.presenter_class = QaServer::MonitorStatusPresenter
     self.scenario_run_registry_class = QaServer::ScenarioRunRegistry
     self.scenario_history_class = QaServer::ScenarioRunHistory
+    self.performance_history_class = QaServer::PerformanceHistory
 
     # Sets up presenter with data to display in the UI
     def index
@@ -20,7 +22,7 @@ module QaServer
       @presenter = presenter_class.new(current_summary: latest_summary,
                                        current_failure_data: latest_failures,
                                        historical_summary_data: historical_summary_data,
-                                       performance_data: [])
+                                       performance_data: performance_history_class.performance_data)
       render 'index', status: :internal_server_error if latest_summary.failing_authority_count.positive?
     end
 
