@@ -1,3 +1,9 @@
+### 2.2.0 (2019-08-15)
+
+* add performance graphs to monitor status page
+* add ability to fetch a term through the UI
+* update authority configs to latest versions
+
 ### 2.1.0 (2019-06-10)
 
 * remove context from mesh_nlm; add direct match to locnames
