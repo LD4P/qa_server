@@ -34,4 +34,13 @@ class QaServer::ConfigGenerator < Rails::Generators::Base
   def create_initializer_config_file
     copy_file 'config/initializers/qa_server.rb'
   end
+
+  def append_prepends
+    inject_into_file 'config/application.rb', after: /Rails::Application/ do
+      "\n      config.to_prepare do"\
+      "\n        Qa::Authorities::LinkedData::FindTerm.prepend PrependedLinkedData::FindTerm"\
+      "\n        Qa::Authorities::LinkedData::SearchQuery.prepend PrependedLinkedData::SearchQuery"\
+      "\n      end\n"
+    end
+  end
 end

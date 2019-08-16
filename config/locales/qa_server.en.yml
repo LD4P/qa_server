@@ -74,5 +74,19 @@ en:
         days_passing:    Days Passing
         days_tested:     Days Tested
         percent_failing: Percent Failing
+      performance:
+        title:           Performance Metrics
+        menu_day:        Day
+        menu_month:      Month
+        menu_year:       Year
+        load_time_ms:          Load Time (ms)
+        normalization_time_ms: Normalization Time (ms)
+        combined_time_ms:      Full Request Time (ms)
+        x_axis_hour:     Hour
+        x_axis_day:      Day
+        x_axis_month:    Month
+        y_axis_ms:       Milliseconds (ms)
+        now:             NOW
+        today:           TODAY
     usage:
       title:             Usage
