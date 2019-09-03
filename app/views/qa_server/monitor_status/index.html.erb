@@ -91,10 +91,11 @@
       </div>
   <% end %>
 
-  <% if @presenter.performance_data? %>
+  <% if @presenter.performance_data? && @presenter.display_performance_details?%>
     <div id="performance-data" class="status-section">
       <h3><%= t('qa_server.monitor_status.performance.title') %></h3>
 
+      <% if @presenter.display_performance_graph? %>
       <script>
         function switch_performance_view(id) {
             document.getElementById('performance-by-the-hour').style.display = 'none';
@@ -149,5 +150,25 @@
         </div>
       </div>
     </div>
+    <% end %>
+
+    <% if @presenter.display_performance_datatable? %>
+      <table class="status">
+        <tr>
+          <th><%= t('qa_server.monitor_status.performance.authority') %></th>
+          <th><%= t('qa_server.monitor_status.performance.fastest') %></th>
+          <th><%= t('qa_server.monitor_status.performance.slowest') %></th>
+          <th><%= t('qa_server.monitor_status.performance.average') %></th>
+        </tr>
+        <% @presenter.performance_summary.each do |entry| %>
+          <tr>
+            <td><%= @presenter.performance_data_authority_name(entry) %></td>
+            <td class="<%= @presenter.slowest_style_class(entry) %>"><%= @presenter.fastest_request %></td>
+            <td class="<%= @presenter.slowest_style_class(entry) %>"><%= @presenter.slowest_request %></td>
+            <td class="<%= @presenter.average_style_class(entry) %>"><%= @presenter.average_request %></td>
+          </tr>
+        <% end %>
+      </table>
+    <% end %>
   <% end %>
 </div>

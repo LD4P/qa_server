@@ -1,7 +1,8 @@
+# frozen_string_literal: true
 module PrependedLinkedData::FindTerm
   # Override Qa::Authorities::LinkedData::FindTerm#find method
   # @return [Hash] single term results in requested format
-  def find(id, language: nil, replacements: {}, subauth: nil, format: nil, jsonld: false, performance_data: false) # rubocop:disable Metrics/ParameterLists, Metrics/MethodLength
+  def find(id, language: nil, replacements: {}, subauth: nil, format: nil, jsonld: false, performance_data: false) # rubocop:disable Metrics/ParameterLists
     saved_performance_data = performance_data
     performance_data = true
     full_results = super
