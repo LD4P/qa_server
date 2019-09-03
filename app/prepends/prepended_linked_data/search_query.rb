@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 module PrependedLinkedData::SearchQuery
   # Override Qa::Authorities::LinkedData::SearchQuery#search method
   # @return [String] json results for search query
