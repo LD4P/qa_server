@@ -22,7 +22,7 @@ module QaServer
     attr_writer :display_performance_graph
     def display_performance_graph?
       return @display_performance_graph unless @display_performance_graph.nil?
-      @display_performance_graph = true
+      @display_performance_graph = false
     end
 
     # Displays a datatable of performance test data when true
@@ -30,7 +30,7 @@ module QaServer
     attr_writer :display_performance_datatable
     def display_performance_datatable?
       return @display_performance_datatable unless @display_performance_datatable.nil?
-      @display_performance_datatable = false
+      @display_performance_datatable = true
     end
 
     # Additional menu items to add to the main navigation menu's set of left justified menu items

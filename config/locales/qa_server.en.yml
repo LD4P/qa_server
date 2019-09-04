@@ -81,12 +81,19 @@ en:
         menu_year:       Year
         load_time_ms:          Load Time (ms)
         normalization_time_ms: Normalization Time (ms)
-        combined_time_ms:      Full Request Time (ms)
+        full_request_time_ms:      Full Request Time (ms)
         x_axis_hour:     Hour
         x_axis_day:      Day
         x_axis_month:    Month
         y_axis_ms:       Milliseconds (ms)
         now:             NOW
         today:           TODAY
+        authority:           Authority
+        average_times:       Average (ms)
+        fastest_times:       Fastest (ms)
+        slowest_times:       Slowest (ms)
+        load_times:          Load
+        normalization_times: Normalization
+        full_request_times:  Total
     usage:
       title:             Usage
