@@ -23,8 +23,12 @@ module QaServer
                    :percent_authority_failing, :percent_authority_failing_str, :failure_style_class, :passing_style_class,
                    :display_history_details?, :display_historical_graph?, :display_historical_datatable?
 
-    def_delegators :@performance_presenter, :performance_data?, :performance_for_day_graph, :performance_for_month_graph,
-                   :performance_for_year_graph, :performance_style_class, :display_performance_details?, :display_performance_graph?,
-                   :display_performance_datatable?, :max_threshold_exceeded, :min_threshold_not_met
+    def_delegators :@performance_presenter, :performance_data, :performance_data?, :display_performance?, :display_performance_graph?,
+                   :display_performance_datatable?, :performance_data_authority_name, :performance_for_day_graph, :performance_for_month_graph,
+                   :performance_for_year_graph, :lifetime_stats, :min_load, :min_normalization, :min_full_request, :max_load,
+                   :max_normalization, :max_full_request, :avg_load, :avg_normalization, :avg_full_request, :min_load_style,
+                   :min_normalization_style, :min_full_request_style, :max_load_style, :max_normalization_style, :max_full_request_style,
+                   :avg_load_style, :avg_normalization_style, :avg_full_request_style, :performance_style_class, :max_threshold_exceeded,
+                   :min_threshold_not_met
   end
 end
