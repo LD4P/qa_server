@@ -1,3 +1,8 @@
+### 2.2.1 (2019-09-04)
+
+* config to optionally display of the performance graph/datatable
+* add data table view of performance data
+
 ### 2.2.0 (2019-08-15)
 
 * add performance graphs to monitor status page
