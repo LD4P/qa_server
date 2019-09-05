@@ -6,9 +6,10 @@ module QaServer
 
     enum action: [:fetch, :search]
 
-    class_attribute :stats_calculator_class, :graph_service_class
+    class_attribute :stats_calculator_class, :graph_service_class, :authority_list_class
     self.stats_calculator_class = QaServer::PerformanceCalculatorService
     self.graph_service_class = QaServer::PerformanceGraphService
+    self.authority_list_class = QaServer::AuthorityListerService
 
     class << self
       include QaServer::PerformanceHistoryDataKeys
@@ -56,26 +57,42 @@ module QaServer
       #         11: { month: '08-2019', stats: { load_avg_ms: 12.3, normalization_avg_ms: 4.2, full_request_avg_ms: 16.5, etc. }}
       #       }
       #     }
+      #     { AGROVOC_LD4L_CACHE: ... # same data for each authority  }
       #   }
       def performance_data
         data = {}
-        data[ALL_AUTH] = {
-          FOR_LIFETIME => lifetime,
-          FOR_DAY => graph_service_class.average_last_24_hours,
-          FOR_MONTH => graph_service_class.average_last_30_days,
-          FOR_YEAR => graph_service_class.average_last_12_months
-        }
+        auths = authority_list_class.authorities_list
+        data[ALL_AUTH] = all_data
+        auths.each { |auth_name| data[auth_name] = data_for_authority(auth_name) }
         data
       end
 
       private
 
+        def all_data
+          {
+            FOR_LIFETIME => lifetime,
+            FOR_DAY => graph_service_class.average_last_24_hours,
+            FOR_MONTH => graph_service_class.average_last_30_days,
+            FOR_YEAR => graph_service_class.average_last_12_months
+          }
+        end
+
+        def data_for_authority(auth_name)
+          {
+            FOR_LIFETIME => lifetime(auth_name),
+            FOR_DAY => graph_service_class.average_last_24_hours(auth_name),
+            FOR_MONTH => graph_service_class.average_last_30_days(auth_name),
+            FOR_YEAR => graph_service_class.average_last_12_months(auth_name)
+          }
+        end
+
         # Get hourly average for the past 24 hours.
         # @returns [Hash] performance statistics across all records
         # @example
         #   { load_avg_ms: 12.3, normalization_avg_ms: 4.2, full_request_avg_ms: 16.5, etc. }
-        def lifetime
-          records = PerformanceHistory.all
+        def lifetime(auth_name = nil)
+          records = auth_name.nil? ? PerformanceHistory.all : where(authority: auth_name)
           stats_calculator_class.calculate_stats(records)
         end
     end
