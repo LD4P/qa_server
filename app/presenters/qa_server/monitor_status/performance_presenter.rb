@@ -2,34 +2,8 @@
 # This presenter class provides performance data needed by the view that monitors status of authorities.
 module QaServer::MonitorStatus
   class PerformancePresenter # rubocop:disable Metrics/ClassLength
-    class_attribute :performance_history_class
-    self.performance_history_class = QaServer::PerformanceHistory
-
     include QaServer::MonitorStatus::GruffGraph
-
-    ALL_AUTHS = performance_history_class::PERFORMANCE_ALL_KEY
-    STATS = performance_history_class::PERFORMANCE_STATS_KEY
-
-    FOR_LIFETIME = performance_history_class::PERFORMANCE_FOR_LIFETIME_KEY
-    FOR_DAY = performance_history_class::PERFORMANCE_FOR_DAY_KEY
-    BY_HOUR = performance_history_class::PERFORMANCE_BY_HOUR_KEY
-    FOR_MONTH = performance_history_class::PERFORMANCE_FOR_MONTH_KEY
-    BY_DAY = performance_history_class::PERFORMANCE_BY_DAY_KEY
-    FOR_YEAR = performance_history_class::PERFORMANCE_FOR_YEAR_KEY
-    BY_MONTH = performance_history_class::PERFORMANCE_BY_MONTH_KEY
-
-    SUM_LOAD = performance_history_class::SUM_LOAD_TIME_KEY
-    SUM_NORMALIZATION = performance_history_class::SUM_NORMALIZATION_TIME_KEY
-    SUM_FULL_REQUEST = performance_history_class::SUM_FULL_REQUEST_TIME_KEY
-    MIN_LOAD = performance_history_class::MIN_LOAD_TIME_KEY
-    MIN_NORMALIZATION = performance_history_class::MIN_NORMALIZATION_TIME_KEY
-    MIN_FULL_REQUEST = performance_history_class::MIN_FULL_REQUEST_TIME_KEY
-    MAX_LOAD = performance_history_class::MAX_LOAD_TIME_KEY
-    MAX_NORMALIZATION = performance_history_class::MAX_NORMALIZATION_TIME_KEY
-    MAX_FULL_REQUEST = performance_history_class::MAX_FULL_REQUEST_TIME_KEY
-    AVG_LOAD = performance_history_class::AVG_LOAD_TIME_KEY
-    AVG_NORMALIZATION = performance_history_class::AVG_NORMALIZATION_TIME_KEY
-    AVG_FULL_REQUEST = performance_history_class::AVG_FULL_REQUEST_TIME_KEY
+    include QaServer::PerformanceHistoryDataKeys
 
     # @param performance_data [Hash<Hash>] performance data
     def initialize(performance_data:)
@@ -88,11 +62,11 @@ module QaServer::MonitorStatus
     end
 
     def min_normalization(stats)
-      format_stat stats[MIN_NORMALIZATION]
+      format_stat stats[MIN_NORM]
     end
 
     def min_full_request(stats)
-      format_stat stats[MIN_FULL_REQUEST]
+      format_stat stats[MIN_FULL]
     end
 
     def max_load(stats)
@@ -100,11 +74,11 @@ module QaServer::MonitorStatus
     end
 
     def max_normalization(stats)
-      format_stat stats[MAX_NORMALIZATION]
+      format_stat stats[MAX_NORM]
     end
 
     def max_full_request(stats)
-      format_stat stats[MAX_FULL_REQUEST]
+      format_stat stats[MAX_FULL]
     end
 
     def avg_load(stats)
@@ -112,11 +86,11 @@ module QaServer::MonitorStatus
     end
 
     def avg_normalization(stats)
-      format_stat stats[AVG_NORMALIZATION]
+      format_stat stats[AVG_NORM]
     end
 
     def avg_full_request(stats)
-      format_stat stats[AVG_FULL_REQUEST]
+      format_stat stats[AVG_FULL]
     end
 
     def min_load_style(stats)
@@ -124,11 +98,11 @@ module QaServer::MonitorStatus
     end
 
     def min_normalization_style(stats)
-      performance_style_class(stats, MIN_NORMALIZATION)
+      performance_style_class(stats, MIN_NORM)
     end
 
     def min_full_request_style(stats)
-      performance_style_class(stats, MIN_FULL_REQUEST)
+      performance_style_class(stats, MIN_FULL)
     end
 
     def max_load_style(stats)
@@ -136,11 +110,11 @@ module QaServer::MonitorStatus
     end
 
     def max_normalization_style(stats)
-      performance_style_class(stats, MAX_NORMALIZATION)
+      performance_style_class(stats, MAX_NORM)
     end
 
     def max_full_request_style(stats)
-      performance_style_class(stats, MAX_FULL_REQUEST)
+      performance_style_class(stats, MAX_FULL)
     end
 
     def avg_load_style(stats)
@@ -148,17 +122,17 @@ module QaServer::MonitorStatus
     end
 
     def avg_normalization_style(stats)
-      performance_style_class(stats, AVG_NORMALIZATION)
+      performance_style_class(stats, AVG_NORM)
     end
 
     def avg_full_request_style(stats)
-      performance_style_class(stats, AVG_FULL_REQUEST)
+      performance_style_class(stats, AVG_FULL)
     end
 
     private
 
       def all_authorities_performance_data
-        performance_data[ALL_AUTHS]
+        performance_data[ALL_AUTH]
       end
 
       def format_stat(stat)
@@ -201,7 +175,7 @@ module QaServer::MonitorStatus
       end
 
       def performance_for_day_graph_filename
-        graph_filename(ALL_AUTHS, :day)
+        graph_filename(ALL_AUTH, :day)
       end
 
       def performance_for_day_graph_full_path
@@ -209,7 +183,7 @@ module QaServer::MonitorStatus
       end
 
       def performance_for_month_graph_filename
-        graph_filename(ALL_AUTHS, :month)
+        graph_filename(ALL_AUTH, :month)
       end
 
       def performance_for_month_graph_full_path
@@ -217,7 +191,7 @@ module QaServer::MonitorStatus
       end
 
       def performance_for_year_graph_filename
-        graph_filename(ALL_AUTHS, :year)
+        graph_filename(ALL_AUTH, :year)
       end
 
       def performance_for_year_graph_full_path
@@ -232,8 +206,8 @@ module QaServer::MonitorStatus
         performance_data.each do |i, data|
           labels[i] = data[label_key]
           load_data << data[STATS][AVG_LOAD]
-          normalization_data << data[STATS][AVG_NORMALIZATION]
-          full_request_data << data[STATS][AVG_FULL_REQUEST]
+          normalization_data << data[STATS][AVG_NORM]
+          full_request_data << data[STATS][AVG_FULL]
         end
         [labels, load_data, normalization_data, full_request_data]
       end
