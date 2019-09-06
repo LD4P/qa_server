@@ -82,10 +82,6 @@ module QaServer::MonitorStatus
 
     private
 
-      def all_authorities_performance_data
-        performance_data[ALL_AUTH]
-      end
-
       def format_stat(stat)
         format("%0.1f", stat)
       end

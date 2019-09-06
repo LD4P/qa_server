@@ -1,0 +1,96 @@
+  <% if @presenter.display_performance? && @presenter.performance_data? %>
+    <div id="performance-data" class="status-section">
+      <h3><%= t('qa_server.monitor_status.performance.title') %></h3>
+
+      <% if @presenter.display_performance_graph? %>
+      <script>
+        function switch_performance_view(id) {
+            document.getElementById('performance-by-the-hour').style.display = 'none';
+            document.getElementById('performance-by-the-day').style.display = 'none';
+            document.getElementById('performance-by-the-month').style.display = 'none';
+            document.getElementById(id).style.display = 'block';
+        }
+      </script>
+
+      <div id="performance-by-the-hour" class="performance-data-section">
+        <div id="right-menu-section">
+          <ul class="right-menu">
+            <li class="selected"><%= t('qa_server.monitor_status.performance.menu_day') %></li>
+            <li class="clickable" onClick="switch_performance_view('performance-by-the-day')"><%= t('qa_server.monitor_status.performance.menu_month') %></li>
+            <li class="clickable" onClick="switch_performance_view('performance-by-the-month')"><%= t('qa_server.monitor_status.performance.menu_year') %></li>
+          </ul>
+        </div>
+
+        <div id="performance-chart-by-the-hour" class="performance-chart">
+          <p>Data for the last 24 hours</p>
+          <%= image_tag(@presenter.performance_for_day_graph, alt: 'Performance data for the last 24 hours.') %>
+        </div>
+      </div>
+
+      <div id="performance-by-the-day" class="performance-data-section">
+        <div id="right-menu-section">
+          <ul class="right-menu">
+            <li class="clickable" onClick="switch_performance_view('performance-by-the-hour')"><%= t('qa_server.monitor_status.performance.menu_day') %></li>
+            <li class="selected"><%= t('qa_server.monitor_status.performance.menu_month') %></li>
+            <li class="clickable" onClick="switch_performance_view('performance-by-the-month')"><%= t('qa_server.monitor_status.performance.menu_year') %></li>
+          </ul>
+        </div>
+
+        <div id="performance-chart-by-the-day" class="performance-chart">
+          <p>Data for the last 30 days</p>
+          <%= image_tag(@presenter.performance_for_month_graph, alt: 'Performance data for the last 30 days.') %>
+        </div>
+      </div>
+
+      <div id="performance-by-the-month" class="performance-data-section">
+        <div id="right-menu-section">
+          <ul class="right-menu">
+            <li class="clickable" onClick="switch_performance_view('performance-by-the-hour')"><%= t('qa_server.monitor_status.performance.menu_day') %></li>
+            <li class="clickable" onClick="switch_performance_view('performance-by-the-day')"><%= t('qa_server.monitor_status.performance.menu_month') %></li>
+            <li class="selected"><%= t('qa_server.monitor_status.performance.menu_year') %></li>
+          </ul>
+        </div>
+
+        <div id="performance-chart-by-the-month" class="performance-chart">
+          <p>Data for the last 12 months</p>
+          <%= image_tag(@presenter.performance_for_year_graph, alt: 'Performance data for the last 12 months.') %>
+        </div>
+      </div>
+    </div>
+    <% end %>
+
+    <% if @presenter.display_performance_datatable? %>
+      <table class="status">
+        <tr>
+          <th></th>
+          <th><%= t('qa_server.monitor_status.performance.slowest_times') %></th>
+          <th><%= t('qa_server.monitor_status.performance.average_times') %></th>
+          <th><%= t('qa_server.monitor_status.performance.fastest_times') %></th>
+        </tr>
+        <% @presenter.performance_data.each do |authority_name, data| %>
+          <% stats = @presenter.lifetime_stats(data) %>
+          <tr>
+            <td class="table_subheading" colspan="4"><%= authority_name %></td>
+          </tr>
+          <tr>
+            <th><%= t('qa_server.monitor_status.performance.load_times') %></th>
+            <td class="<%= @presenter.max_load_style(stats) %>"><%= @presenter.max_load(stats) %></td>
+            <td class="<%= @presenter.avg_load_style(stats) %>"><%= @presenter.avg_load(stats) %></td>
+            <td class="<%= @presenter.min_load_style(stats) %>"><%= @presenter.min_load(stats) %></td>
+          </tr>
+          <tr>
+            <th><%= t('qa_server.monitor_status.performance.normalization_times') %></th>
+            <td class="<%= @presenter.max_normalization_style(stats) %>"><%= @presenter.max_normalization(stats) %></td>
+            <td class="<%= @presenter.avg_normalization_style(stats) %>"><%= @presenter.avg_normalization(stats) %></td>
+            <td class="<%= @presenter.min_normalization_style(stats) %>"><%= @presenter.min_normalization(stats) %></td>
+          </tr>
+          <tr>
+            <th><%= t('qa_server.monitor_status.performance.full_request_times') %></th>
+            <td class="<%= @presenter.max_full_request_style(stats) %>"><%= @presenter.max_full_request(stats) %></td>
+            <td class="<%= @presenter.avg_full_request_style(stats) %>"><%= @presenter.avg_full_request(stats) %></td>
+            <td class="<%= @presenter.min_full_request_style(stats) %>"><%= @presenter.min_full_request(stats) %></td>
+          </tr>
+        <% end %>
+      </table>
+    <% end %>
+  <% end %>

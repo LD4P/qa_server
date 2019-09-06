@@ -6,9 +6,10 @@ module QaServer
 
     enum action: [:fetch, :search]
 
-    class_attribute :stats_calculator_class, :graph_service_class, :authority_list_class
+    class_attribute :stats_calculator_class, :graph_data_service_class, :graphing_service_class, :authority_list_class
     self.stats_calculator_class = QaServer::PerformanceCalculatorService
-    self.graph_service_class = QaServer::PerformanceGraphService
+    self.graph_data_service_class = QaServer::PerformanceGraphDataService
+    self.graphing_service_class = QaServer::PerformanceGraphingService
     self.authority_list_class = QaServer::AuthorityListerService
 
     class << self
@@ -26,7 +27,8 @@ module QaServer
                normalization_time_ms: normalization_time_ms)
       end
 
-      # Performance data for a day, a month, and a year.
+      # Performance data for a day, a month, a year, and all time for each authority.
+      # @param datatype [Symbol] what type of data should be calculated (e.g. :datatable, :graph, :all)
       # @returns [Hash] performance statistics for the past 24 hours
       # @example
       #   { all_authorities:
@@ -59,35 +61,44 @@ module QaServer
       #     }
       #     { AGROVOC_LD4L_CACHE: ... # same data for each authority  }
       #   }
-      def performance_data
-        data = {}
-        auths = authority_list_class.authorities_list
-        data[ALL_AUTH] = all_data
-        auths.each { |auth_name| data[auth_name] = data_for_authority(auth_name) }
+      def performance_data(datatype: :datatable)
+        return if datatype == :none
+        data = calculate_data(datatype)
+        graphing_service_class.create_performance_graphs(performance_data: data) if calculate_graphdata? datatype
         data
       end
 
       private
 
-        def all_data
-          {
-            FOR_LIFETIME => lifetime,
-            FOR_DAY => graph_service_class.average_last_24_hours,
-            FOR_MONTH => graph_service_class.average_last_30_days,
-            FOR_YEAR => graph_service_class.average_last_12_months
-          }
+        def calculate_datatable?(datatype)
+          datatype == :datatable || datatype == :all
         end
 
-        def data_for_authority(auth_name)
-          {
-            FOR_LIFETIME => lifetime(auth_name),
-            FOR_DAY => graph_service_class.average_last_24_hours(auth_name),
-            FOR_MONTH => graph_service_class.average_last_30_days(auth_name),
-            FOR_YEAR => graph_service_class.average_last_12_months(auth_name)
-          }
+        def calculate_graphdata?(datatype)
+          datatype == :graph || datatype == :all
         end
 
-        # Get hourly average for the past 24 hours.
+        def calculate_data(datatype)
+          data = {}
+          auths = authority_list_class.authorities_list
+          data[ALL_AUTH] = data_for_authority(datatype: datatype)
+          auths.each { |auth_name| data[auth_name] = data_for_authority(authority_name: auth_name, datatype: datatype) }
+          data
+        end
+
+        def data_for_authority(authority_name: nil, datatype:)
+          data = {}
+          data[FOR_LIFETIME] = lifetime(authority_name) if calculate_datatable?(datatype)
+          if calculate_graphdata?(datatype)
+            data[FOR_DAY] = graph_data_service_class.average_last_24_hours(authority_name)
+            data[FOR_MONTH] = graph_data_service_class.average_last_30_days(authority_name)
+            data[FOR_YEAR] = graph_data_service_class.average_last_12_months(authority_name)
+          end
+          data
+        end
+
+        # Get statistics for all available data.
+        # @param [String] auth_name - limit statistics to records for the given authority (default: all authorities)
         # @returns [Hash] performance statistics across all records
         # @example
         #   { load_avg_ms: 12.3, normalization_avg_ms: 4.2, full_request_avg_ms: 16.5, etc. }

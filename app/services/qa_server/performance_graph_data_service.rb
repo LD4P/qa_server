@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 # This class sets performance stats for the last 24 hours, past 30 days, and the past 12 months.
 module QaServer
-  class PerformanceGraphService
+  class PerformanceGraphDataService
     class << self
       include QaServer::PerformanceHistoryDataKeys
 

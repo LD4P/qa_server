@@ -14,15 +14,13 @@ module QaServer
 
     # Sets up presenter with data to display in the UI
     def index
-      if refresh? || expired?
-        validate(authorities_list)
-        update_summary_and_data
-      end
-      # TODO: Include historical data and performance data too
+      refresh_tests
+      historical_data = refresh_history
+      performance_data = refresh_performance
       @presenter = presenter_class.new(current_summary: latest_summary,
                                        current_failure_data: latest_failures,
-                                       historical_summary_data: historical_summary_data,
-                                       performance_data: performance_history_class.performance_data)
+                                       historical_summary_data: historical_data,
+                                       performance_data: performance_data)
       render 'index', status: :internal_server_error if latest_summary.failing_authority_count.positive?
     end
 
@@ -46,20 +44,77 @@ module QaServer
         @latest_failures = nil # reset so next request recalculates
       end
 
-      def historical_summary_data
-        @historical_summary_data ||= scenario_history_class.historical_summary
-      end
-
       def expired?
-        latest_summary.blank? || latest_summary.run_dt_stamp < yesterday_midnight_et
+        @expired ||= latest_summary.blank? || latest_summary.run_dt_stamp < yesterday_midnight_et
       end
 
       def yesterday_midnight_et
         (DateTime.yesterday.midnight.to_time + 4.hours).to_datetime.in_time_zone("Eastern Time (US & Canada)")
       end
 
+      def historical_summary_data(refresh: false)
+        # TODO: Make this refresh the same way performance data refreshes.
+        #       Requires historical graph to move out of presenter so it can be created here only with refresh.
+        if refresh
+          @historical_summary_data = scenario_history_class.historical_summary
+          # TODO: Need to recreate graph here.  And need to only read the graph in presenter.
+        end
+        @historical_summary_data ||= scenario_history_class.historical_summary
+      end
+
+      def performance_data(refresh: false)
+        datatype = performance_datatype(refresh)
+        return if datatype == :none
+        @performance_data = nil if refresh
+        @performance_data ||= performance_history_class.performance_data(datatype: datatype)
+      end
+
+      def performance_datatype(refresh) # rubocop:disable Metrics/CyclomaticComplexity
+        return :all if display_performance_datatable? && display_performance_graph? && refresh
+        return :datatable if display_performance_datatable?
+        return :graph if display_performance_graph? && refresh
+        :none
+      end
+
+      def display_performance_datatable?
+        @display_performance_datatable ||= QaServer.config.display_performance_datatable?
+      end
+
+      def display_performance_graph?
+        @display_performance_graph ||= QaServer.config.display_performance_graph?
+      end
+
+      def refresh_tests
+        return unless refresh_tests?
+        validate(authorities_list)
+        update_summary_and_data
+      end
+
+      def refresh_history
+        historical_summary_data(refresh: refresh_history?)
+      end
+
+      def refresh_performance
+        performance_data(refresh: refresh_performance?)
+      end
+
       def refresh?
         params.key? :refresh
+      end
+
+      def refresh_tests?
+        return false unless refresh? || expired?
+        params[:refresh].casecmp?('tests') || params[:refresh].casecmp?('all') || expired?
+      end
+
+      def refresh_history?
+        return false unless refresh?
+        params[:refresh].casecmp?('history') || params[:refresh].casecmp?('all')
+      end
+
+      def refresh_performance?
+        return false unless refresh?
+        params[:refresh].casecmp?('performance') || params[:refresh].casecmp?('all')
       end
   end
 end
