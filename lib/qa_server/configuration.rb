@@ -61,6 +61,27 @@ module QaServer
       @display_performance_datatable = true
     end
 
+    # Performance datatable default time period for calculating stats.
+    # @param [String] :day, :month, :year, :all
+    attr_writer :performance_datatable_default_time_period
+    def performance_datatable_default_time_period
+      @performance_datatable_default_time_period ||= :year
+    end
+
+    # Performance datatable targeted maximum full request time.
+    # @param [Integer] targeted maximum full request time in ms
+    attr_writer :performance_datatable_max_threshold
+    def performance_datatable_max_threshold
+      @performance_datatable_max_threshold ||= 1500
+    end
+
+    # Performance datatable targeted warning full request time.
+    # @param [Integer] targeted warning full request time in ms
+    attr_writer :performance_datatable_warning_threshold
+    def performance_datatable_warning_threshold
+      @performance_datatable_warning_threshold ||= 1000
+    end
+
     # Additional menu items to add to the main navigation menu's set of left justified menu items
     # @param [Array<Hash<String,String>>] array of menu items to append with hash key = menu item label to display and hash value = URL for the menu item link
     # @example

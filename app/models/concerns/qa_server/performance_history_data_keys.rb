@@ -5,7 +5,7 @@ module QaServer
   module PerformanceHistoryDataKeys
     ALL_AUTH = :all_authorities
     STATS = :stats
-    FOR_LIFETIME = :lifetime_stats
+    FOR_DATATABLE = :datatable_stats
 
     FOR_DAY = :day
     BY_HOUR = :hour
@@ -16,17 +16,14 @@ module QaServer
     FOR_YEAR = :year
     BY_MONTH = :month
 
-    SUM_LOAD = :load_sum_ms
-    SUM_NORM = :normalization_sum_ms
-    SUM_FULL = :full_request_sum_ms
-    MIN_LOAD = :load_min_ms
-    MIN_NORM = :normalization_min_ms
-    MIN_FULL = :full_request_min_ms
-    MAX_LOAD = :load_max_ms
-    MAX_NORM = :normalization_max_ms
-    MAX_FULL = :full_request_max_ms
-    AVG_LOAD = :load_avg_ms
-    AVG_NORM = :normalization_avg_ms
-    AVG_FULL = :full_request_avg_ms
+    LOW_LOAD = :low_load_ms
+    LOW_NORM = :low_normalization_ms
+    LOW_FULL = :low_full_request_ms
+    AVG_LOAD = :avg_load_ms
+    AVG_NORM = :avg_normalization_ms
+    AVG_FULL = :avg_full_request_ms
+    HIGH_LOAD = :max_load_ms
+    HIGH_NORM = :max_normalization_ms
+    HIGH_FULL = :max_full_request_ms
   end
 end

@@ -25,13 +25,13 @@ module QaServer
 
     def_delegators :@performance_presenter, :performance_data, :performance_data?, :display_performance?, :display_performance_graph?,
                    :display_performance_datatable?, :performance_data_authority_name, :performance_for_day_graph, :performance_for_month_graph,
-                   :performance_for_year_graph, :lifetime_stats, :min_load, :min_normalization, :min_full_request, :max_load,
-                   :max_normalization, :max_full_request, :avg_load, :avg_normalization, :avg_full_request, :min_load_style,
-                   :min_normalization_style, :min_full_request_style, :max_load_style, :max_normalization_style, :max_full_request_style,
-                   :avg_load_style, :avg_normalization_style, :avg_full_request_style, :performance_style_class, :max_threshold_exceeded,
-                   :min_threshold_not_met, :performance_graphs, :performance_graph, :performance_graph_authority, :performance_graph_label,
+                   :performance_for_year_graph, :datatable_stats, :low_load, :low_normalization, :low_full_request, :high_load,
+                   :high_normalization, :high_full_request, :avg_load, :avg_normalization, :avg_full_request, :low_load_style,
+                   :low_normalization_style, :low_full_request_style, :high_load_style, :high_normalization_style, :high_full_request_style,
+                   :avg_load_style, :avg_normalization_style, :avg_full_request_style, :performance_style_class, :high_threshold_exceeded,
+                   :low_threshold_not_met, :performance_graphs, :performance_graph, :performance_graph_authority, :performance_graph_label,
                    :performance_default_graph_id, :performance_graph_id, :performance_graph_data_section_id, :performance_graph_data_section_base_id,
                    :performance_data_section_class, :performance_day_graph_selected?, :performance_month_graph_selected?,
-                   :performance_year_graph_selected?
+                   :performance_year_graph_selected?, :performance_table_description
   end
 end

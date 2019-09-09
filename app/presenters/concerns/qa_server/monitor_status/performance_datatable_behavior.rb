@@ -4,32 +4,32 @@ module QaServer::MonitorStatus
   module PerformanceDatatableBehavior
     include QaServer::PerformanceHistoryDataKeys
 
-    def lifetime_stats(authority_data)
-      authority_data[FOR_LIFETIME]
+    def datatable_stats(authority_data)
+      authority_data[FOR_DATATABLE]
     end
 
-    def min_load(stats)
-      format_stat stats[MIN_LOAD]
+    def low_load(stats)
+      format_stat stats[LOW_LOAD]
     end
 
-    def min_normalization(stats)
-      format_stat stats[MIN_NORM]
+    def low_normalization(stats)
+      format_stat stats[LOW_NORM]
     end
 
-    def min_full_request(stats)
-      format_stat stats[MIN_FULL]
+    def low_full_request(stats)
+      format_stat stats[LOW_FULL]
     end
 
-    def max_load(stats)
-      format_stat stats[MAX_LOAD]
+    def high_load(stats)
+      format_stat stats[HIGH_LOAD]
     end
 
-    def max_normalization(stats)
-      format_stat stats[MAX_NORM]
+    def high_normalization(stats)
+      format_stat stats[HIGH_NORM]
     end
 
-    def max_full_request(stats)
-      format_stat stats[MAX_FULL]
+    def high_full_request(stats)
+      format_stat stats[HIGH_FULL]
     end
 
     def avg_load(stats)
@@ -44,43 +44,36 @@ module QaServer::MonitorStatus
       format_stat stats[AVG_FULL]
     end
 
-    def min_load_style(stats)
-      performance_style_class(stats, MIN_LOAD)
+    def low_full_request_style(stats)
+      performance_style_class(stats, LOW_FULL)
     end
 
-    def min_normalization_style(stats)
-      performance_style_class(stats, MIN_NORM)
-    end
-
-    def min_full_request_style(stats)
-      performance_style_class(stats, MIN_FULL)
-    end
-
-    def max_load_style(stats)
-      performance_style_class(stats, MAX_LOAD)
-    end
-
-    def max_normalization_style(stats)
-      performance_style_class(stats, MAX_NORM)
-    end
-
-    def max_full_request_style(stats)
-      performance_style_class(stats, MAX_FULL)
-    end
-
-    def avg_load_style(stats)
-      performance_style_class(stats, AVG_LOAD)
-    end
-
-    def avg_normalization_style(stats)
-      performance_style_class(stats, AVG_NORM)
+    def high_full_request_style(stats)
+      performance_style_class(stats, HIGH_FULL)
     end
 
     def avg_full_request_style(stats)
       performance_style_class(stats, AVG_FULL)
     end
 
+    def performance_table_description
+      case expected_time_period
+      when :day
+        I18n.t('qa_server.monitor_status.performance.datatable_day_desc', )
+      when :month
+        I18n.t('qa_server.monitor_status.performance.datatable_month_desc', )
+      when :year
+        I18n.t('qa_server.monitor_status.performance.datatable_year_desc', )
+      else
+        I18n.t('qa_server.monitor_status.performance.datatable_all_desc', )
+      end
+    end
+
     private
+
+      def expected_time_period
+        QaServer.config.performance_datatable_default_time_period
+      end
 
       def format_stat(stat)
         format("%0.1f", stat)
@@ -88,19 +81,17 @@ module QaServer::MonitorStatus
 
       def performance_style_class(stats, stat_key)
         return "status-bad" if max_threshold_exceeded(stats, stat_key)
-        return "status-unknown" if min_threshold_not_met(stats, stat_key)
-        "status-neutral"
+        return "status-unknown" if desired_threshold_not_met(stats, stat_key)
+        "status-good"
       end
 
-      MAX_THRESHOLD = 1000 # ms
       def max_threshold_exceeded(stats, stat_key)
-        return true if stats[stat_key] > MAX_THRESHOLD
+        return true if stats[stat_key] > QaServer.config.performance_datatable_max_threshold
         false
       end
 
-      MIN_THRESHOLD = 500 # ms
-      def min_threshold_not_met(stats, stat_key)
-        return true unless stats[stat_key] < MIN_THRESHOLD
+      def desired_threshold_not_met(stats, stat_key)
+        return true unless stats[stat_key] < QaServer.config.performance_datatable_warning_threshold
         false
       end
   end

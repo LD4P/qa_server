@@ -32,7 +32,7 @@ module QaServer
       # @returns [Hash] performance statistics for the past 24 hours
       # @example
       #   { all_authorities:
-      #     { lifetime_stats:
+      #     { datatable_stats:
       #       { load_avg_ms: 12.3, normalization_avg_ms: 4.2, full_request_avg_ms: 16.5, etc. }
       #     }
       #     { day:
@@ -88,7 +88,7 @@ module QaServer
 
         def data_for_authority(authority_name: nil, datatype:)
           data = {}
-          data[FOR_LIFETIME] = lifetime(authority_name) if calculate_datatable?(datatype)
+          data[FOR_DATATABLE] = data_table_stats(authority_name) if calculate_datatable?(datatype)
           if calculate_graphdata?(datatype)
             data[FOR_DAY] = graph_data_service_class.average_last_24_hours(authority_name)
             data[FOR_MONTH] = graph_data_service_class.average_last_30_days(authority_name)
@@ -99,12 +99,52 @@ module QaServer
 
         # Get statistics for all available data.
         # @param [String] auth_name - limit statistics to records for the given authority (default: all authorities)
-        # @returns [Hash] performance statistics across all records
+        # @returns [Hash] performance statistics for the datatable during the expected time period
         # @example
         #   { load_avg_ms: 12.3, normalization_avg_ms: 4.2, full_request_avg_ms: 16.5, etc. }
-        def lifetime(auth_name = nil)
-          records = auth_name.nil? ? PerformanceHistory.all : where(authority: auth_name)
-          stats_calculator_class.calculate_stats(records)
+        def data_table_stats(auth_name)
+          records = records_for_last_24_hours(auth_name) ||
+                    records_for_last_30_days(auth_name) ||
+                    records_for_last_12_months(auth_name) ||
+                    all_records(auth_name)
+          stats = stats_calculator_class.new(records).calculate_stats
+        end
+
+        def expected_time_period
+          QaServer.config.performance_datatable_default_time_period
+        end
+
+        def records_for_last_24_hours(auth_name)
+          return unless expected_time_period == :day
+          end_hour = Time.now.getlocal
+          start_hour = end_hour - 23.hours
+          where_clause = { dt_stamp: start_hour..end_hour }
+          records_for_authority(auth_name, where_clause)
+        end
+
+        def records_for_last_30_days(auth_name)
+          return unless expected_time_period == :month
+          end_day = Time.now.getlocal
+          start_day = end_day - 29.days
+          where_clause = { dt_stamp: start_day..end_day }
+          records_for_authority(auth_name, where_clause)
+        end
+
+        def records_for_last_12_months(auth_name)
+          return unless expected_time_period == :year
+          end_month = Time.now.getlocal
+          start_month = end_month - 11.months
+          where_clause = { dt_stamp: start_month..end_month }
+          records_for_authority(auth_name, where_clause)
+        end
+
+        def all_records(auth_name)
+          auth_name.nil? ? PerformanceHistory.all : where(authority: auth_name)
+        end
+
+        def records_for_authority(auth_name, where_clause)
+          where_clause[:authority] = auth_name unless auth_name.nil?
+          where(where_clause)
         end
     end
   end
