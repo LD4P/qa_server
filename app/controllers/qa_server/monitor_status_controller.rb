@@ -6,7 +6,6 @@ module QaServer
                     :scenario_run_registry_class,
                     :scenario_history_class,
                     :performance_history_class
-
     self.presenter_class = QaServer::MonitorStatusPresenter
     self.scenario_run_registry_class = QaServer::ScenarioRunRegistry
     self.scenario_history_class = QaServer::ScenarioRunHistory
@@ -102,19 +101,23 @@ module QaServer
         params.key? :refresh
       end
 
+      def refresh_all?
+        params[:refresh].nil? || params[:refresh].casecmp?('all') # nil is for backward compatibility
+      end
+
       def refresh_tests?
         return false unless refresh? || expired?
-        params[:refresh].casecmp?('tests') || params[:refresh].casecmp?('all') || expired?
+        refresh_all? || params[:refresh].casecmp?('tests') || expired?
       end
 
       def refresh_history?
         return false unless refresh?
-        params[:refresh].casecmp?('history') || params[:refresh].casecmp?('all')
+        refresh_all? || params[:refresh].casecmp?('history')
       end
 
       def refresh_performance?
         return false unless refresh?
-        params[:refresh].casecmp?('performance') || params[:refresh].casecmp?('all')
+        refresh_all? || params[:refresh].casecmp?('performance')
       end
   end
 end

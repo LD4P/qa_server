@@ -25,6 +25,34 @@ module QaServer
       @display_performance_graph = false
     end
 
+    # Color of the graph line for load times
+    # @param [String] color RGB code
+    attr_writer :performance_load_color
+    def performance_load_color
+      @performance_load_color ||= '#CCBE9F'
+    end
+
+    # Color of the graph line for normalization times
+    # @param [String] color RGB code
+    attr_writer :performance_normalization_color
+    def performance_normalization_color
+      @performance_normalization_color ||= '#ABC3C9'
+    end
+
+    # Color of the graph line for full request times
+    # @param [String] color RGB code
+    attr_writer :performance_full_request_color
+    def performance_full_request_color
+      @performance_full_request_color ||= '#382119'
+    end
+
+    # Performance graph default time period for all graphs.  All authorities will show the graph for this time period on page load.
+    # @param [String] :day, :month, or :year
+    attr_writer :performance_graph_default_time_period
+    def performance_graph_default_time_period
+      @performance_graph_default_time_period ||= :month
+    end
+
     # Displays a datatable of performance test data when true
     # @param [Boolean] display performance datatable when true
     attr_writer :display_performance_datatable

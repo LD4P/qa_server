@@ -12,6 +12,25 @@ QaServer.config do |config|
   # @param [Boolean] display performance graph when true
   # config.display_performance_graph = false
 
+  # Color of the graph line for load times in the performance graphs.
+  # @param [String] color RGB code
+  # @note The default colors for the load, normalization, and full request lines in the performance graph are accessible.
+  # config.performance_load_color = '#CCBE9F'
+
+  # Color of the graph line for normalization times (The default colors for the performance graph are accessible.)
+  # @param [String] color RGB code
+  # @note The default colors for the load, normalization, and full request lines in the performance graph are accessible.
+  # config.performance_normalization_color = '#ABC3C9'
+
+  # Color of the graph line for full request times (The default colors for the performance graph are accessible.)
+  # @param [String] color RGB code
+  # @note The default colors for the load, normalization, and full request lines in the performance graph are accessible.
+  # config.performance_full_request_color = '#382119'
+
+  # Performance graph default time period for all graphs.  All authorities will show the graph for this time period on page load.
+  # @param [String] :day, :month, or :year
+  # config.performance_graph_default_time_period = :month
+
   # Displays a datatable of performance test data when true
   # @param [Boolean] display performance datatable when true
   # config.display_performance_datatable = true

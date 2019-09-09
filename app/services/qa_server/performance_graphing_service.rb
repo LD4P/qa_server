@@ -12,9 +12,7 @@ module QaServer
       # @param performance_data [Hash] hash of all performance data for all authorities
       # @see QaServer:PerformanceHistory
       def create_performance_graphs(performance_data:)
-        create_graphs_for_authority(performance_data, ALL_AUTH)
-        auths = authority_list_class.authorities_list
-        auths.each { |auth_name| create_graphs_for_authority(performance_data, auth_name) }
+        performance_data.each_key { |auth_name| create_graphs_for_authority(performance_data, auth_name.to_sym) }
       end
 
       # @param authority_name [String] name of the authority
@@ -36,7 +34,7 @@ module QaServer
           return unless auth_data
           gruff_data = rework_performance_data_for_gruff(auth_data[FOR_DAY], BY_HOUR)
           create_gruff_graph(gruff_data,
-                             performance_for_day_graph_full_path,
+                             performance_for_day_graph_full_path(authority_name),
                              I18n.t('qa_server.monitor_status.performance.x_axis_hour'))
         end
 
@@ -44,7 +42,7 @@ module QaServer
           auth_data = authority_performance_data(performance_data, authority_name)
           gruff_data = rework_performance_data_for_gruff(auth_data[FOR_MONTH], BY_DAY)
           create_gruff_graph(gruff_data,
-                             performance_for_month_graph_full_path,
+                             performance_for_month_graph_full_path(authority_name),
                              I18n.t('qa_server.monitor_status.performance.x_axis_day'))
         end
 
@@ -52,7 +50,7 @@ module QaServer
           auth_data = authority_performance_data(performance_data, authority_name)
           gruff_data = rework_performance_data_for_gruff(auth_data[FOR_YEAR], BY_MONTH)
           create_gruff_graph(gruff_data,
-                             performance_for_year_graph_full_path,
+                             performance_for_year_graph_full_path(authority_name),
                              I18n.t('qa_server.monitor_status.performance.x_axis_month'))
         end
 
@@ -63,7 +61,9 @@ module QaServer
 
         def performance_graph_theme(g, x_axis_label)
           g.theme_pastel
-          g.colors = ['#81adf4', '#8696b0', '#06578a']
+          g.colors = [QaServer.config.performance_load_color,
+                      QaServer.config.performance_normalization_color,
+                      QaServer.config.performance_full_request_color]
           g.marker_font_size = 12
           g.x_axis_increment = 10
           g.x_axis_label = x_axis_label
@@ -71,19 +71,19 @@ module QaServer
           g.dot_radius = 3
           g.line_width = 2
           g.minimum_value = 0
-          g.maximum_value = 1000
+          g.maximum_value = 2000
         end
 
-        def performance_for_day_graph_full_path
-          graph_full_path(graph_filename(ALL_AUTH, :day))
+        def performance_for_day_graph_full_path(authority_name)
+          graph_full_path(graph_filename(authority_name, :day))
         end
 
-        def performance_for_month_graph_full_path
-          graph_full_path(graph_filename(ALL_AUTH, :month))
+        def performance_for_month_graph_full_path(authority_name)
+          graph_full_path(graph_filename(authority_name, :month))
         end
 
-        def performance_for_year_graph_full_path
-          graph_full_path(graph_filename(ALL_AUTH, :year))
+        def performance_for_year_graph_full_path(authority_name)
+          graph_full_path(graph_filename(authority_name, :year))
         end
 
         def graph_filename(authority_name, time_period)

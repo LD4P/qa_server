@@ -12,6 +12,14 @@ p.status-update-dtstamp {
   font-style: italic;
 }
 
+div.performance-data-section-hidden {
+  display: none;
+}
+
+div.performance-data-section-visible {
+  display: block;
+}
+
 div.right-menu-section {
   padding-top: 50px;
 }

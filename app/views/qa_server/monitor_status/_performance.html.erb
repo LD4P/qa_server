@@ -4,58 +4,49 @@
 
       <% if @presenter.display_performance_graph? %>
       <script>
-        function switch_performance_view(id) {
-            document.getElementById('performance-by-the-hour').style.display = 'none';
-            document.getElementById('performance-by-the-day').style.display = 'none';
-            document.getElementById('performance-by-the-month').style.display = 'none';
-            document.getElementById(id).style.display = 'block';
+        function switch_performance_view(base_id, time_period) {
+          document.getElementById(base_id+'-during-day').className = 'performance-data-section-hidden';
+          document.getElementById(base_id+'-during-month').className = 'performance-data-section-hidden';
+          document.getElementById(base_id+'-during-year').className = 'performance-data-section-hidden';
+          document.getElementById(base_id+'-during-'+time_period).className = 'performance-data-section-visible';
         }
       </script>
 
-      <div id="performance-by-the-hour" class="performance-data-section">
-        <div id="right-menu-section">
+      <% @presenter.performance_graphs.each do |graph_info| %>
+      <div id="<%= @presenter.performance_graph_data_section_id(graph_info) %>" class="<%= @presenter.performance_data_section_class(graph_info) %>">
+        <div class="right-menu-section">
+          <h4><%= @presenter.performance_graph_authority(graph_info) %></h4>
           <ul class="right-menu">
-            <li class="selected"><%= t('qa_server.monitor_status.performance.menu_day') %></li>
-            <li class="clickable" onClick="switch_performance_view('performance-by-the-day')"><%= t('qa_server.monitor_status.performance.menu_month') %></li>
-            <li class="clickable" onClick="switch_performance_view('performance-by-the-month')"><%= t('qa_server.monitor_status.performance.menu_year') %></li>
+            <% if @presenter.performance_day_graph_selected?(graph_info) %>
+              <li class="selected"><%= t('qa_server.monitor_status.performance.menu_day') %></li>
+            <% else %>
+              <li class="clickable" onClick="switch_performance_view('<%= @presenter.performance_graph_data_section_base_id(graph_info) %>', 'day')">
+                <%= t('qa_server.monitor_status.performance.menu_day') %>
+              </li>
+            <% end %>
+            <% if @presenter.performance_month_graph_selected?(graph_info) %>
+              <li class="selected"><%= t('qa_server.monitor_status.performance.menu_month') %></li>
+            <% else %>
+              <li class="clickable" onClick="switch_performance_view('<%= @presenter.performance_graph_data_section_base_id(graph_info) %>', 'month')">
+                <%= t('qa_server.monitor_status.performance.menu_month') %>
+              </li>
+            <% end %>
+            <% if @presenter.performance_year_graph_selected?(graph_info) %>
+              <li class="selected"><%= t('qa_server.monitor_status.performance.menu_year') %></li>
+            <% else %>
+              <li class="clickable" onClick="switch_performance_view('<%= @presenter.performance_graph_data_section_base_id(graph_info) %>', 'year')">
+                <%= t('qa_server.monitor_status.performance.menu_year') %>
+              </li>
+            <% end %>
           </ul>
         </div>
 
-        <div id="performance-chart-by-the-hour" class="performance-chart">
-          <p>Data for the last 24 hours</p>
-          <%= image_tag(@presenter.performance_for_day_graph, alt: 'Performance data for the last 24 hours.') %>
+        <div id="<%= @presenter.performance_graph_id(graph_info) %>" class="performance-chart">
+          <p><%= @presenter.performance_graph_label(graph_info) %></p>
+          <%= image_tag(@presenter.performance_graph(graph_info), alt: @presenter.performance_graph_label(graph_info)) %>
         </div>
       </div>
-
-      <div id="performance-by-the-day" class="performance-data-section">
-        <div id="right-menu-section">
-          <ul class="right-menu">
-            <li class="clickable" onClick="switch_performance_view('performance-by-the-hour')"><%= t('qa_server.monitor_status.performance.menu_day') %></li>
-            <li class="selected"><%= t('qa_server.monitor_status.performance.menu_month') %></li>
-            <li class="clickable" onClick="switch_performance_view('performance-by-the-month')"><%= t('qa_server.monitor_status.performance.menu_year') %></li>
-          </ul>
-        </div>
-
-        <div id="performance-chart-by-the-day" class="performance-chart">
-          <p>Data for the last 30 days</p>
-          <%= image_tag(@presenter.performance_for_month_graph, alt: 'Performance data for the last 30 days.') %>
-        </div>
-      </div>
-
-      <div id="performance-by-the-month" class="performance-data-section">
-        <div id="right-menu-section">
-          <ul class="right-menu">
-            <li class="clickable" onClick="switch_performance_view('performance-by-the-hour')"><%= t('qa_server.monitor_status.performance.menu_day') %></li>
-            <li class="clickable" onClick="switch_performance_view('performance-by-the-day')"><%= t('qa_server.monitor_status.performance.menu_month') %></li>
-            <li class="selected"><%= t('qa_server.monitor_status.performance.menu_year') %></li>
-          </ul>
-        </div>
-
-        <div id="performance-chart-by-the-month" class="performance-chart">
-          <p>Data for the last 12 months</p>
-          <%= image_tag(@presenter.performance_for_year_graph, alt: 'Performance data for the last 12 months.') %>
-        </div>
-      </div>
+      <% end %>
     </div>
     <% end %>
 

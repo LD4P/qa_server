@@ -29,6 +29,9 @@ module QaServer
                    :max_normalization, :max_full_request, :avg_load, :avg_normalization, :avg_full_request, :min_load_style,
                    :min_normalization_style, :min_full_request_style, :max_load_style, :max_normalization_style, :max_full_request_style,
                    :avg_load_style, :avg_normalization_style, :avg_full_request_style, :performance_style_class, :max_threshold_exceeded,
-                   :min_threshold_not_met
+                   :min_threshold_not_met, :performance_graphs, :performance_graph, :performance_graph_authority, :performance_graph_label,
+                   :performance_default_graph_id, :performance_graph_id, :performance_graph_data_section_id, :performance_graph_data_section_base_id,
+                   :performance_data_section_class, :performance_day_graph_selected?, :performance_month_graph_selected?,
+                   :performance_year_graph_selected?
   end
 end
