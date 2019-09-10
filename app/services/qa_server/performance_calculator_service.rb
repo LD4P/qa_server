@@ -20,9 +20,9 @@ module QaServer
     # { load_avg_ms: 12.3, normalization_avg_ms: 4.2, full_request_avg_ms: 16.5,
     #   load_min_ms: 12.3, normalization_min_ms: 4.2, full_request_min_ms: 16.5,
     #   load_max_ms: 12.3, normalization_max_ms: 4.2, full_request_max_ms: 16.5 }
-    def calculate_stats(avg: false, low: false, high: false, load: true, norm: true, full: true)
-      calculate_load_stats(avg, low, high)
-      calculate_norm_stats(avg, low, high)
+    def calculate_stats(avg: false, low: false, high: false, load: true, norm: true, full: true) # rubocop:disable Metrics/ParameterLists
+      calculate_load_stats(avg, low, high) if load
+      calculate_norm_stats(avg, low, high) if norm
       calculate_full_stats(avg, low, high) if full
       stats
     end
@@ -52,7 +52,10 @@ module QaServer
       end
 
       def tenth_percentile_count
-        @tenth_percentile_count ||= (records.count * 0.1).round
+        return @tenth_percentile_count if @tenth_percentile_count.present?
+        percentile_count = (count * 0.1).round
+        percentile_count = 1 if percentile_count.zero? && count > 1
+        @tenth_percentile_count = percentile_count
       end
 
       def load_times
@@ -80,14 +83,20 @@ module QaServer
       end
 
       def calculate_average(times)
+        return 0 if count.zero?
+        return times[0] if count == 1
         times.inject(0.0) { |sum, el| sum + el } / count
       end
 
       def calculate_10th_percentile(sorted_times)
+        return 0 if count.zero?
+        return sorted_times[0] if count == 1
         sorted_times[tenth_percentile_count - 1]
       end
 
       def calculate_90th_percentile(sorted_times)
+        return 0 if count.zero?
+        return sorted_times[0] if count == 1
         sorted_times[count - tenth_percentile_count]
       end
   end
