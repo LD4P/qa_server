@@ -61,15 +61,12 @@ module QaServer
 
         def performance_graph_theme(g, x_axis_label)
           g.theme_pastel
-          g.colors = [QaServer.config.performance_load_color,
-                      QaServer.config.performance_normalization_color,
-                      QaServer.config.performance_full_request_color]
+          g.colors = [QaServer.config.performance_normalization_color,
+                      QaServer.config.performance_load_color]
           g.marker_font_size = 12
           g.x_axis_increment = 10
           g.x_axis_label = x_axis_label
           g.y_axis_label = I18n.t('qa_server.monitor_status.performance.y_axis_ms')
-          g.dot_radius = 3
-          g.line_width = 2
           g.minimum_value = 0
           g.maximum_value = 2000
         end
@@ -94,24 +91,21 @@ module QaServer
           labels = {}
           load_data = []
           normalization_data = []
-          full_request_data = []
           performance_data.each do |i, data|
             labels[i] = data[label_key]
             load_data << data[STATS][AVG_LOAD]
             normalization_data << data[STATS][AVG_NORM]
-            full_request_data << data[STATS][AVG_FULL]
           end
-          [labels, load_data, normalization_data, full_request_data]
+          [labels, normalization_data, load_data]
         end
 
         def create_gruff_graph(performance_data, performance_graph_full_path, x_axis_label)
-          g = Gruff::Line.new
+          g = Gruff::StackedBar.new
           performance_graph_theme(g, x_axis_label)
           g.title = ''
           g.labels = performance_data[0]
-          g.data(I18n.t('qa_server.monitor_status.performance.load_time_ms'), performance_data[1])
-          g.data(I18n.t('qa_server.monitor_status.performance.normalization_time_ms'), performance_data[2])
-          g.data(I18n.t('qa_server.monitor_status.performance.full_request_time_ms'), performance_data[3])
+          g.data(I18n.t('qa_server.monitor_status.performance.normalization_time_ms'), performance_data[1])
+          g.data(I18n.t('qa_server.monitor_status.performance.load_time_ms'), performance_data[2])
           g.write performance_graph_full_path
         end
     end

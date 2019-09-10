@@ -29,21 +29,14 @@ module QaServer
     # @param [String] color RGB code
     attr_writer :performance_load_color
     def performance_load_color
-      @performance_load_color ||= '#CCBE9F'
+      @performance_load_color ||= '#ABC3C9'
     end
 
     # Color of the graph line for normalization times
     # @param [String] color RGB code
     attr_writer :performance_normalization_color
     def performance_normalization_color
-      @performance_normalization_color ||= '#ABC3C9'
-    end
-
-    # Color of the graph line for full request times
-    # @param [String] color RGB code
-    attr_writer :performance_full_request_color
-    def performance_full_request_color
-      @performance_full_request_color ||= '#382119'
+      @performance_normalization_color ||= '#CCBE9F'
     end
 
     # Performance graph default time period for all graphs.  All authorities will show the graph for this time period on page load.
