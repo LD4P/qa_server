@@ -76,6 +76,7 @@ module QaServer::MonitorStatus
       end
 
       def format_stat(stat)
+        return '' if stat.nil?
         format("%0.1f", stat)
       end
 
@@ -86,11 +87,13 @@ module QaServer::MonitorStatus
       end
 
       def max_threshold_exceeded(stats, stat_key)
+        return false if stats[stat_key].nil?
         return true if stats[stat_key] > QaServer.config.performance_datatable_max_threshold
         false
       end
 
       def desired_threshold_not_met(stats, stat_key)
+        return false if stats[stat_key].nil?
         return true unless stats[stat_key] < QaServer.config.performance_datatable_warning_threshold
         false
       end
