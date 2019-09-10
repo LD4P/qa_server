@@ -25,7 +25,7 @@ module QaServer
           where_clause = { dt_stamp: start_hour..start_hour.end_of_hour }
           where_clause[:authority] = auth_name unless auth_name.nil?
           records = performance_data_class.where(where_clause)
-          stats = stats_calculator_class.new(records).calculate_stats
+          stats = stats_calculator_class.new(records).calculate_stats(avg: true, full: false)
           data = {}
           data[BY_HOUR] = performance_by_hour_label(idx, start_hour)
           data[STATS] = stats
@@ -51,7 +51,7 @@ module QaServer
           where_clause = { dt_stamp: start_day..start_day.end_of_day }
           where_clause[:authority] = auth_name unless auth_name.nil?
           records = performance_data_class.where(where_clause)
-          stats = stats_calculator_class.new(records).calculate_stats
+          stats = stats_calculator_class.new(records).calculate_stats(avg: true, full: false)
           data = {}
           data[BY_DAY] = performance_by_day_label(idx, start_day)
           data[STATS] = stats
@@ -77,7 +77,7 @@ module QaServer
           where_clause = { dt_stamp: start_month..start_month.end_of_month }
           where_clause[:authority] = auth_name unless auth_name.nil?
           records = performance_data_class.where(where_clause)
-          stats = stats_calculator_class.new(records).calculate_stats
+          stats = stats_calculator_class.new(records).calculate_stats(avg: true, full: false)
           data = {}
           data[BY_MONTH] = start_month.strftime("%m-%Y")
           data[STATS] = stats

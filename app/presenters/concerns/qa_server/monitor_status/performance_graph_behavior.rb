@@ -63,7 +63,7 @@ module QaServer::MonitorStatus
 
     private
 
-      def default_graph?(graph_info)
+      def default_graph?(graph_info) # rubocop:disable Metrics/CyclomaticComplexity
         return true if QaServer.config.performance_graph_default_time_period == :day && performance_day_graph_selected?(graph_info)
         return true if QaServer.config.performance_graph_default_time_period == :month && performance_month_graph_selected?(graph_info)
         return true if QaServer.config.performance_graph_default_time_period == :year && performance_year_graph_selected?(graph_info)

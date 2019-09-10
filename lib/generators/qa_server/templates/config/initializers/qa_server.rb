@@ -15,17 +15,12 @@ QaServer.config do |config|
   # Color of the graph line for load times in the performance graphs.
   # @param [String] color RGB code
   # @note The default colors for the load, normalization, and full request lines in the performance graph are accessible.
-  # config.performance_load_color = '#CCBE9F'
+  # config.performance_load_color = '#ABC3C9'
 
   # Color of the graph line for normalization times (The default colors for the performance graph are accessible.)
   # @param [String] color RGB code
   # @note The default colors for the load, normalization, and full request lines in the performance graph are accessible.
-  # config.performance_normalization_color = '#ABC3C9'
-
-  # Color of the graph line for full request times (The default colors for the performance graph are accessible.)
-  # @param [String] color RGB code
-  # @note The default colors for the load, normalization, and full request lines in the performance graph are accessible.
-  # config.performance_full_request_color = '#382119'
+  # config.performance_normalization_color = '#CCBE9F'
 
   # Performance graph default time period for all graphs.  All authorities will show the graph for this time period on page load.
   # @param [String] :day, :month, or :year

@@ -20,31 +20,31 @@ module QaServer
     # { load_avg_ms: 12.3, normalization_avg_ms: 4.2, full_request_avg_ms: 16.5,
     #   load_min_ms: 12.3, normalization_min_ms: 4.2, full_request_min_ms: 16.5,
     #   load_max_ms: 12.3, normalization_max_ms: 4.2, full_request_max_ms: 16.5 }
-    def calculate_stats
-      calculate_load_stats
-      calculate_norm_stats
-      calculate_full_stats
+    def calculate_stats(avg: false, low: false, high: false, load: true, norm: true, full: true)
+      calculate_load_stats(avg, low, high)
+      calculate_norm_stats(avg, low, high)
+      calculate_full_stats(avg, low, high) if full
       stats
     end
 
     private
 
-      def calculate_load_stats
-        stats[AVG_LOAD] = calculate_average(load_times)
-        stats[LOW_LOAD] = calculate_10th_percentile(load_times_sorted)
-        stats[HIGH_LOAD] = calculate_90th_percentile(load_times_sorted)
+      def calculate_load_stats(avg, low, high)
+        stats[AVG_LOAD] = calculate_average(load_times) if avg
+        stats[LOW_LOAD] = calculate_10th_percentile(load_times_sorted) if low
+        stats[HIGH_LOAD] = calculate_90th_percentile(load_times_sorted) if high
       end
 
-      def calculate_norm_stats
-        stats[AVG_NORM] = calculate_average(norm_times)
-        stats[LOW_NORM] = calculate_10th_percentile(norm_times_sorted)
-        stats[HIGH_NORM] = calculate_90th_percentile(norm_times_sorted)
+      def calculate_norm_stats(avg, low, high)
+        stats[AVG_NORM] = calculate_average(norm_times) if avg
+        stats[LOW_NORM] = calculate_10th_percentile(norm_times_sorted) if low
+        stats[HIGH_NORM] = calculate_90th_percentile(norm_times_sorted) if high
       end
 
-      def calculate_full_stats
-        stats[AVG_FULL] = calculate_average(full_times)
-        stats[LOW_FULL] = calculate_10th_percentile(full_times_sorted)
-        stats[HIGH_FULL] = calculate_90th_percentile(full_times_sorted)
+      def calculate_full_stats(avg, low, high)
+        stats[AVG_FULL] = calculate_average(full_times) if avg
+        stats[LOW_FULL] = calculate_10th_percentile(full_times_sorted) if low
+        stats[HIGH_FULL] = calculate_90th_percentile(full_times_sorted) if high
       end
 
       def count
@@ -52,7 +52,7 @@ module QaServer
       end
 
       def tenth_percentile_count
-        @tenth_percentile_count ||= (records.count*0.1).round
+        @tenth_percentile_count ||= (records.count * 0.1).round
       end
 
       def load_times
@@ -84,11 +84,11 @@ module QaServer
       end
 
       def calculate_10th_percentile(sorted_times)
-        sorted_times[tenth_percentile_count-1]
+        sorted_times[tenth_percentile_count - 1]
       end
 
       def calculate_90th_percentile(sorted_times)
-        sorted_times[count-tenth_percentile_count]
+        sorted_times[count - tenth_percentile_count]
       end
   end
 end

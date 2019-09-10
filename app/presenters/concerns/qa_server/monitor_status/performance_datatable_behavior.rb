@@ -59,13 +59,13 @@ module QaServer::MonitorStatus
     def performance_table_description
       case expected_time_period
       when :day
-        I18n.t('qa_server.monitor_status.performance.datatable_day_desc', )
+        I18n.t('qa_server.monitor_status.performance.datatable_day_desc')
       when :month
-        I18n.t('qa_server.monitor_status.performance.datatable_month_desc', )
+        I18n.t('qa_server.monitor_status.performance.datatable_month_desc')
       when :year
-        I18n.t('qa_server.monitor_status.performance.datatable_year_desc', )
+        I18n.t('qa_server.monitor_status.performance.datatable_year_desc')
       else
-        I18n.t('qa_server.monitor_status.performance.datatable_all_desc', )
+        I18n.t('qa_server.monitor_status.performance.datatable_all_desc')
       end
     end
 

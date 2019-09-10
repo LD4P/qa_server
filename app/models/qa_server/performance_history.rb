@@ -107,7 +107,7 @@ module QaServer
                     records_for_last_30_days(auth_name) ||
                     records_for_last_12_months(auth_name) ||
                     all_records(auth_name)
-          stats = stats_calculator_class.new(records).calculate_stats
+          stats_calculator_class.new(records).calculate_stats(avg: true, low: true, high: true)
         end
 
         def expected_time_period
