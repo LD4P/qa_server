@@ -1,3 +1,13 @@
+### 2.2.2 (2019-09-10)
+
+* handle stat calculation and formatting when 0 records or missing stats
+* switch performance graph to stacked_bar
+* Use 10th and 90th percentiles for datatable
+* display day graph for every authority for default time period
+* cache performance graphs
+* include authority data for performance graphs
+* move some of the performance data construction code to services
+
 ### 2.2.1 (2019-09-04)
 
 * config to optionally display of the performance graph/datatable
