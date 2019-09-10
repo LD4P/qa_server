@@ -6,7 +6,7 @@ module PrependedLinkedData::FindTerm
     saved_performance_data = performance_data
     performance_data = true
     full_results = super
-    QaServer::PerformanceHistory.save_result(dt_stamp: Time.now,
+    QaServer::PerformanceHistory.save_result(dt_stamp: Time.now.getlocal,
                                              authority: authority_name,
                                              action: 'fetch',
                                              size_bytes: full_results[:performance][:fetched_bytes],

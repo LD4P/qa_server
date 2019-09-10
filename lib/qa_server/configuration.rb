@@ -25,12 +25,61 @@ module QaServer
       @display_performance_graph = false
     end
 
+    # Color of the graph line for load times
+    # @param [String] color RGB code
+    attr_writer :performance_load_color
+    def performance_load_color
+      @performance_load_color ||= '#CCBE9F'
+    end
+
+    # Color of the graph line for normalization times
+    # @param [String] color RGB code
+    attr_writer :performance_normalization_color
+    def performance_normalization_color
+      @performance_normalization_color ||= '#ABC3C9'
+    end
+
+    # Color of the graph line for full request times
+    # @param [String] color RGB code
+    attr_writer :performance_full_request_color
+    def performance_full_request_color
+      @performance_full_request_color ||= '#382119'
+    end
+
+    # Performance graph default time period for all graphs.  All authorities will show the graph for this time period on page load.
+    # @param [String] :day, :month, or :year
+    attr_writer :performance_graph_default_time_period
+    def performance_graph_default_time_period
+      @performance_graph_default_time_period ||= :month
+    end
+
     # Displays a datatable of performance test data when true
     # @param [Boolean] display performance datatable when true
     attr_writer :display_performance_datatable
     def display_performance_datatable?
       return @display_performance_datatable unless @display_performance_datatable.nil?
       @display_performance_datatable = true
+    end
+
+    # Performance datatable default time period for calculating stats.
+    # @param [String] :day, :month, :year, :all
+    attr_writer :performance_datatable_default_time_period
+    def performance_datatable_default_time_period
+      @performance_datatable_default_time_period ||= :year
+    end
+
+    # Performance datatable targeted maximum full request time.
+    # @param [Integer] targeted maximum full request time in ms
+    attr_writer :performance_datatable_max_threshold
+    def performance_datatable_max_threshold
+      @performance_datatable_max_threshold ||= 1500
+    end
+
+    # Performance datatable targeted warning full request time.
+    # @param [Integer] targeted warning full request time in ms
+    attr_writer :performance_datatable_warning_threshold
+    def performance_datatable_warning_threshold
+      @performance_datatable_warning_threshold ||= 1000
     end
 
     # Additional menu items to add to the main navigation menu's set of left justified menu items

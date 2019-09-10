@@ -1,0 +1,54 @@
+  <h3><%= t('qa_server.monitor_status.summary.title') %></h3>
+
+  <h4><%= t('qa_server.monitor_status.summary.summary_table') %></h4>
+  <table class="monitor-status-status">
+    <tr>
+      <th><%= t('qa_server.monitor_status.summary.authorities') %></th>
+      <th><%= t('qa_server.monitor_status.summary.authorities_with_failures') %></th>
+      <th><%= t('qa_server.monitor_status.summary.passing_tests') %></th>
+      <th><%= t('qa_server.monitor_status.summary.failing_tests') %></th>
+      <th><%= t('qa_server.monitor_status.summary.total_tests') %></th>
+    </tr>
+    <tr>
+      <td class="status-neutral"><%= @presenter.authorities_count %></td>
+      <td class="<%= @presenter.authorities_count_style %>"><%= @presenter.failing_authorities_count %></td>
+      <td class="status-neutral"><%= @presenter.passing_tests_count%></td>
+      <td class="<%= @presenter.failing_tests_style %>"><%= @presenter.failing_tests_count %></td>
+      <td class="status-neutral"><%= @presenter.tests_count %></td>
+    </tr>
+  </table>
+  <p class="status-update-dtstamp"><%= t('qa_server.monitor_status.summary.last_updated', date: @presenter.last_updated) %></p>
+
+  <% if @presenter.failures? %>
+    <div id="failures" class="status-section">
+      <h4><%= t('qa_server.monitor_status.failures.title') %></h4>
+
+      <table class="status">
+        <tr>
+          <th><%= t('qa_server.monitor_status.failures.status') %></th>
+          <th><%= t('qa_server.monitor_status.failures.subauthority') %></th>
+          <th><%= t('qa_server.monitor_status.failures.service') %></th>
+          <th><%= t('qa_server.monitor_status.failures.action') %></th>
+          <th><%= t('qa_server.monitor_status.failures.url') %></th>
+          <th><%= t('qa_server.monitor_status.failures.errmsg') %></th>
+        </tr>
+        <% current_authority = nil %>
+        <% @status_data.each do |status| %>
+          <% unless status[:authority_name] == current_authority %>
+              <% current_authority = status[:authority_name] %>
+              <tr>
+                <td class="table_subheading" colspan="6"><%= current_authority %></td>
+              </tr>
+          <% end %>
+          <tr>
+            <td class="<%= @presenter.status_style_class(status) %>"><%= @presenter.status_label(status) %></td>
+            <td><%= status[:subauthority_name] %></td>
+            <td><%= status[:service] %></td>
+            <td><%= status[:action] %></td>
+            <td><a href="<%= status[:url] %>"><%= status[:url] %></a></td>
+            <td><%= status[:err_message] %></td>
+          </tr>
+        <% end %>
+      </table>
+    </div>
+  <% end %>

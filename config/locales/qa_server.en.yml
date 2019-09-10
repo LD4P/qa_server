@@ -88,12 +88,16 @@ en:
         y_axis_ms:       Milliseconds (ms)
         now:             NOW
         today:           TODAY
-        authority:           Authority
-        average_times:       Average (ms)
-        fastest_times:       Fastest (ms)
-        slowest_times:       Slowest (ms)
-        load_times:          Load
-        normalization_times: Normalization
-        full_request_times:  Total
+        datatable_day_desc:   'Performance tabulated data for last 24 hours'
+        datatable_month_desc: 'Performance tabulated data for last 30 days'
+        datatable_year_desc:  'Performance tabulated data for one year'
+        datatable_all_desc:   'Performance tabulated data for all recorded data'
+        authority:            Authority
+        average_times:        Average (ms)
+        fastest_times:        10th percentile (ms)
+        slowest_times:        90th percentile (ms)
+        load_times:           Load
+        normalization_times:  Normalization
+        full_request_times:   Total
     usage:
       title:             Usage

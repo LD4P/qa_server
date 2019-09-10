@@ -18,4 +18,3 @@ module QaServer::MonitorStatus
       end
   end
 end
-# frozen_string_literal: true

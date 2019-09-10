@@ -32,7 +32,7 @@ module QaServer
 
       def authority_name
         return @authority_name if @authority_name.present?
-        @authority_name = (params.key? :authority) ? params[:authority].downcase : nil # rubocop:disable Style/TernaryParentheses
+        @authority_name = params.key?(:authority) ? params[:authority].downcase : nil
       end
   end
 end
