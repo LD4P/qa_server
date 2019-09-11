@@ -6,6 +6,7 @@ module PrependedLinkedData::SearchQuery
     saved_performance_data = performance_data
     performance_data = true
     full_results = super
+    return full_results unless full_results.is_a?(Hash) && full_results.key?(:performance)
     QaServer::PerformanceHistory.save_result(dt_stamp: Time.now.getlocal,
                                              authority: authority_name,
                                              action: 'search',

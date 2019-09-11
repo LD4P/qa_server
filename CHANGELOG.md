@@ -5,6 +5,8 @@
 * Use 10th and 90th percentiles for datatable
 * display day graph for every authority for default time period
 * cache performance graphs
+* don’t calculate low and high for graphs since they aren’t used
+* don’t calcualte full request data for graphs since it isn’t used
 * include authority data for performance graphs
 * move some of the performance data construction code to services
 
