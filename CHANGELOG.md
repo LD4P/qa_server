@@ -1,3 +1,7 @@
+### 2.2.3 (2019-09-11)
+
+* do not process and store performance data if it wasn't returned in the result
+
 ### 2.2.2 (2019-09-10)
 
 * handle stat calculation and formatting when 0 records or missing stats
