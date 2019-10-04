@@ -92,5 +92,11 @@ module QaServer
       @navmenu_presenter.append_leftmenu_items(navmenu_extra_leftitems)
       @navmenu_presenter
     end
+
+    def performance_tracker
+      @performance_tracker ||= File.new('log/performance.csv', 'w').tap do |f|
+        f.puts('action, http request, load graph, normalization, TOTAL, data size, authority')
+      end
+    end
   end
 end
