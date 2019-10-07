@@ -16,15 +16,13 @@ module QaServer
       include QaServer::PerformanceHistoryDataKeys
 
       # Save a scenario result
-      # @param run_id [Integer] the run on which to gather statistics
-      # @param result [Hash] the scenario result to be saved
-      def save_result(dt_stamp:, authority:, action:, size_bytes:, load_time_ms:, normalization_time_ms:) # rubocop:disable Metrics/ParameterLists
-        create(dt_stamp: dt_stamp,
+      # @param authority [String] name of the authority
+      # @param action [Symbol] type of action being evaluated (e.g. :fetch, :search)
+      # @return ActveRecord::Base for the new performance history record
+      def create_record(authority:, action:)
+        create(dt_stamp: Time.now.getlocal,
                authority: authority,
-               action: action,
-               size_bytes: size_bytes,
-               load_time_ms: load_time_ms,
-               normalization_time_ms: normalization_time_ms)
+               action: action)
       end
 
       # Performance data for a day, a month, a year, and all time for each authority.
