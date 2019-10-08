@@ -66,10 +66,16 @@
             <td class="table_subheading" colspan="4"><%= authority_name %></td>
           </tr>
           <tr>
-            <th><%= t('qa_server.monitor_status.performance.load_times') %></th>
-            <td class="status-neutral"><%= @presenter.high_load(stats) %></td>
-            <td class="status-neutral"><%= @presenter.avg_load(stats) %></td>
-            <td class="status-neutral"><%= @presenter.low_load(stats) %></td>
+            <th><%= t('qa_server.monitor_status.performance.retrieve_times') %></th>
+            <td class="status-neutral"><%= @presenter.high_retrieve(stats) %></td>
+            <td class="status-neutral"><%= @presenter.avg_retrieve(stats) %></td>
+            <td class="status-neutral"><%= @presenter.low_retrieve(stats) %></td>
+          </tr>
+          <tr>
+            <th><%= t('qa_server.monitor_status.performance.graph_load_times') %></th>
+            <td class="status-neutral"><%= @presenter.high_graph_load(stats) %></td>
+            <td class="status-neutral"><%= @presenter.avg_graph_load(stats) %></td>
+            <td class="status-neutral"><%= @presenter.low_graph_load(stats) %></td>
           </tr>
           <tr>
             <th><%= t('qa_server.monitor_status.performance.normalization_times') %></th>

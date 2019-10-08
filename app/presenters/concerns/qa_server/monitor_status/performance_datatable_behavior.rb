@@ -8,8 +8,12 @@ module QaServer::MonitorStatus
       authority_data[FOR_DATATABLE]
     end
 
-    def low_load(stats)
-      format_stat stats[LOW_LOAD]
+    def low_retrieve(stats)
+      format_stat stats[LOW_RETR]
+    end
+
+    def low_graph_load(stats)
+      format_stat stats[LOW_GRPH]
     end
 
     def low_normalization(stats)
@@ -17,11 +21,15 @@ module QaServer::MonitorStatus
     end
 
     def low_full_request(stats)
-      format_stat stats[LOW_FULL]
+      format_stat stats[LOW_ACTN]
     end
 
-    def high_load(stats)
-      format_stat stats[HIGH_LOAD]
+    def high_retrieve(stats)
+      format_stat stats[HIGH_RETR]
+    end
+
+    def high_graph_load(stats)
+      format_stat stats[HIGH_GRPH]
     end
 
     def high_normalization(stats)
@@ -29,11 +37,15 @@ module QaServer::MonitorStatus
     end
 
     def high_full_request(stats)
-      format_stat stats[HIGH_FULL]
+      format_stat stats[HIGH_ACTN]
     end
 
-    def avg_load(stats)
-      format_stat stats[AVG_LOAD]
+    def avg_retrieve(stats)
+      format_stat stats[AVG_RETR]
+    end
+
+    def avg_graph_load(stats)
+      format_stat stats[AVG_GRPH]
     end
 
     def avg_normalization(stats)
@@ -41,19 +53,19 @@ module QaServer::MonitorStatus
     end
 
     def avg_full_request(stats)
-      format_stat stats[AVG_FULL]
+      format_stat stats[AVG_ACTN]
     end
 
     def low_full_request_style(stats)
-      performance_style_class(stats, LOW_FULL)
+      performance_style_class(stats, LOW_ACTN)
     end
 
     def high_full_request_style(stats)
-      performance_style_class(stats, HIGH_FULL)
+      performance_style_class(stats, HIGH_ACTN)
     end
 
     def avg_full_request_style(stats)
-      performance_style_class(stats, AVG_FULL)
+      performance_style_class(stats, AVG_ACTN)
     end
 
     def performance_table_description
