@@ -1,3 +1,11 @@
+### 3.0.1 (2019-10-09)
+
+* use old :load data when split :retrieve and :graph_load are not available
+* bug fix - make sure count is counting based on the current set of times
+* bug fix - add in missing translations
+* bug fix - fix performance data table data style for retrieve
+* bug fix - unsupported_action? for performance datatable handles all 0 stats
+
 ### 3.0.0 (2019-10-09)
 
 * refactor performance data and graphs to include stats by action as well as by authority and time period
