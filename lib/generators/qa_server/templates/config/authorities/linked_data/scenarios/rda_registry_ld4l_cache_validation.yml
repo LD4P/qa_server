@@ -1,0 +1,255 @@
+---
+authority:
+  service: ld4l_cache
+  context: true
+search:
+  -
+    query: full
+    subauth: aspect_ratio
+    result_size: 130
+  -
+    query: essays
+    subauth: collective_title
+    result_size: 130
+  -
+    query: graph
+    subauth: illustrative_content
+    result_size: 130
+  -
+    query: single
+    subauth: mode_of_issuance
+    result_size: 130
+  -
+    query: letter
+    subauth: form_of_musical_notation
+    result_size: 130
+  -
+    query: case
+    subauth: carrier_extent_unit
+    result_size: 130
+  -
+    query: audio
+    subauth: carrier_type
+    result_size: 130
+  -
+    query: point
+    subauth: cartographic_data_type
+    result_size: 130
+  -
+    query: monochrome
+    subauth: colour_content
+    result_size: 130
+  -
+    query: image
+    subauth: content_type
+    result_size: 130
+  -
+    query: disc
+    subauth: generation
+    result_size: 130
+  -
+    query: paper
+    subauth: material
+    result_size: 130
+  -
+    query: audio
+    subauth: media_type
+    result_size: 130
+  -
+    query: positive
+    subauth: polarity
+    result_size: 130
+  -
+    query: title
+    subauth: recording_sources
+    result_size: 130
+  -
+    query: high
+    subauth: reduction_ratio
+    result_size: 130
+  -
+    query: video
+    subauth: regional_encoding
+    result_size: 130
+  -
+    query: audio
+    subauth: terms
+    result_size: 130
+  -
+    query: ring
+    subauth: type_of_binding
+    result_size: 130
+# Deprecated
+#   -
+#    query: ALA
+#    subauth: base_material
+#    result_size: 130
+  -
+    query: print
+    subauth: production_method
+    result_size: 130
+  -
+    query: braille
+    subauth: form_of_tactile_notation
+    result_size: 130
+  -
+    query: folio
+    subauth: bibliographic_format
+    result_size: 130
+  -
+    query: PAL
+    subauth: broadcast_standard
+    result_size: 130
+  -
+    query: mono
+    subauth: config_playback_channels
+    result_size: 130
+  -
+    query: audio
+    subauth: file_type
+    result_size: 130
+  -
+    query: large
+    subauth: font_size
+    result_size: 130
+  -
+    query: choir
+    subauth: format_of_notated_music
+    result_size: 130
+  -
+    query: times
+    subauth: frequency
+    result_size: 130
+  -
+    query: male
+    subauth: gender
+    result_size: 120
+  -
+    query: fine
+    subauth: groove_pitch
+    result_size: 130
+  -
+    query: coarse
+    subauth: groove_width
+    result_size: 130
+  -
+    query: single
+    subauth: layout
+    result_size: 130
+  -
+    query: game
+    subauth: form_of_notated_movement
+    result_size: 130
+  -
+    query: standard
+    subauth: presentation_format
+    result_size: 130
+# Deprecated
+#   -
+#    query: ALA
+#    subauth: prod_tactile
+#    result_size: 130
+  -
+    query: optical
+    subauth: recording_medium
+    result_size: 130
+  -
+    query: music
+    subauth: rofch
+    result_size: 120
+#   -
+#    query: ALA
+#    subauth: rofchrda
+#    result_size: 130
+#   -
+#    query: ALA
+#    subauth: rofem
+#    result_size: 130
+#   -
+#    query: ALA
+#    subauth: rofer
+#    result_size: 130
+#   -
+#    query: ALA
+#    subauth: rofet
+#    result_size: 130
+#   -
+#    query: ALA
+#    subauth: roffgrda
+#    result_size: 130
+#   -
+#    query: ALA
+#    subauth: rofhf
+#    result_size: 130
+#   -
+#    query: ALA
+#    subauth: rofid
+#    result_size: 130
+#   -
+#    query: ALA
+#    subauth: rofim
+#    result_size: 130
+#   -
+#    query: ALA
+#    subauth: rofin
+#    result_size: 130
+#   -
+#    query: ALA
+#    subauth: rofit
+#    result_size: 130
+#   -
+#    query: ALA
+#    subauth: rofitrda
+#    result_size: 130
+#   -
+#    query: ALA
+#    subauth: rofrm
+#    result_size: 130
+#   -
+#    query: ALA
+#    subauth: rofrr
+#    result_size: 130
+#   -
+#    query: ALA
+#    subauth: rofrt
+#    result_size: 130
+#   -
+#    query: ALA
+#    subauth: rofsf
+#    result_size: 130
+#   -
+#    query: ALA
+#    subauth: rofsfrda
+#    result_size: 130
+#   -
+#    query: ALA
+#    subauth: rofsm
+#    result_size: 130
+  -
+    query: scale
+    subauth: scale_designation
+    result_size: 130
+  -
+    query: sound
+    subauth: sound_content
+    result_size: 130
+  -
+    query: dolby
+    subauth: special_playback
+    result_size: 130
+  -
+    query: preliminary
+    subauth: status_of_identification
+    result_size: 130
+  -
+    query: edge
+    subauth: track_config
+    result_size: 130
+  -
+    query: digital
+    subauth: type_of_recording
+    result_size: 120
+  -
+    query: laser
+    subauth: video_format
+    result_size: 130

@@ -35,7 +35,7 @@
     "url": {
       "@context": "http://www.w3.org/ns/hydra/context.jsonld",
       "@type": "IriTemplate",
-      "template": "http://services.ld4l.org/ld4l_services/nalt_batch.jsp?{?query}&{?maxRecords}&{?entity}&{?lang}",
+      "template": "http://services.ld4l.org/ld4l_services/nalt_batch.jsp?{?query}&{?maxRecords}&{?startRecord}&{?entity}&{?lang}",
       "variableRepresentation": "BasicRepresentation",
       "mapping": [
         {
@@ -58,6 +58,13 @@
           "property": "hydra:freetextQuery",
           "required": false,
           "default": "20"
+        },
+        {
+          "@type": "IriTemplateMapping",
+          "variable": "startRecord",
+          "property": "hydra:freetextQuery",
+          "required": false,
+          "default": "1"
         },
         {
           "@type": "IriTemplateMapping",

@@ -1,6 +1,7 @@
 {
   "QA_CONFIG_VERSION": "2.1",
   "prefixes": {
+    "loc":     "http://id.loc.gov/vocabulary/identifiers/",
     "madsrdf": "http://www.loc.gov/mads/rdf/v1#",
     "vivo":    "http://vivoweb.org/ontology/core#"
   },
@@ -120,7 +121,7 @@
         {
           "property_label_i18n": "qa.linked_data.authority.locdemographics_ld4l_cache.earlier_form",
           "property_label_default": "Earlier form",
-          "ldpath": "madsrdf:hasEarlierEstablishedForm/madsrdf:variantLabel :: xsd:string",
+          "ldpath": "madsrdf:hasEarlierEstablishedForm/madsrdf:authoritativeLabel :: xsd:string",
           "selectable": false,
           "drillable": false
         },

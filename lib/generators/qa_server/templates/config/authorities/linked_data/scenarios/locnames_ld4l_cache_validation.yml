@@ -4,28 +4,13 @@ authority:
   context: true
 search:
   -
-    query: 'mark twain'
-  -
-    query: 'mark twain'
-    subauth: person
-  -
-    query: 'Twain, Mark, 1835-1910'
-    subauth: person
-  -
-    query: 'mark twain'
-    subauth: organization
+    query: Cayuga
   -
     query: Cayuga
-    subauth: place
+    subauth: geographic
   -
-    query: Cayuga
-    subauth: intangible
-  -
-    query: Cayuga
-    subauth: geocoordinates
-  -
-    query: 'mark twain'
-    subauth: work
+    query: ALA
+    subauth: conference
 term:
   -
     identifier: 'http://id.loc.gov/authorities/names/n92016188'
