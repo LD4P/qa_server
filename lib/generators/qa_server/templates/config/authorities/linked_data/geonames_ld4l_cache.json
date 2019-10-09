@@ -36,7 +36,7 @@
     "url": {
       "@context": "http://www.w3.org/ns/hydra/context.jsonld",
       "@type": "IriTemplate",
-      "template": "http://services.ld4l.org/ld4l_services/geonames_batch.jsp?{?query}&{?entity}&{?maxRecords}&{?lang}",
+      "template": "http://services.ld4l.org/ld4l_services/geonames_batch.jsp?{?query}&{?entity}&{?maxRecords}&{?startRecord}&{?lang}",
       "variableRepresentation": "BasicRepresentation",
       "mapping": [
         {
@@ -59,6 +59,13 @@
           "property": "hydra:freetextQuery",
           "required": false,
           "default": "20"
+        },
+        {
+          "@type": "IriTemplateMapping",
+          "variable": "startRecord",
+          "property": "hydra:freetextQuery",
+          "required": false,
+          "default": "1"
         },
         {
           "@type": "IriTemplateMapping",
@@ -85,6 +92,7 @@
           "property_label_i18n": "qa.linked_data.authority.geonames_ld4l_cache.parent_adm1_label",
           "property_label_default": "Parent",
           "ldpath": "geonames:parentADM1 :: xsd:string",
+          "expansion_label_ldpath": "geonames:name ::xsd:string",
           "selectable": false,
           "drillable": false
         },
@@ -92,6 +100,7 @@
           "property_label_i18n": "qa.linked_data.authority.geonames_ld4l_cache.parent_adm2_label",
           "property_label_default": "Parent2",
           "ldpath": "geonames:parentADM2 :: xsd:string",
+          "expansion_label_ldpath": "geonames:name ::xsd:string",
           "selectable": false,
           "drillable": false
         },
@@ -99,6 +108,7 @@
           "property_label_i18n": "qa.linked_data.authority.geonames_ld4l_cache.parent_country_label",
           "property_label_default": "Parent Country",
           "ldpath": "geonames:parentCountry :: xsd:string",
+          "expansion_label_ldpath": "geonames:name ::xsd:string",
           "selectable": false,
           "drillable": false
         },
