@@ -1,3 +1,11 @@
+### 3.0.0 (2019-10-09)
+
+* refactor performance data and graphs to include stats by action as well as by authority and time period
+* adds pagination start_record parameter for LD4P cached data
+* adds RDA Registry authority
+* splits LCNAF into 2 authorities for LD4P cached data focused locnames and real world object focused locnames_rwo
+* adds wikidata authority - NOTE: The first pass on fetching through this authority is non-performant.
+
 ### 2.2.3 (2019-09-11)
 
 * do not process and store performance data if it wasn't returned in the result
