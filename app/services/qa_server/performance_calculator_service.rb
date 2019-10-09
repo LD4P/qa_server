@@ -21,6 +21,7 @@ module QaServer
     #     retrieve_10th_ms: 12.3, graph_load_10th_ms: 12.3, normalization_10th_ms: 4.2, full_request_10th_ms: 16.5,
     #     retrieve_90th_ms: 12.3, graph_load_90th_ms: 12.3, normalization_90th_ms: 4.2, full_request_90th_ms: 16.5 }
     def calculate_stats(avg: false, low: false, high: false, load: true, norm: true, full: true) # rubocop:disable Metrics/ParameterLists
+      calculate_load_stats(avg, low, high) if load
       calculate_retrieve_stats(avg, low, high) if load
       calculate_graph_load_stats(avg, low, high) if load
       calculate_normalization_stats(avg, low, high) if norm
@@ -29,6 +30,12 @@ module QaServer
     end
 
     private
+
+      def calculate_load_stats(avg, low, high)
+        stats[AVG_LOAD] = calculate_average(full_load_times) if avg
+        stats[LOW_LOAD] = calculate_10th_percentile(full_load_times) if low
+        stats[HIGH_LOAD] = calculate_90th_percentile(full_load_times) if high
+      end
 
       def calculate_retrieve_stats(avg, low, high)
         stats[AVG_RETR] = calculate_average(retrieve_times) if avg
@@ -63,6 +70,10 @@ module QaServer
       def times(column)
         where_clause = action.nil? ? "" : { "action" => action }
         records.where(where_clause).where.not(column => nil).order(column).pluck(column)
+      end
+
+      def full_load_times
+        @full_load_times ||= times(:retrieve_plus_graph_load_time_ms)
       end
 
       def retrieve_times
