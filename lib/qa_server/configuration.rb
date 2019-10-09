@@ -25,15 +25,31 @@ module QaServer
       @display_performance_graph = false
     end
 
-    # Color of the graph line for load times
-    # @param [String] color RGB code
-    attr_writer :performance_load_color
-    def performance_load_color
-      @performance_load_color ||= '#ABC3C9'
+    # Max time in milliseconds for y-axis in the performance graphs.
+    attr_writer :performance_y_axis_max
+    def performance_y_axis_max
+      @performance_y_axis_max ||= 4000
     end
 
-    # Color of the graph line for normalization times
+    # Color of the graph line for retrieve times in the performance graphs.
     # @param [String] color RGB code
+    # @note The default colors for the retrieve, graph_load, load, normalization, and full request lines in the performance graph are accessible.
+    attr_writer :performance_retrieve_color
+    def performance_retrieve_color
+      @performance_retrieve_color ||= '#ABC3C9'
+    end
+
+    # Color of the graph line for graph load times in the performance graphs.
+    # @param [String] color RGB code
+    # @note The default colors for the retrieve, graph_load, load, normalization, and full request lines in the performance graph are accessible.
+    attr_writer :performance_graph_load_color
+    def performance_graph_load_color
+      @performance_graph_load_color ||= '#E8DCD3'
+    end
+
+    # Color of the graph line for normalization times in the performance graphs
+    # @param [String] color RGB code
+    # @note The default colors for the retrieve, graph_load, load, normalization, and full request lines in the performance graph are accessible.
     attr_writer :performance_normalization_color
     def performance_normalization_color
       @performance_normalization_color ||= '#CCBE9F'

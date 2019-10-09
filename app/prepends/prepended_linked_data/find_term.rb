@@ -12,7 +12,7 @@ module PrependedLinkedData::FindTerm
     begin
       full_results = super
       update_performance_history_record(full_results, start_time_s)
-    rescue Exception => e
+    rescue Exception => e # rubocop:disable Lint/RescueException
       ph_record.destroy
       raise e
     end
@@ -47,9 +47,9 @@ module PrependedLinkedData::FindTerm
     # Temporary override to fix bug.  Remove when QA PR #273 is merged and a new release is cut
     def normalize_results
       normalize_start_dt = Time.now.utc
-  
+
       json = perform_normalization
-  
+
       normalize_end_dt = Time.now.utc
       @normalize_time_s = normalize_end_dt - normalize_start_dt
       @normalized_size = json.to_s.size if performance_data?

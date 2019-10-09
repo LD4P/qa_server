@@ -12,7 +12,7 @@ module PrependedLinkedData::SearchQuery
     begin
       full_results = super
       update_performance_history_record(full_results, start_time_s)
-    rescue Exception => e
+    rescue Exception => e # rubocop:disable Lint/RescueException
       ph_record.destroy
       raise e
     end

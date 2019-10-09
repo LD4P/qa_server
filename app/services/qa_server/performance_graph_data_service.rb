@@ -18,13 +18,11 @@ module QaServer
       #     ...,
       #     23: { hour: 'NOW', stats: { load_avg_ms: 12.3, normalization_avg_ms: 4.2, full_request_avg_ms: 16.5, etc. }}
       #   }
-      def average_last_24_hours(auth_name = nil)
+      def average_last_24_hours(authority_name: nil, action: nil)
         start_hour = Time.now.getlocal.beginning_of_hour - 23.hours
         avgs = {}
         0.upto(23).each do |idx|
-          where_clause = { dt_stamp: start_hour..start_hour.end_of_hour }
-          where_clause[:authority] = auth_name unless auth_name.nil?
-          records = performance_data_class.where(where_clause)
+          records = records_by(authority_name, action, start_hour..start_hour.end_of_hour)
           stats = stats_calculator_class.new(records).calculate_stats(avg: true, full: false)
           data = {}
           data[BY_HOUR] = performance_by_hour_label(idx, start_hour)
@@ -44,13 +42,11 @@ module QaServer
       #     ...,
       #     29: { day: 'TODAY', stats: { load_avg_ms: 12.3, normalization_avg_ms: 4.2, full_request_avg_ms: 16.5, etc. }}
       #   }
-      def average_last_30_days(auth_name = nil)
+      def average_last_30_days(authority_name: nil, action: nil)
         start_day = Time.now.getlocal.beginning_of_day - 29.days
         avgs = {}
         0.upto(29).each do |idx|
-          where_clause = { dt_stamp: start_day..start_day.end_of_day }
-          where_clause[:authority] = auth_name unless auth_name.nil?
-          records = performance_data_class.where(where_clause)
+          records = records_by(authority_name, action, start_day..start_day.end_of_day)
           stats = stats_calculator_class.new(records).calculate_stats(avg: true, full: false)
           data = {}
           data[BY_DAY] = performance_by_day_label(idx, start_day)
@@ -70,13 +66,11 @@ module QaServer
       #     ...,
       #     11: { month: '08-2019', stats: { load_avg_ms: 12.3, normalization_avg_ms: 4.2, full_request_avg_ms: 16.5, etc. }}
       #   }
-      def average_last_12_months(auth_name = nil)
+      def average_last_12_months(authority_name: nil, action: nil)
         start_month = Time.now.getlocal.beginning_of_month - 11.months
         avgs = {}
         0.upto(11).each do |idx|
-          where_clause = { dt_stamp: start_month..start_month.end_of_month }
-          where_clause[:authority] = auth_name unless auth_name.nil?
-          records = performance_data_class.where(where_clause)
+          records = records_by(authority_name, action, start_month..start_month.end_of_month)
           stats = stats_calculator_class.new(records).calculate_stats(avg: true, full: false)
           data = {}
           data[BY_MONTH] = start_month.strftime("%m-%Y")
@@ -88,6 +82,13 @@ module QaServer
       end
 
       private
+
+        def records_by(authority_name, action, time_period)
+          where_clause = { dt_stamp: time_period }
+          where_clause[:authority] = authority_name unless authority_name.nil?
+          where_clause[:action] = action unless action.nil? || action == :all_actions
+          performance_data_class.where(where_clause)
+        end
 
         def performance_by_hour_label(idx, start_hour)
           if idx == 23

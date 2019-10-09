@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 # This module provides methods for creating and accessing performance graphs.
 module QaServer::MonitorStatus
-  module PerformanceGraphBehavior
+  module PerformanceGraphBehavior # rubocop:disable Metrics/ModuleLength
     include QaServer::PerformanceHistoryDataKeys
     include QaServer::MonitorStatus::GruffGraph
 
@@ -29,12 +29,20 @@ module QaServer::MonitorStatus
       "performance-for-day-#{ALL_AUTH}"
     end
 
+    def performance_graph_time_period(graph_info)
+      graph_info[:time_period]
+    end
+
+    def performance_graph_action(graph_info)
+      graph_info[:action]
+    end
+
     def performance_graph_id(graph_info)
-      "#{graph_info[:base_id]}-during-#{graph_info[:time_period]}-chart"
+      "#{graph_info[:base_id]}-#{performance_graph_action(graph_info)}-during-#{performance_graph_time_period(graph_info)}-chart"
     end
 
     def performance_graph_data_section_id(graph_info)
-      "#{graph_info[:base_id]}-during-#{graph_info[:time_period]}"
+      "#{graph_info[:base_id]}-#{performance_graph_action(graph_info)}-during-#{performance_graph_time_period(graph_info)}"
     end
 
     def performance_graph_data_section_base_id(graph_info)
@@ -46,63 +54,84 @@ module QaServer::MonitorStatus
       'performance-data-section-hidden'
     end
 
-    def performance_day_graph_selected?(graph_info)
-      return true if graph_info[:time_period] == :day
+    def performance_day_graph?(graph_info)
+      return true if performance_graph_time_period(graph_info) == :day
       false
     end
 
-    def performance_month_graph_selected?(graph_info)
-      return true if graph_info[:time_period] == :month
+    def performance_month_graph?(graph_info)
+      return true if performance_graph_time_period(graph_info) == :month
       false
     end
 
-    def performance_year_graph_selected?(graph_info)
-      return true if graph_info[:time_period] == :year
+    def performance_year_graph?(graph_info)
+      return true if performance_graph_time_period(graph_info) == :year
+      false
+    end
+
+    def performance_all_actions_graph?(graph_info)
+      return true if performance_graph_action(graph_info) == :all_actions
+      false
+    end
+
+    def performance_search_graph?(graph_info)
+      return true if performance_graph_action(graph_info) == :search
+      false
+    end
+
+    def performance_fetch_graph?(graph_info)
+      return true if performance_graph_action(graph_info) == :fetch
       false
     end
 
     private
 
-      def default_graph?(graph_info) # rubocop:disable Metrics/CyclomaticComplexity
-        return true if QaServer.config.performance_graph_default_time_period == :day && performance_day_graph_selected?(graph_info)
-        return true if QaServer.config.performance_graph_default_time_period == :month && performance_month_graph_selected?(graph_info)
-        return true if QaServer.config.performance_graph_default_time_period == :year && performance_year_graph_selected?(graph_info)
+      def default_graph?(graph_info) # rubocop:disable Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
+        return false unless performance_all_actions_graph?(graph_info)
+        return true if QaServer.config.performance_graph_default_time_period == :day && performance_day_graph?(graph_info)
+        return true if QaServer.config.performance_graph_default_time_period == :month && performance_month_graph?(graph_info)
+        return true if QaServer.config.performance_graph_default_time_period == :year && performance_year_graph?(graph_info)
         false
       end
 
       def performance_graphs_for_authority(graphs, auth_name)
-        graphs << performance_for_day_graph(auth_name)
-        graphs << performance_for_month_graph(auth_name)
-        graphs << performance_for_year_graph(auth_name)
+        [:search, :fetch, :all_actions].each do |action|
+          graphs << performance_for_day_graph(auth_name, action)
+          graphs << performance_for_month_graph(auth_name, action)
+          graphs << performance_for_year_graph(auth_name, action)
+        end
       end
 
-      def performance_for_day_graph(auth_name)
+      def performance_for_day_graph(auth_name, action)
         {
+          action: action,
           time_period: :day,
-          graph: QaServer::PerformanceGraphingService.performance_graph_file(authority_name: auth_name, time_period: :day),
+          graph: QaServer::PerformanceGraphingService.performance_graph_file(authority_name: auth_name, action: action, time_period: :day),
           label: "Performance data for the last 24 hours.",
           authority_name: auth_name,
-          base_id: "performance-for-#{auth_name}"
+          base_id: "performance-of-#{auth_name}"
         }
       end
 
-      def performance_for_month_graph(auth_name)
+      def performance_for_month_graph(auth_name, action)
         {
+          action: action,
           time_period: :month,
-          graph: QaServer::PerformanceGraphingService.performance_graph_file(authority_name: auth_name, time_period: :month),
+          graph: QaServer::PerformanceGraphingService.performance_graph_file(authority_name: auth_name, action: action, time_period: :month),
           label: "Performance data for the last 30 days.",
           authority_name: auth_name,
-          base_id: "performance-for-#{auth_name}"
+          base_id: "performance-of-#{auth_name}"
         }
       end
 
-      def performance_for_year_graph(auth_name)
+      def performance_for_year_graph(auth_name, action)
         {
+          action: action,
           time_period: :year,
-          graph: QaServer::PerformanceGraphingService.performance_graph_file(authority_name: auth_name, time_period: :year),
+          graph: QaServer::PerformanceGraphingService.performance_graph_file(authority_name: auth_name, action: action, time_period: :year),
           label: "Performance data for the last 12 months.",
           authority_name: auth_name,
-          base_id: "performance-for-#{auth_name}"
+          base_id: "performance-of-#{auth_name}"
         }
       end
   end

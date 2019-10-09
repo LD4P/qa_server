@@ -4,6 +4,10 @@
 module QaServer
   module PerformanceHistoryDataKeys
     ALL_AUTH = :all_authorities
+    SEARCH = :search
+    FETCH = :fetch
+    ALL_ACTIONS = :all_actions
+
     STATS = :stats
     FOR_DATATABLE = :datatable_stats
 
@@ -28,11 +32,11 @@ module QaServer
     AVG_NORM = :avg_normalization_ms
     AVG_ACTN = :avg_action_request_ms
     AVG_FULL = :avg_full_request_ms
-    HIGH_LOAD = :max_load_ms
-    HIGH_RETR = :max_retrieve_ms
-    HIGH_GRPH = :max_load_graph_ms
-    HIGH_NORM = :max_normalization_ms
-    HIGH_ACTN = :max_action_request_ms
-    HIGH_FULL = :max_full_request_ms
+    HIGH_LOAD = :high_load_ms
+    HIGH_RETR = :high_retrieve_ms
+    HIGH_GRPH = :high_load_graph_ms
+    HIGH_NORM = :high_normalization_ms
+    HIGH_ACTN = :high_action_request_ms
+    HIGH_FULL = :high_full_request_ms
   end
 end
