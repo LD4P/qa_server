@@ -112,7 +112,7 @@
           </tr>
           <tr>
             <th><%= t('qa_server.monitor_status.performance.retrieve_times') %></th>
-            <td class="<%= @presenter.high_full_request_style(search_stats) %>"><%= @presenter.high_retrieve(search_stats) %></td>
+            <td class="<%= @presenter.datatable_data_style(search_stats) %>"><%= @presenter.high_retrieve(search_stats) %></td>
             <td class="<%= @presenter.datatable_data_style(search_stats) %>"><%= @presenter.avg_retrieve(search_stats) %></td>
             <td class="<%= @presenter.datatable_data_style(search_stats) %>"><%= @presenter.low_retrieve(search_stats) %></td>
             <td class="<%= @presenter.datatable_data_style(fetch_stats) %>"><%= @presenter.high_retrieve(fetch_stats) %></td>
