@@ -1,3 +1,7 @@
+### 3.0.2 (2019-10-09)
+
+* bug fix - make sure count is counting based on the current set of times
+
 ### 3.0.1 (2019-10-09)
 
 * use old :load data when split :retrieve and :graph_load are not available
