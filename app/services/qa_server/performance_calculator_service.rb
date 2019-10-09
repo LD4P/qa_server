@@ -63,7 +63,7 @@ module QaServer
 
       def tenth_percentile_count(times)
         percentile_count = (times.count * 0.1).round
-        percentile_count = 1 if percentile_count.zero? && count > 1
+        percentile_count = 1 if percentile_count.zero? && times.count > 1
         percentile_count
       end
 
