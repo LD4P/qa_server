@@ -54,10 +54,6 @@ module QaServer
         stats[HIGH_ACTN] = calculate_90th_percentile(action_times) if high
       end
 
-      def count
-        @count ||= records.count
-      end
-
       def tenth_percentile_count(times)
         percentile_count = (times.count * 0.1).round
         percentile_count = 1 if percentile_count.zero? && count > 1
@@ -86,8 +82,8 @@ module QaServer
       end
 
       def calculate_average(times)
-        return 0 if count.zero?
-        return times[0] if count == 1
+        return 0 if times.count.zero?
+        return times[0] if times.count == 1
         times.inject(0.0) { |sum, el| sum + el } / times.count
       end
 
