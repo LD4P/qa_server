@@ -1,59 +1,84 @@
 # frozen_string_literal: true
 # This module provides access methods into the performance data hash.
 module QaServer::MonitorStatus
-  module PerformanceDatatableBehavior
+  module PerformanceDatatableBehavior # rubocop:disable Metrics/ModuleLength
     include QaServer::PerformanceHistoryDataKeys
 
-    def datatable_stats(authority_data)
-      authority_data[FOR_DATATABLE]
+    def datatable_search_stats(authority_data)
+      data_table_for(authority_data, SEARCH)
     end
 
-    def low_load(stats)
-      format_stat stats[LOW_LOAD]
+    def datatable_fetch_stats(authority_data)
+      data_table_for(authority_data, FETCH)
+    end
+
+    def datatable_all_actions_stats(authority_data)
+      data_table_for(authority_data, ALL_ACTIONS)
+    end
+
+    def low_retrieve(stats)
+      format_stat stats, LOW_RETR
+    end
+
+    def low_graph_load(stats)
+      format_stat stats, LOW_GRPH
     end
 
     def low_normalization(stats)
-      format_stat stats[LOW_NORM]
+      format_stat stats, LOW_NORM
     end
 
     def low_full_request(stats)
-      format_stat stats[LOW_FULL]
+      format_stat stats, LOW_ACTN
     end
 
-    def high_load(stats)
-      format_stat stats[HIGH_LOAD]
+    def high_retrieve(stats)
+      format_stat stats, HIGH_RETR
+    end
+
+    def high_graph_load(stats)
+      format_stat stats, HIGH_GRPH
     end
 
     def high_normalization(stats)
-      format_stat stats[HIGH_NORM]
+      format_stat stats, HIGH_NORM
     end
 
     def high_full_request(stats)
-      format_stat stats[HIGH_FULL]
+      format_stat stats, HIGH_ACTN
     end
 
-    def avg_load(stats)
-      format_stat stats[AVG_LOAD]
+    def avg_retrieve(stats)
+      format_stat stats, AVG_RETR
+    end
+
+    def avg_graph_load(stats)
+      format_stat stats, AVG_GRPH
     end
 
     def avg_normalization(stats)
-      format_stat stats[AVG_NORM]
+      format_stat stats, AVG_NORM
     end
 
     def avg_full_request(stats)
-      format_stat stats[AVG_FULL]
+      format_stat stats, AVG_ACTN
+    end
+
+    def datatable_data_style(stats)
+      return "status-not-supported" if unsupported_action?(stats)
+      "status-neutral"
     end
 
     def low_full_request_style(stats)
-      performance_style_class(stats, LOW_FULL)
+      performance_style_class(stats, LOW_ACTN)
     end
 
     def high_full_request_style(stats)
-      performance_style_class(stats, HIGH_FULL)
+      performance_style_class(stats, HIGH_ACTN)
     end
 
     def avg_full_request_style(stats)
-      performance_style_class(stats, AVG_FULL)
+      performance_style_class(stats, AVG_ACTN)
     end
 
     def performance_table_description
@@ -75,12 +100,21 @@ module QaServer::MonitorStatus
         QaServer.config.performance_datatable_default_time_period
       end
 
-      def format_stat(stat)
-        return '' if stat.nil?
-        format("%0.1f", stat)
+      def data_table_for(authority_data, action)
+        authority_data[action][FOR_DATATABLE]
+      end
+
+      def unsupported_action?(stats)
+        stats[AVG_ACTN].nan?
+      end
+
+      def format_stat(stats, idx)
+        return '' if stats[idx].nil? || unsupported_action?(stats)
+        format("%0.1f", stats[idx])
       end
 
       def performance_style_class(stats, stat_key)
+        return "status-not-supported" if unsupported_action?(stats)
         return "status-bad" if max_threshold_exceeded(stats, stat_key)
         return "status-unknown" if desired_threshold_not_met(stats, stat_key)
         "status-good"

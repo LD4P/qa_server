@@ -20,11 +20,11 @@ div.performance-data-section-visible {
   display: block;
 }
 
-div.right-menu-section {
+div.performance-graph-menu-section {
   padding-top: 50px;
 }
 
-ul.right-menu {
+ul.time-period-menu, ul.action-menu {
   list-style-type: none;
   li.clickable {
     display: inline;

@@ -12,14 +12,23 @@ QaServer.config do |config|
   # @param [Boolean] display performance graph when true
   # config.display_performance_graph = false
 
-  # Color of the graph line for load times in the performance graphs.
-  # @param [String] color RGB code
-  # @note The default colors for the load, normalization, and full request lines in the performance graph are accessible.
-  # config.performance_load_color = '#ABC3C9'
+  # Max time in milliseconds for y-axis in the performance graphs.
+  # @param [Integer] milliseconds
+  # config.performance_y_axis_max = 4000
 
-  # Color of the graph line for normalization times (The default colors for the performance graph are accessible.)
+  # Color of the graph line for retrieve times in the performance graphs.
   # @param [String] color RGB code
-  # @note The default colors for the load, normalization, and full request lines in the performance graph are accessible.
+  # @note The default colors for the retrieve, graph_load, load, normalization, and full request lines in the performance graph are accessible.
+  # config.performance_retrieve_color = '#ABC3C9'
+
+  # Color of the graph line for graph load times in the performance graphs.
+  # @param [String] color RGB code
+  # @note The default colors for the retrieve, graph_load, normalization, and full request lines in the performance graph are accessible.
+  # config.performance_graph_load_color = '#E8DCD3'
+
+  # Color of the graph line for normalization times in the performance graphs
+  # @param [String] color RGB code
+  # @note The default colors for the retrieve, graph_load, load, normalization, and full request lines in the performance graph are accessible.
   # config.performance_normalization_color = '#CCBE9F'
 
   # Performance graph default time period for all graphs.  All authorities will show the graph for this time period on page load.
