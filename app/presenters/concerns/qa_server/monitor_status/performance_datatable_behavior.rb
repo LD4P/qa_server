@@ -105,7 +105,9 @@ module QaServer::MonitorStatus
       end
 
       def unsupported_action?(stats)
-        stats[AVG_ACTN].nan?
+        values = stats.values
+        return true if values.all? &:zero?
+        values.any? { |v| v.respond_to?(:nan?) && v.nan? }
       end
 
       def format_stat(stats, idx)

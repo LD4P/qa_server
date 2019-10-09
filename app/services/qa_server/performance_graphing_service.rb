@@ -82,16 +82,29 @@ module QaServer
 
         def rework_performance_data_for_gruff(performance_data, label_key)
           labels = {}
+          full_load_data = []
           retrieve_data = []
           graph_load_data = []
           normalization_data = []
           performance_data.each do |i, data|
             labels[i] = data[label_key]
             retrieve_data << data[STATS][AVG_RETR]
-            graph_load_data << data[STATS][AVG_GRPH]
+            graph_load_data << graph_load_time(data)
             normalization_data << data[STATS][AVG_NORM]
           end
           [labels, normalization_data, graph_load_data, retrieve_data]
+        end
+
+        def graph_load_time(data)
+          # For some sense of backward compatibility and to avoid losing the usefulness of previously collected data,
+          # create the graph using the old :load stat when both :retrieve and :graph_load are 0. If the value truly
+          # is 0, then :load will also be 0.
+          # NOTE: It's ok to use AVG_RETR for the retrieve data point because it is 0.
+          (data[STATS][AVG_RETR].zero? && data[STATS][AVG_GRPH].zero?) ? data[STATS][AVG_LOAD] : data[STATS][AVG_GRPH]
+        end
+
+        def empty(stat_data)
+          !stat_data.any? { |f| f > 0 }
         end
 
         def performance_graph_theme(g, x_axis_label)

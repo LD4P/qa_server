@@ -103,7 +103,8 @@ en:
         average_times:        Average (ms)
         fastest_times:        10th percentile (ms)
         slowest_times:        90th percentile (ms)
-        load_times:           Load
+        retrieve_times:       Retrieve
+        graph_load_times:     Graph Load
         normalization_times:  Normalization
         full_request_times:   Total
     usage:
