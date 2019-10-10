@@ -103,10 +103,6 @@ module QaServer
           (data[STATS][AVG_RETR].zero? && data[STATS][AVG_GRPH].zero?) ? data[STATS][AVG_LOAD] : data[STATS][AVG_GRPH]
         end
 
-        def empty(stat_data)
-          !stat_data.any? { |f| f > 0 }
-        end
-
         def performance_graph_theme(g, x_axis_label)
           g.theme_pastel
           g.colors = [QaServer.config.performance_normalization_color,
@@ -123,7 +119,6 @@ module QaServer
         def create_gruff_graph(performance_data, performance_graph_full_path, x_axis_label)
           g = Gruff::StackedBar.new
           performance_graph_theme(g, x_axis_label)
-          g.title = ''
           g.labels = performance_data[0]
           g.data(I18n.t('qa_server.monitor_status.performance.normalization_time_ms'), performance_data[1])
           g.data(I18n.t('qa_server.monitor_status.performance.graph_load_time_ms'), performance_data[2])

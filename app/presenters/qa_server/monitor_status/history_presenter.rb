@@ -31,7 +31,6 @@ module QaServer::MonitorStatus
       # g = Gruff::SideStackedBar.new('800x400')
       g = Gruff::SideStackedBar.new
       historical_graph_theme(g)
-      g.title = ''
       historical_data = rework_historical_data_for_gruff
       g.labels = historical_data[0]
       g.data('Fail', historical_data[1])
