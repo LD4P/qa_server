@@ -1,3 +1,7 @@
+### 3.0.3 (2019-10-09)
+
+* remove titles from graphs (previously set to '' which caused problems when deployed)
+
 ### 3.0.2 (2019-10-09)
 
 * bug fix - make sure count is counting based on the current set of times
