@@ -1,3 +1,7 @@
+### 3.0.4 (2019-11-14)
+
+* prepends for find and query updated to process request_header parameter
+
 ### 3.0.3 (2019-10-09)
 
 * remove titles from graphs (previously set to '' which caused problems when deployed)
