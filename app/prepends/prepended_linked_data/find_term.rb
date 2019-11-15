@@ -16,7 +16,7 @@ module PrependedLinkedData::FindTerm
       ph_record.destroy
       raise e
     end
-    saved_performance_data || full_results.is_a?(Array) ? full_results : full_results[:results]
+    saved_performance_data || !full_results.is_a?(Hash) ? full_results : full_results[:results]
   end
 
   private
