@@ -2,11 +2,11 @@
 module PrependedLinkedData::FindTerm
   # Override Qa::Authorities::LinkedData::FindTerm#find method
   # @return [Hash] single term results in requested format
-  def find(id, request_header: {}, language: nil, replacements: {}, subauth: nil, format: nil, jsonld: false, performance_data: false) # rubocop:disable Metrics/ParameterLists
+  def find(id, request_header: {}, language: nil, replacements: {}, subauth: nil, format: nil, performance_data: false) # rubocop:disable Metrics/ParameterLists
     start_time_s = Time.now.to_f
 
     saved_performance_data = performance_data || request_header[:performance_data]
-    performance_data = true
+    request_header[:performance_data] = true
     ph_record = QaServer::PerformanceHistory.create_record(authority: authority_name, action: 'fetch')
     @phid = ph_record.id
     begin
@@ -16,7 +16,7 @@ module PrependedLinkedData::FindTerm
       ph_record.destroy
       raise e
     end
-    saved_performance_data || !full_results.key?(:results) ? full_results : full_results[:results]
+    saved_performance_data || full_results.is_a?(Array) ? full_results : full_results[:results]
   end
 
   private
