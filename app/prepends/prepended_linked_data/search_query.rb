@@ -2,10 +2,10 @@
 module PrependedLinkedData::SearchQuery
   # Override Qa::Authorities::LinkedData::SearchQuery#search method
   # @return [String] json results for search query
-  def search(query, language: nil, replacements: {}, subauth: nil, context: false, performance_data: false) # rubocop:disable Metrics/ParameterLists
+  def search(query, request_header: {}, language: nil, replacements: {}, subauth: nil, context: false, performance_data: false) # rubocop:disable Metrics/ParameterLists
     start_time_s = Time.now.to_f
 
-    saved_performance_data = performance_data
+    saved_performance_data = performance_data || request_header[:performance_data]
     performance_data = true
     ph_record = QaServer::PerformanceHistory.create_record(authority: authority_name, action: 'search')
     @phid = ph_record.id
