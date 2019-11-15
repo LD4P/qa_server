@@ -1,4 +1,4 @@
-### 3.0.4 (2019-11-14)
+### 4.0.0 (2019-11-14)
 
 * prepends for find and query updated to process request_header parameter
 
