@@ -6,7 +6,7 @@ module PrependedLinkedData::SearchQuery
     start_time_s = Time.now.to_f
 
     saved_performance_data = performance_data || request_header[:performance_data]
-    performance_data = true
+    request_header[:performance_data] = true
     ph_record = QaServer::PerformanceHistory.create_record(authority: authority_name, action: 'search')
     @phid = ph_record.id
     begin
