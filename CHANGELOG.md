@@ -1,3 +1,7 @@
+### 5.0.0 (2019-11-22)
+
+* prepends for query updated to retain response_header in results
+
 ### 4.0.0 (2019-11-14)
 
 * prepends for find and query updated to process request_header parameter
