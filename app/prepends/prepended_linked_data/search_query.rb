@@ -16,7 +16,7 @@ module PrependedLinkedData::SearchQuery
       ph_record.destroy
       raise e
     end
-    saved_performance_data || !full_results.key?(:results) ? full_results : full_results[:results]
+    requested_results(full_results, saved_performance_data)
   end
 
   private
@@ -42,5 +42,12 @@ module PrependedLinkedData::SearchQuery
       @access_time_s = access_end_dt - access_start_dt
       @fetched_size = full_graph.triples.to_s.size if performance_data?
       Rails.logger.info("Time to receive data from authority: #{access_time_s}s")
+    end
+
+    def requested_results(full_results, saved_performance_data)
+      return full_results if saved_performance_data
+      return full_results[:results] unless full_results.key? :response_header
+      full_results.delete(:performance)
+      full_results
     end
 end
