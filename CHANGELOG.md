@@ -1,3 +1,7 @@
+### 5.0.1 (2019-12-3)
+
+* bug fix - force qa to not exclued performance header when find term returns jsonld
+
 ### 5.0.0 (2019-11-22)
 
 * prepends for query updated to retain response_header in results
