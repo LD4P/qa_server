@@ -45,16 +45,7 @@ module PrependedLinkedData::FindTerm
     end
 
     # Temporary override to fix bug.  Remove when QA PR #273 is merged and a new release is cut
-    def normalize_results
-      normalize_start_dt = Time.now.utc
-
-      json = perform_normalization
-
-      normalize_end_dt = Time.now.utc
-      @normalize_time_s = normalize_end_dt - normalize_start_dt
-      @normalized_size = json.to_s.size if performance_data?
-      Rails.logger.info("Time to convert data to json: #{normalize_time_s}s")
-      json = append_performance_data(json) if performance_data?
-      json
+    def performance_data?
+      @performance_data == true
     end
 end
