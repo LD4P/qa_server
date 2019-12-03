@@ -4,7 +4,7 @@ module PrependedLinkedData::FindTerm
   # @return [Hash] single term results in requested format
   def find(id, request_header: {}, language: nil, replacements: {}, subauth: nil, format: nil, performance_data: false) # rubocop:disable Metrics/ParameterLists
     start_time_s = Time.now.to_f
-
+    request_header = build_request_header(language: language, replacements: replacements, subauth: subauth, format: format, performance_data: performance_data) if request_header.empty?
     saved_performance_data = performance_data || request_header[:performance_data]
     request_header[:performance_data] = true
     ph_record = QaServer::PerformanceHistory.create_record(authority: authority_name, action: 'fetch')
