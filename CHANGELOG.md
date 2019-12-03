@@ -1,3 +1,7 @@
+### 5.0.2 (2019-12-3)
+
+* bug fix - move individual params into request header to avoid lost subauths during testing
+
 ### 5.0.1 (2019-12-3)
 
 * bug fix - force qa to not exclued performance header when find term returns jsonld
