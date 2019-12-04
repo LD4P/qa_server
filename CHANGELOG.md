@@ -1,3 +1,7 @@
+### 5.0.3 (2019-12-3)
+
+* bug fix - use correct parameters for search query
+
 ### 5.0.2 (2019-12-3)
 
 * bug fix - move individual params into request header to avoid lost subauths during testing
