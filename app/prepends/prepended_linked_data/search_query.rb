@@ -4,7 +4,7 @@ module PrependedLinkedData::SearchQuery
   # @return [String] json results for search query
   def search(query, request_header: {}, language: nil, replacements: {}, subauth: nil, context: false, performance_data: false) # rubocop:disable Metrics/ParameterLists
     start_time_s = Time.now.to_f
-    request_header = build_request_header(language: language, replacements: replacements, subauth: subauth, format: format, performance_data: performance_data) if request_header.empty?
+    request_header = build_request_header(language: language, replacements: replacements, subauth: subauth, context: context, performance_data: performance_data) if request_header.empty?
     saved_performance_data = performance_data || request_header[:performance_data]
     request_header[:performance_data] = true
     ph_record = QaServer::PerformanceHistory.create_record(authority: authority_name, action: 'search')
