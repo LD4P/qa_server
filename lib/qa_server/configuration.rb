@@ -118,6 +118,7 @@ module QaServer
     # Performance data is gathered on every incoming query.  If load is high, this can have a negative performance
     # impact and may need to be suppressed.  Performance stats will not be gathered when this config is true.
     # @param [Boolean] do not gather performance data when true (defaults to false for backward compatibitily)
+    attr_writer :suppress_performance_gathering
     def suppress_performance_gathering
       @suppress_performance_gathering ||= false
     end

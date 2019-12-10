@@ -3,7 +3,7 @@ module PrependedLinkedData::FindTerm
   # Override Qa::Authorities::LinkedData::FindTerm#find method
   # @return [Hash] single term results in requested format
   def find(id, request_header: {}, language: nil, replacements: {}, subauth: nil, format: nil, performance_data: false) # rubocop:disable Metrics/ParameterLists
-    return super if config.suppress_performance_gathering
+    return super if QaServer.config.suppress_performance_gathering
 
     start_time_s = Time.now.to_f
     request_header = build_request_header(language: language, replacements: replacements, subauth: subauth, format: format, performance_data: performance_data) if request_header.empty?
@@ -35,6 +35,8 @@ module PrependedLinkedData::FindTerm
 
     # Override to append performance history record id into the URL to allow access to the record in RDF::Graph
     def load_graph(url:)
+      return super if QaServer.config.suppress_performance_gathering
+
       access_start_dt = Time.now.utc
 
       url += "&phid=#{@phid}"
@@ -46,8 +48,10 @@ module PrependedLinkedData::FindTerm
       Rails.logger.info("Time to receive data from authority: #{access_time_s}s")
     end
 
-    # Temporary override to fix bug.  Remove when QA PR #273 is merged and a new release is cut
+    # Temporary override to fix bug.  Remove when QA Issue #271 is fixed and a new release is cut
     def performance_data?
+      return super if QaServer.config.suppress_performance_gathering
+
       @performance_data == true
     end
 end
