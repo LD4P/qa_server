@@ -1,3 +1,7 @@
+### 5.1.0 (2019-12-10)
+
+* allow suppression of performance data gathering
+
 ### 5.0.3 (2019-12-3)
 
 * bug fix - use correct parameters for search query
