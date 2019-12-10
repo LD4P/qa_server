@@ -56,4 +56,9 @@ QaServer.config do |config|
   # config.navmenu_extra_leftitems = [
   #   { label: 'Your Menu Item Label', url: 'http://your.menu.item/url' }
   # ]
+
+  # Performance data is gathered on every incoming query.  If load is high, this can have a negative performance
+  # impact and may need to be suppressed.  Performance stats will not be gathered when this config is true.
+  # @param [Boolean] do not gather performance data when true (defaults to false for backward compatibitily)
+  # config.suppress_performance_gathering = false
 end
