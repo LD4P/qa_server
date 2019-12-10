@@ -3,7 +3,7 @@ module PrependedLinkedData::SearchQuery
   # Override Qa::Authorities::LinkedData::SearchQuery#search method
   # @return [String] json results for search query
   def search(query, request_header: {}, language: nil, replacements: {}, subauth: nil, context: false, performance_data: false) # rubocop:disable Metrics/ParameterLists
-    return super if config.suppress_performance_gathering
+    return super if QaServer.config.suppress_performance_gathering
 
     start_time_s = Time.now.to_f
     request_header = build_request_header(language: language, replacements: replacements, subauth: subauth, context: context, performance_data: performance_data) if request_header.empty?
@@ -35,6 +35,8 @@ module PrependedLinkedData::SearchQuery
 
     # Override to append performance history record id into the URL to allow access to the record in RDF::Graph
     def load_graph(url:)
+      return super if QaServer.config.suppress_performance_gathering
+
       access_start_dt = Time.now.utc
 
       url += "&phid=#{@phid}"
