@@ -29,4 +29,9 @@ module QaServer
   def self.current_time_s
     current_time.to_f
   end
+
+  def self.monitoring_expires_at
+    offset = QaServer.config.hour_offset_to_run_monitoring_tests
+    (current_time - offset.hours).beginning_of_day + offset.hours
+  end
 end

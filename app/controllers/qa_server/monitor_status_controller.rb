@@ -44,11 +44,7 @@ module QaServer
       end
 
       def expired?
-        @expired ||= latest_summary.blank? || latest_summary.run_dt_stamp < yesterday_midnight_et
-      end
-
-      def yesterday_midnight_et
-        (DateTime.yesterday.midnight.to_time + 4.hours).to_datetime.in_time_zone("Eastern Time (US & Canada)")
+        @expired ||= latest_summary.blank? || latest_summary.run_dt_stamp < QaServer.monitoring_expires_at
       end
 
       def historical_summary_data(refresh: false)
@@ -116,8 +112,8 @@ module QaServer
       end
 
       def refresh_performance?
-        return false unless refresh?
-        refresh_all? || params[:refresh].casecmp?('performance')
+        return false unless refresh? || expired?
+        refresh_all? || params[:refresh].casecmp?('performance') || expired?
       end
   end
 end

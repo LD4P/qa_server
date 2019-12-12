@@ -9,6 +9,16 @@ module QaServer
       @preferred_time_zone_name ||= 'Eastern Time (US & Canada)'
     end
 
+    # Preferred hour to run monitoring tests
+    # @param [Integer] count of hours from midnight (0-23 with 0=midnight)
+    # @example
+    #   For preferred_time_zone_name of ET, use 3 for slow down at midnight PT/3am ET
+    #   For preferred_time_zone_name of PT, use 0 for slow down at midnight PT/3am ET
+    attr_writer :hour_offset_to_run_monitoring_tests
+    def hour_offset_to_run_monitoring_tests
+      hour_offset_to_run_monitoring_tests ||= 3
+    end
+
     # Displays a graph of historical test data when true
     # @param [Boolean] display history graph when true
     attr_writer :display_historical_graph

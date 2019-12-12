@@ -34,25 +34,25 @@ require 'rspec/rails'
 require 'rspec/its'
 require 'rspec/matchers'
 require 'rspec/active_model/mocks'
-require 'capybara/rspec'
-require 'capybara/rails'
-require 'selenium-webdriver'
+# require 'capybara/rspec'
+# require 'capybara/rails'
+# require 'selenium-webdriver'
 # require 'equivalent-xml'
 # require 'equivalent-xml/rspec_matchers'
 # require 'database_cleaner' # TODO: Explore whether to include database cleaner
 
-unless ENV['SKIP_MALEFICENT']
-  # See https://github.com/jeremyf/capybara-maleficent
-  # Wrap Capybara matchers with sleep intervals to reduce fragility of specs.
-  require 'capybara/maleficent/spindle'
-
-  Capybara::Maleficent.config do |c|
-    # Quieting down maleficent's logging
-    logger = Logger.new(STDOUT)
-    logger.level = Logger::INFO
-    c.logger = logger
-  end
-end
+# unless ENV['SKIP_MALEFICENT']
+#   # See https://github.com/jeremyf/capybara-maleficent
+#   # Wrap Capybara matchers with sleep intervals to reduce fragility of specs.
+#   require 'capybara/maleficent/spindle'
+#
+#   Capybara::Maleficent.config do |c|
+#     # Quieting down maleficent's logging
+#     logger = Logger.new(STDOUT)
+#     logger.level = Logger::INFO
+#     c.logger = logger
+#   end
+# end
 
 # Require supporting ruby files from spec/support/ and subdirectories.  Note: engine, not Rails.root context.
 Dir[File.join(File.dirname(__FILE__), "support/**/*.rb")].each { |f| require f }
