@@ -106,7 +106,7 @@ module QaServer::MonitorStatus
 
       def unsupported_action?(stats)
         values = stats.values
-        return true if values.all? &:zero?
+        return true if values.all?(&:zero?)
         values.any? { |v| v.respond_to?(:nan?) && v.nan? }
       end
 

@@ -29,12 +29,9 @@ module QaServer
       size_before = @cache.size
       @cache.each do |id, entry|
         next if incomplete? entry
-        QaServer::PerformanceHistory.create(dt_stamp: entry[:dt_stamp],
-                                            authority: entry[:authority],
-                                            action: entry[:action],
-                                            action_time_ms: entry[:action_time_ms],
-                                            size_bytes: entry[:size_bytes],
-                                            retrieve_time_ms: entry[:retrieve_time_ms],
+        QaServer::PerformanceHistory.create(dt_stamp: entry[:dt_stamp], authority: entry[:authority],
+                                            action: entry[:action], action_time_ms: entry[:action_time_ms],
+                                            size_bytes: entry[:size_bytes], retrieve_time_ms: entry[:retrieve_time_ms],
                                             graph_load_time_ms: entry[:graph_load_time_ms],
                                             normalization_time_ms: entry[:normalization_time_ms])
         @cache.delete(id)

@@ -39,6 +39,8 @@ Gem::Specification.new do |spec|
   # spec.add_development_dependency 'chromedriver-helper', '~> 2.1'
   spec.add_development_dependency 'engine_cart', '~> 2.0'
   spec.add_development_dependency "factory_bot", '~> 4.4'
+  spec.add_development_dependency 'simplecov'
+  spec.add_development_dependency 'sqlite3'
   spec.add_development_dependency 'rails-controller-testing', '~> 1'
   spec.add_development_dependency 'rspec-activemodel-mocks', '~> 1.0'
   spec.add_development_dependency 'rspec-its', '~> 1.1'
@@ -46,4 +48,10 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'selenium-webdriver'
   spec.add_development_dependency 'webdrivers', '~> 3.0'
   spec.add_development_dependency 'webmock'
+
+  ########################################################
+  # Temporarily pinned dependencies. INCLUDE EXPLANATIONS.
+  #
+  # Pin sass-rails to 5.x because rails 5.x apps have this same dependency in their generated Gemfiles
+  spec.add_dependency 'sass-rails', '~> 5.0'
 end

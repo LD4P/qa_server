@@ -82,7 +82,7 @@ module QaServer
 
         def rework_performance_data_for_gruff(performance_data, label_key)
           labels = {}
-          full_load_data = []
+          # full_load_data = []
           retrieve_data = []
           graph_load_data = []
           normalization_data = []
@@ -100,7 +100,9 @@ module QaServer
           # create the graph using the old :load stat when both :retrieve and :graph_load are 0. If the value truly
           # is 0, then :load will also be 0.
           # NOTE: It's ok to use AVG_RETR for the retrieve data point because it is 0.
+          # rubocop:disable Style/TernaryParentheses
           (data[STATS][AVG_RETR].zero? && data[STATS][AVG_GRPH].zero?) ? data[STATS][AVG_LOAD] : data[STATS][AVG_GRPH]
+          # rubocop:enable Style/TernaryParentheses
         end
 
         def performance_graph_theme(g, x_axis_label)
