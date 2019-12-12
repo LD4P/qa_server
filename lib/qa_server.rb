@@ -21,4 +21,12 @@ module QaServer
 
     @config
   end
+
+  def self.current_time
+    Time.now.in_time_zone(QaServer.config.preferred_time_zone_name)
+  end
+
+  def self.current_time_s
+    current_time.to_f
+  end
 end

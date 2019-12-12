@@ -1,6 +1,14 @@
 # frozen_string_literal: true
 module QaServer
   class Configuration
+    # Preferred time zone for reporting historical data and performance data
+    # @param [String] time zone name
+    # @see https://api.rubyonrails.org/classes/ActiveSupport/TimeZone.html for possible values of TimeZone names
+    attr_writer :preferred_time_zone_name
+    def preferred_time_zone_name
+      @preferred_time_zone_name ||= 'Eastern Time (US & Canada)'
+    end
+
     # Displays a graph of historical test data when true
     # @param [Boolean] display history graph when true
     attr_writer :display_historical_graph
@@ -121,6 +129,10 @@ module QaServer
     attr_writer :suppress_performance_gathering
     def suppress_performance_gathering
       @suppress_performance_gathering ||= false
+    end
+
+    def performance_cache
+      @performance_cache ||= QaServer::PerformanceCache.new
     end
   end
 end

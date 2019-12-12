@@ -18,9 +18,10 @@ module QaServer
       # Save a scenario result
       # @param authority [String] name of the authority
       # @param action [Symbol] type of action being evaluated (e.g. :fetch, :search)
+      # @param dt_stamp [Time] defaults to current time in preferred time zone
       # @return ActveRecord::Base for the new performance history record
-      def create_record(authority:, action:)
-        create(dt_stamp: Time.now.getlocal,
+      def create_record(authority:, action:, dt_stamp: QaServer.current_time)
+        create(dt_stamp: dt_stamp,
                authority: authority,
                action: action)
       end
@@ -65,6 +66,7 @@ module QaServer
       #   }
       def performance_data(datatype: :datatable)
         return if datatype == :none
+        QaServer.config.performance_cache.write_all
         data = calculate_data(datatype)
         graphing_service_class.create_performance_graphs(performance_data: data) if calculate_graphdata? datatype
         data
@@ -124,7 +126,7 @@ module QaServer
 
         def records_for_last_24_hours(auth_name)
           return unless expected_time_period == :day
-          end_hour = Time.now.getlocal
+          end_hour = QaServer.current_time
           start_hour = end_hour - 23.hours
           where_clause = { dt_stamp: start_hour..end_hour }
           records_for_authority(auth_name, where_clause)
@@ -132,7 +134,7 @@ module QaServer
 
         def records_for_last_30_days(auth_name)
           return unless expected_time_period == :month
-          end_day = Time.now.getlocal
+          end_day = QaServer.current_time
           start_day = end_day - 29.days
           where_clause = { dt_stamp: start_day..end_day }
           records_for_authority(auth_name, where_clause)
@@ -140,7 +142,7 @@ module QaServer
 
         def records_for_last_12_months(auth_name)
           return unless expected_time_period == :year
-          end_month = Time.now.getlocal
+          end_month = QaServer.current_time
           start_month = end_month - 11.months
           where_clause = { dt_stamp: start_month..end_month }
           records_for_authority(auth_name, where_clause)
