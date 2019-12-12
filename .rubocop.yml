@@ -11,8 +11,14 @@ AllCops:
     - 'script/**/*'
     - 'spec/test_app_templates/**/*'
     - 'vendor/**/*'
-    - 'lib/hyrax/specs/**/*'
+    - 'lib/qa_server/specs/**/*'
 
 Lint/ImplicitStringConcatenation:
   Exclude:
     - 'lib/generators/qa_server/**/*'
+
+Metrics/BlockLength:
+  ExcludedMethods: ['included']
+  Exclude:
+    - 'qa_server.gemspec'
+    - 'spec/**/*.rb'

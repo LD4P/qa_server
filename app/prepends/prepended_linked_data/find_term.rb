@@ -2,7 +2,7 @@
 module PrependedLinkedData::FindTerm
   # Override Qa::Authorities::LinkedData::FindTerm#find method
   # @return [Hash] single term results in requested format
-  def find(id, request_header: {}, language: nil, replacements: {}, subauth: nil, format: nil, performance_data: false) # rubocop:disable Metrics/ParameterLists
+  def find(id, request_header: {}, language: nil, replacements: {}, subauth: nil, format: nil, performance_data: false) # rubocop:disable Metrics/ParameterLists, Metrics/CyclomaticComplexity
     return super if QaServer.config.suppress_performance_gathering
 
     start_time_s = QaServer.current_time_s

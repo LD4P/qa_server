@@ -16,7 +16,7 @@ module QaServer
     #   For preferred_time_zone_name of PT, use 0 for slow down at midnight PT/3am ET
     attr_writer :hour_offset_to_run_monitoring_tests
     def hour_offset_to_run_monitoring_tests
-      hour_offset_to_run_monitoring_tests ||= 3
+      @hour_offset_to_run_monitoring_tests ||= 3
     end
 
     # Displays a graph of historical test data when true
