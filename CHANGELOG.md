@@ -1,3 +1,7 @@
+### 5.2.1 (2019-12-13)
+
+* fix - add defaults to the initializer generator template for new configs
+
 ### 5.2.0 (2019-12-10)
 
 * cache performance data saving once a day when monitoring runs
