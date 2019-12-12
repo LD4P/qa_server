@@ -1,3 +1,9 @@
+### 5.2.0 (2019-12-10)
+
+* cache performance data saving once a day when monitoring runs
+* set monitoring to expire at 3am ET by default (configurable)
+* setup travis-ci to run
+
 ### 5.1.0 (2019-12-10)
 
 * allow suppression of performance data gathering
