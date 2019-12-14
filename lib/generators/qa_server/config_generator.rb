@@ -40,7 +40,6 @@ class QaServer::ConfigGenerator < Rails::Generators::Base
       "\n      config.to_prepare do"\
       "\n        Qa::Authorities::LinkedData::FindTerm.prepend PrependedLinkedData::FindTerm"\
       "\n        Qa::Authorities::LinkedData::SearchQuery.prepend PrependedLinkedData::SearchQuery"\
-      "\n        Qa::LinkedData::GraphService.prepend PrependedServices::GraphService"\
       "\n        RDF::Graph.prepend PrependedRdf::RdfGraph"\
       "\n      end\n"
     end
