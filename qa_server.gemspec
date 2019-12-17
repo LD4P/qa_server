@@ -23,6 +23,7 @@ Gem::Specification.new do |spec|
   # minor version releases can include breaking changes; see
   # http://guides.rubyonrails.org/maintenance_policy.html
   spec.add_dependency 'rails', '~> 5.0' # Keep in sync with version supported by Hyrax
+  spec.add_dependency 'useragent'
 
   # Required gems for QA and linked data access
   spec.add_development_dependency 'qa', '~> 5.1' # required for response_header
