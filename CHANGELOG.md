@@ -1,3 +1,11 @@
+### 5.3.0 (2019-12-19)
+
+* optionally log browser and platform user agent info
+* update to qa 5.3
+  * add a request id to the search and find request headers
+  * log exception for graph load failures
+  * optionally include IP info at start of search/find linked data requests
+
 ### 5.2.1 (2019-12-13)
 
 * fix - add defaults to the initializer generator template for new configs
