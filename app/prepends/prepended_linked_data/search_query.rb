@@ -4,28 +4,33 @@ module PrependedLinkedData::SearchQuery
   # @return [String] json results for search query
   def search(query, request_header: {}, language: nil, replacements: {}, subauth: nil, context: false, performance_data: false) # rubocop:disable Metrics/ParameterLists
     return super if QaServer.config.suppress_performance_gathering
-
-    start_time_s = QaServer.current_time_s
-    request_header = build_request_header(language: language, replacements: replacements, subauth: subauth, context: context, performance_data: performance_data) if request_header.empty?
-    saved_performance_data = performance_data || request_header[:performance_data]
-    request_header[:performance_data] = true
-
+    request_header = setup_search(request_header: request_header, language: language, replacements: replacements, subauth: subauth,
+                                  context: context, performance_data: performance_data)
     @phid = QaServer.config.performance_cache.new_entry(authority: authority_name, action: 'search')
     begin
       full_results = super
-      update_performance_history_record(full_results, start_time_s)
+      update_performance_history_record(full_results)
     rescue Exception => e # rubocop:disable Lint/RescueException
       QaServer.config.performance_cache.destroy(@phid)
       raise e
     end
-    requested_results(full_results, saved_performance_data)
+    requested_results(full_results)
   end
 
   private
 
-    def update_performance_history_record(full_results, start_time_s)
+    def setup_search(request_header: {}, language: nil, replacements: {}, subauth: nil, context: false, performance_data: false) # rubocop:disable Metrics/ParameterLists
+      QaServer.log_agent_info(request_header[:request])
+      @start_time_s = QaServer.current_time_s
+      request_header = build_request_header(language: language, replacements: replacements, subauth: subauth, context: context, performance_data: performance_data) if request_header.empty?
+      @saved_performance_data = performance_data || request_header[:performance_data]
+      request_header[:performance_data] = true
+      request_header
+    end
+
+    def update_performance_history_record(full_results)
       return QaServer.config.performance_cache.destroy(@phid) unless full_results.is_a?(Hash) && full_results.key?(:performance)
-      updates = { action_time_ms: (QaServer.current_time_s - start_time_s) * 1000,
+      updates = { action_time_ms: (QaServer.current_time_s - @start_time_s) * 1000,
                   size_bytes: full_results[:performance][:fetched_bytes],
                   retrieve_plus_graph_load_time_ms: full_results[:performance][:fetch_time_s] * 1000,
                   normalization_time_ms: full_results[:performance][:normalization_time_s] * 1000 }
@@ -48,8 +53,8 @@ module PrependedLinkedData::SearchQuery
       Rails.logger.info("Time to receive data from authority: #{access_time_s}s")
     end
 
-    def requested_results(full_results, saved_performance_data)
-      return full_results if saved_performance_data
+    def requested_results(full_results)
+      return full_results if @saved_performance_data
       return full_results[:results] unless full_results.key? :response_header
       full_results.delete(:performance)
       full_results

@@ -41,8 +41,8 @@ module QaServer
     end
 
     def log(id:)
-      Rails.logger.info("*** performance data for id: #{id} ***")
-      Rails.logger.info(@cache[id].to_yaml)
+      Rails.logger.debug("*** performance data for id: #{id} ***")
+      Rails.logger.debug(@cache[id].to_yaml)
     end
 
     private
