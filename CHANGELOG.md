@@ -1,3 +1,11 @@
+### 5.4.0 (2020-01-07)
+
+* adds config hour_offset_to_expire_cache
+* deprecates config hour_offset_to_run_monitoring_tests (replaced by hour_offset_to_expire_cache)
+* updates QaServer.monitoring_expires_at to use the new hour_offset_to_expire_cache config
+* adds QaServer.cache_expiry that can be used for expiring all cached data
+* add tests and exceptions for configs
+
 ### 5.3.0 (2019-12-19)
 
 * optionally log browser and platform user agent info
