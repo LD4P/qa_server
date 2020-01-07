@@ -9,8 +9,9 @@ module QaServer
       @preferred_time_zone_name ||= 'Eastern Time (US & Canada)'
     end
 
-    # Preferred hour to expire caches related to slow running calculations (e.g. monitoring tests, performance data)
-    # @param [Integer] count of hours from midnight (0-23 with 0=midnight)
+    # Set preferred hour to expire caches related to slow running calculations (e.g. monitoring tests, performance data)
+    # @param [Integer] count of hours after midnight (0-23 with 0=midnight)
+    # @raise [ArgumentError] if offset is not between 0 and 23
     # @example
     #   For preferred_time_zone_name of 'Eastern Time (US & Canada)', use 3 for slow down at midnight PT/3am ET
     #   For preferred_time_zone_name of 'Pacific Time (US & Canada)', use 0 for slow down at midnight PT/3am ET
@@ -19,20 +20,26 @@ module QaServer
       @hour_offset_to_expire_cache = offset
     end
 
+    # Preferred hour to expire caches related to slow running calculations (e.g. monitoring tests, performance data)
+    # @return [Integer] count of hours after midnight (0-23 with 0=midnight)
     def hour_offset_to_expire_cache
       @hour_offset_to_expire_cache ||= 3
     end
 
-    # Preferred hour to run monitoring tests
+    # Set preferred hour to run monitoring tests (deprecated)
     # @param [Integer] count of hours from midnight (0-23 with 0=midnight)
     # @example
     #   For preferred_time_zone_name of 'Eastern Time (US & Canada)', use 3 for slow down at midnight PT/3am ET
     #   For preferred_time_zone_name of 'Pacific Time (US & Canada)', use 0 for slow down at midnight PT/3am ET
-    # alias hour_offset_to_run_monitoring_tests= hour_offset_to_expire_cache=
+    # @deprecated Use {#hour_offset_to_expire_cache=} instead.
     def hour_offset_to_run_monitoring_tests=(offset)
       Deprecation.warn(QaServer, "hour_offset_to_run_monitoring_tests= is deprecated and will be removed from a future release (use #hour_offset_to_expire_cache= instead)")
       @hour_offset_to_expire_cache = offset
     end
+
+    # Preferred hour to run monitoring tests (deprecated)
+    # @return [Integer] count of hours from midnight (0-23 with 0=midnight)
+    # @deprecated Use {#hour_offset_to_expire_cache} instead.
     alias hour_offset_to_run_monitoring_tests hour_offset_to_expire_cache
     deprecation_deprecate hour_offset_to_run_monitoring_tests: "use #hour_offset_to_expire_cache instead"
 
@@ -91,8 +98,15 @@ module QaServer
     end
 
     # Performance graph default time period for all graphs.  All authorities will show the graph for this time period on page load.
-    # @param [String] :day, :month, or :year
-    attr_writer :performance_graph_default_time_period
+    # @param [Symbol] time period for default display of performance graphs (i.e., one of :day, :month, or :year)
+    # @raise [ArgumentError] if time_period is not one of :day, :month, or :year
+    def performance_graph_default_time_period=(time_period)
+      raise ArgumentError, 'time_period must be one of :day, :month, or :year' unless [:day, :month, :year].include? time_period
+      @performance_graph_default_time_period = time_period
+    end
+
+    # Performance graph default time period for all graphs.  All authorities will show the graph for this time period on page load.
+    # @return [Symbol] time period for default display of performance graphs (i.e., one of :day, :month, or :year)
     def performance_graph_default_time_period
       @performance_graph_default_time_period ||= :month
     end
@@ -106,8 +120,15 @@ module QaServer
     end
 
     # Performance datatable default time period for calculating stats.
-    # @param [String] :day, :month, :year, :all
-    attr_writer :performance_datatable_default_time_period
+    # @param [Symbol] time period for calculating performance stats (i.e., one of :day, :month, :year, or :all)
+    # @raise [ArgumentError] if time_period is not one of :day, :month, :year, or :all
+    def performance_datatable_default_time_period=(time_period)
+      raise ArgumentError, 'time_period must be one of :day, :month, :year, or :all' unless [:day, :month, :year, :all].include? time_period
+      @performance_datatable_default_time_period = time_period
+    end
+
+    # Performance datatable default time period for calculating stats.
+    # @return [Symbol] time period for calculating performance stats (i.e., one of :day, :month, :year, or :all)
     def performance_datatable_default_time_period
       @performance_datatable_default_time_period ||= :year
     end
