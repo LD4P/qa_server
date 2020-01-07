@@ -38,6 +38,7 @@ Gem::Specification.new do |spec|
   # spec.add_development_dependency "capybara", '~> 3.29'
   # spec.add_development_dependency 'capybara-maleficent', '~> 0.3.0'
   # spec.add_development_dependency 'chromedriver-helper', '~> 2.1'
+  spec.add_development_dependency 'deprecation'
   spec.add_development_dependency 'engine_cart', '~> 2.0'
   spec.add_development_dependency "factory_bot", '~> 4.4'
   spec.add_development_dependency 'simplecov'

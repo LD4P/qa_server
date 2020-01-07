@@ -9,15 +9,32 @@ module QaServer
       @preferred_time_zone_name ||= 'Eastern Time (US & Canada)'
     end
 
+    # Preferred hour to expire caches related to slow running calculations (e.g. monitoring tests, performance data)
+    # @param [Integer] count of hours from midnight (0-23 with 0=midnight)
+    # @example
+    #   For preferred_time_zone_name of 'Eastern Time (US & Canada)', use 3 for slow down at midnight PT/3am ET
+    #   For preferred_time_zone_name of 'Pacific Time (US & Canada)', use 0 for slow down at midnight PT/3am ET
+    def hour_offset_to_expire_cache=(offset)
+      raise ArgumentError, 'offset must be between 0 and 23' unless (0..23).cover? offset
+      @hour_offset_to_expire_cache = offset
+    end
+
+    def hour_offset_to_expire_cache
+      @hour_offset_to_expire_cache ||= 3
+    end
+
     # Preferred hour to run monitoring tests
     # @param [Integer] count of hours from midnight (0-23 with 0=midnight)
     # @example
     #   For preferred_time_zone_name of 'Eastern Time (US & Canada)', use 3 for slow down at midnight PT/3am ET
     #   For preferred_time_zone_name of 'Pacific Time (US & Canada)', use 0 for slow down at midnight PT/3am ET
-    attr_writer :hour_offset_to_run_monitoring_tests
-    def hour_offset_to_run_monitoring_tests
-      @hour_offset_to_run_monitoring_tests ||= 3
+    # alias hour_offset_to_run_monitoring_tests= hour_offset_to_expire_cache=
+    def hour_offset_to_run_monitoring_tests=(offset)
+      Deprecation.warn(QaServer, "hour_offset_to_run_monitoring_tests= is deprecated and will be removed from a future release (use #hour_offset_to_expire_cache= instead)")
+      @hour_offset_to_expire_cache = offset
     end
+    alias hour_offset_to_run_monitoring_tests hour_offset_to_expire_cache
+    deprecation_deprecate hour_offset_to_run_monitoring_tests: "use #hour_offset_to_expire_cache instead"
 
     # Displays a graph of historical test data when true
     # @param [Boolean] display history graph when true

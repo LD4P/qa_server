@@ -2,9 +2,13 @@
 require 'qa_server/engine'
 require 'qa_server/version'
 require 'user_agent'
+require 'deprecation'
 
 module QaServer
   extend ActiveSupport::Autoload
+  extend Deprecation
+
+  self.deprecation_horizon = 'LD4P/QaServer v6.0.0'
 
   autoload :Configuration
 
@@ -23,17 +27,27 @@ module QaServer
     @config
   end
 
+  # @return [ActiveSupport::TimeWithZone] current DateTime in the configured preferred_time_zone_name
   def self.current_time
     Time.now.in_time_zone(QaServer.config.preferred_time_zone_name)
   end
 
+  # @return [Float] current DateTime in seconds
   def self.current_time_s
     current_time.to_f
   end
 
+  # @return [ActiveSupport::TimeWithZone] DateTime at which cache should expire
   def self.monitoring_expires_at
-    offset = QaServer.config.hour_offset_to_run_monitoring_tests
-    (current_time - offset.hours).beginning_of_day + offset.hours
+    offset = QaServer.config.hour_offset_to_expire_cache
+    offset_time = current_time
+    offset_time = offset_time.tomorrow unless (offset_time + 5.minutes).hour < offset
+    offset_time.beginning_of_day + offset.hours - 5.minutes
+  end
+
+  # @return [Float] number of seconds until cache should expire
+  def self.cache_expiry
+    monitoring_expires_at - current_time
   end
 
   def self.log_agent_info(request)
