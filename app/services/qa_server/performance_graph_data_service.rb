@@ -10,6 +10,9 @@ module QaServer
       self.performance_data_class = QaServer::PerformanceHistory
 
       # Get hourly average for the past 24 hours.
+      # @param authority_name [String] limit statistics to records for the given authority (default: all authorities)
+      # @param action [Symbol] one of :search, :fetch, :all_actions
+      # @param force [Boolean] if true, forces cache to regenerate; otherwise, returns value from cache unless expired
       # @returns [Hash] performance statistics for the past 24 hours
       # @example
       #   { 0: { hour: '1400', stats: { load_avg_ms: 12.3, normalization_avg_ms: 4.2, full_request_avg_ms: 16.5, etc. }},
@@ -18,22 +21,19 @@ module QaServer
       #     ...,
       #     23: { hour: 'NOW', stats: { load_avg_ms: 12.3, normalization_avg_ms: 4.2, full_request_avg_ms: 16.5, etc. }}
       #   }
-      def average_last_24_hours(authority_name: nil, action: nil)
-        start_hour = Time.now.getlocal.beginning_of_hour - 23.hours
-        avgs = {}
-        0.upto(23).each do |idx|
-          records = records_by(authority_name, action, start_hour..start_hour.end_of_hour)
-          stats = stats_calculator_class.new(records).calculate_stats(avg: true, full: false)
-          data = {}
-          data[BY_HOUR] = performance_by_hour_label(idx, start_hour)
-          data[STATS] = stats
-          avgs[idx] = data
-          start_hour += 1.hour
+      def average_last_24_hours(authority_name: nil, action: nil, force: false)
+        Rails.cache.fetch("#{self.class}/#{__method__}/#{authority_name || ALL_AUTH}/#{action}/#{FOR_DAY}",
+                          expires_in: QaServer.current_time.end_of_hour - QaServer.current_time,
+                          race_condition_ttl: 1.hour, force: force) do
+          Rails.logger.info("#{self.class}##{__method__} - calculating performance stats for last 24 hours - cache expired or refresh requested (#{force})")
+          calculate_last_24_hours(authority_name, action)
         end
-        avgs
       end
 
       # Get daily average for the past 30 days.
+      # @param authority_name [String] limit statistics to records for the given authority (default: all authorities)
+      # @param action [Symbol] one of :search, :fetch, :all_actions
+      # @param force [Boolean] if true, forces cache to regenerate; otherwise, returns value from cache unless expired
       # @returns [Hash] performance statistics for the past 30 days
       # @example
       #   { 0: { day: '07-15-2019', stats: { load_avg_ms: 12.3, normalization_avg_ms: 4.2, full_request_avg_ms: 16.5, etc. }},
@@ -42,22 +42,18 @@ module QaServer
       #     ...,
       #     29: { day: 'TODAY', stats: { load_avg_ms: 12.3, normalization_avg_ms: 4.2, full_request_avg_ms: 16.5, etc. }}
       #   }
-      def average_last_30_days(authority_name: nil, action: nil)
-        start_day = Time.now.getlocal.beginning_of_day - 29.days
-        avgs = {}
-        0.upto(29).each do |idx|
-          records = records_by(authority_name, action, start_day..start_day.end_of_day)
-          stats = stats_calculator_class.new(records).calculate_stats(avg: true, full: false)
-          data = {}
-          data[BY_DAY] = performance_by_day_label(idx, start_day)
-          data[STATS] = stats
-          avgs[idx] = data
-          start_day += 1.day
+      def average_last_30_days(authority_name: nil, action: nil, force: false)
+        Rails.cache.fetch("#{self.class}/#{__method__}/#{authority_name || ALL_AUTH}/#{action}/#{FOR_MONTH}",
+                          expires_in: QaServer.cache_expiry, race_condition_ttl: 1.hour, force: force) do
+          Rails.logger.info("#{self.class}##{__method__} - calculating performance stats for last 30 days - cache expired or refresh requested (#{force})")
+          calculate_last_30_days(authority_name, action)
         end
-        avgs
       end
 
       # Get daily average for the past 12 months.
+      # @param authority_name [String] limit statistics to records for the given authority (default: all authorities)
+      # @param action [Symbol] one of :search, :fetch, :all_actions
+      # @param force [Boolean] if true, forces cache to regenerate; otherwise, returns value from cache unless expired
       # @returns [Hash] performance statistics for the past 12 months
       # @example
       #   { 0: { month: '09-2019', stats: { load_avg_ms: 12.3, normalization_avg_ms: 4.2, full_request_avg_ms: 16.5, etc. }},
@@ -66,19 +62,12 @@ module QaServer
       #     ...,
       #     11: { month: '08-2019', stats: { load_avg_ms: 12.3, normalization_avg_ms: 4.2, full_request_avg_ms: 16.5, etc. }}
       #   }
-      def average_last_12_months(authority_name: nil, action: nil)
-        start_month = Time.now.getlocal.beginning_of_month - 11.months
-        avgs = {}
-        0.upto(11).each do |idx|
-          records = records_by(authority_name, action, start_month..start_month.end_of_month)
-          stats = stats_calculator_class.new(records).calculate_stats(avg: true, full: false)
-          data = {}
-          data[BY_MONTH] = start_month.strftime("%m-%Y")
-          data[STATS] = stats
-          avgs[idx] = data
-          start_month += 1.month
+      def average_last_12_months(authority_name: nil, action: nil, force: false)
+        Rails.cache.fetch("#{self.class}/#{__method__}/#{authority_name || ALL_AUTH}/#{action}/#{FOR_YEAR}",
+                          expires_in: QaServer.cache_expiry, race_condition_ttl: 1.hour, force: force) do
+          Rails.logger.info("#{self.class}##{__method__} - calculating performance stats for last 12 months - cache expired or refresh requested (#{force})")
+          calculate_last_12_months(authority_name, action)
         end
-        avgs
       end
 
       private
@@ -108,6 +97,51 @@ module QaServer
           else
             ""
           end
+        end
+
+        def calculate_last_24_hours(authority_name, action)
+          start_hour = QaServer.current_time.beginning_of_hour - 23.hours
+          avgs = {}
+          0.upto(23).each do |idx|
+            records = records_by(authority_name, action, start_hour..start_hour.end_of_hour)
+            stats = stats_calculator_class.new(records).calculate_stats(avg: true, full: false)
+            data = {}
+            data[BY_HOUR] = performance_by_hour_label(idx, start_hour)
+            data[STATS] = stats
+            avgs[idx] = data
+            start_hour += 1.hour
+          end
+          avgs
+        end
+
+        def calculate_last_30_days(authority_name, action)
+          start_day = QaServer.current_time.beginning_of_day - 29.days
+          avgs = {}
+          0.upto(29).each do |idx|
+            records = records_by(authority_name, action, start_day..start_day.end_of_day)
+            stats = stats_calculator_class.new(records).calculate_stats(avg: true, full: false)
+            data = {}
+            data[BY_DAY] = performance_by_day_label(idx, start_day)
+            data[STATS] = stats
+            avgs[idx] = data
+            start_day += 1.day
+          end
+          avgs
+        end
+
+        def calculate_last_12_months(authority_name, action)
+          start_month = QaServer.current_time.beginning_of_month - 11.months
+          avgs = {}
+          0.upto(11).each do |idx|
+            records = records_by(authority_name, action, start_month..start_month.end_of_month)
+            stats = stats_calculator_class.new(records).calculate_stats(avg: true, full: false)
+            data = {}
+            data[BY_MONTH] = start_month.strftime("%m-%Y")
+            data[STATS] = stats
+            avgs[idx] = data
+            start_month += 1.month
+          end
+          avgs
         end
     end
   end

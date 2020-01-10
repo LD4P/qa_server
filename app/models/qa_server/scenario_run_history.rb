@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 # Provide access to the scenario_results_history database table which tracks specific scenario runs over time.
 module QaServer
-  class ScenarioRunHistory < ActiveRecord::Base
+  class ScenarioRunHistory < ActiveRecord::Base # rubocop:disable Metrics/ClassLength
     self.table_name = 'scenario_run_history'
     belongs_to :scenario_run_registry
     enum scenario_type: [:connection, :accuracy, :performance], _suffix: :type
@@ -31,24 +31,28 @@ module QaServer
     end
 
     # Get a summary of passing/failing tests for a run.
-    # @param scenario_run [ScenarioRunRegistry] the run on which to gather statistics
-    # @returns [Hash] statistics on the requested run
-    # @example
-    #   { run_id: 14,
-    #     failing_count: 3,
-    #     passing_count: 156,
-    #     total_count: 159,
-    #     authority_count: 22,
-    #     failing_authority_count: 1 }
-    def self.run_summary(scenario_run:)
-      return nil unless scenario_run&.id
-      status = status_counts_in_run(run_id: scenario_run.id)
-      summary_class.new(run_id: scenario_run.id,
-                        run_dt_stamp: scenario_run.dt_stamp,
-                        authority_count: authorities_in_run(run_id: scenario_run.id).count,
-                        failing_authority_count: authorities_with_failures_in_run(run_id: scenario_run.id).count,
-                        passing_scenario_count: status['good'],
-                        failing_scenario_count: status['bad'] + status['unknown'])
+    # @param scenario_run [QaServer::ScenarioRunRegistry] the run on which to gather statistics
+    # @param force [Boolean] if true, forces cache to regenerate; otherwise, returns value from cache unless expired
+    # @returns [QaServer::ScenarioRunSummary] statistics on the requested run
+    # @example ScenarioRunSummary includes methods for accessing
+    #   * run_id: 14,
+    #   * run_dt_stamp:
+    #   * authority_count: 22,
+    #   * failing_authority_count: 1
+    #   * passing_scenario_count: 156,
+    #   * failing_scenario_count: 3,
+    #   * total_scenario_count: 159,
+    def self.run_summary(scenario_run:, force: false)
+      Rails.cache.fetch("#{self.class}/#{__method__}", expires_in: QaServer.cache_expiry, race_condition_ttl: 1.hour, force: force) do
+        Rails.logger.info("#{self.class}##{__method__} - creating summary of latest run - cache expired or refresh requested (#{force})")
+        status = status_counts_in_run(run_id: scenario_run.id)
+        summary_class.new(run_id: scenario_run.id,
+                          run_dt_stamp: scenario_run.dt_stamp,
+                          authority_count: authorities_in_run(run_id: scenario_run.id).count,
+                          failing_authority_count: authorities_with_failures_in_run(run_id: scenario_run.id).count,
+                          passing_scenario_count: status['good'],
+                          failing_scenario_count: status['bad'] + status['unknown'])
+      end
     end
 
     # Get set of all scenario results for a run.
@@ -85,6 +89,7 @@ module QaServer
     #       err_message: "Not enough search results returned",
     #       scenario_type: :connection
     #       run_time: 0.123 } ]
+    # @deprecated Not used anywhere. Being removed.
     def self.run_results(run_id:, authority_name: nil, status: nil, url: nil)
       return [] unless run_id
       where = {}
@@ -94,9 +99,11 @@ module QaServer
       where[:url] = url if url.present?
       QaServer::ScenarioRunHistory.where(where).to_a
     end
+    deprecation_deprecate run_results: "Not used anywhere. Being removed."
 
     # Get set of failures for a run, if any.
     # @param run_id [Integer] the run on which to gather statistics
+    # @param force [Boolean] if true, forces cache to regenerate; otherwise, returns value from cache unless expired
     # @returns [Array<Hash>] scenario details for any failing scenarios in the run
     # @example
     #   [ { status: :bad,
@@ -117,31 +124,42 @@ module QaServer
     #       err_message: "Not enough search results returned",
     #       scenario_type: :connection
     #       run_time: 0.123 } ]
-    def self.run_failures(run_id:)
+    def self.run_failures(run_id:, force: false)
       return [] unless run_id
-      QaServer::ScenarioRunHistory.where(scenario_run_registry_id: run_id).where.not(status: :good).to_a
+      Rails.cache.fetch("#{self.class}/#{__method__}", expires_in: QaServer.cache_expiry, race_condition_ttl: 1.hour, force: force) do
+        Rails.logger.info("#{self.class}##{__method__} - finding failures in latest run - cache expired or refresh requested (#{force})")
+        QaServer::ScenarioRunHistory.where(scenario_run_registry_id: run_id).where.not(status: :good).to_a
+      end
     end
 
     # Get a summary level of historical data
-    # @returns [Array<Hash>] scenario details for any failing scenarios in the run (auth_name, failing, passing)
-    # @example
+    # @returns [Array<Array>] summary of passing/failing tests for each authority
+    # @example [auth_name, failing, passing]
     #   [ [ 'agrovoc', 0, 24 ],
     #     [ 'geonames_ld4l_cache', 2, 22 ] ... ]
-    def self.historical_summary
-      runs = all_runs_per_authority
-      failures = failing_runs_per_authority
-      return [] unless runs.present?
-      data = []
-      runs.each do |auth_name, run_count|
-        auth_data = []
-        auth_data[0] = auth_name
-        failure_count = (failures.key? auth_name) ? failures[auth_name] : 0 # rubocop:disable Style/TernaryParentheses
-        auth_data[1] = failure_count
-        auth_data[2] = run_count - failure_count # passing
-        data << auth_data
+    def self.historical_summary(force: false)
+      Rails.cache.fetch("#{self.class}/#{__method__}", expires_in: QaServer.cache_expiry, race_condition_ttl: 1.hour, force: force) do
+        Rails.logger.info("#{self.class}##{__method__} - calculating pass/fail per authority across all time - cache expired or refresh requested (#{force})")
+        runs = all_runs_per_authority
+        failures = failing_runs_per_authority
+        return [] unless runs.present?
+        data = []
+        runs.each do |auth_name, run_count|
+          data << pass_fail_stats_for_authority(failures, auth_name, run_count)
+        end
+        data
       end
-      data
     end
+
+    def self.pass_fail_stats_for_authority(failures, auth_name, run_count)
+      auth_data = []
+      auth_data[0] = auth_name
+      failure_count = failures.key?(auth_name) ? failures[auth_name] : 0
+      auth_data[1] = failure_count
+      auth_data[2] = run_count - failure_count # passing
+      auth_data
+    end
+    private_class_method :pass_fail_stats_for_authority
 
     def self.authorities_in_run(run_id:)
       QaServer::ScenarioRunHistory.where(scenario_run_registry_id: run_id).pluck(:authority_name).uniq
@@ -153,6 +171,8 @@ module QaServer
     end
     private_class_method :authorities_with_failures_in_run
 
+    # @return [Hash] status counts across all authorities (used for current test summary)
+    # @example { "good" => 23, "bad" => 3, "unknown" => 0 }
     def self.status_counts_in_run(run_id:)
       status = QaServer::ScenarioRunHistory.group('status').where(scenario_run_registry_id: run_id).count
       status["good"] = 0 unless status.key? "good"

@@ -22,3 +22,7 @@ Metrics/BlockLength:
   Exclude:
     - 'qa_server.gemspec'
     - 'spec/**/*.rb'
+
+Metrics/ClassLength:
+  Exclude:
+    - 'lib/qa_server/configuration.rb'

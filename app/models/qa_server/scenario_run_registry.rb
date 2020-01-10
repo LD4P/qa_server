@@ -5,7 +5,7 @@ module QaServer
     self.table_name = 'scenario_run_registry'
     has_many :scenario_run_history, foreign_key: :scenario_run_registry_id
 
-    # Get the latest saved run of scenarios.
+    # @return [ScenarioRunRegistry] registry data for latest run (e.g. id, dt_stamp)
     def self.latest_run
       return nil unless QaServer::ScenarioRunRegistry.last
       QaServer::ScenarioRunRegistry.last # Can we count on last to always be the one with the latest dt_stamp?
@@ -14,21 +14,27 @@ module QaServer
       # latest_run.id
     end
 
-    # Get the latest saved status.
+    # @return [Integer] id for latest test run
+    # @deprecated Not used anywhere. Being removed.
     def self.latest_run_id
       latest = latest_run
       return nil unless latest
       lastest.id
     end
+    deprecation_deprecate latest_run_id: "Not used anywhere. Being removed."
 
+    # @return [String] datetime stamp of first registered run
+    def self.first_run_dt
+      Rails.cache.fetch("#{self.class}/#{__method__}", expires_in: QaServer.cache_expiry, race_condition_ttl: 1.hour) do
+        QaServer::ScenarioRunRegistry.first.dt_stamp.in_time_zone("Eastern Time (US & Canada)").strftime("%m/%d/%y - %I:%M %p")
+      end
+    end
+
+    # Register and save latest test run results
+    # @param scenarios_results [Array<Hash>] results of latest test run
     def self.save_run(scenarios_results:)
-      run = QaServer::ScenarioRunRegistry.create(dt_stamp: dt_stamp_now_et)
+      run = QaServer::ScenarioRunRegistry.create(dt_stamp: QaServer.current_time)
       scenarios_results.each { |result| QaServer::ScenarioRunHistory.save_result(run_id: run.id, scenario_result: result) }
     end
-
-    def self.dt_stamp_now_et
-      Time.now.in_time_zone("Eastern Time (US & Canada)")
-    end
-    private_class_method :dt_stamp_now_et
   end
 end

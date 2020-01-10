@@ -64,10 +64,10 @@ module QaServer
       #     },
       #     AGROVOC_LD4L_CACHE: { ... # same data for each authority  }
       #   }
-      def performance_data(datatype: :datatable)
+      def performance_data(datatype: :datatable, force: false)
         return if datatype == :none
         QaServer.config.performance_cache.write_all
-        data = calculate_data(datatype)
+        data = calculate_data(datatype, force: force)
         graphing_service_class.create_performance_graphs(performance_data: data) if calculate_graphdata? datatype
         data
       end
@@ -82,23 +82,23 @@ module QaServer
           datatype == :graph || datatype == :all
         end
 
-        def calculate_data(datatype)
+        def calculate_data(datatype, force:)
           data = {}
           auths = authority_list_class.authorities_list
-          data[ALL_AUTH] = data_for_authority(datatype: datatype)
-          auths.each { |auth_name| data[auth_name] = data_for_authority(authority_name: auth_name, datatype: datatype) }
+          data[ALL_AUTH] = data_for_authority(datatype: datatype, force: force)
+          auths.each { |auth_name| data[auth_name] = data_for_authority(authority_name: auth_name, datatype: datatype, force: force) }
           data
         end
 
-        def data_for_authority(authority_name: nil, datatype:)
+        def data_for_authority(authority_name: nil, datatype:, force:)
           action_data = {}
           [:search, :fetch, :all_actions].each do |action|
             data = {}
-            data[FOR_DATATABLE] = data_table_stats(authority_name, action) if calculate_datatable?(datatype)
+            data[FOR_DATATABLE] = data_table_stats(authority_name, action, force: force) if calculate_datatable?(datatype)
             if calculate_graphdata?(datatype)
-              data[FOR_DAY] = graph_data_service_class.average_last_24_hours(authority_name: authority_name, action: action)
-              data[FOR_MONTH] = graph_data_service_class.average_last_30_days(authority_name: authority_name, action: action)
-              data[FOR_YEAR] = graph_data_service_class.average_last_12_months(authority_name: authority_name, action: action)
+              data[FOR_DAY] = graph_data_service_class.average_last_24_hours(authority_name: authority_name, action: action, force: force)
+              data[FOR_MONTH] = graph_data_service_class.average_last_30_days(authority_name: authority_name, action: action, force: force)
+              data[FOR_YEAR] = graph_data_service_class.average_last_12_months(authority_name: authority_name, action: action, force: force)
             end
             action_data[action] = data
           end
@@ -106,18 +106,23 @@ module QaServer
         end
 
         # Get statistics for all available data.
-        # @param [String] auth_name - limit statistics to records for the given authority (default: all authorities)
+        # @param auth_name [String] limit statistics to records for the given authority (default: all authorities)
+        # @param action [Symbol] one of :search, :fetch, :all_actions
+        # @param force [Boolean] if true, forces cache to regenerate; otherwise, returns value from cache unless expired
         # @returns [Hash] performance statistics for the datatable during the expected time period
         # @example
         #   { retrieve_avg_ms: 12.3, graph_load_avg_ms: 2.1, normalization_avg_ms: 4.2, full_request_avg_ms: 16.5,
         #     retrieve_10th_ms: 12.3, graph_load_10th_ms: 12.3, normalization_10th_ms: 4.2, full_request_10th_ms: 16.5,
         #     retrieve_90th_ms: 12.3, graph_load_90th_ms: 12.3, normalization_90th_ms: 4.2, full_request_90th_ms: 16.5 }
-        def data_table_stats(auth_name, action)
-          records = records_for_last_24_hours(auth_name) ||
-                    records_for_last_30_days(auth_name) ||
-                    records_for_last_12_months(auth_name) ||
-                    all_records(auth_name)
-          stats_calculator_class.new(records, action: action).calculate_stats(avg: true, low: true, high: true)
+        def data_table_stats(auth_name, action, force:)
+          Rails.cache.fetch("#{self.class}/#{__method__}/#{auth_name || ALL_AUTH}/#{action}/#{FOR_DATATABLE}", expires_in: QaServer.cache_expiry, race_condition_ttl: 1.hour, force: force) do
+            Rails.logger.info("#{self.class}##{__method__} - calculating performance datatable stats - cache expired or refresh requested (#{force})")
+            records = records_for_last_24_hours(auth_name) ||
+                      records_for_last_30_days(auth_name) ||
+                      records_for_last_12_months(auth_name) ||
+                      all_records(auth_name)
+            stats_calculator_class.new(records, action: action).calculate_stats(avg: true, low: true, high: true)
+          end
         end
 
         def expected_time_period
