@@ -1,3 +1,7 @@
+### 5.5.0 (2020-01-10)
+
+* use caching with expiry for monitor status page
+
 ### 5.4.0 (2020-01-07)
 
 * adds config hour_offset_to_expire_cache
