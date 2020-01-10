@@ -13,9 +13,7 @@ module QaServer
 
     # Sets up presenter with data to display in the UI
     def index
-      refresh_tests
-      historical_data = refresh_history
-      performance_data = refresh_performance
+      latest_run
       @presenter = presenter_class.new(current_summary: latest_summary,
                                        current_failure_data: latest_failures,
                                        historical_summary_data: historical_data,
@@ -25,49 +23,39 @@ module QaServer
 
     private
 
+      # Sets @latest_run [QaServer::ScenarioRunRegistry]
       def latest_run
-        @latest_run ||= scenario_run_registry_class.latest_run
+        Rails.cache.fetch("#{self.class}/#{__method__}", expires_in: QaServer.cache_expiry, race_condition_ttl: 1.hour, force: refresh_tests?) do
+          Rails.logger.info("#{self.class}##{__method__} - Running Tests - cache expired or refresh requested (#{refresh_tests?})")
+          validate(authorities_list)
+          scenario_run_registry_class.save_run(scenarios_results: status_log.to_a)
+          scenario_run_registry_class.latest_run
+        end
       end
 
+      # Sets @latest_summary [QaServer::ScenarioRunSummary]
       def latest_summary
-        @latest_summary ||= scenario_history_class.run_summary(scenario_run: latest_run)
+        scenario_history_class.run_summary(scenario_run: latest_run, force: refresh_tests?)
       end
 
       def latest_failures
-        @status_data ||= scenario_history_class.run_failures(run_id: latest_run.id)
+        scenario_history_class.run_failures(run_id: latest_run.id, force: refresh_tests?)
       end
 
-      def update_summary_and_data
-        scenario_run_registry_class.save_run(scenarios_results: status_log.to_a)
-        @latest_summary = nil # reset so next request recalculates
-        @latest_failures = nil # reset so next request recalculates
+      # Sets @historical_data [Array<Hash>]
+      def historical_data
+        scenario_history_class.historical_summary(force: refresh_history?)
       end
 
-      def expired?
-        @expired ||= latest_summary.blank? || latest_summary.run_dt_stamp < QaServer.monitoring_expires_at
+      # Sets @performance_data [Hash<Hash>]
+      def performance_data
+        performance_history_class.performance_data(datatype: performance_datatype, force: refresh_performance?)
       end
 
-      def historical_summary_data(refresh: false)
-        # TODO: Make this refresh the same way performance data refreshes.
-        #       Requires historical graph to move out of presenter so it can be created here only with refresh.
-        if refresh
-          @historical_summary_data = scenario_history_class.historical_summary
-          # TODO: Need to recreate graph here.  And need to only read the graph in presenter.
-        end
-        @historical_summary_data ||= scenario_history_class.historical_summary
-      end
-
-      def performance_data(refresh: false)
-        datatype = performance_datatype(refresh)
-        return if datatype == :none
-        @performance_data = nil if refresh
-        @performance_data ||= performance_history_class.performance_data(datatype: datatype)
-      end
-
-      def performance_datatype(refresh) # rubocop:disable Metrics/CyclomaticComplexity
-        return :all if display_performance_datatable? && display_performance_graph? && refresh
+      def performance_datatype
+        return :all if display_performance_datatable? && display_performance_graph?
         return :datatable if display_performance_datatable?
-        return :graph if display_performance_graph? && refresh
+        return :graph if display_performance_graph?
         :none
       end
 
@@ -77,12 +65,6 @@ module QaServer
 
       def display_performance_graph?
         @display_performance_graph ||= QaServer.config.display_performance_graph?
-      end
-
-      def refresh_tests
-        return unless refresh_tests?
-        validate(authorities_list)
-        update_summary_and_data
       end
 
       def refresh_history
@@ -98,12 +80,13 @@ module QaServer
       end
 
       def refresh_all?
+        return false unless refresh?
         params[:refresh].nil? || params[:refresh].casecmp?('all') # nil is for backward compatibility
       end
 
       def refresh_tests?
-        return false unless refresh? || expired?
-        refresh_all? || params[:refresh].casecmp?('tests') || expired?
+        return false unless refresh?
+        refresh_all? || params[:refresh].casecmp?('tests')
       end
 
       def refresh_history?
@@ -112,8 +95,8 @@ module QaServer
       end
 
       def refresh_performance?
-        return false unless refresh? || expired?
-        refresh_all? || params[:refresh].casecmp?('performance') || expired?
+        return false unless refresh?
+        refresh_all? || params[:refresh].casecmp?('performance')
       end
   end
 end

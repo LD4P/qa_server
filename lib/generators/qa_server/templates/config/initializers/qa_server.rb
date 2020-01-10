@@ -73,4 +73,9 @@ QaServer.config do |config|
   # impact and may need to be suppressed.  Performance stats will not be gathered when this config is true.
   # @param [Boolean] do not gather performance data when true (defaults to false for backward compatibitily)
   # config.suppress_performance_gathering = false
+
+  # Performance data is gathered on every incoming query.  Basic stats are logged from QA.  Full stats are logged
+  # by QaServer and can eat up logging realestate.  To suppress the logging of details, set this config to true.
+  # @param [Boolean] do not log performance data details when true (defaults to false for backward compatibitily)
+  # config.suppress_logging_performance_datails = false
 end

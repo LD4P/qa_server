@@ -17,15 +17,15 @@ module PrependedRdf::RdfGraph
     raise TypeError, "#{self} is immutable" if immutable?
     phid, real_url = parse_phid(url)
     performance_udpates = {}
-    start_time_s = Time.now.to_f
+    start_time_s = QaServer.current_time_s
 
     reader = RDF::Reader.open(real_url, { base_uri: real_url }.merge(options))
 
-    end_time_s = Time.now.to_f
+    end_time_s = QaServer.current_time_s
     performance_udpates[:retrieve_time_ms] = (end_time_s - start_time_s) * 1000
     QaServer.config.performance_tracker.write "#{format('%.6f', end_time_s - start_time_s)}, " # read data
 
-    start_time_s = Time.now.to_f
+    start_time_s = QaServer.current_time_s
 
     if graph_name
       statements = []
@@ -40,7 +40,7 @@ module PrependedRdf::RdfGraph
       nil
     end
 
-    end_time_s = Time.now.to_f
+    end_time_s = QaServer.current_time_s
     performance_udpates[:graph_load_time_ms] = (end_time_s - start_time_s) * 1000
     QaServer.config.performance_cache.update(id: phid, updates: performance_udpates)
     QaServer.config.performance_tracker.write "#{format('%.6f', end_time_s - start_time_s)}, " # load graph

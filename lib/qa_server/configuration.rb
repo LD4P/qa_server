@@ -179,6 +179,15 @@ module QaServer
       @suppress_performance_gathering ||= false
     end
 
+    # Performance data is gathered on every incoming query.  Basic stats are logged from QA.  Full stats are logged
+    # by QaServer and can eat up logging realestate.  To suppress the logging of details, set this config to true.
+    # @param [Boolean] do not log performance data details when true (defaults to false for backward compatibitily)
+    attr_writer :suppress_logging_performance_datails
+    def suppress_logging_performance_datails
+      @suppress_logging_performance_datails ||= false
+    end
+
+    # TODO: consider refactor performance caching to use Rails cache
     def performance_cache
       @performance_cache ||= QaServer::PerformanceCache.new
     end
