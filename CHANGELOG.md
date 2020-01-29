@@ -1,3 +1,7 @@
+### 5.5.1 (2020-01-29)
+
+* fix - check for nil before calling .each
+
 ### 5.5.0 (2020-01-10)
 
 * use caching with expiry for monitor status page
