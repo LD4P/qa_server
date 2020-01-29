@@ -19,7 +19,7 @@
   </table>
   <p class="status-update-dtstamp"><%= t('qa_server.monitor_status.summary.last_updated', date: @presenter.last_updated) %></p>
 
-  <% if @presenter.failures? %>
+  <% if @presenter.failures? & !@status_data.nil? %>
     <div id="failures" class="status-section">
       <h4><%= t('qa_server.monitor_status.failures.title') %></h4>
 
