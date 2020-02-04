@@ -1,4 +1,7 @@
 # QaServer
+
+https://docs.google.com/presentation/d/1O3LnACOKnHfKB_p7x--tkO2rh_KfgBS5hZ_qXxJBvAc/edit#slide=id.g552158001e_0_487
+
 This rails engine can be installed into your app to serve as a Questioning Authority (QA) Server for accessing external authorities.  It is part of a larger architecture supporting linked data authority access.  From this engine, you can send a search query and get back multiple results OR you can fetch a single term.  The engine provides UI for monitoring connections to configured authorities and the ability to check the current status of a single authority to determine if it is up and running now. 
 
 ## Reference
