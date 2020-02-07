@@ -1,21 +1,23 @@
 # frozen_string_literal: true
 module QaServer
-  class AuthorityValidationController < ApplicationController
-    layout 'qa_server'
-
-    class_attribute :validator_class,
-                    :lister_class,
-                    :logger_class
-
-    self.validator_class = QaServer::AuthorityValidatorService
-    self.lister_class = QaServer::AuthorityListerService
-    self.logger_class = QaServer::ScenarioLogger
+  module AuthorityValidationBehavior
+    extend ActiveSupport::Concern
 
     VALIDATION_TYPE_PARAM = :validation_type
     VALIDATE_CONNECTIONS = 'connections'
     VALIDATE_ACCURACY = 'accuracy'
     ALL_VALIDATIONS = 'all_checks'
-    DEFAULT_VALIDATION_TYPE = validator_class::VALIDATE_CONNECTIONS
+    DEFAULT_VALIDATION_TYPE = QaServer::AuthorityValidatorService
+
+    included do
+      class_attribute :validator_class,
+                      :lister_class,
+                      :logger_class
+
+      self.validator_class = QaServer::AuthorityValidatorService
+      self.lister_class = QaServer::AuthorityListerService
+      self.logger_class = QaServer::ScenarioLogger
+    end
 
     private
 
