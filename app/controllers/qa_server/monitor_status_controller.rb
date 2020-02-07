@@ -1,7 +1,11 @@
 # frozen_string_literal: true
 # Controller for Monitor Status header menu item
 module QaServer
-  class MonitorStatusController < QaServer::AuthorityValidationController
+  class MonitorStatusController < ApplicationController
+    layout 'qa_server'
+
+    include QaServer::AuthorityValidationBehavior
+
     class_attribute :presenter_class,
                     :scenario_run_registry_class,
                     :scenario_history_class,
@@ -65,14 +69,6 @@ module QaServer
 
       def display_performance_graph?
         @display_performance_graph ||= QaServer.config.display_performance_graph?
-      end
-
-      def refresh_history
-        historical_summary_data(refresh: refresh_history?)
-      end
-
-      def refresh_performance
-        performance_data(refresh: refresh_performance?)
       end
 
       def refresh?

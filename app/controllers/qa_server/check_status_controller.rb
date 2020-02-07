@@ -1,7 +1,11 @@
 # frozen_string_literal: true
 # Controller for Check Status header menu item
 module QaServer
-  class CheckStatusController < QaServer::AuthorityValidationController
+  class CheckStatusController < ApplicationController
+    layout 'qa_server'
+
+    include QaServer::AuthorityValidationBehavior
+
     ALL_AUTHORITIES = '__all__'
 
     class_attribute :presenter_class
