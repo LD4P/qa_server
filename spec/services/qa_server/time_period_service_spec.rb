@@ -12,7 +12,7 @@ RSpec.describe QaServer::TimePeriodService do
 
   describe '.where_clause_for_last_24_hours' do
     let(:end_hour) { end_range }
-    let(:start_hour) { end_hour - 23.hours }
+    let(:start_hour) { end_hour - 1.day }
 
     context 'when auth_name is nil' do
       context 'and auth_table is nil' do
@@ -90,7 +90,7 @@ RSpec.describe QaServer::TimePeriodService do
 
   describe '.where_clause_for_last_30_days' do
     let(:end_day) { end_range }
-    let(:start_day) { end_day - 29.days }
+    let(:start_day) { end_day - 1.month }
 
     context 'when auth_name is nil' do
       context 'and auth_table is nil' do
@@ -168,7 +168,7 @@ RSpec.describe QaServer::TimePeriodService do
 
   describe '.where_clause_for_last_12_months' do
     let(:end_month) { end_range }
-    let(:start_month) { end_month - 11.months }
+    let(:start_month) { end_month - 1.year }
 
     context 'when auth_name is nil' do
       context 'and auth_table is nil' do

@@ -20,6 +20,10 @@ QaServer.config do |config|
   # @param [Boolean] display history datatable when true
   # config.display_historical_datatable = true
 
+  # Historical datatable default time period.
+  # @param [Symbol] time period for calculating historical pass/fail (i.e., one of :month, :year, or :all)
+  # config.historical_datatable_default_time_period = :year
+
   # Displays a graph of performance test data when true
   # @param [Boolean] display performance graph when true
   # config.display_performance_graph = false

@@ -83,7 +83,8 @@
 
   <% if @presenter.display_performance_datatable? && !@presenter.performance_data.nil? %>
     <div id="performance-datatable-section">
-      <h4><%= @presenter.performance_table_description %></h4>
+      <h4><%= t('qa_server.monitor_status.performance.datatable_desc') %></h4>
+      <p class="status-update-dtstamp"><%= t('qa_server.monitor_status.performance.datarange', from: @presenter.performance_data_start, to: @presenter.performance_data_end) %></p>
       <table class="status">
         <tr>
           <th></th>

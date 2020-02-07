@@ -2,21 +2,33 @@
 # This presenter class provides data related to last test run as needed by the view that monitors status of authorities.
 module QaServer::MonitorStatus
   class CurrentStatusPresenter
+    # @param parent [QaServer::MonitorStatusPresenter] parent presenter
     # @param current_summary [ScenarioRunSummary] summary status of the latest run of test scenarios
     # @param current_data [Array<Hash>] current set of failures for the latest test run, if any
-    def initialize(current_summary:, current_failure_data:)
+    def initialize(parent:, current_summary:, current_failure_data:)
+      @parent = parent
       @current_summary = current_summary
       @current_failure_data = current_failure_data
     end
 
-    # @return [String] date of last test run
-    def last_updated
-      @current_summary.run_dt_stamp.in_time_zone("Eastern Time (US & Canada)").strftime("%m/%d/%y - %I:%M %p")
+    # @return [ActiveSupport::TimeWithZone] date time stamp of last test run
+    def last_updated_dt
+      @current_summary.run_dt_stamp
     end
 
-    # @return [String] date of first recorded test run
-    def first_updated
+    # @return [String] date with time of last test run
+    def last_updated
+      QaServer.pretty_time(last_updated_dt)
+    end
+
+    # @return [ActiveSupport::TimeWithZone] date time stamp of first recorded test run
+    def first_updated_dt
       QaServer::ScenarioRunRegistry.first_run_dt
+    end
+
+    # @return [String] date with time of first recorded test run
+    def first_updated
+      QaServer.pretty_time(first_updated_dt)
     end
 
     # @return [Integer] number of loaded authorities
