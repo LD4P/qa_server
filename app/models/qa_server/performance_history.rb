@@ -117,10 +117,7 @@ module QaServer
         def data_table_stats(auth_name, action, force:)
           Rails.cache.fetch("#{self.class}/#{__method__}/#{auth_name || ALL_AUTH}/#{action}/#{FOR_DATATABLE}", expires_in: QaServer.cache_expiry, race_condition_ttl: 1.hour, force: force) do
             Rails.logger.info("#{self.class}##{__method__} - calculating performance datatable stats - cache expired or refresh requested (#{force})")
-            records = records_for_last_24_hours(auth_name) ||
-                      records_for_last_30_days(auth_name) ||
-                      records_for_last_12_months(auth_name) ||
-                      all_records(auth_name)
+            records = records_for_authority(auth_name)
             stats_calculator_class.new(records, action: action).calculate_stats(avg: true, low: true, high: true)
           end
         end
@@ -129,37 +126,21 @@ module QaServer
           QaServer.config.performance_datatable_default_time_period
         end
 
-        def records_for_last_24_hours(auth_name)
-          return unless expected_time_period == :day
-          end_hour = QaServer.current_time
-          start_hour = end_hour - 23.hours
-          where_clause = { dt_stamp: start_hour..end_hour }
-          records_for_authority(auth_name, where_clause)
-        end
-
-        def records_for_last_30_days(auth_name)
-          return unless expected_time_period == :month
-          end_day = QaServer.current_time
-          start_day = end_day - 29.days
-          where_clause = { dt_stamp: start_day..end_day }
-          records_for_authority(auth_name, where_clause)
-        end
-
-        def records_for_last_12_months(auth_name)
-          return unless expected_time_period == :year
-          end_month = QaServer.current_time
-          start_month = end_month - 11.months
-          where_clause = { dt_stamp: start_month..end_month }
-          records_for_authority(auth_name, where_clause)
+        def records_for_authority(auth_name)
+          case expected_time_period
+          when :day
+            where(QaServer::TimePeriodService.where_clause_for_last_24_hours(auth_name: auth_name))
+          when :month
+            where(QaServer::TimePeriodService.where_clause_for_last_30_days(auth_name: auth_name))
+          when :year
+            where(QaServer::TimePeriodService.where_clause_for_last_12_months(auth_name: auth_name))
+          else
+            all_records(auth_name)
+          end
         end
 
         def all_records(auth_name)
           auth_name.nil? ? PerformanceHistory.all : where(authority: auth_name)
-        end
-
-        def records_for_authority(auth_name, where_clause)
-          where_clause[:authority] = auth_name unless auth_name.nil?
-          where(where_clause)
         end
     end
   end
