@@ -7,8 +7,10 @@ module QaServer::MonitorStatus
     include QaServer::MonitorStatus::PerformanceGraphBehavior
     include QaServer::PerformanceHistoryDataKeys
 
+    # @param parent [QaServer::MonitorStatusPresenter] parent presenter
     # @param performance_data [Hash<Hash>] performance data
-    def initialize(performance_data:)
+    def initialize(parent:, performance_data:)
+      @parent = parent
       @performance_data = performance_data
     end
 

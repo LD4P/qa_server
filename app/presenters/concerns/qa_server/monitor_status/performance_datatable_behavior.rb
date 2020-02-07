@@ -94,6 +94,28 @@ module QaServer::MonitorStatus
       end
     end
 
+    def performance_data_start
+      start_dt = case expected_time_period
+                 when :day
+                   performance_data_end_dt - 1.day
+                 when :month
+                   performance_data_end_dt - 1.month
+                 when :year
+                   performance_data_end_dt - 1.year
+                 else
+                   @parent.first_updated_dt
+                 end
+      QaServer.pretty_date(start_dt)
+    end
+
+    def performance_data_end_dt
+      @parent.last_updated_dt
+    end
+
+    def performance_data_end
+      QaServer.pretty_date(performance_data_end_dt)
+    end
+
     private
 
       def expected_time_period

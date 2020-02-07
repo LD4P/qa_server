@@ -1,15 +1,13 @@
 # frozen_string_literal: true
 # This presenter class provides historical testing data needed by the view that monitors status of authorities.
 module QaServer::MonitorStatus
-  class HistoryPresenter
-    HISTORICAL_AUTHORITY_NAME_IDX = 0
-    HISTORICAL_FAILURE_COUNT_IDX = 1
-    HISTORICAL_PASSING_COUNT_IDX = 2
-
+  class HistoryPresenter # rubocop:disable Metrics/ClassLength
     include QaServer::MonitorStatus::GruffGraph
 
+    # @param parent [QaServer::MonitorStatusPresenter] parent presenter
     # @param historical_summary_data [Array<Hash>] summary of past failuring runs per authority to drive chart
-    def initialize(historical_summary_data:)
+    def initialize(parent:, historical_summary_data:)
+      @parent = parent
       @historical_summary_data = historical_summary_data
     end
 
@@ -23,8 +21,33 @@ module QaServer::MonitorStatus
 
     # @return [Boolean] true if historical test data exists; otherwise false
     def history?
-      return true if @historical_summary_data.present?
-      false
+      @historical_summary_data.present?
+    end
+
+    # Return the first date of data represented in the history graph and data table
+    # @return [String] string version of date formatted with just date (e.g. "02/01/2020")
+    def history_start
+      start_dt = case QaServer.config.historical_datatable_default_time_period
+                 when :month
+                   history_end_dt - 1.month
+                 when :year
+                   history_end_dt - 1.year
+                 else
+                   @parent.first_updated_dt
+                 end
+      QaServer.pretty_date(start_dt)
+    end
+
+    # Return the last date of data represented in the history graph and data table
+    # @return [ActiveSupport::TimeWithZone] date time stamp
+    def history_end_dt
+      @parent.last_updated_dt
+    end
+
+    # Return the last date of data represented in the history graph and data table
+    # @return [String] string version of date formatted with just date (e.g. "02/01/2020")
+    def history_end
+      QaServer.pretty_date(history_end_dt)
     end
 
     def historical_graph
@@ -57,15 +80,15 @@ module QaServer::MonitorStatus
     end
 
     def historical_data_authority_name(historical_entry)
-      historical_entry[HISTORICAL_AUTHORITY_NAME_IDX]
+      historical_entry[0]
     end
 
     def days_authority_passing(historical_entry)
-      historical_entry[HISTORICAL_PASSING_COUNT_IDX]
+      historical_entry[1]["good"]
     end
 
     def days_authority_failing(historical_entry)
-      historical_entry[HISTORICAL_FAILURE_COUNT_IDX]
+      historical_entry[1]["bad"]
     end
 
     def days_authority_tested(historical_entry)
@@ -82,13 +105,11 @@ module QaServer::MonitorStatus
 
     def failure_style_class(historical_entry)
       return "status-neutral" if days_authority_failing(historical_entry) <= 0
-      return "status-unknown" if percent_authority_failing(historical_entry) < 0.1
-      "status-bad"
+      percent_authority_failing(historical_entry) < 0.1 ? "status-unknown" : "status-bad"
     end
 
     def passing_style_class(historical_entry)
-      return "status-bad" if days_authority_passing(historical_entry) <= 0
-      "status-good"
+      days_authority_passing(historical_entry) <= 0 ? "status-bad" : "status-good"
     end
 
     def display_history_details?
@@ -125,11 +146,11 @@ module QaServer::MonitorStatus
         pass_data = []
         fail_data = []
         i = 0
-        historical_summary.each do |data|
-          labels[i] = data[0]
+        historical_summary.each do |auth, data|
+          labels[i] = auth
           i += 1
-          fail_data << data[1]
-          pass_data << data[2]
+          fail_data << data["bad"]
+          pass_data << data["good"]
         end
         [labels, fail_data, pass_data]
       end

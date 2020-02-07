@@ -23,10 +23,10 @@ module QaServer
     end
     deprecation_deprecate latest_run_id: "Not used anywhere. Being removed."
 
-    # @return [String] datetime stamp of first registered run
+    # @return [ActiveSupport::TimeWithZone] datetime stamp of first registered run
     def self.first_run_dt
       Rails.cache.fetch("#{self.class}/#{__method__}", expires_in: QaServer.cache_expiry, race_condition_ttl: 1.hour) do
-        QaServer::ScenarioRunRegistry.first.dt_stamp.in_time_zone("Eastern Time (US & Canada)").strftime("%m/%d/%y - %I:%M %p")
+        QaServer::ScenarioRunRegistry.first.dt_stamp
       end
     end
 

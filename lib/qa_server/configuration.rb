@@ -59,6 +59,20 @@ module QaServer
       @display_historical_datatable = true
     end
 
+    # Historical datatable default time period.
+    # @param [Symbol] time period for calculating historical pass/fail (i.e., one of :month, :year, or :all)
+    # @raise [ArgumentError] if time_period is not one of :month, :year, or :all
+    def historical_datatable_default_time_period=(time_period)
+      raise ArgumentError, 'time_period must be one of :day, :month, or :year' unless [:month, :year, :all].include? time_period
+      @historical_datatable_default_time_period = time_period
+    end
+
+    # Historical datatable default time period.
+    # @return [Symbol] time period for calculating historical pass/fail (i.e., one of :month, :year, or :all)
+    def historical_datatable_default_time_period
+      @historical_datatable_default_time_period ||= :year
+    end
+
     # Displays a graph of performance test data when true
     # @param [Boolean] display performance graph when true
     attr_writer :display_performance_graph

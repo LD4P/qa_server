@@ -12,7 +12,6 @@ RSpec.describe QaServer do
     end
 
     it 'returns the time in the preferred time zone' do
-      puts 'Running QaServer.current_time spec'
       expect(described_class.current_time.zone).to eq 'EST'
     end
   end

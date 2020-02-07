@@ -37,6 +37,18 @@ module QaServer
     current_time.to_f
   end
 
+  # @param dt [ActiveSupport::TimeWithZone] date time stamp
+  # @return [String] string version of date formatted with date and time (e.g. "02/01/2020 - 02:35 PM ET")
+  def self.pretty_time(dt)
+    dt.in_time_zone(QaServer.config.preferred_time_zone_name).strftime("%m/%d/%Y - %I:%M %p")
+  end
+
+  # @param dt [ActiveSupport::TimeWithZone] date time stamp
+  # @return [String] string version of date formatted with just date (e.g. "02/01/2020")
+  def self.pretty_date(dt)
+    dt.in_time_zone(QaServer.config.preferred_time_zone_name).strftime("%m/%d/%Y")
+  end
+
   # @return [ActiveSupport::TimeWithZone] DateTime at which cache should expire
   def self.monitoring_expires_at
     offset = QaServer.config.hour_offset_to_expire_cache
