@@ -18,7 +18,7 @@ module QaServer::MonitorStatus
 
     # @return [String] date with time of last test run
     def last_updated
-      QaServer.pretty_time(last_updated_dt)
+      QaServer::TimeService.pretty_time(last_updated_dt)
     end
 
     # @return [ActiveSupport::TimeWithZone] date time stamp of first recorded test run
@@ -28,7 +28,7 @@ module QaServer::MonitorStatus
 
     # @return [String] date with time of first recorded test run
     def first_updated
-      QaServer.pretty_time(first_updated_dt)
+      QaServer::TimeService.pretty_time(first_updated_dt)
     end
 
     # @return [Integer] number of loaded authorities

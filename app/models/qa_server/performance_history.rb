@@ -20,7 +20,7 @@ module QaServer
       # @param action [Symbol] type of action being evaluated (e.g. :fetch, :search)
       # @param dt_stamp [Time] defaults to current time in preferred time zone
       # @return ActveRecord::Base for the new performance history record
-      def create_record(authority:, action:, dt_stamp: QaServer.current_time)
+      def create_record(authority:, action:, dt_stamp: QaServer::TimeService.current_time)
         create(dt_stamp: dt_stamp,
                authority: authority,
                action: action)
@@ -115,7 +115,8 @@ module QaServer
         #     retrieve_10th_ms: 12.3, graph_load_10th_ms: 12.3, normalization_10th_ms: 4.2, full_request_10th_ms: 16.5,
         #     retrieve_90th_ms: 12.3, graph_load_90th_ms: 12.3, normalization_90th_ms: 4.2, full_request_90th_ms: 16.5 }
         def data_table_stats(auth_name, action, force:)
-          Rails.cache.fetch("#{self.class}/#{__method__}/#{auth_name || ALL_AUTH}/#{action}/#{FOR_DATATABLE}", expires_in: QaServer.cache_expiry, race_condition_ttl: 1.hour, force: force) do
+          Rails.cache.fetch("#{self.class}/#{__method__}/#{auth_name || ALL_AUTH}/#{action}/#{FOR_DATATABLE}",
+                            expires_in: QaServer::MonitorCacheService.cache_expiry, race_condition_ttl: 1.hour, force: force) do
             Rails.logger.info("#{self.class}##{__method__} - calculating performance datatable stats - cache expired or refresh requested (#{force})")
             records = records_for_authority(auth_name)
             stats_calculator_class.new(records, action: action).calculate_stats(avg: true, low: true, high: true)
