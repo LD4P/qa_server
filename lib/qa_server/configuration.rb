@@ -201,9 +201,15 @@ module QaServer
       @suppress_logging_performance_datails ||= false
     end
 
+    # For internal use only
     # TODO: consider refactor performance caching to use Rails cache
     def performance_cache
       @performance_cache ||= QaServer::PerformanceCache.new
+    end
+
+    # For internal use only
+    def jobs_logger
+      @jobs_logger ||= Logger.new(ENV['JOBS_LOG_PATH'] || File.join("log", "jobs.log"))
     end
   end
 end
