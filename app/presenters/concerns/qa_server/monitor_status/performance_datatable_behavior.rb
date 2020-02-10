@@ -105,7 +105,7 @@ module QaServer::MonitorStatus
                  else
                    @parent.first_updated_dt
                  end
-      QaServer.pretty_date(start_dt)
+      QaServer::TimeService.pretty_date(start_dt)
     end
 
     def performance_data_end_dt
@@ -113,7 +113,7 @@ module QaServer::MonitorStatus
     end
 
     def performance_data_end
-      QaServer.pretty_date(performance_data_end_dt)
+      QaServer::TimeService.pretty_date(performance_data_end_dt)
     end
 
     private

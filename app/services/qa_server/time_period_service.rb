@@ -66,7 +66,7 @@ module QaServer
       private
 
         def where_for_dt_stamp(dt_table, time_period)
-          end_range = QaServer.current_time
+          end_range = QaServer::TimeService.current_time
           start_range = end_range - time_period
           where_clause = { dt_stamp: start_range..end_range }
           where_clause = { dt_table => where_clause } unless dt_table.nil?

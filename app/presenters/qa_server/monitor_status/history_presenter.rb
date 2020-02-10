@@ -35,7 +35,7 @@ module QaServer::MonitorStatus
                  else
                    @parent.first_updated_dt
                  end
-      QaServer.pretty_date(start_dt)
+      QaServer::TimeService.pretty_date(start_dt)
     end
 
     # Return the last date of data represented in the history graph and data table
@@ -47,7 +47,7 @@ module QaServer::MonitorStatus
     # Return the last date of data represented in the history graph and data table
     # @return [String] string version of date formatted with just date (e.g. "02/01/2020")
     def history_end
-      QaServer.pretty_date(history_end_dt)
+      QaServer::TimeService.pretty_date(history_end_dt)
     end
 
     def historical_graph

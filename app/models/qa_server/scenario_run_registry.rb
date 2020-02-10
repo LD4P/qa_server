@@ -25,7 +25,7 @@ module QaServer
 
     # @return [ActiveSupport::TimeWithZone] datetime stamp of first registered run
     def self.first_run_dt
-      Rails.cache.fetch("#{self.class}/#{__method__}", expires_in: QaServer.cache_expiry, race_condition_ttl: 1.hour) do
+      Rails.cache.fetch("#{self.class}/#{__method__}", expires_in: QaServer::MonitorCacheService.cache_expiry, race_condition_ttl: 1.hour) do
         QaServer::ScenarioRunRegistry.first.dt_stamp
       end
     end
@@ -33,7 +33,7 @@ module QaServer
     # Register and save latest test run results
     # @param scenarios_results [Array<Hash>] results of latest test run
     def self.save_run(scenarios_results:)
-      run = QaServer::ScenarioRunRegistry.create(dt_stamp: QaServer.current_time)
+      run = QaServer::ScenarioRunRegistry.create(dt_stamp: QaServer::TimeService.current_time)
       scenarios_results.each { |result| QaServer::ScenarioRunHistory.save_result(run_id: run.id, scenario_result: result) }
     end
   end

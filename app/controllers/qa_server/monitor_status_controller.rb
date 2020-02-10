@@ -29,7 +29,7 @@ module QaServer
 
       # Sets @latest_run [QaServer::ScenarioRunRegistry]
       def latest_run
-        Rails.cache.fetch("#{self.class}/#{__method__}", expires_in: QaServer.cache_expiry, race_condition_ttl: 1.hour, force: refresh_tests?) do
+        Rails.cache.fetch("#{self.class}/#{__method__}", expires_in: QaServer::MonitorCacheService.cache_expiry, race_condition_ttl: 1.hour, force: refresh_tests?) do
           Rails.logger.info("#{self.class}##{__method__} - Running Tests - cache expired or refresh requested (#{refresh_tests?})")
           validate(authorities_list)
           scenario_run_registry_class.save_run(scenarios_results: status_log.to_a)

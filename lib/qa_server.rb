@@ -27,41 +27,6 @@ module QaServer
     @config
   end
 
-  # @return [ActiveSupport::TimeWithZone] current DateTime in the configured preferred_time_zone_name
-  def self.current_time
-    Time.now.in_time_zone(QaServer.config.preferred_time_zone_name)
-  end
-
-  # @return [Float] current DateTime in seconds
-  def self.current_time_s
-    current_time.to_f
-  end
-
-  # @param dt [ActiveSupport::TimeWithZone] date time stamp
-  # @return [String] string version of date formatted with date and time (e.g. "02/01/2020 - 02:35 PM ET")
-  def self.pretty_time(dt)
-    dt.in_time_zone(QaServer.config.preferred_time_zone_name).strftime("%m/%d/%Y - %I:%M %p")
-  end
-
-  # @param dt [ActiveSupport::TimeWithZone] date time stamp
-  # @return [String] string version of date formatted with just date (e.g. "02/01/2020")
-  def self.pretty_date(dt)
-    dt.in_time_zone(QaServer.config.preferred_time_zone_name).strftime("%m/%d/%Y")
-  end
-
-  # @return [ActiveSupport::TimeWithZone] DateTime at which cache should expire
-  def self.monitoring_expires_at
-    offset = QaServer.config.hour_offset_to_expire_cache
-    offset_time = current_time
-    offset_time = offset_time.tomorrow unless (offset_time + 5.minutes).hour < offset
-    offset_time.beginning_of_day + offset.hours - 5.minutes
-  end
-
-  # @return [Float] number of seconds until cache should expire
-  def self.cache_expiry
-    monitoring_expires_at - current_time
-  end
-
   def self.log_agent_info(request)
     return if !Qa.config.respond_to?(:suppress_ip_data_from_log) || Qa.config.suppress_ip_data_from_log
     user_agent = request.respond_to?(:user_agent) && !request.user_agent.nil? ? ::UserAgent.parse(request.user_agent) : nil

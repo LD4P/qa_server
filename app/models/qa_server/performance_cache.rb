@@ -7,7 +7,7 @@ module QaServer
     end
 
     def new_entry(authority:, action:)
-      entry = { dt_stamp: QaServer.current_time,
+      entry = { dt_stamp: QaServer::TimeService.current_time,
                 authority: authority,
                 action: action }
       id = SecureRandom.uuid
