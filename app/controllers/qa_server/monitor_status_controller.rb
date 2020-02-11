@@ -17,7 +17,9 @@ module QaServer
 
     # Sets up presenter with data to display in the UI
     def index
-      latest_run
+      QaServer.config.jobs_logger.info("(#{self.class}##{__method__}) monitor status page request (refresh_tests? # #{refresh_tests?}, " \
+                                       "refresh_history? # #{refresh_history?}, refresh_performance? # #{refresh_performance?})")
+      latest_test_run
       @presenter = presenter_class.new(current_summary: latest_summary,
                                        current_failure_data: latest_failures,
                                        historical_summary_data: historical_data,
@@ -27,23 +29,28 @@ module QaServer
 
     private
 
-      # Sets @latest_run [QaServer::ScenarioRunRegistry]
-      def latest_run
-        Rails.cache.fetch("#{self.class}/#{__method__}", expires_in: QaServer::MonitorCacheService.cache_expiry, race_condition_ttl: 1.hour, force: refresh_tests?) do
-          Rails.logger.info("#{self.class}##{__method__} - Running Tests - cache expired or refresh requested (#{refresh_tests?})")
-          validate(authorities_list)
-          scenario_run_registry_class.save_run(scenarios_results: status_log.to_a)
+      # Sets @latest_test_run [QaServer::ScenarioRunRegistry]
+      def latest_test_run
+        @latest_test_run ||= latest_test_run_from_cache
+      end
+
+      # cache of latest run; runs tests if cache is expired
+      # @see #latest_test_run_from_temp_cache
+      def latest_test_run_from_cache
+        Rails.cache.fetch("#{self.class}/#{__method__}", expires_in: QaServer::MonitorCacheService.cache_expiry, race_condition_ttl: 5.minutes, force: refresh_tests?) do
+          QaServer.config.jobs_logger.info("(#{self.class}##{__method__}) request to run monitoring tests - either cache expired or forced refresh")
+          QaServer::MonitorTestsJob.perform_later
           scenario_run_registry_class.latest_run
         end
       end
 
       # Sets @latest_summary [QaServer::ScenarioRunSummary]
       def latest_summary
-        scenario_history_class.run_summary(scenario_run: latest_run, force: refresh_tests?)
+        scenario_history_class.run_summary(scenario_run: latest_test_run, force: refresh_tests?)
       end
 
       def latest_failures
-        scenario_history_class.run_failures(run_id: latest_run.id, force: refresh_tests?)
+        scenario_history_class.run_failures(run_id: latest_test_run.id, force: refresh_tests?)
       end
 
       # Sets @historical_data [Array<Hash>]
