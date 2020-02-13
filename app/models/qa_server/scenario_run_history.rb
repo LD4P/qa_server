@@ -44,8 +44,8 @@ module QaServer
       #   * failing_scenario_count: 3,
       #   * total_scenario_count: 159,
       def run_summary(scenario_run:, force: false)
-        Rails.cache.fetch("#{self.class}/#{__method__}", expires_in: QaServer::MonitorCacheService.cache_expiry, race_condition_ttl: 1.hour, force: force) do
-          Rails.logger.info("#{self.class}##{__method__} - creating summary of latest run - cache expired or refresh requested (#{force})")
+        Rails.cache.fetch("QaServer::ScenarioRunHistory/#{__method__}", expires_in: QaServer::MonitorCacheService.cache_expiry, race_condition_ttl: 1.minute, force: force) do
+          Rails.logger.info("QaServer::ScenarioRunHistory##{__method__} - creating summary of latest run - cache expired or refresh requested (#{force})")
           status = status_counts_in_run(run_id: scenario_run.id)
           summary_class.new(run_id: scenario_run.id,
                             run_dt_stamp: scenario_run.dt_stamp,
@@ -127,8 +127,8 @@ module QaServer
       #       run_time: 0.123 } ]
       def run_failures(run_id:, force: false)
         return [] unless run_id
-        Rails.cache.fetch("#{self.class}/#{__method__}", expires_in: QaServer::MonitorCacheService.cache_expiry, race_condition_ttl: 1.hour, force: force) do
-          Rails.logger.info("#{self.class}##{__method__} - finding failures in latest run - cache expired or refresh requested (#{force})")
+        Rails.cache.fetch("QaServer::ScenarioRunHistory/#{__method__}", expires_in: QaServer::MonitorCacheService.cache_expiry, race_condition_ttl: 1.minute, force: force) do
+          Rails.logger.info("QaServer::ScenarioRunHistory##{__method__} - finding failures in latest run - cache expired or refresh requested (#{force})")
           QaServer::ScenarioRunHistory.where(scenario_run_registry_id: run_id).where.not(status: :good).to_a
         end
       end
@@ -139,7 +139,7 @@ module QaServer
       #   { 'agrovoc' => { "good" => 0, "bad" => 24 },
       #     'geonames_ld4l_cache' => { "good" => 2, "bad" => 22 } }
       def historical_summary(force: false)
-        Rails.cache.fetch("#{self.class}/#{__method__}", expires_in: QaServer::MonitorCacheService.cache_expiry, race_condition_ttl: 1.hour, force: force) do
+        Rails.cache.fetch("QaServer::ScenarioRunHistory/#{__method__}", expires_in: QaServer::MonitorCacheService.cache_expiry, race_condition_ttl: 1.minute, force: force) do
           runs_per_authority_for_time_period
         end
       end

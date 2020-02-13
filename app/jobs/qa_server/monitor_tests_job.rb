@@ -11,7 +11,7 @@ module QaServer
 
     # def perform(job_id:)
     def perform
-      Rails.cache.fetch("QaServer::MonitorTestsController/latest_run", expires_in: QaServer::MonitorCacheService.cache_expiry, race_condition_ttl: 1.hour, force: true) do
+      Rails.cache.fetch("QaServer::MonitorTestsController/latest_run", expires_in: QaServer::MonitorCacheService.cache_expiry, race_condition_ttl: 5.minutes, force: true) do
         job_id = SecureRandom.uuid
         monitor_tests_job_id = job_id unless monitor_tests_job_id
         if monitor_tests_job_id == job_id # avoid race conditions
