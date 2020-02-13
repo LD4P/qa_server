@@ -1,3 +1,15 @@
+### 6.0.0 (2020-02-13)
+
+* refactor generation of performance graphs to minimize db access and calculations
+* shorten race_condition times for caching
+* rename jobs_logger to be monitor_logger
+* run monitoring tests in background
+* move methods from QaServer to services
+* use presenter to get failure data
+* move controller validation code to module include
+* limit historical data to configurable time period
+* move time_period where clause construction to service
+
 ### 5.5.1 (2020-01-29)
 
 * fix - check for nil before calling .each
