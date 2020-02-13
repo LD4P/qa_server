@@ -17,8 +17,7 @@ module QaServer
 
     # Sets up presenter with data to display in the UI
     def index
-      QaServer.config.jobs_logger.info("(#{self.class}##{__method__}) monitor status page request (refresh_tests? # #{refresh_tests?}, " \
-                                       "refresh_history? # #{refresh_history?}, refresh_performance? # #{refresh_performance?})")
+      log_header
       latest_test_run
       @presenter = presenter_class.new(current_summary: latest_summary,
                                        current_failure_data: latest_failures,
@@ -38,7 +37,7 @@ module QaServer
       # @see #latest_test_run_from_temp_cache
       def latest_test_run_from_cache
         Rails.cache.fetch("#{self.class}/#{__method__}", expires_in: QaServer::MonitorCacheService.cache_expiry, race_condition_ttl: 5.minutes, force: refresh_tests?) do
-          QaServer.config.jobs_logger.info("(#{self.class}##{__method__}) request to run monitoring tests - either cache expired or forced refresh")
+          QaServer.config.monitor_logger.info("(#{self.class}##{__method__}) get latest run of monitoring tests - cache expired or refresh requested (force: #{refresh_tests?})")
           QaServer::MonitorTestsJob.perform_later
           scenario_run_registry_class.latest_run
         end
@@ -100,6 +99,14 @@ module QaServer
       def refresh_performance?
         return false unless refresh?
         refresh_all? || params[:refresh].casecmp?('performance')
+      end
+
+      def log_header
+        QaServer.config.monitor_logger.debug("----------------------------------------------------------------------")
+        QaServer.config.monitor_logger.debug("                         loading monitor status page")
+        QaServer.config.monitor_logger.debug("----------------------------------------------------------------------")
+        QaServer.config.monitor_logger.info("(#{self.class}##{__method__}) monitor status page request (refresh_tests? # #{refresh_tests?}, " \
+                                         "refresh_history? # #{refresh_history?}, refresh_performance? # #{refresh_performance?})")
       end
   end
 end
