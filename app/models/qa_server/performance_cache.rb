@@ -36,8 +36,7 @@ module QaServer
                                             normalization_time_ms: entry[:normalization_time_ms])
         @cache.delete(id)
       end
-      Rails.logger.warn("0 of #{size_before} performance data records were saved") if size_before.positive? && (size_before == @cache.size)
-      Rails.logger.info("#{size_before - @cache.size} of #{size_before} performance data records were saved") if size_before.positive? && (size_before > @cache.size)
+      log_write_all("(#{self.class}##{__method__})", size_before, @cache.size)
     end
 
     def log(id:)
@@ -62,6 +61,15 @@ module QaServer
          :retrieve_time_ms,
          :graph_load_time_ms,
          :normalization_time_ms]
+      end
+
+      def log_write_all(prefix, size_before, cache_size)
+        if size_before.positive?
+          QaServer.config.monitor_logger.warn("#{prefix} 0 of #{size_before} performance data records were saved") if size_before == cache_size
+          QaServer.config.monitor_logger.info("#{prefix} #{size_before - cache_size} of #{size_before} performance data records were saved") if size_before > cache_size
+        else
+          QaServer.config.monitor_logger.info("#{prefix} 0 of 0 performance data records were saved")
+        end
       end
   end
 end

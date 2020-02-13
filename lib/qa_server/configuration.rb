@@ -208,8 +208,8 @@ module QaServer
     end
 
     # For internal use only
-    def jobs_logger
-      @jobs_logger ||= Logger.new(ENV['JOBS_LOG_PATH'] || File.join("log", "jobs.log"))
+    def monitor_logger
+      @monitor_logger ||= Logger.new(ENV['MONITOR_LOG_PATH'] || File.join("log", "monitor.log"))
     end
   end
 end

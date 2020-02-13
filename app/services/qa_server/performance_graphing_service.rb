@@ -12,6 +12,7 @@ module QaServer
       # @param performance_data [Hash] hash of all performance data for all authorities
       # @see QaServer:PerformanceHistory
       def create_performance_graphs(performance_data:)
+        QaServer.config.monitor_logger.info("(QaServer::PerformanceGraphingService##{__method__}) - generating graphs")
         performance_data.each_key do |auth_name|
           create_graphs_for_authority(performance_data, auth_name.to_sym, :search)
           create_graphs_for_authority(performance_data, auth_name.to_sym, :fetch)

@@ -15,9 +15,10 @@ module QaServer
         job_id = SecureRandom.uuid
         monitor_tests_job_id = job_id unless monitor_tests_job_id
         if monitor_tests_job_id == job_id # avoid race conditions
-          QaServer.config.jobs_logger.info("(#{self.class}##{__method__}-#{job_id}) running monitoring tests")
+          QaServer.config.monitor_logger.info("(#{self.class}##{__method__}-#{job_id}) RUNNING monitoring tests")
           validate(authorities_list)
           scenario_run_registry_class.save_run(scenarios_results: status_log.to_a)
+          QaServer.config.monitor_logger.info("(#{self.class}##{__method__}-#{job_id}) COMPLETED monitoring tests")
           reset_monitor_tests_job_id
         end
         scenario_run_registry_class.latest_run
