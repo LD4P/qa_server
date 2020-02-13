@@ -7,7 +7,7 @@ module QaServer
     # @param current_summary [ScenarioRunSummary] summary status of the latest run of test scenarios
     # @param current_data [Array<Hash>] current set of failures for the latest test run, if any
     # @param historical_summary_data [Array<Hash>] summary of past failuring runs per authority to drive chart
-    # @param performance_data [Hash<Hash>] performance data
+    # @param performance_data [Hash<Hash>] performance datatable data
     def initialize(current_summary:, current_failure_data:, historical_summary_data:, performance_data:)
       @current_status_presenter = QaServer::MonitorStatus::CurrentStatusPresenter.new(parent: self, current_summary: current_summary, current_failure_data: current_failure_data)
       @history_presenter = QaServer::MonitorStatus::HistoryPresenter.new(parent: self, historical_summary_data: historical_summary_data)

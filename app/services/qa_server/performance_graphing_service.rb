@@ -36,33 +36,35 @@ module QaServer
         end
 
         def create_performance_for_day_graph(performance_data, authority_name, action)
-          auth_data = authority_performance_data(performance_data, authority_name)
-          return unless auth_data
-          gruff_data = rework_performance_data_for_gruff(auth_data[action][FOR_DAY], BY_HOUR)
+          data = authority_performance_data(performance_data, authority_name, action, FOR_DAY)
+          return if data.empty?
+          gruff_data = rework_performance_data_for_gruff(data, BY_HOUR)
           create_gruff_graph(gruff_data,
                              performance_for_day_graph_full_path(authority_name, action),
                              I18n.t('qa_server.monitor_status.performance.x_axis_hour'))
         end
 
         def create_performance_for_month_graph(performance_data, authority_name, action)
-          auth_data = authority_performance_data(performance_data, authority_name)
-          gruff_data = rework_performance_data_for_gruff(auth_data[action][FOR_MONTH], BY_DAY)
+          data = authority_performance_data(performance_data, authority_name, action, FOR_MONTH)
+          return if data.empty?
+          gruff_data = rework_performance_data_for_gruff(data, BY_DAY)
           create_gruff_graph(gruff_data,
                              performance_for_month_graph_full_path(authority_name, action),
                              I18n.t('qa_server.monitor_status.performance.x_axis_day'))
         end
 
         def create_performance_for_year_graph(performance_data, authority_name, action)
-          auth_data = authority_performance_data(performance_data, authority_name)
-          gruff_data = rework_performance_data_for_gruff(auth_data[action][FOR_YEAR], BY_MONTH)
+          data = authority_performance_data(performance_data, authority_name, action, FOR_YEAR)
+          return if data.empty?
+          gruff_data = rework_performance_data_for_gruff(data, BY_MONTH)
           create_gruff_graph(gruff_data,
                              performance_for_year_graph_full_path(authority_name, action),
                              I18n.t('qa_server.monitor_status.performance.x_axis_month'))
         end
 
-        def authority_performance_data(data, authority_name)
+        def authority_performance_data(data, authority_name, action, time_period)
           auth_name = authority_name.nil? ? ALL_AUTH : authority_name
-          data[auth_name]
+          data[auth_name][action].key?(time_period) ? data[auth_name][action][time_period] : {}
         end
 
         def performance_for_day_graph_full_path(authority_name, action)
@@ -93,7 +95,7 @@ module QaServer
             graph_load_data << graph_load_time(data)
             normalization_data << data[STATS][AVG_NORM]
           end
-          [labels, normalization_data, graph_load_data, retrieve_data]
+          [labels, retrieve_data, graph_load_data, normalization_data]
         end
 
         def graph_load_time(data)
@@ -123,9 +125,9 @@ module QaServer
           g = Gruff::StackedBar.new
           performance_graph_theme(g, x_axis_label)
           g.labels = performance_data[0]
-          g.data(I18n.t('qa_server.monitor_status.performance.normalization_time_ms'), performance_data[1])
+          g.data(I18n.t('qa_server.monitor_status.performance.retrieve_time_ms'), performance_data[1])
           g.data(I18n.t('qa_server.monitor_status.performance.graph_load_time_ms'), performance_data[2])
-          g.data(I18n.t('qa_server.monitor_status.performance.retrieve_time_ms'), performance_data[3])
+          g.data(I18n.t('qa_server.monitor_status.performance.normalization_time_ms'), performance_data[3])
           g.write performance_graph_full_path
         end
     end

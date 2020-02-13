@@ -29,7 +29,7 @@ module QaServer
 
       # @return [String, Boolean] Returns job id of the job currently running tests; otherwise, false if tests are not running
       def monitor_tests_job_id
-        Rails.cache.fetch("QaServer:monitor_tests-job_id", expires_in: 2.hours, race_condition_ttl: 1.hour) { false }
+        Rails.cache.fetch("QaServer:monitor_tests-job_id", expires_in: 2.hours, race_condition_ttl: 5.minutes) { false }
       end
 
       # Set the id of the job that will run the tests.
@@ -44,7 +44,7 @@ module QaServer
 
       # Set job id for monitor tests to false indicating that tests are not currently running
       def reset_monitor_tests_job_id
-        Rails.cache.fetch("QaServer:monitor_tests-job_id", expires_in: 2.hours, race_condition_ttl: 1.hour, force: true) { false }
+        Rails.cache.fetch("QaServer:monitor_tests-job_id", expires_in: 2.hours, race_condition_ttl: 30.seconds, force: true) { false }
       end
   end
 end

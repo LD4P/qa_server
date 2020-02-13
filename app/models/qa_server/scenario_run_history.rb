@@ -45,7 +45,7 @@ module QaServer
       #   * total_scenario_count: 159,
       def run_summary(scenario_run:, force: false)
         Rails.cache.fetch("QaServer::ScenarioRunHistory/#{__method__}", expires_in: QaServer::MonitorCacheService.cache_expiry, race_condition_ttl: 1.minute, force: force) do
-          Rails.logger.info("QaServer::ScenarioRunHistory##{__method__} - creating summary of latest run - cache expired or refresh requested (#{force})")
+          QaServer.config.monitor_logger.info("(QaServer::ScenarioRunHistory##{__method__}) - creating summary of latest run - cache expired or refresh requested (force: #{force})")
           status = status_counts_in_run(run_id: scenario_run.id)
           summary_class.new(run_id: scenario_run.id,
                             run_dt_stamp: scenario_run.dt_stamp,
@@ -128,7 +128,7 @@ module QaServer
       def run_failures(run_id:, force: false)
         return [] unless run_id
         Rails.cache.fetch("QaServer::ScenarioRunHistory/#{__method__}", expires_in: QaServer::MonitorCacheService.cache_expiry, race_condition_ttl: 1.minute, force: force) do
-          Rails.logger.info("QaServer::ScenarioRunHistory##{__method__} - finding failures in latest run - cache expired or refresh requested (#{force})")
+          QaServer.config.monitor_logger.info("(QaServer::ScenarioRunHistory##{__method__}) - finding failures in latest run - cache expired or refresh requested (force: #{force})")
           QaServer::ScenarioRunHistory.where(scenario_run_registry_id: run_id).where.not(status: :good).to_a
         end
       end
