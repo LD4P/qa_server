@@ -14,18 +14,29 @@ module QaServer
       @stats = {}
     end
 
-    # Calculate performance statistics for a set of PerformanceHistory records.  Min is at the 10th percentile.  Max is at the 90th percentile.
+    # Calculate performance statistics with percentiles.  Min is at the 10th percentile.  Max is at the 90th percentile.
     # @return [Hash] hash of the statistics
     # @example
     #   { retrieve_avg_ms: 12.3, graph_load_avg_ms: 2.1, normalization_avg_ms: 4.2, full_request_avg_ms: 16.5,
     #     retrieve_10th_ms: 12.3, graph_load_10th_ms: 12.3, normalization_10th_ms: 4.2, full_request_10th_ms: 16.5,
     #     retrieve_90th_ms: 12.3, graph_load_90th_ms: 12.3, normalization_90th_ms: 4.2, full_request_90th_ms: 16.5 }
-    def calculate_stats(avg: false, low: false, high: false, load: true, norm: true, full: true) # rubocop:disable Metrics/ParameterLists
-      calculate_load_stats(avg, low, high) if load
-      calculate_retrieve_stats(avg, low, high) if load
-      calculate_graph_load_stats(avg, low, high) if load
-      calculate_normalization_stats(avg, low, high) if norm
-      calculate_action_stats(avg, low, high) if full
+    def calculate_stats_with_percentiles
+      calculate_retrieve_stats(true, true, true)
+      calculate_graph_load_stats(true, true, true)
+      calculate_normalization_stats(true, true, true)
+      calculate_action_stats(true, true, true)
+      stats
+    end
+
+    # Calculate performance statistics including averages only.
+    # @return [Hash] hash of the statistics
+    # @example
+    #   { retrieve_avg_ms: 12.3, graph_load_avg_ms: 2.1, normalization_avg_ms: 4.2, full_request_avg_ms: 16.5 }
+    def calculate_average_stats
+      calculate_load_stats(true, false, false) # used for backward compatibility only
+      calculate_retrieve_stats(true, false, false)
+      calculate_graph_load_stats(true, false, false)
+      calculate_normalization_stats(true, false, false)
       stats
     end
 

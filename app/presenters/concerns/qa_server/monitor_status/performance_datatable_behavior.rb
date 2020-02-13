@@ -123,7 +123,7 @@ module QaServer::MonitorStatus
       end
 
       def data_table_for(authority_data, action)
-        authority_data[action][FOR_DATATABLE]
+        authority_data[action]
       end
 
       def unsupported_action?(stats)

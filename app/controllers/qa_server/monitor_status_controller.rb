@@ -9,11 +9,13 @@ module QaServer
     class_attribute :presenter_class,
                     :scenario_run_registry_class,
                     :scenario_history_class,
-                    :performance_history_class
+                    :performance_history_class,
+                    :graphing_service_class
     self.presenter_class = QaServer::MonitorStatusPresenter
     self.scenario_run_registry_class = QaServer::ScenarioRunRegistry
     self.scenario_history_class = QaServer::ScenarioRunHistory
     self.performance_history_class = QaServer::PerformanceHistory
+    self.graphing_service_class = QaServer::PerformanceGraphingService
 
     # Sets up presenter with data to display in the UI
     def index
@@ -22,7 +24,8 @@ module QaServer
       @presenter = presenter_class.new(current_summary: latest_summary,
                                        current_failure_data: latest_failures,
                                        historical_summary_data: historical_data,
-                                       performance_data: performance_data)
+                                       performance_data: performance_table_data)
+      update_performance_graphs
       render 'index', status: :internal_server_error if latest_summary.failing_authority_count.positive?
     end
 
@@ -57,16 +60,15 @@ module QaServer
         scenario_history_class.historical_summary(force: refresh_history?)
       end
 
-      # Sets @performance_data [Hash<Hash>]
-      def performance_data
-        performance_history_class.performance_data(datatype: performance_datatype, force: refresh_performance?)
+      # Sets @performance_table_data [Hash<Hash>]
+      def performance_table_data
+        display_performance_datatable? ? performance_history_class.performance_table_data(force: refresh_performance?) : {}
       end
 
-      def performance_datatype
-        return :all if display_performance_datatable? && display_performance_graph?
-        return :datatable if display_performance_datatable?
-        return :graph if display_performance_graph?
-        :none
+      def update_performance_graphs
+        return unless display_performance_graph?
+        data = performance_history_class.performance_graph_data(force: refresh_performance?)
+        graphing_service_class.create_performance_graphs(performance_data: data)
       end
 
       def display_performance_datatable?
