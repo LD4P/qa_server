@@ -1,0 +1,168 @@
+{
+  "QA_CONFIG_VERSION": "2.2",
+  "service_uri": "http://ld4l.org/ld4l_services/cache",
+  "prefixes": {
+    "rdaGr2": "http://rdvocab.info/ElementsGr2/",
+    "rdaGr3": "http://rdvocab.info/ElementsGr3/",
+    "ct": "http://www.cerl.org/namespaces/thesaurus",
+    "rdaRelGr2": "http://metadataregistry.org/uri/schema/RDARelationshipsGR2",
+    "vivo": "http://vivoweb.org/ontology/core#"
+  },
+  "term": {
+    "url": {
+      "@context": "http://www.w3.org/ns/hydra/context.jsonld",
+      "@type":    "IriTemplate",
+      "template": "http://services.ld4l.org/ld4l_services/cerl_lookup.jsp?uri={term_uri}",
+      "variableRepresentation": "BasicRepresentation",
+      "mapping": [
+        {
+          "@type":    "IriTemplateMapping",
+          "variable": "term_uri",
+          "property": "hydra:freetextQuery",
+          "required": true,
+          "encode":   true
+        }
+      ]
+    },
+    "qa_replacement_patterns": {
+      "term_id": "term_uri"
+    },
+    "term_id": "URI",
+    "results": {
+      "label_ldpath":    "skos:prefLabel ::xsd:string",
+      "altlabel_ldpath": "skos:altLabel ::xsd:string",
+      "broader_ldpath":  "skos:broader ::xsd:anyURI",
+      "narrower_ldpath": "skos:narrower ::xsd:anyURI",
+      "sameas_ldpath":   "skos:exactMatch ::xsd:anyURI"
+    }
+  },
+  "search": {
+    "url": {
+      "@context": "http://www.w3.org/ns/hydra/context.jsonld",
+      "@type": "IriTemplate",
+      "template": "http://services.ld4l.org/ld4l_services/cerl_batch.jsp?{?query}&{?maxRecords}&{?startRecord}&{?entity}&{?lang}",
+      "variableRepresentation": "BasicRepresentation",
+      "mapping": [
+        {
+          "@type": "IriTemplateMapping",
+          "variable": "query",
+          "property": "hydra:freetextQuery",
+          "required": true,
+          "encode": true
+        },
+        {
+          "@type": "IriTemplateMapping",
+          "variable": "entity",
+          "property": "hydra:freetextQuery",
+          "required": false,
+          "default": ""
+        },
+        {
+          "@type": "IriTemplateMapping",
+          "variable": "maxRecords",
+          "property": "hydra:freetextQuery",
+          "required": false,
+          "default": "20"
+        },
+        {
+          "@type": "IriTemplateMapping",
+          "variable": "startRecord",
+          "property": "hydra:freetextQuery",
+          "required": false,
+          "default": "1"
+        },
+        {
+          "@type": "IriTemplateMapping",
+          "variable": "lang",
+          "property": "hydra:freetextQuery",
+          "required": false,
+          "default": "en"
+        }
+      ]
+    },
+    "qa_replacement_patterns": {
+      "query":   "query",
+      "subauth": "entity",
+      "start_record": "startRecord",
+      "requested_records": "maxRecords"
+    },
+    "total_count_ldpath": "vivo:count",
+    "results": {
+      "label_ldpath": "rdaGr2:nameOfThePerson | rdaGr2:nameOfTheCorporateBody | ct:imprintName ::xsd:string",
+      "sort_ldpath":  "vivo:rank ::xsd:string"
+    },
+    "context": {
+      "properties": [
+        {
+          "property_label_i18n": "qa.linked_data.authority.cerl_ld4l_cache.name",
+          "property_label_default": "Name",
+          "ldpath": "rdaGr2:nameOfThePerson | rdaGr2:nameOfTheCorporateBody | ct:imprintName :: xsd:string",
+          "selectable": true,
+          "drillable": false
+        },
+        {
+          "property_label_i18n": "qa.linked_data.authority.cerl_ld4l_cache.biographical_information",
+          "property_label_default": "Biographical information",
+          "ldpath": "rdaGr2:biographicalInformation :: xsd:string",
+          "selectable": false,
+          "drillable": false
+        },
+        {
+          "property_label_i18n": "qa.linked_data.authority.cerl_ld4l_cache.dates_of_activity",
+          "property_label_default": "Dates of activity",
+          "ldpath": "ct:datesOfActivity",
+          "selectable": false,
+          "drillable": false
+        },
+        {
+          "property_label_i18n": "qa.linked_data.authority.cerl_ld4l_cache.activity",
+          "property_label_default": "Activity",
+          "ldpath": "rdaGr2:fieldOfActivityOfThePerson | ct:activityNote :: xsd:string",
+          "selectable": false,
+          "drillable": false
+        },
+        {
+          "property_label_i18n": "qa.linked_data.authority.cerl_ld4l_cache.device",
+          "property_label_default": "Device",
+          "ldpath": "ct:signOrDevice/ct:hasDescription :: xsd:string",
+          "selectable": false,
+          "drillable": false
+        },
+        {
+          "property_label_i18n": "qa.linked_data.authority.cerl_ld4l_cache.variant_name",
+          "property_label_default": "Variant name",
+          "ldpath": "rdaGr2:variantNameForThePerson | rdaGr2:variantNameForTheCorporateBody | ct:variantImprintName :: xsd:string",
+          "selectable": false,
+          "drillable": false
+        },
+        {
+          "property_label_i18n": "qa.linked_data.authority.cerl_ld4l_cache.affiliation",
+          "property_label_default": "Affiliation",
+          "ldpath": "rdaRelGr2:relatedCorporateBody :: xsd:string",
+          "selectable": false,
+          "drillable": false
+        },
+        {
+          "property_label_i18n": "qa.linked_data.authority.cerl_ld4l_cache.address",
+          "property_label_default": "Address",
+          "ldpath": "ct:locationOfActivity/ct:hasAddress :: xsd:string",
+          "selectable": false,
+          "drillable": false
+        },
+        {
+          "property_label_i18n": "qa.linked_data.authority.cerl_ld4l_cache.location",
+          "property_label_default": "Location",
+          "ldpath": "(rdaGr2:placeAssociatedWithTheCorporateBody/rdaGr3:nameOfThePlace) | (ct:locationOfActivity/ct:hasPlace/rdaGr3:nameOfThePlace) :: xsd:string",
+          "selectable": false,
+          "drillable": false
+        }
+      ]
+    },
+    "subauthorities": {
+      "person":    "Person",
+      "corporate": "Corporate",
+      "imprint":   "Imprint"
+    }
+  }
+}
+
