@@ -17,9 +17,9 @@ module QaServer
       #   { dt_stamp: start_hour..end_hour, authority: 'LOC_DIRECT' }
       # @example returned where when no authority
       #   { dt_stamp: start_hour..end_hour }
-      def where_clause_for_last_24_hours(auth_name: nil, auth_table: nil, dt_table: nil)
+      def where_clause_for_last_24_hours(auth_name: nil, auth_table: nil, dt_table: nil, dt_column: :dt_stamp)
         validate_params(auth_name, auth_table, dt_table)
-        where_clause = where_for_dt_stamp(dt_table, 1.day)
+        where_clause = where_for_dt_stamp(dt_table, dt_column, 1.day)
         where_with_authority(where_clause, auth_name, auth_table)
       end
 
@@ -37,9 +37,9 @@ module QaServer
       #   { dt_stamp: start_day..end_day, authority: 'LOC_DIRECT' }
       # @example returned where when no authority
       #   { dt_stamp: start_day..end_day }
-      def where_clause_for_last_30_days(auth_name: nil, auth_table: nil, dt_table: nil)
+      def where_clause_for_last_30_days(auth_name: nil, auth_table: nil, dt_table: nil, dt_column: :dt_stamp)
         validate_params(auth_name, auth_table, dt_table)
-        where_clause = where_for_dt_stamp(dt_table, 1.month)
+        where_clause = where_for_dt_stamp(dt_table, dt_column, 1.month)
         where_with_authority(where_clause, auth_name, auth_table)
       end
 
@@ -57,18 +57,18 @@ module QaServer
       #   { dt_stamp: start_month..end_month, authority: 'LOC_DIRECT' }
       # @example returned where when no authority
       #   { dt_stamp: start_month..end_month }
-      def where_clause_for_last_12_months(auth_name: nil, auth_table: nil, dt_table: nil)
+      def where_clause_for_last_12_months(auth_name: nil, auth_table: nil, dt_table: nil, dt_column: :dt_stamp)
         validate_params(auth_name, auth_table, dt_table)
-        where_clause = where_for_dt_stamp(dt_table, 1.year)
+        where_clause = where_for_dt_stamp(dt_table, dt_column, 1.year)
         where_with_authority(where_clause, auth_name, auth_table)
       end
 
       private
 
-        def where_for_dt_stamp(dt_table, time_period)
+        def where_for_dt_stamp(dt_table, dt_column, time_period)
           end_range = QaServer::TimeService.current_time
           start_range = end_range - time_period
-          where_clause = { dt_stamp: start_range..end_range }
+          where_clause = { dt_column => start_range..end_range }
           where_clause = { dt_table => where_clause } unless dt_table.nil?
           where_clause
         end

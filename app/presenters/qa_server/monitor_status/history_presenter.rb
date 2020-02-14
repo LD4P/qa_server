@@ -67,7 +67,7 @@ module QaServer::MonitorStatus
       "status-#{status[:status]}"
     end
 
-    # @return [String] the name of the css style class to use for the status cell based on the status of the scenario test.
+    # @return [String] the marker to use for the status cell based on the status of the scenario test (e.g. '√', 'X', '?')
     def status_label(status)
       case status[:status]
       when :good
@@ -84,11 +84,11 @@ module QaServer::MonitorStatus
     end
 
     def days_authority_passing(historical_entry)
-      historical_entry[1]["good"]
+      historical_entry[1][:good]
     end
 
     def days_authority_failing(historical_entry)
-      historical_entry[1]["bad"]
+      historical_entry[1][:bad]
     end
 
     def days_authority_tested(historical_entry)
@@ -100,12 +100,12 @@ module QaServer::MonitorStatus
     end
 
     def percent_authority_failing_str(historical_entry)
-      "#{percent_authority_failing(historical_entry) * 100}%"
+      ActiveSupport::NumberHelper.number_to_percentage(percent_authority_failing(historical_entry) * 100, precision: 1)
     end
 
     def failure_style_class(historical_entry)
       return "status-neutral" if days_authority_failing(historical_entry) <= 0
-      percent_authority_failing(historical_entry) < 0.1 ? "status-unknown" : "status-bad"
+      percent_authority_failing(historical_entry) < 0.10 ? "status-unknown" : "status-bad"
     end
 
     def passing_style_class(historical_entry)
@@ -149,8 +149,8 @@ module QaServer::MonitorStatus
         historical_summary.each do |auth, data|
           labels[i] = auth
           i += 1
-          fail_data << data["bad"]
-          pass_data << data["good"]
+          fail_data << data[:bad]
+          pass_data << data[:good]
         end
         [labels, fail_data, pass_data]
       end

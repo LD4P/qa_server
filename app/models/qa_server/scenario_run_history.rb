@@ -20,6 +20,7 @@ module QaServer
       # @param run_id [Integer] the run on which to gather statistics
       # @param result [Hash] the scenario result to be saved
       def save_result(run_id:, scenario_result:)
+        registry = QaServer::ScenarioRunRegistry.find(run_id)
         QaServer::ScenarioRunHistory.create(scenario_run_registry_id: run_id,
                                             status: scenario_result[:status],
                                             authority_name: scenario_result[:authority_name],
@@ -28,7 +29,8 @@ module QaServer
                                             action: scenario_result[:action],
                                             url: scenario_result[:url],
                                             err_message: scenario_result[:err_message],
-                                            run_time: scenario_result[:run_time])
+                                            run_time: scenario_result[:run_time],
+                                            date: registry.dt_stamp.to_date)
       end
 
       # Get a summary of passing/failing tests for a run.
@@ -136,15 +138,37 @@ module QaServer
       # Get a summary level of historical data
       # @returns [Array<Array>] summary of passing/failing tests for each authority
       # @example [auth_name, failing, passing]
-      #   { 'agrovoc' => { "good" => 0, "bad" => 24 },
-      #     'geonames_ld4l_cache' => { "good" => 2, "bad" => 22 } }
+      #   { 'agrovoc' => { good: 31, bad: 2 },
+      #     'geonames_ld4l_cache' => { good: 32, bad: 1 } }
       def historical_summary(force: false)
         Rails.cache.fetch("QaServer::ScenarioRunHistory/#{__method__}", expires_in: QaServer::MonitorCacheService.cache_expiry, race_condition_ttl: 1.minute, force: force) do
-          runs_per_authority_for_time_period
+          days_good = count_days(:good)
+          days_bad = count_days(:bad)
+          days_unknown = count_days(:unknown)
+          keys = (days_good.keys + days_bad.keys + days_unknown.keys).uniq.sort
+          keys.each_with_object({}) do |auth, hash|
+            hash[auth] = { good: day_count(auth, days_good), bad: day_count(auth, days_bad) + day_count(auth, days_unknown) }
+          end
         end
       end
 
       private
+
+        def day_count(auth, days)
+          days&.key?(auth) ? days[auth] : 0
+        end
+
+        def count_days(status)
+          # TODO: limit to time period
+          where = time_period_where
+          where[:status] = status
+          auths = QaServer::ScenarioRunHistory.where(where).select("authority_name").group("date, authority_name")
+                                              .order("authority_name").pluck(:authority_name)
+          h = auths.each_with_object({}) do |auth, hash|
+            hash[auth] = 0 unless hash.key? auth
+            hash[auth] += 1
+          end
+        end
 
         def authorities_in_run(run_id:)
           QaServer::ScenarioRunHistory.where(scenario_run_registry_id: run_id).pluck(:authority_name).uniq
@@ -166,6 +190,7 @@ module QaServer
 
         def runs_per_authority_for_time_period
           status = QaServer::ScenarioRunHistory.joins(:scenario_run_registry).where(time_period_where).group('authority_name', 'status').count
+byebug
           status.each_with_object({}) do |(k, v), hash|
             h = hash[k[0]] || { "good" => 0, "bad" => 0 } # initialize for an authority if it doesn't already exist
             h[k[1]] = v
@@ -180,11 +205,11 @@ module QaServer
         def time_period_where
           case expected_time_period
           when :day
-            QaServer::TimePeriodService.where_clause_for_last_24_hours(dt_table: :scenario_run_registry)
+            QaServer::TimePeriodService.where_clause_for_last_24_hours(dt_table: :scenario_run_history, dt_column: :date)
           when :month
-            QaServer::TimePeriodService.where_clause_for_last_30_days(dt_table: :scenario_run_registry)
+            QaServer::TimePeriodService.where_clause_for_last_30_days(dt_table: :scenario_run_history, dt_column: :date)
           when :year
-            QaServer::TimePeriodService.where_clause_for_last_12_months(dt_table: :scenario_run_registry)
+            QaServer::TimePeriodService.where_clause_for_last_12_months(dt_table: :scenario_run_history, dt_column: :date)
           else
             all_records
           end
