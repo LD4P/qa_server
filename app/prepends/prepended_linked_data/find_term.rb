@@ -35,7 +35,7 @@ module PrependedLinkedData::FindTerm
                   retrieve_plus_graph_load_time_ms: full_results[:performance][:fetch_time_s] * 1000,
                   normalization_time_ms: full_results[:performance][:normalization_time_s] * 1000 }
       QaServer.config.performance_cache.update(id: @phid, updates: updates)
-      QaServer.config.performance_cache.log(id: @phid)
+      QaServer.config.performance_cache.complete_entry(id: @phid)
     end
 
     # Override to append performance history record id into the URL to allow access to the record in RDF::Graph
