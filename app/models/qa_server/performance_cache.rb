@@ -21,31 +21,46 @@ module QaServer
       @cache[id] = entry.merge(updates)
     end
 
+    def complete_entry(id:)
+      log(id: id)
+      QaServer.config.monitor_logger.info("#{self.class}##{__method__} - id: #{id}   cache memory: #{ObjectSpace.memsize_of @cache}")
+      write_all if ObjectSpace.memsize_of(@cache) > QaServer.config.max_performance_cache_size
+    end
+
     def destroy(id)
-      @cache.delete(id)
+      @cache.delete(id) # WARNING: doesn't change the size of the cache
     end
 
     def write_all
-      size_before = @cache.size
-      @cache.each do |id, entry|
+      cache_to_write = swap_cache_hash
+      size_before = cache_to_write.size
+      cache_to_write.each do |id, entry|
         next if incomplete? entry
         QaServer::PerformanceHistory.create(dt_stamp: entry[:dt_stamp], authority: entry[:authority],
                                             action: entry[:action], action_time_ms: entry[:action_time_ms],
                                             size_bytes: entry[:size_bytes], retrieve_time_ms: entry[:retrieve_time_ms],
                                             graph_load_time_ms: entry[:graph_load_time_ms],
                                             normalization_time_ms: entry[:normalization_time_ms])
-        @cache.delete(id)
+        cache_to_write.delete(id)
       end
-      log_write_all("(#{self.class}##{__method__})", size_before, @cache.size)
-    end
-
-    def log(id:)
-      return if QaServer.config.suppress_logging_performance_datails
-      Rails.logger.debug("*** performance data for id: #{id} ***")
-      Rails.logger.debug(@cache[id].to_yaml)
+      log_write_all("(#{self.class}##{__method__})", size_before, cache_to_write.size)
+      cache_to_write = nil # free cache for garbage collection
     end
 
     private
+
+      def swap_cache_hash
+        cache_to_write = @cache
+        @cache = {} # reset main cache so new items after write begins are cached in the main cache
+        QaServer.config.monitor_logger.info("#{self.class}##{__method__} - cache memory BEFORE write: #{ObjectSpace.memsize_of(cache_to_write)}")
+        cache_to_write
+      end
+
+      def log(id:)
+        return if QaServer.config.suppress_logging_performance_datails
+        Rails.logger.debug("*** performance data for id: #{id} ***")
+        Rails.logger.debug(@cache[id].to_yaml)
+      end
 
       def incomplete?(entry)
         required_keys.each { |k| return true unless entry.key? k }
@@ -70,6 +85,7 @@ module QaServer
         else
           QaServer.config.monitor_logger.info("#{prefix} 0 of 0 performance data records were saved")
         end
+        QaServer.config.monitor_logger.info("#{prefix} - cache memory AFTER write: #{ObjectSpace.memsize_of @cache}")
       end
   end
 end

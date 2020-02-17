@@ -13,6 +13,7 @@ module QaServer
 
     # Sets up presenter with data to display in the UI
     def index
+      log_header
       validate(authorities_to_validate, validation_type)
       @presenter = presenter_class.new(authorities_list: authorities_list,
                                        connection_status_data: connection_status_data_from_log,
@@ -37,6 +38,11 @@ module QaServer
       def authority_name
         return @authority_name if @authority_name.present?
         @authority_name = params.key?(:authority) ? params[:authority].downcase : nil
+      end
+
+      def log_header
+        QaServer.config.monitor_logger.debug("-------------------------------------  check status  ---------------------------------")
+        QaServer.config.monitor_logger.info("(#{self.class}##{__method__}) check status page request (authority_name # #{authority_name})")
       end
   end
 end

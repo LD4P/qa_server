@@ -201,8 +201,14 @@ module QaServer
       @suppress_logging_performance_datails ||= false
     end
 
+    # Maximum amount of memory the performance cache can occupy before it is written to the database.
+    # @param [Integer] maximum size of performance cache before flushing
+    attr_writer :max_performance_cache_size
+    def max_performance_cache_size
+      @max_performance_cache_size ||= 32.megabytes
+    end
+
     # For internal use only
-    # TODO: consider refactor performance caching to use Rails cache
     def performance_cache
       @performance_cache ||= QaServer::PerformanceCache.new
     end
