@@ -26,7 +26,7 @@ module QaServer
       #   }
       def calculate_datatable_data(force:)
         Rails.cache.fetch("QaServer::PerformanceDatatableService/#{__method__}", expires_in: QaServer::MonitorCacheService.cache_expiry, race_condition_ttl: 5.minutes, force: force) do
-          QaServer.config.monitor_logger.info("(QaServer::PerformanceDatatableService##{__method__}) - calculating performance datatable stats - cache expired or refresh requested (force: #{force})")
+          QaServer.config.monitor_logger.info("(QaServer::PerformanceDatatableService##{__method__}) - CALCULATING performance datatable stats - cache expired or refresh requested (force: #{force})")
           data = {}
           auths = authority_list_class.authorities_list
           data[ALL_AUTH] = datatable_data_for_authority

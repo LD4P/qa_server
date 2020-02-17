@@ -45,11 +45,11 @@ module QaServer
       #     AGROVOC_LD4L_CACHE: { ... # same data for each authority  }
       #   }
       def calculate_graph_data(force:)
-        QaServer.config.monitor_logger.info("(QaServer::PerformanceGraphDataService##{__method__}) - calculating performance graph data")
         QaServer.config.performance_cache.write_all
         data = {}
         auths = authority_list_class.authorities_list
         calculate_all = force || cache_expired?
+        QaServer.config.monitor_logger.info("(QaServer::PerformanceGraphDataService##{__method__}) - CALCULATING performance graph data (calculate_all: #{calculate_all})")
         data[ALL_AUTH] = graph_data_for_authority(force: force, calculate_all: calculate_all)
         auths.each { |auth_name| data[auth_name] = graph_data_for_authority(authority_name: auth_name, force: force, calculate_all: calculate_all) }
         data
@@ -83,7 +83,6 @@ module QaServer
           avgs = Rails.cache.fetch("QaServer::PerformanceGraphDataService/#{__method__}/#{authority_name || ALL_AUTH}/#{action}/#{FOR_DAY}",
                                    expires_in: QaServer::TimeService.current_time.end_of_hour - QaServer::TimeService.current_time,
                                    race_condition_ttl: 1.hour, force: force) do
-            QaServer.config.monitor_logger.info("(QaServer::PerformanceGraphDataService##{__method__}) - calculating performance stats - cache expired or refresh requested (force: #{force})")
             calculate_last_24_hours(authority_name, action)
           end
           calculate_last_hour(authority_name, action, avgs)
@@ -104,7 +103,6 @@ module QaServer
         def average_last_30_days(authority_name: nil, action: nil, force: false)
           Rails.cache.fetch("QaServer::PerformanceGraphDataService/#{__method__}/#{authority_name || ALL_AUTH}/#{action}/#{FOR_MONTH}",
                             expires_in: QaServer::MonitorCacheService.cache_expiry, race_condition_ttl: 1.hour, force: force) do
-            QaServer.config.monitor_logger.info("(QaServer::PerformanceGraphDataService##{__method__}) - calculating performance stats - cache expired or refresh requested (force: #{force})")
             calculate_last_30_days(authority_name, action)
           end
         end
@@ -124,7 +122,6 @@ module QaServer
         def average_last_12_months(authority_name: nil, action: nil, force: false)
           Rails.cache.fetch("QaServer::PerformanceGraphDataService/#{__method__}/#{authority_name || ALL_AUTH}/#{action}/#{FOR_YEAR}",
                             expires_in: QaServer::MonitorCacheService.cache_expiry, race_condition_ttl: 1.hour, force: force) do
-            QaServer.config.monitor_logger.info("(QaServer::PerformanceGraphDataService##{__method__}) - calculating performance stats - cache expired or refresh requested (force: #{force})")
             calculate_last_12_months(authority_name, action)
           end
         end

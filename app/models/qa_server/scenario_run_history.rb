@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 # Provide access to the scenario_run_history database table which tracks scenario runs over time.
 module QaServer
-  class ScenarioRunHistory < ActiveRecord::Base
+  class ScenarioRunHistory < ActiveRecord::Base # rubocop:disable Metrics/ClassLength
     self.table_name = 'scenario_run_history'
     belongs_to :scenario_run_registry
     enum scenario_type: [:connection, :accuracy, :performance], _suffix: :type
@@ -20,6 +20,7 @@ module QaServer
       # @param run_id [Integer] the run on which to gather statistics
       # @param result [Hash] the scenario result to be saved
       def save_result(run_id:, scenario_result:)
+        registry = QaServer::ScenarioRunRegistry.find(run_id)
         QaServer::ScenarioRunHistory.create(scenario_run_registry_id: run_id,
                                             status: scenario_result[:status],
                                             authority_name: scenario_result[:authority_name],
@@ -28,7 +29,8 @@ module QaServer
                                             action: scenario_result[:action],
                                             url: scenario_result[:url],
                                             err_message: scenario_result[:err_message],
-                                            run_time: scenario_result[:run_time])
+                                            run_time: scenario_result[:run_time],
+                                            date: registry.dt_stamp.to_date)
       end
 
       # Get a summary of passing/failing tests for a run.
@@ -45,7 +47,7 @@ module QaServer
       #   * total_scenario_count: 159,
       def run_summary(scenario_run:, force: false)
         Rails.cache.fetch("QaServer::ScenarioRunHistory/#{__method__}", expires_in: QaServer::MonitorCacheService.cache_expiry, race_condition_ttl: 1.minute, force: force) do
-          QaServer.config.monitor_logger.info("(QaServer::ScenarioRunHistory##{__method__}) - creating summary of latest run - cache expired or refresh requested (force: #{force})")
+          QaServer.config.monitor_logger.info("(QaServer::ScenarioRunHistory##{__method__}) - CALCULATING summary of latest run - cache expired or refresh requested (force: #{force})")
           status = status_counts_in_run(run_id: scenario_run.id)
           summary_class.new(run_id: scenario_run.id,
                             run_dt_stamp: scenario_run.dt_stamp,
@@ -136,15 +138,37 @@ module QaServer
       # Get a summary level of historical data
       # @returns [Array<Array>] summary of passing/failing tests for each authority
       # @example [auth_name, failing, passing]
-      #   { 'agrovoc' => { "good" => 0, "bad" => 24 },
-      #     'geonames_ld4l_cache' => { "good" => 2, "bad" => 22 } }
+      #   { 'agrovoc' => { good: 31, bad: 2 },
+      #     'geonames_ld4l_cache' => { good: 32, bad: 1 } }
       def historical_summary(force: false)
         Rails.cache.fetch("QaServer::ScenarioRunHistory/#{__method__}", expires_in: QaServer::MonitorCacheService.cache_expiry, race_condition_ttl: 1.minute, force: force) do
-          runs_per_authority_for_time_period
+          QaServer.config.monitor_logger.info("(QaServer::ScenarioRunHistory##{__method__}) - CALCULATING authority connection history - cache expired or refresh requested (force: #{force})")
+          days_good = count_days(:good)
+          days_bad = count_days(:bad)
+          days_unknown = count_days(:unknown)
+          keys = (days_good.keys + days_bad.keys + days_unknown.keys).uniq.sort
+          keys.each_with_object({}) do |auth, hash|
+            hash[auth] = { good: day_count(auth, days_good), bad: day_count(auth, days_bad) + day_count(auth, days_unknown) }
+          end
         end
       end
 
       private
+
+        def day_count(auth, days)
+          days&.key?(auth) ? days[auth] : 0
+        end
+
+        def count_days(status)
+          where = time_period_where
+          where[:status] = status
+          auths = QaServer::ScenarioRunHistory.where(where).select("authority_name").group("date, authority_name")
+                                              .order("authority_name").pluck(:authority_name)
+          auths.each_with_object({}) do |auth, hash|
+            hash[auth] = 0 unless hash.key? auth
+            hash[auth] += 1
+          end
+        end
 
         def authorities_in_run(run_id:)
           QaServer::ScenarioRunHistory.where(scenario_run_registry_id: run_id).pluck(:authority_name).uniq
@@ -180,11 +204,11 @@ module QaServer
         def time_period_where
           case expected_time_period
           when :day
-            QaServer::TimePeriodService.where_clause_for_last_24_hours(dt_table: :scenario_run_registry)
+            QaServer::TimePeriodService.where_clause_for_last_24_hours(dt_table: :scenario_run_history, dt_column: :date)
           when :month
-            QaServer::TimePeriodService.where_clause_for_last_30_days(dt_table: :scenario_run_registry)
+            QaServer::TimePeriodService.where_clause_for_last_30_days(dt_table: :scenario_run_history, dt_column: :date)
           when :year
-            QaServer::TimePeriodService.where_clause_for_last_12_months(dt_table: :scenario_run_registry)
+            QaServer::TimePeriodService.where_clause_for_last_12_months(dt_table: :scenario_run_history, dt_column: :date)
           else
             all_records
           end
