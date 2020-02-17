@@ -22,11 +22,11 @@ module QaServer
     private
 
       def run_tests
-        QaServer.config.monitor_logger.info("(#{self.class}##{__method__}-#{job_id}) RUNNING monitoring tests")
+        QaServer.config.monitor_logger.debug("(#{self.class}##{__method__}-#{job_id}) RUNNING monitoring tests")
         validate(authorities_list)
         log_results(authorities_list, status_log.to_a)
         scenario_run_registry_class.save_run(scenarios_results: status_log.to_a)
-        QaServer.config.monitor_logger.info("(#{self.class}##{__method__}-#{job_id}) COMPLETED monitoring tests")
+        QaServer.config.monitor_logger.debug("(#{self.class}##{__method__}-#{job_id}) COMPLETED monitoring tests")
         reset_monitor_tests_job_id
       end
 

@@ -23,7 +23,7 @@ module QaServer
 
     def complete_entry(id:)
       log(id: id)
-      QaServer.config.monitor_logger.info("#{self.class}##{__method__} - id: #{id}   cache memory: #{ObjectSpace.memsize_of @cache}")
+      QaServer.config.performance_cache_logger.debug("#{self.class}##{__method__} - id: #{id}   cache memory: #{ObjectSpace.memsize_of @cache}")
       write_all if ObjectSpace.memsize_of(@cache) > QaServer.config.max_performance_cache_size
     end
 
@@ -52,7 +52,7 @@ module QaServer
       def swap_cache_hash
         cache_to_write = @cache
         @cache = {} # reset main cache so new items after write begins are cached in the main cache
-        QaServer.config.monitor_logger.info("#{self.class}##{__method__} - cache memory BEFORE write: #{ObjectSpace.memsize_of(cache_to_write)}")
+        QaServer.config.performance_cache_logger.debug("#{self.class}##{__method__} - cache memory BEFORE write: #{ObjectSpace.memsize_of(cache_to_write)}")
         cache_to_write
       end
 
@@ -80,12 +80,12 @@ module QaServer
 
       def log_write_all(prefix, size_before, cache_size)
         if size_before.positive?
-          QaServer.config.monitor_logger.warn("#{prefix} 0 of #{size_before} performance data records were saved") if size_before == cache_size
-          QaServer.config.monitor_logger.info("#{prefix} #{size_before - cache_size} of #{size_before} performance data records were saved") if size_before > cache_size
+          QaServer.config.performance_cache_logger.debug("#{prefix} 0 of #{size_before} performance data records were saved") if size_before == cache_size
+          QaServer.config.performance_cache_logger.debug("#{prefix} #{size_before - cache_size} of #{size_before} performance data records were saved") if size_before > cache_size
         else
-          QaServer.config.monitor_logger.info("#{prefix} 0 of 0 performance data records were saved")
+          QaServer.config.performance_cache_logger.debug("#{prefix} 0 of 0 performance data records were saved")
         end
-        QaServer.config.monitor_logger.info("#{prefix} - cache memory AFTER write: #{ObjectSpace.memsize_of @cache}")
+        QaServer.config.performance_cache_logger.debug("#{prefix} - cache memory AFTER write: #{ObjectSpace.memsize_of @cache}")
       end
   end
 end

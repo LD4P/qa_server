@@ -41,8 +41,8 @@ module QaServer
       end
 
       def log_header
-        QaServer.config.monitor_logger.debug("-------------------------------------  check status  ---------------------------------")
-        QaServer.config.monitor_logger.info("(#{self.class}##{__method__}) check status page request (authority_name # #{authority_name})")
+        QaServer.config.performance_cache_logger.debug("-------------------------------------  check status  ---------------------------------")
+        QaServer.config.performance_cache_logger.debug("(#{self.class}##{__method__}) check status page request (authority_name # #{authority_name})")
       end
   end
 end

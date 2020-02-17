@@ -49,7 +49,7 @@ module QaServer
         data = {}
         auths = authority_list_class.authorities_list
         calculate_all = force || cache_expired?
-        QaServer.config.monitor_logger.info("(QaServer::PerformanceGraphDataService##{__method__}) - CALCULATING performance graph data (calculate_all: #{calculate_all})")
+        QaServer.config.monitor_logger.debug("(QaServer::PerformanceGraphDataService##{__method__}) - CALCULATING performance graph data (calculate_all: #{calculate_all})")
         data[ALL_AUTH] = graph_data_for_authority(force: force, calculate_all: calculate_all)
         auths.each { |auth_name| data[auth_name] = graph_data_for_authority(authority_name: auth_name, force: force, calculate_all: calculate_all) }
         data

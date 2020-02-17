@@ -213,6 +213,31 @@ module QaServer
       @performance_cache ||= QaServer::PerformanceCache.new
     end
 
+    # Enable logging of performance cache
+    def enable_performance_cache_logging
+      performance_cache_logger.level = Logger::DEBUG
+    end
+
+    # Disable logging of performance cache
+    def disable_performance_cache_logging
+      performance_cache_logger.level = Logger::INFO
+    end
+
+    # For internal use only
+    def performance_cache_logger
+      @performance_cache_logger ||= Logger.new(ENV['PERFORMANCE_CACHE_LOG_PATH'] || File.join("log", "performance_cache.log"))
+    end
+
+    # Enable logging of monitoring process
+    def enable_monitor_status_logging
+      monitor_logger.level = Logger::DEBUG
+    end
+
+    # Disable logging of performance cache
+    def disable_monitor_status_logging
+      monitor_logger.level = Logger::INFO
+    end
+
     # For internal use only
     def monitor_logger
       @monitor_logger ||= Logger.new(ENV['MONITOR_LOG_PATH'] || File.join("log", "monitor.log"))
