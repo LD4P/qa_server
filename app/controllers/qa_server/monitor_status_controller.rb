@@ -104,9 +104,7 @@ module QaServer
       end
 
       def log_header
-        QaServer.config.monitor_logger.debug("----------------------------------------------------------------------")
-        QaServer.config.monitor_logger.debug("                         loading monitor status page")
-        QaServer.config.monitor_logger.debug("----------------------------------------------------------------------")
+        QaServer.config.monitor_logger.debug("-------------------------------------  monitor status  ---------------------------------")
         QaServer.config.monitor_logger.info("(#{self.class}##{__method__}) monitor status page request (refresh_tests? # #{refresh_tests?}, " \
                                          "refresh_history? # #{refresh_history?}, refresh_performance? # #{refresh_performance?})")
       end

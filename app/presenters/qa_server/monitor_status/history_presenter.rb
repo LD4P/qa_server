@@ -67,7 +67,7 @@ module QaServer::MonitorStatus
       "status-#{status[:status]}"
     end
 
-    # @return [String] the marker to use for the status cell based on the status of the scenario test (e.g. '√', 'X', '?')
+    # @return [String] the marker to use for the status cell based on the status of the scenario test
     def status_label(status)
       case status[:status]
       when :good

@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 # Provide access to the scenario_run_history database table which tracks scenario runs over time.
 module QaServer
-  class ScenarioRunHistory < ActiveRecord::Base
+  class ScenarioRunHistory < ActiveRecord::Base # rubocop:disable Metrics/ClassLength
     self.table_name = 'scenario_run_history'
     belongs_to :scenario_run_registry
     enum scenario_type: [:connection, :accuracy, :performance], _suffix: :type
@@ -47,7 +47,7 @@ module QaServer
       #   * total_scenario_count: 159,
       def run_summary(scenario_run:, force: false)
         Rails.cache.fetch("QaServer::ScenarioRunHistory/#{__method__}", expires_in: QaServer::MonitorCacheService.cache_expiry, race_condition_ttl: 1.minute, force: force) do
-          QaServer.config.monitor_logger.info("(QaServer::ScenarioRunHistory##{__method__}) - creating summary of latest run - cache expired or refresh requested (force: #{force})")
+          QaServer.config.monitor_logger.info("(QaServer::ScenarioRunHistory##{__method__}) - CALCULATING summary of latest run - cache expired or refresh requested (force: #{force})")
           status = status_counts_in_run(run_id: scenario_run.id)
           summary_class.new(run_id: scenario_run.id,
                             run_dt_stamp: scenario_run.dt_stamp,
@@ -142,6 +142,7 @@ module QaServer
       #     'geonames_ld4l_cache' => { good: 32, bad: 1 } }
       def historical_summary(force: false)
         Rails.cache.fetch("QaServer::ScenarioRunHistory/#{__method__}", expires_in: QaServer::MonitorCacheService.cache_expiry, race_condition_ttl: 1.minute, force: force) do
+          QaServer.config.monitor_logger.info("(QaServer::ScenarioRunHistory##{__method__}) - CALCULATING authority connection history - cache expired or refresh requested (force: #{force})")
           days_good = count_days(:good)
           days_bad = count_days(:bad)
           days_unknown = count_days(:unknown)
@@ -159,12 +160,11 @@ module QaServer
         end
 
         def count_days(status)
-          # TODO: limit to time period
           where = time_period_where
           where[:status] = status
           auths = QaServer::ScenarioRunHistory.where(where).select("authority_name").group("date, authority_name")
                                               .order("authority_name").pluck(:authority_name)
-          h = auths.each_with_object({}) do |auth, hash|
+          auths.each_with_object({}) do |auth, hash|
             hash[auth] = 0 unless hash.key? auth
             hash[auth] += 1
           end
@@ -190,7 +190,6 @@ module QaServer
 
         def runs_per_authority_for_time_period
           status = QaServer::ScenarioRunHistory.joins(:scenario_run_registry).where(time_period_where).group('authority_name', 'status').count
-byebug
           status.each_with_object({}) do |(k, v), hash|
             h = hash[k[0]] || { "good" => 0, "bad" => 0 } # initialize for an authority if it doesn't already exist
             h[k[1]] = v
