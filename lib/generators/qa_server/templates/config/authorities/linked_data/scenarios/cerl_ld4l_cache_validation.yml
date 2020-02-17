@@ -5,6 +5,8 @@ authority:
 search:
   -
     query: John Winters
+  -
+    query: John Winters
     subauth: person
   -
     query: Jacob Winter
