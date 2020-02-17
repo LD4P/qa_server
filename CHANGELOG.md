@@ -1,3 +1,10 @@
+### 6.1.0 (2020-02-17)
+
+* change historical summary to show number of days instead of number of tests (original intent)
+* default tests to connection tests
+* update authorities to v2.2 configs
+* add authority cerl_ld4l_cache
+
 ### 6.0.0 (2020-02-13)
 
 * refactor generation of performance graphs to minimize db access and calculations
