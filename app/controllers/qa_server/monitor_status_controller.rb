@@ -21,11 +21,13 @@ module QaServer
     def index
       log_header
       latest_test_run
+      commit_cache if commit_cache?
       @presenter = presenter_class.new(current_summary: latest_summary,
                                        current_failure_data: latest_failures,
                                        historical_summary_data: historical_data,
                                        performance_data: performance_table_data)
       update_performance_graphs
+      QaServer.config.monitor_logger.debug("(#{self.class}##{__method__}) DONE rendering")
       render 'index', status: :internal_server_error if latest_summary.failing_authority_count.positive?
     end
 
@@ -80,7 +82,7 @@ module QaServer
       end
 
       def refresh?
-        params.key? :refresh
+        params.key?(:refresh) && validate_auth_reload_token("refresh status")
       end
 
       def refresh_all?
@@ -103,10 +105,28 @@ module QaServer
         refresh_all? || params[:refresh].casecmp?('performance')
       end
 
+      def commit_cache?
+        params.key?(:commit) && validate_auth_reload_token("commit cache")
+      end
+
+      def commit_cache
+        QaServer.config.performance_cache.write_all
+      end
+
+      def validate_auth_reload_token(action)
+        token = params.key?(:auth_token) ? params[:auth_token] : nil
+        valid = Qa.config.valid_authority_reload_token?(token)
+        return true if valid
+        msg = "Permission denied. Unable to #{action}."
+        logger.warn msg
+        flash.now[:error] = msg
+        false
+      end
+
       def log_header
         QaServer.config.monitor_logger.debug("-------------------------------------  monitor status  ---------------------------------")
         QaServer.config.monitor_logger.debug("(#{self.class}##{__method__}) monitor status page request (refresh_tests? # #{refresh_tests?}, " \
-                                         "refresh_history? # #{refresh_history?}, refresh_performance? # #{refresh_performance?})")
+                                             "refresh_history? # #{refresh_history?}, refresh_performance? # #{refresh_performance?})")
       end
   end
 end
