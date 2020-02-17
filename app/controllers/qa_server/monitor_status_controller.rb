@@ -40,7 +40,7 @@ module QaServer
       # @see #latest_test_run_from_temp_cache
       def latest_test_run_from_cache
         Rails.cache.fetch("#{self.class}/#{__method__}", expires_in: QaServer::MonitorCacheService.cache_expiry, race_condition_ttl: 5.minutes, force: refresh_tests?) do
-          QaServer.config.monitor_logger.info("(#{self.class}##{__method__}) get latest run of monitoring tests - cache expired or refresh requested (force: #{refresh_tests?})")
+          QaServer.config.monitor_logger.debug("(#{self.class}##{__method__}) get latest run of monitoring tests - cache expired or refresh requested (force: #{refresh_tests?})")
           QaServer::MonitorTestsJob.perform_later
           scenario_run_registry_class.latest_run
         end
@@ -105,7 +105,7 @@ module QaServer
 
       def log_header
         QaServer.config.monitor_logger.debug("-------------------------------------  monitor status  ---------------------------------")
-        QaServer.config.monitor_logger.info("(#{self.class}##{__method__}) monitor status page request (refresh_tests? # #{refresh_tests?}, " \
+        QaServer.config.monitor_logger.debug("(#{self.class}##{__method__}) monitor status page request (refresh_tests? # #{refresh_tests?}, " \
                                          "refresh_history? # #{refresh_history?}, refresh_performance? # #{refresh_performance?})")
       end
   end
