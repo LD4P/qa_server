@@ -1,3 +1,9 @@
+### 6.2.0 (2020-02-17)
+
+* use authentication for refreshing monitor tests
+* add performance cache logger
+* exceeding max performance cache size flushing the cache
+
 ### 6.1.0 (2020-02-17)
 
 * change historical summary to show number of days instead of number of tests (original intent)
