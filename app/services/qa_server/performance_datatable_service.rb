@@ -25,7 +25,7 @@ module QaServer
       #     AGROVOC_LD4L_CACHE: { ... # same data for each authority  }
       #   }
       def calculate_datatable_data(force:)
-        Rails.cache.fetch("QaServer::PerformanceDatatableService/#{__method__}", expires_in: QaServer::MonitorCacheService.cache_expiry, race_condition_ttl: 5.minutes, force: force) do
+        Rails.cache.fetch("QaServer::PerformanceDatatableService/#{__method__}", expires_in: QaServer::CacheExpiryService.cache_expiry, race_condition_ttl: 5.minutes, force: force) do
           QaServer.config.monitor_logger.debug("(QaServer::PerformanceDatatableService##{__method__}) - CALCULATING performance datatable stats - cache expired or refresh requested (force: #{force})")
           data = {}
           auths = authority_list_class.authorities_list

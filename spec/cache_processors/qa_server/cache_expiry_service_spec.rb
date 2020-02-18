@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 require 'spec_helper'
 
-RSpec.describe QaServer::MonitorCacheService do
+RSpec.describe QaServer::CacheExpiryService do
   # rubocop:disable RSpec/MessageChain
   let(:timezone_name) { 'Eastern Time (US & Canada)' }
   before { allow(described_class).to receive_message_chain(:config, :preferred_time_zone_name).and_return(timezone_name) }

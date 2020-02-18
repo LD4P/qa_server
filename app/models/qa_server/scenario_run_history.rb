@@ -46,7 +46,7 @@ module QaServer
       #   * failing_scenario_count: 3,
       #   * total_scenario_count: 159,
       def run_summary(scenario_run:, force: false)
-        Rails.cache.fetch("QaServer::ScenarioRunHistory/#{__method__}", expires_in: QaServer::MonitorCacheService.cache_expiry, race_condition_ttl: 1.minute, force: force) do
+        Rails.cache.fetch("QaServer::ScenarioRunHistory/#{__method__}", expires_in: QaServer::CacheExpiryService.cache_expiry, race_condition_ttl: 1.minute, force: force) do
           QaServer.config.monitor_logger.debug("(QaServer::ScenarioRunHistory##{__method__}) - CALCULATING summary of latest run - cache expired or refresh requested (force: #{force})")
           status = status_counts_in_run(run_id: scenario_run.id)
           summary_class.new(run_id: scenario_run.id,
@@ -129,7 +129,7 @@ module QaServer
       #       run_time: 0.123 } ]
       def run_failures(run_id:, force: false)
         return [] unless run_id
-        Rails.cache.fetch("QaServer::ScenarioRunHistory/#{__method__}", expires_in: QaServer::MonitorCacheService.cache_expiry, race_condition_ttl: 1.minute, force: force) do
+        Rails.cache.fetch("QaServer::ScenarioRunHistory/#{__method__}", expires_in: QaServer::CacheExpiryService.cache_expiry, race_condition_ttl: 1.minute, force: force) do
           QaServer.config.monitor_logger.debug("(QaServer::ScenarioRunHistory##{__method__}) - finding failures in latest run - cache expired or refresh requested (force: #{force})")
           QaServer::ScenarioRunHistory.where(scenario_run_registry_id: run_id).where.not(status: :good).to_a
         end
@@ -141,7 +141,7 @@ module QaServer
       #   { 'agrovoc' => { good: 31, bad: 2 },
       #     'geonames_ld4l_cache' => { good: 32, bad: 1 } }
       def historical_summary(force: false)
-        Rails.cache.fetch("QaServer::ScenarioRunHistory/#{__method__}", expires_in: QaServer::MonitorCacheService.cache_expiry, race_condition_ttl: 1.minute, force: force) do
+        Rails.cache.fetch("QaServer::ScenarioRunHistory/#{__method__}", expires_in: QaServer::CacheExpiryService.cache_expiry, race_condition_ttl: 1.minute, force: force) do
           QaServer.config.monitor_logger.debug("(QaServer::ScenarioRunHistory##{__method__}) - CALCULATING authority connection history - cache expired or refresh requested (force: #{force})")
           days_good = count_days(:good)
           days_bad = count_days(:bad)
