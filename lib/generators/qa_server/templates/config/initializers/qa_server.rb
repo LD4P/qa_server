@@ -86,4 +86,16 @@ QaServer.config do |config|
   # Maximum amount of memory the performance cache can occupy before it is written to the database.
   # @param [Integer] maximum size of performance cache before flushing
   # config.max_performance_cache_size = 32.megabytes
+
+  # Enable/Disable logging of performance cache
+  # Uncomment one of the lines below to enable or disable performance cache logging.  NOTE: By default, loggers follow the
+  # default levels for Rails loggers (i.e. enabled for development, disabled for production.)
+  # config.enable_performance_cache_logging
+  # config.disable_performance_cache_logging
+
+  # Enable/Disable logging of monitoring process
+  # Uncomment one of the lines below to enable or disable monitoring process logging.  NOTE: By default, loggers follow the
+  # default levels for Rails loggers (i.e. enabled for development, disabled for production.)
+  # config.enable_monitor_status_logging
+  # config.disable_monitor_status_logging
 end
