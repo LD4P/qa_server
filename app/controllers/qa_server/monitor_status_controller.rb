@@ -41,7 +41,7 @@ module QaServer
       # cache of latest run; runs tests if cache is expired
       # @see #latest_test_run_from_temp_cache
       def latest_test_run_from_cache
-        Rails.cache.fetch("#{self.class}/#{__method__}", expires_in: QaServer::MonitorCacheService.cache_expiry, race_condition_ttl: 5.minutes, force: refresh_tests?) do
+        Rails.cache.fetch("#{self.class}/#{__method__}", expires_in: QaServer::CacheExpiryService.cache_expiry, race_condition_ttl: 5.minutes, force: refresh_tests?) do
           QaServer.config.monitor_logger.debug("(#{self.class}##{__method__}) get latest run of monitoring tests - cache expired or refresh requested (force: #{refresh_tests?})")
           QaServer::MonitorTestsJob.perform_later
           scenario_run_registry_class.latest_run

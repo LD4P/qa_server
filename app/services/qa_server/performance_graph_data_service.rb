@@ -102,7 +102,7 @@ module QaServer
         #   }
         def average_last_30_days(authority_name: nil, action: nil, force: false)
           Rails.cache.fetch("QaServer::PerformanceGraphDataService/#{__method__}/#{authority_name || ALL_AUTH}/#{action}/#{FOR_MONTH}",
-                            expires_in: QaServer::MonitorCacheService.cache_expiry, race_condition_ttl: 1.hour, force: force) do
+                            expires_in: QaServer::CacheExpiryService.cache_expiry, race_condition_ttl: 1.hour, force: force) do
             calculate_last_30_days(authority_name, action)
           end
         end
@@ -121,7 +121,7 @@ module QaServer
         #   }
         def average_last_12_months(authority_name: nil, action: nil, force: false)
           Rails.cache.fetch("QaServer::PerformanceGraphDataService/#{__method__}/#{authority_name || ALL_AUTH}/#{action}/#{FOR_YEAR}",
-                            expires_in: QaServer::MonitorCacheService.cache_expiry, race_condition_ttl: 1.hour, force: force) do
+                            expires_in: QaServer::CacheExpiryService.cache_expiry, race_condition_ttl: 1.hour, force: force) do
             calculate_last_12_months(authority_name, action)
           end
         end
@@ -195,7 +195,7 @@ module QaServer
         # @returns [Boolean] true if cache has expired; otherwise, false
         def cache_expired?
           expired = Rails.cache.fetch("QaServer::PerformanceGraphDataService/#{__method__}", expires_in: 5.seconds) { true }
-          Rails.cache.fetch("QaServer::PerformanceGraphDataService/#{__method__}", expires_in: QaServer::MonitorCacheService.cache_expiry, force: expired) { false } # reset if expired
+          Rails.cache.fetch("QaServer::PerformanceGraphDataService/#{__method__}", expires_in: QaServer::CacheExpiryService.cache_expiry, force: expired) { false } # reset if expired
           expired
         end
     end

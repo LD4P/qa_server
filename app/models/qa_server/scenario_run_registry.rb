@@ -25,7 +25,7 @@ module QaServer
 
     # @return [ActiveSupport::TimeWithZone] datetime stamp of first registered run
     def self.first_run_dt
-      Rails.cache.fetch("#{self.class}/#{__method__}", expires_in: QaServer::MonitorCacheService.cache_expiry, race_condition_ttl: 30.seconds) do
+      Rails.cache.fetch("#{self.class}/#{__method__}", expires_in: QaServer::CacheExpiryService.cache_expiry, race_condition_ttl: 30.seconds) do
         QaServer::ScenarioRunRegistry.first.dt_stamp
       end
     end
