@@ -49,43 +49,61 @@ module QaServer
         data = {}
         auths = authority_list_class.authorities_list
         calculate_all = force || cache_expired?
+        return unless calculate_all
         QaServer.config.monitor_logger.debug("(QaServer::PerformanceGraphDataService##{__method__}) - CALCULATING performance graph data (calculate_all: #{calculate_all})")
-        data[ALL_AUTH] = graph_data_for_authority(force: force, calculate_all: calculate_all)
-        auths.each { |auth_name| data[auth_name] = graph_data_for_authority(authority_name: auth_name, force: force, calculate_all: calculate_all) }
+        data[ALL_AUTH] = graph_data_for_authority(force: force)
+        auths.each { |auth_name| data[auth_name] = graph_data_for_authority(authority_name: auth_name, force: force) }
         data
+      end
+
+      # Performance data for the last 24 hours for a specific authority and action
+      # @param authority_name [String] name of an authority
+      # @param action [Symbol] :search, :fetch, or :all
+      # @param averages [Hash] existing data for each hour
+      # @returns [Hash] existing hourly data with the last hour updated
+      # @example returns
+      #   { 0: { hour: '1400', stats: { retrieve_avg_ms: 12.3, graph_load_avg_ms: 2.1, normalization_avg_ms: 4.2, full_request_avg_ms: 16.5, etc. }},
+      #     1: { hour: '1500', stats: { retrieve_avg_ms: 12.3, graph_load_avg_ms: 2.1, normalization_avg_ms: 4.2, full_request_avg_ms: 16.5, etc. }},
+      #     2: { hour: '1600', stats: { retrieve_avg_ms: 12.3, graph_load_avg_ms: 2.1, normalization_avg_ms: 4.2, full_request_avg_ms: 16.5, etc. }},
+      #     ...,
+      #     23: { hour: 'NOW', retrieve_avg_ms: 12.3, graph_load_avg_ms: 2.1, normalization_avg_ms: 4.2, full_request_avg_ms: 16.5, etc. }}
+      #   }
+      def recalculate_last_hour(authority_name:, action:, averages:)
+        start_hour = QaServer::TimeService.current_time.beginning_of_hour
+        records = records_by(authority_name, action, start_hour..start_hour.end_of_hour)
+        averages[23] = calculate_from_records(records, BY_HOUR, performance_by_hour_label(23, start_hour))
+        averages
+      end
+
+      # Performance data for the last 24 hours for a specific authority and action
+      # @param authority_name [String] name of an authority
+      # @param action [Symbol] :search, :fetch, or :all
+      # @returns [Hash] performance statistics for the past 24 hours
+      # @example returns
+      #   { 0: { hour: '1400', stats: { retrieve_avg_ms: 12.3, graph_load_avg_ms: 2.1, normalization_avg_ms: 4.2, full_request_avg_ms: 16.5, etc. }},
+      #     1: { hour: '1500', stats: { retrieve_avg_ms: 12.3, graph_load_avg_ms: 2.1, normalization_avg_ms: 4.2, full_request_avg_ms: 16.5, etc. }},
+      #     2: { hour: '1600', stats: { retrieve_avg_ms: 12.3, graph_load_avg_ms: 2.1, normalization_avg_ms: 4.2, full_request_avg_ms: 16.5, etc. }},
+      #     ...,
+      #     23: { hour: 'NOW', retrieve_avg_ms: 12.3, graph_load_avg_ms: 2.1, normalization_avg_ms: 4.2, full_request_avg_ms: 16.5, etc. }}
+      #   }
+      def calculate_last_24_hours(authority_name:, action:)
+        start_hour = QaServer::TimeService.current_time.beginning_of_hour - 23.hours
+        0.upto(23).each_with_object({}) do |idx, averages|
+          records = records_by(authority_name, action, start_hour..start_hour.end_of_hour)
+          averages[idx] = calculate_from_records(records, BY_HOUR, performance_by_hour_label(idx, start_hour))
+          start_hour += 1.hour
+        end
       end
 
       private
 
-        def graph_data_for_authority(authority_name: nil, force:, calculate_all:)
+        def graph_data_for_authority(authority_name: nil, force:)
           [:search, :fetch, :all_actions].each_with_object({}) do |action, hash|
             data = {}
-            data[FOR_DAY] = average_last_24_hours(authority_name: authority_name, action: action, force: force)
-            data[FOR_MONTH] = average_last_30_days(authority_name: authority_name, action: action, force: force) if calculate_all
-            data[FOR_YEAR] = average_last_12_months(authority_name: authority_name, action: action, force: force) if calculate_all
+            data[FOR_MONTH] = average_last_30_days(authority_name: authority_name, action: action, force: force)
+            data[FOR_YEAR] = average_last_12_months(authority_name: authority_name, action: action, force: force)
             hash[action] = data
           end
-        end
-
-        # Get hourly average for the past 24 hours.
-        # @param authority_name [String] limit statistics to records for the given authority (default: all authorities)
-        # @param action [Symbol] one of :search, :fetch, :all_actions
-        # @param force [Boolean] if true, forces cache to regenerate; otherwise, returns value from cache unless expired
-        # @returns [Hash] performance statistics for the past 24 hours
-        # @example
-        #   { 0: { hour: '1400', stats: { load_avg_ms: 12.3, normalization_avg_ms: 4.2, full_request_avg_ms: 16.5, etc. }},
-        #     1: { hour: '1500', stats: { load_avg_ms: 12.3, normalization_avg_ms: 4.2, full_request_avg_ms: 16.5, etc. }},
-        #     2: { hour: '1600', stats: { load_avg_ms: 12.3, normalization_avg_ms: 4.2, full_request_avg_ms: 16.5, etc. }},
-        #     ...,
-        #     23: { hour: 'NOW', stats: { load_avg_ms: 12.3, normalization_avg_ms: 4.2, full_request_avg_ms: 16.5, etc. }}
-        #   }
-        def average_last_24_hours(authority_name: nil, action: nil, force: false)
-          avgs = Rails.cache.fetch("QaServer::PerformanceGraphDataService/#{__method__}/#{authority_name || ALL_AUTH}/#{action}/#{FOR_DAY}",
-                                   expires_in: QaServer::TimeService.current_time.end_of_hour - QaServer::TimeService.current_time,
-                                   race_condition_ttl: 1.hour, force: force) do
-            calculate_last_24_hours(authority_name, action)
-          end
-          calculate_last_hour(authority_name, action, avgs)
         end
 
         # Get daily average for the past 30 days.
@@ -128,8 +146,8 @@ module QaServer
 
         def records_by(authority_name, action, time_period)
           where_clause = { dt_stamp: time_period }
-          where_clause[:authority] = authority_name unless authority_name.nil?
-          where_clause[:action] = action unless action.nil? || action == :all_actions
+          where_clause[:authority] = authority_name unless authority_name.nil? || authority_name == ALL_AUTH
+          where_clause[:action] = action unless action.nil? || action == ALL_ACTIONS
           performance_data_class.where(where_clause)
         end
 
@@ -156,22 +174,6 @@ module QaServer
         def calculate_from_records(records, range_idx, range_label)
           stats = stats_calculator_class.new(records).calculate_average_stats
           { STATS => stats, range_idx => range_label }
-        end
-
-        def calculate_last_hour(authority_name, action, avgs)
-          start_hour = QaServer::TimeService.current_time.beginning_of_hour
-          records = records_by(authority_name, action, start_hour..start_hour.end_of_hour)
-          avgs[23] = calculate_from_records(records, BY_HOUR, performance_by_hour_label(23, start_hour))
-          avgs
-        end
-
-        def calculate_last_24_hours(authority_name, action)
-          start_hour = QaServer::TimeService.current_time.beginning_of_hour - 23.hours
-          0.upto(23).each_with_object({}) do |idx, avgs|
-            records = records_by(authority_name, action, start_hour..start_hour.end_of_hour)
-            avgs[idx] = calculate_from_records(records, BY_HOUR, performance_by_hour_label(idx, start_hour))
-            start_hour += 1.hour
-          end
         end
 
         def calculate_last_30_days(authority_name, action)

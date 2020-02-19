@@ -27,21 +27,18 @@ module QaServer
         File.join(graph_relative_path, graph_filename(authority_name, action, time_period))
       end
 
+      def generate_hourly_graph(authority_name: ALL_AUTH, action:, data:)
+        gruff_data = rework_performance_data_for_gruff(data, BY_HOUR)
+        create_gruff_graph(gruff_data,
+                           performance_for_day_graph_full_path(authority_name, action),
+                           I18n.t('qa_server.monitor_status.performance.x_axis_hour'))
+      end
+
       private
 
         def create_graphs_for_authority(performance_data, authority_name, action)
-          create_performance_for_day_graph(performance_data, authority_name, action)
           create_performance_for_month_graph(performance_data, authority_name, action)
           create_performance_for_year_graph(performance_data, authority_name, action)
-        end
-
-        def create_performance_for_day_graph(performance_data, authority_name, action)
-          data = authority_performance_data(performance_data, authority_name, action, FOR_DAY)
-          return if data.empty?
-          gruff_data = rework_performance_data_for_gruff(data, BY_HOUR)
-          create_gruff_graph(gruff_data,
-                             performance_for_day_graph_full_path(authority_name, action),
-                             I18n.t('qa_server.monitor_status.performance.x_axis_hour'))
         end
 
         def create_performance_for_month_graph(performance_data, authority_name, action)
