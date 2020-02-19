@@ -69,6 +69,7 @@ module QaServer
 
       def update_performance_graphs
         return unless display_performance_graph?
+        QaServer::PerformanceHourlyGraphCache.generate_graphs(force: refresh_performance?)
         data = performance_history_class.performance_graph_data(force: refresh_performance?)
         graphing_service_class.create_performance_graphs(performance_data: data)
       end
