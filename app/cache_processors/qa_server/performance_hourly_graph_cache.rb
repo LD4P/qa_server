@@ -9,11 +9,12 @@ module QaServer
     self.graphing_service = QaServer::PerformanceGraphingService
 
     class << self
+      include QaServer::CacheKeys
       include QaServer::PerformanceHistoryDataKeys
 
       # Generates graphs for the past 24 hours for :search, :fetch, and :all actions for each authority.
       def generate_graphs(force: false)
-        QaServer.config.monitor_logger.debug("(QaServer::PerformanceHourlyGraphCache) - GENERATING hourly performance graphs")
+        QaServer.config.monitor_logger.debug("(QaServer::PerformanceHourlyGraphCache) - GENERATING hourly performance graphs (force: #{force})")
         QaServer.config.performance_cache.write_all
         generate_graphs_for_authorities(force: force)
       end
@@ -56,7 +57,7 @@ module QaServer
         end
 
         def cache_key_for_authority_action(authority_name:, action:)
-          "#{QaServer::CacheKeys::PERFORMANCE_GRAPH_HOURLY_DATA}-#{authority_name}-#{action}"
+          "#{PERFORMANCE_GRAPH_HOURLY_DATA_CACHE_KEY}--#{authority_name}--#{action}"
         end
     end
   end

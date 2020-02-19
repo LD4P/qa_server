@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 # Controller for Monitor Status header menu item
 module QaServer
-  class MonitorStatusController < ApplicationController
+  class MonitorStatusController < ApplicationController # rubocop:disable Metrics/ClassLength
     layout 'qa_server'
 
     include QaServer::AuthorityValidationBehavior
@@ -62,20 +62,16 @@ module QaServer
         scenario_history_class.historical_summary(force: refresh_history?)
       end
 
-      # Sets @performance_table_data [Hash<Hash>]
       def performance_table_data
-        display_performance_datatable? ? performance_history_class.performance_table_data(force: refresh_performance?) : {}
+        return {} unless QaServer.config.display_performance_graph?
+        QaServer::PerformanceDatatableCache.data(force: refresh_performance_table?)
       end
 
       def update_performance_graphs
         return unless QaServer.config.display_performance_graph?
-        QaServer::PerformanceHourlyGraphCache.generate_graphs(force: refresh_performance?)
-        QaServer::PerformanceDailyGraphCache.generate_graphs(force: refresh_performance?)
-        QaServer::PerformanceMonthlyGraphCache.generate_graphs(force: refresh_performance?)
-      end
-
-      def display_performance_datatable?
-        @display_performance_datatable ||= QaServer.config.display_performance_datatable?
+        QaServer::PerformanceHourlyGraphCache.generate_graphs(force: refresh_performance_graphs?)
+        QaServer::PerformanceDailyGraphCache.generate_graphs(force: refresh_performance_graphs?)
+        QaServer::PerformanceMonthlyGraphCache.generate_graphs(force: refresh_performance_graphs?)
       end
 
       def refresh?
@@ -88,18 +84,31 @@ module QaServer
       end
 
       def refresh_tests?
-        return false unless refresh?
-        refresh_all? || params[:refresh].casecmp?('tests')
+        refresh? ? (refresh_all? || params[:refresh].casecmp?('tests')) : false
       end
 
       def refresh_history?
-        return false unless refresh?
-        refresh_all? || params[:refresh].casecmp?('history')
+        refresh? ? (refresh_all? || params[:refresh].casecmp?('history')) : false
+      end
+
+      def refresh_history_table?
+        refresh? ? (refresh_history? || params[:refresh].casecmp?('history_table')) : false
+      end
+
+      def refresh_history_graph?
+        refresh? ? (refresh_history? || params[:refresh].casecmp?('history_graph')) : false
       end
 
       def refresh_performance?
-        return false unless refresh?
-        refresh_all? || params[:refresh].casecmp?('performance')
+        refresh? ? (refresh_all? || params[:refresh].casecmp?('performance')) : false
+      end
+
+      def refresh_performance_table?
+        refresh? ? (refresh_performance? || params[:refresh].casecmp?('performance_table')) : false
+      end
+
+      def refresh_performance_graphs?
+        refresh? ? (refresh_performance? || params[:refresh].casecmp?('performance_graphs')) : false
       end
 
       def commit_cache?
@@ -122,8 +131,10 @@ module QaServer
 
       def log_header
         QaServer.config.monitor_logger.debug("-------------------------------------  monitor status  ---------------------------------")
-        QaServer.config.monitor_logger.debug("(#{self.class}##{__method__}) monitor status page request (refresh_tests? # #{refresh_tests?}, " \
-                                             "refresh_history? # #{refresh_history?}, refresh_performance? # #{refresh_performance?})")
+        QaServer.config.monitor_logger.debug("refresh_all? #{refresh_all?}, refresh_tests? #{refresh_tests?}")
+        QaServer.config.monitor_logger.debug("refresh_history? #{refresh_history?}, refresh_history_table? #{refresh_history_table?}, refresh_history_graph? #{refresh_history_graph?}")
+        QaServer.config.monitor_logger.debug("refresh_performance? #{refresh_performance?}, refresh_performance_table? #{refresh_performance_table?}, " \
+                                             "refresh_performance_graphs? #{refresh_performance_graphs?})")
       end
   end
 end
