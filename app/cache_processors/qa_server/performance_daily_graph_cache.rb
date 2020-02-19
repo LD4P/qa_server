@@ -12,6 +12,7 @@ module QaServer
       include QaServer::PerformanceHistoryDataKeys
 
       # Generates graphs for the past 30 days for :search, :fetch, and :all actions for each authority.
+      # @param force [Boolean] if true, run the tests even if the cache hasn't expired; otherwise, use cache if not expired
       def generate_graphs(force: false)
         return unless QaServer::CacheExpiryService.cache_expired?(key: cache_key_for_force, force: force, next_expiry: next_expiry)
         QaServer.config.monitor_logger.debug("(QaServer::PerformanceDailyGraphCache) - GENERATING daily performance graphs (force: #{force})")
