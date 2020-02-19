@@ -1,65 +1,57 @@
 # frozen_string_literal: true
 # Controller for Monitor Status header menu item
 module QaServer
-  class MonitorStatusController < ApplicationController # rubocop:disable Metrics/ClassLength
+  class MonitorStatusController < ApplicationController
     layout 'qa_server'
 
     include QaServer::AuthorityValidationBehavior
 
     class_attribute :presenter_class,
-                    :scenario_run_registry_class,
-                    :scenario_history_class,
-                    :performance_history_class,
-                    :graphing_service_class
+                    :scenario_run_registry_class
     self.presenter_class = QaServer::MonitorStatusPresenter
     self.scenario_run_registry_class = QaServer::ScenarioRunRegistry
-    self.scenario_history_class = QaServer::ScenarioRunHistory
-    self.performance_history_class = QaServer::PerformanceHistory
-    self.graphing_service_class = QaServer::PerformanceGraphingService
 
     # Sets up presenter with data to display in the UI
     def index
       log_header
-      latest_test_run
+      update_tests
+      update_performance_graphs
       commit_cache if commit_cache?
       @presenter = presenter_class.new(current_summary: latest_summary,
                                        current_failure_data: latest_failures,
                                        historical_summary_data: historical_data,
                                        performance_data: performance_table_data)
-      update_performance_graphs
-      QaServer.config.monitor_logger.debug("(#{self.class}##{__method__}) DONE rendering")
+      QaServer.config.monitor_logger.debug("~~~~~~~~ DONE rendering monitor status")
       render 'index', status: :internal_server_error if latest_summary.failing_authority_count.positive?
     end
 
     private
 
+      def update_tests
+        QaServer::ScenarioRunCache.run_tests(force: refresh_tests?)
+      end
+
       # Sets @latest_test_run [QaServer::ScenarioRunRegistry]
       def latest_test_run
-        @latest_test_run ||= latest_test_run_from_cache
+        @latest_test_run ||= scenario_run_registry_class.latest_run
       end
 
-      # cache of latest run; runs tests if cache is expired
-      # @see #latest_test_run_from_temp_cache
-      def latest_test_run_from_cache
-        Rails.cache.fetch("#{self.class}/#{__method__}", expires_in: QaServer::CacheExpiryService.cache_expiry, race_condition_ttl: 5.minutes, force: refresh_tests?) do
-          QaServer.config.monitor_logger.debug("(#{self.class}##{__method__}) get latest run of monitoring tests - cache expired or refresh requested (force: #{refresh_tests?})")
-          QaServer::MonitorTestsJob.perform_later
-          scenario_run_registry_class.latest_run
-        end
-      end
-
-      # Sets @latest_summary [QaServer::ScenarioRunSummary]
+      # @returns [QaServer::ScenarioRunSummary] summary statistics on the latest run
       def latest_summary
-        scenario_history_class.run_summary(scenario_run: latest_test_run, force: refresh_tests?)
+        QaServer::ScenarioRunSummaryCache.summary_for_run(run: latest_test_run)
       end
 
+      # @returns [Array<Hash>] scenario details for any failing scenarios in the latest run
+      # @see QaServer::ScenarioRunHistory#run_failures for structure of output
       def latest_failures
-        scenario_history_class.run_failures(run_id: latest_test_run.id, force: refresh_tests?)
+        QaServer::ScenarioRunFailuresCache.failures_for_run(run: latest_test_run)
       end
 
-      # Sets @historical_data [Array<Hash>]
+      # Get a summary level of historical data
+      # @returns [Array<Hash>] summary of passing/failing tests for each authority
+      # @see QaServer::ScenarioRunHistory#historical_summary for structure of output
       def historical_data
-        scenario_history_class.historical_summary(force: refresh_history?)
+        QaServer::ScenarioHistoryCache.historical_summary(force: refresh_history?)
       end
 
       def performance_table_data
@@ -89,14 +81,6 @@ module QaServer
 
       def refresh_history?
         refresh? ? (refresh_all? || params[:refresh].casecmp?('history')) : false
-      end
-
-      def refresh_history_table?
-        refresh? ? (refresh_history? || params[:refresh].casecmp?('history_table')) : false
-      end
-
-      def refresh_history_graph?
-        refresh? ? (refresh_history? || params[:refresh].casecmp?('history_graph')) : false
       end
 
       def refresh_performance?
@@ -130,9 +114,8 @@ module QaServer
       end
 
       def log_header
-        QaServer.config.monitor_logger.debug("-------------------------------------  monitor status  ---------------------------------")
-        QaServer.config.monitor_logger.debug("refresh_all? #{refresh_all?}, refresh_tests? #{refresh_tests?}")
-        QaServer.config.monitor_logger.debug("refresh_history? #{refresh_history?}, refresh_history_table? #{refresh_history_table?}, refresh_history_graph? #{refresh_history_graph?}")
+        QaServer.config.monitor_logger.debug("------------------------------------  monitor status  -----------------------------------")
+        QaServer.config.monitor_logger.debug("refresh_all? #{refresh_all?}, refresh_tests? #{refresh_tests?}, refresh_history? #{refresh_history?}")
         QaServer.config.monitor_logger.debug("refresh_performance? #{refresh_performance?}, refresh_performance_table? #{refresh_performance_table?}, " \
                                              "refresh_performance_graphs? #{refresh_performance_graphs?})")
       end
