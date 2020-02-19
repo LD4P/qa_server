@@ -11,7 +11,6 @@ module QaServer
       self.authority_list_class = QaServer::AuthorityListerService
 
       # Summary of performance by action for each authority for the configured time period (e.g. :day, :month, :year, :all).
-      # @param force [Boolean] if true, calculate the stats even if the cache hasn't expired; otherwise, use cache if not expired
       # @returns [Hash] performance statistics for configured time period by action for each authority
       # @example
       #   { all_authorities:
@@ -24,14 +23,12 @@ module QaServer
       #     },
       #     AGROVOC_LD4L_CACHE: { ... # same data for each authority  }
       #   }
-      def calculate_datatable_data(force:)
-        Rails.cache.fetch("QaServer::PerformanceDatatableService/#{__method__}", expires_in: QaServer::CacheExpiryService.cache_expiry, race_condition_ttl: 5.minutes, force: force) do
-          QaServer.config.monitor_logger.debug("(QaServer::PerformanceDatatableService##{__method__}) - CALCULATING performance datatable stats - cache expired or refresh requested (force: #{force})")
-          data = {}
-          auths = authority_list_class.authorities_list
-          data[ALL_AUTH] = datatable_data_for_authority
-          auths.each { |auth_name| data[auth_name] = datatable_data_for_authority(authority_name: auth_name) }
-          data
+      def calculate_datatable_data
+        data = {}
+        auths = authority_list_class.authorities_list
+        data[ALL_AUTH] = datatable_data_for_authority
+        auths.each_with_object(data) do |auth_name, data| # rubocop:disable Lint/ShadowingOuterLocalVariable
+          data[auth_name] = datatable_data_for_authority(authority_name: auth_name)
         end
       end
 
