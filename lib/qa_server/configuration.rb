@@ -10,7 +10,7 @@ module QaServer
     end
 
     # Set preferred hour to expire caches related to slow running calculations (e.g. monitoring tests, performance data)
-    # @param [Integer] count of hours after midnight (0-23 with 0=midnight)
+    # @param offset [Integer] count of hours after midnight (0-23 with 0=midnight)
     # @raise [ArgumentError] if offset is not between 0 and 23
     # @example
     #   For preferred_time_zone_name of 'Eastern Time (US & Canada)', use 3 for slow down at midnight PT/3am ET
@@ -27,7 +27,7 @@ module QaServer
     end
 
     # Set preferred hour to run monitoring tests (deprecated)
-    # @param [Integer] count of hours from midnight (0-23 with 0=midnight)
+    # @param offset [Integer] count of hours from midnight (0-23 with 0=midnight)
     # @example
     #   For preferred_time_zone_name of 'Eastern Time (US & Canada)', use 3 for slow down at midnight PT/3am ET
     #   For preferred_time_zone_name of 'Pacific Time (US & Canada)', use 0 for slow down at midnight PT/3am ET
@@ -60,7 +60,7 @@ module QaServer
     end
 
     # Historical datatable default time period.
-    # @param [Symbol] time period for calculating historical pass/fail (i.e., one of :month, :year, or :all)
+    # @param time_period [Symbol] time period for calculating historical pass/fail (i.e., one of :month, :year, or :all)
     # @raise [ArgumentError] if time_period is not one of :month, :year, or :all
     def historical_datatable_default_time_period=(time_period)
       raise ArgumentError, 'time_period must be one of :day, :month, or :year' unless [:month, :year, :all].include? time_period
@@ -112,7 +112,7 @@ module QaServer
     end
 
     # Performance graph default time period for all graphs.  All authorities will show the graph for this time period on page load.
-    # @param [Symbol] time period for default display of performance graphs (i.e., one of :day, :month, or :year)
+    # @param time_period [Symbol] time period for default display of performance graphs (i.e., one of :day, :month, or :year)
     # @raise [ArgumentError] if time_period is not one of :day, :month, or :year
     def performance_graph_default_time_period=(time_period)
       raise ArgumentError, 'time_period must be one of :day, :month, or :year' unless [:day, :month, :year].include? time_period
@@ -134,7 +134,7 @@ module QaServer
     end
 
     # Performance datatable default time period for calculating stats.
-    # @param [Symbol] time period for calculating performance stats (i.e., one of :day, :month, :year, or :all)
+    # @param time_period [Symbol] time period for calculating performance stats (i.e., one of :day, :month, :year, or :all)
     # @raise [ArgumentError] if time_period is not one of :day, :month, :year, or :all
     def performance_datatable_default_time_period=(time_period)
       raise ArgumentError, 'time_period must be one of :day, :month, :year, or :all' unless [:day, :month, :year, :all].include? time_period
@@ -205,7 +205,7 @@ module QaServer
     # @param [Integer] maximum size of performance cache before flushing
     attr_writer :max_performance_cache_size
     def max_performance_cache_size
-      @max_performance_cache_size ||= 32.megabytes
+      @max_performance_cache_size ||= convert_size_to_bytes(ENV['MAX_PERFORMANCE_CACHE_SIZE']) || 32.megabytes
     end
 
     # For internal use only
@@ -242,5 +242,22 @@ module QaServer
     def monitor_logger
       @monitor_logger ||= Logger.new(ENV['MONITOR_LOG_PATH'] || File.join("log", "monitor.log"))
     end
+
+    private
+
+      def convert_size_to_bytes(size)
+        md = size.match(/^(?<num>\d+)\s?(?<unit>\w+)?$/)
+        md[:num].to_i *
+          case md[:unit].upcase
+          when 'KB'
+            1024
+          when 'MB'
+            1024**2
+          when 'GB'
+            1024**3
+          else
+            1
+          end
+      end
   end
 end

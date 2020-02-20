@@ -41,8 +41,12 @@ module QaServer
       end
 
       def log_header
-        QaServer.config.performance_cache_logger.debug("-------------------------------------  check status  ---------------------------------")
+        QaServer.config.performance_cache_logger.debug("----------------------  check status (max_cache_size = #{max_cache_size}) ----------------------")
         QaServer.config.performance_cache_logger.debug("(#{self.class}##{__method__}) check status page request (authority_name # #{authority_name})")
+      end
+
+      def max_cache_size
+        ActiveSupport::NumberHelper.number_to_human_size(QaServer.config.max_performance_cache_size)
       end
   end
 end
