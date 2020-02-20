@@ -14,8 +14,7 @@ module QaServer
     # Sets up presenter with data to display in the UI
     def index
       log_header
-      update_tests
-      update_performance_graphs
+      perform_updates
       commit_cache if commit_cache?
       @presenter = presenter_class.new(current_summary: latest_summary,
                                        current_failure_data: latest_failures,
@@ -26,6 +25,12 @@ module QaServer
     end
 
     private
+
+      def perform_updates
+        update_tests
+        update_historical_graph
+        update_performance_graphs
+      end
 
       def update_tests
         QaServer::ScenarioRunCache.run_tests(force: refresh_tests?)
@@ -51,7 +56,12 @@ module QaServer
       # @returns [Array<Hash>] summary of passing/failing tests for each authority
       # @see QaServer::ScenarioRunHistory#historical_summary for structure of output
       def historical_data
-        QaServer::ScenarioHistoryCache.historical_summary(force: refresh_history?)
+        @historical_data ||= QaServer::ScenarioHistoryCache.historical_summary(force: refresh_history?)
+      end
+
+      def update_historical_graph
+        return unless QaServer.config.display_historical_graph?
+        QaServer::ScenarioHistoryGraphCache.generate_graph(data: historical_data, force: refresh_history?)
       end
 
       def performance_table_data

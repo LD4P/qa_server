@@ -2,7 +2,7 @@
     <div id="performance-data" class="status-section">
       <h3><%= t('qa_server.monitor_status.performance.title') %></h3>
 
-  <% if @presenter.display_performance_graph? && !@presenter.performance_graphs.nil? %>
+  <% if @presenter.display_performance_graph? %>
       <script>
         function switch_performance_view(base_id, time_period, action) {
           document.getElementById(base_id+'<%= @presenter.performance_graph_data_section_id(action: :all_actions, time_period: :day) %>').className = 'performance-data-section-hidden';
@@ -81,7 +81,7 @@
     </div>
   <% end %>
 
-  <% if @presenter.display_performance_datatable? && !@presenter.performance_data.nil? %>
+  <% if @presenter.display_performance_datatable? %>
     <div id="performance-datatable-section">
       <h4><%= t('qa_server.monitor_status.performance.datatable_desc') %></h4>
       <p class="status-update-dtstamp"><%= t('qa_server.monitor_status.performance.datarange', from: @presenter.performance_data_start, to: @presenter.performance_data_end) %></p>

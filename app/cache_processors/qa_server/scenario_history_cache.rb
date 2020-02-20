@@ -16,7 +16,7 @@ module QaServer
       #     'geonames_ld4l_cache' => { good: 32, bad: 1 } }
       def historical_summary(force: false)
         Rails.cache.fetch(cache_key_for_historical_data, expires_in: next_expiry, race_condition_ttl: 30.seconds, force: force) do
-          QaServer.config.monitor_logger.debug("(QaServer::ScenarioHistoryCache) - CALCULATING HISTORY of scenario runs (force: force)")
+          QaServer.config.monitor_logger.debug("(QaServer::ScenarioHistoryCache) - CALCULATING HISTORY of scenario runs (force: #{force})")
           scenario_history_class.historical_summary
         end
       end
