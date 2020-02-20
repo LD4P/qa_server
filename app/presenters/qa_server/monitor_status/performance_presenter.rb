@@ -25,11 +25,11 @@ module QaServer::MonitorStatus
     end
 
     def display_performance_graph?
-      QaServer.config.display_performance_graph?
+      QaServer.config.display_performance_graph? && !performance_graphs.nil? && !performance_graphs.empty?
     end
 
     def display_performance_datatable?
-      QaServer.config.display_performance_datatable?
+      QaServer.config.display_performance_datatable? && !performance_data.nil?
     end
 
     def performance_data_authority_name(entry)

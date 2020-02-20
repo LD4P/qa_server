@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 # This presenter class provides historical testing data needed by the view that monitors status of authorities.
 module QaServer::MonitorStatus
-  class HistoryPresenter # rubocop:disable Metrics/ClassLength
+  class HistoryPresenter
     include QaServer::MonitorStatus::GruffGraph
 
     # @param parent [QaServer::MonitorStatusPresenter] parent presenter
@@ -17,6 +17,10 @@ module QaServer::MonitorStatus
     #     [ 'geonames_ld4l_cache', 2, 22 ] ... ]
     def historical_summary
       @historical_summary_data
+    end
+
+    def historical_graph
+      QaServer::HistoryGraphingService.history_graph_image_path
     end
 
     # @return [Boolean] true if historical test data exists; otherwise false
@@ -48,18 +52,6 @@ module QaServer::MonitorStatus
     # @return [String] string version of date formatted with just date (e.g. "02/01/2020")
     def history_end
       QaServer::TimeService.pretty_date(history_end_dt)
-    end
-
-    def historical_graph
-      # g = Gruff::SideStackedBar.new('800x400')
-      g = Gruff::SideStackedBar.new
-      historical_graph_theme(g)
-      historical_data = rework_historical_data_for_gruff
-      g.labels = historical_data[0]
-      g.data('Fail', historical_data[1])
-      g.data('Pass', historical_data[2])
-      g.write historical_graph_full_path
-      File.join(graph_relative_path, historical_graph_filename)
     end
 
     # @return [String] the name of the css style class to use for the status cell based on the status of the scenario test.
@@ -117,42 +109,11 @@ module QaServer::MonitorStatus
     end
 
     def display_historical_graph?
-      QaServer.config.display_historical_graph?
+      QaServer.config.display_historical_graph? && QaServer::HistoryGraphingService.history_graph_image_exists?
     end
 
     def display_historical_datatable?
       QaServer.config.display_historical_datatable?
     end
-
-    private
-
-      def historical_graph_theme(g)
-        g.theme_pastel
-        g.colors = ['#ffcccc', '#ccffcc']
-        g.marker_font_size = 12
-        g.x_axis_increment = 10
-      end
-
-      def historical_graph_full_path
-        graph_full_path(historical_graph_filename)
-      end
-
-      def historical_graph_filename
-        'historical_side_stacked_bar.png'
-      end
-
-      def rework_historical_data_for_gruff
-        labels = {}
-        pass_data = []
-        fail_data = []
-        i = 0
-        historical_summary.each do |auth, data|
-          labels[i] = auth
-          i += 1
-          fail_data << data[:bad]
-          pass_data << data[:good]
-        end
-        [labels, fail_data, pass_data]
-      end
   end
 end

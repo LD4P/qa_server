@@ -6,7 +6,7 @@
           <%= image_tag(@presenter.historical_graph, alt: 'History Graph Unavailable') %>
         <% end %>
 
-        <% if @presenter.display_historical_datatable? && !@presenter.historical_summary.nil? %>
+        <% if @presenter.display_historical_datatable? %>
           <table class="status">
             <tr>
               <th><%= t('qa_server.monitor_status.history.authority') %></th>

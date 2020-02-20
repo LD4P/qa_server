@@ -82,7 +82,7 @@ module QaServer::MonitorStatus
 
     # @return [Boolean] true if failure data exists for the latest test run; otherwise false
     def failures?
-      failing_tests_count.positive?
+      failing_tests_count.positive? && !failures.nil?
     end
   end
 end

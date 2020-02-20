@@ -12,8 +12,18 @@ module QaServer
       # @param authority_name [String] name of the authority
       # @param action [Symbol] action performed by the request (e.g. :search, :fetch, :all_actions)
       # @param time_period [Symbol] time period for the graph (i.e. :day, :month, :year)
-      def performance_graph_file(authority_name: ALL_AUTH, action:, time_period:)
+      # @return [String] Path to use with <image> tags
+      def performance_graph_image_path(authority_name: ALL_AUTH, action:, time_period:)
         File.join(graph_relative_path, graph_filename(authority_name, action, time_period))
+      end
+      alias performance_graph_file performance_graph_image_path
+
+      # @param authority_name [String] name of the authority
+      # @param action [Symbol] action performed by the request (e.g. :search, :fetch, :all_actions)
+      # @param time_period [Symbol] time period for the graph (i.e. :day, :month, :year)
+      # @return [Boolean] true if image for graph exists; otherwise, false
+      def performance_graph_image_exists?(authority_name: ALL_AUTH, action:, time_period:)
+        File.exist?(performance_graph_full_path(authority_name, action, time_period))
       end
 
       # Generate one 12 month graph for the authority and action given the graph data.
@@ -24,8 +34,9 @@ module QaServer
       def generate_monthly_graph(authority_name: ALL_AUTH, action:, data:)
         gruff_data = rework_performance_data_for_gruff(data, BY_MONTH)
         create_gruff_graph(gruff_data,
-                           performance_for_year_graph_full_path(authority_name, action),
+                           performance_graph_full_path(authority_name, action, FOR_YEAR),
                            I18n.t('qa_server.monitor_status.performance.x_axis_month'))
+        log_failure(authority_name, action, BY_MONTH)
       end
 
       # Generate one 30 day graph for the authority and action given the graph data.
@@ -36,7 +47,7 @@ module QaServer
       def generate_daily_graph(authority_name: ALL_AUTH, action:, data:)
         gruff_data = rework_performance_data_for_gruff(data, BY_DAY)
         create_gruff_graph(gruff_data,
-                           performance_for_month_graph_full_path(authority_name, action),
+                           performance_graph_full_path(authority_name, action, FOR_MONTH),
                            I18n.t('qa_server.monitor_status.performance.x_axis_day'))
       end
 
@@ -48,22 +59,14 @@ module QaServer
       def generate_hourly_graph(authority_name: ALL_AUTH, action:, data:)
         gruff_data = rework_performance_data_for_gruff(data, BY_HOUR)
         create_gruff_graph(gruff_data,
-                           performance_for_day_graph_full_path(authority_name, action),
+                           performance_graph_full_path(authority_name, action, FOR_DAY),
                            I18n.t('qa_server.monitor_status.performance.x_axis_hour'))
       end
 
       private
 
-        def performance_for_day_graph_full_path(authority_name, action)
-          graph_full_path(graph_filename(authority_name, action, :day))
-        end
-
-        def performance_for_month_graph_full_path(authority_name, action)
-          graph_full_path(graph_filename(authority_name, action, :month))
-        end
-
-        def performance_for_year_graph_full_path(authority_name, action)
-          graph_full_path(graph_filename(authority_name, action, :year))
+        def performance_graph_full_path(authority_name, action, time_period)
+          graph_full_path(graph_filename(authority_name, action, time_period))
         end
 
         def graph_filename(authority_name, action, time_period)
@@ -116,6 +119,12 @@ module QaServer
           g.data(I18n.t('qa_server.monitor_status.performance.graph_load_time_ms'), performance_data[2])
           g.data(I18n.t('qa_server.monitor_status.performance.normalization_time_ms'), performance_data[3])
           g.write performance_graph_full_path
+        end
+
+        def log_failure(authority_name, action, time_period)
+          relative_path = performance_graph_image_path(authority_name: authority_name, action: action, time_period: time_period)
+          exists = performance_graph_image_exists?(authority_name: authority_name, action: action, time_period: time_period)
+          QaServer.config.monitor_logger.warn("FAILED to write performance graph at #{relative_path}") unless exists
         end
     end
   end
