@@ -1,3 +1,10 @@
+### 7.1.0 (2020-02-20)
+
+* allow performance cache size to be set by environment variable 
+* move generation of history graph to cache_processors
+* log warning in monitor logger if graphs fail to create
+* monitor_status page won't try to display graphs if graph file does not exist
+
 ### 7.0.0 (2020-02-19)
 
 * refactor of caching system to simplify the process
