@@ -1,3 +1,7 @@
+### 7.1.1 (2020-02-21)
+
+* empty performance cache after running monitor status tests
+
 ### 7.1.0 (2020-02-20)
 
 * allow performance cache size to be set by environment variable 
