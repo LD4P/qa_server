@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 # Model to hold performance data in memory and ultimately write it out to the database
+require 'objspace'
+
 module QaServer
   class PerformanceCache
     def initialize
