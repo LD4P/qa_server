@@ -1,3 +1,9 @@
+### 7.1.2 (2020-02-21)
+
+* make configs that return true/false end with ?
+* add tests for configs that weren’t tested
+* fix bugs in config#convert_size_to_bytes in response to testing
+
 ### 7.1.1 (2020-02-21)
 
 * empty performance cache after running monitor status tests
