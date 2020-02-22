@@ -62,6 +62,30 @@ RSpec.describe QaServer::Configuration do
     end
   end
 
+  describe '#historical_datatable_default_time_period=' do
+    it 'raises exception if time_period is invalid' do
+      expect { config.historical_datatable_default_time_period = :day }.to raise_error ArgumentError, 'time_period must be one of :month, :year, or :all'
+      expect { config.historical_datatable_default_time_period = :decade }.to raise_error ArgumentError, 'time_period must be one of :month, :year, or :all'
+    end
+
+    it 'sets time_period if valid' do
+      expect(config.historical_datatable_default_time_period = :month).to eq :month
+      expect(config.historical_datatable_default_time_period = :year).to eq :year
+      expect(config.historical_datatable_default_time_period = :all).to eq :all
+    end
+  end
+
+  describe '#historical_datatable_default_time_period' do
+    it 'return default as :year' do
+      expect(config.historical_datatable_default_time_period).to eq :year
+    end
+
+    it 'returns set value' do
+      config.historical_datatable_default_time_period = :month
+      expect(config.historical_datatable_default_time_period).to eq :month
+    end
+  end
+
   describe '#display_performance_graph?' do
     it 'return default as false' do
       expect(config.display_performance_graph?).to eq false
@@ -194,6 +218,101 @@ RSpec.describe QaServer::Configuration do
     it 'returns set value' do
       config.performance_datatable_warning_threshold = 500
       expect(config.performance_datatable_warning_threshold).to eq 500
+    end
+  end
+
+  describe '#suppress_performance_gathering?' do
+    it 'return default as false' do
+      expect(config.suppress_performance_gathering?).to eq false
+    end
+
+    it 'returns set value' do
+      config.suppress_performance_gathering = true
+      expect(config.suppress_performance_gathering?).to eq true
+    end
+  end
+
+  describe '#suppress_logging_performance_datails?' do
+    it 'return default as false' do
+      expect(config.suppress_logging_performance_datails?).to eq false
+    end
+
+    it 'returns set value' do
+      config.suppress_logging_performance_datails = true
+      expect(config.suppress_logging_performance_datails?).to eq true
+    end
+  end
+
+  describe '#max_performance_cache_size' do
+    it 'return default as 32MB' do
+      expect(config.max_performance_cache_size).to eq 32.megabytes
+    end
+
+    it 'returns set value' do
+      config.max_performance_cache_size = 500
+      expect(config.max_performance_cache_size).to eq 500
+    end
+
+    context 'when value set through ENV' do
+      context 'when no unit specified' do
+        before { stub_const('ENV', 'MAX_PERFORMANCE_CACHE_SIZE' => '96') }
+        it 'sets value as is' do
+          expect(config.max_performance_cache_size).to eq 96
+        end
+      end
+
+      context 'when unit is KB' do
+        before { stub_const('ENV', 'MAX_PERFORMANCE_CACHE_SIZE' => '64KB') }
+        it 'sets value as is' do
+          expect(config.max_performance_cache_size).to eq 64.kilobytes
+        end
+      end
+
+      context 'when unit is MB' do
+        before { stub_const('ENV', 'MAX_PERFORMANCE_CACHE_SIZE' => '16mb') }
+        it 'sets value as is' do
+          expect(config.max_performance_cache_size).to eq 16.megabytes
+        end
+      end
+
+      context 'when unit is GB' do
+        before { stub_const('ENV', 'MAX_PERFORMANCE_CACHE_SIZE' => '8 gb') }
+        it 'sets value as is' do
+          expect(config.max_performance_cache_size).to eq 8.gigabytes
+        end
+      end
+    end
+  end
+
+  describe '#enable_performance_cache_logging' do
+    before { stub_const('ENV', 'PERFORMANCE_CACHE_LOG_PATH' => 'tmp/performance_cache.log') }
+    it 'sets logger level to DEBUG' do
+      config.enable_performance_cache_logging
+      expect(config.performance_cache_logger.level).to be Logger::DEBUG
+    end
+  end
+
+  describe '#disable_performance_cache_logging' do
+    before { stub_const('ENV', 'PERFORMANCE_CACHE_LOG_PATH' => 'tmp/performance_cache.log') }
+    it 'sets logger level to INFO' do
+      config.disable_performance_cache_logging
+      expect(config.performance_cache_logger.level).to be Logger::INFO
+    end
+  end
+
+  describe '#enable_monitor_status_logging' do
+    before { stub_const('ENV', 'MONITOR_LOG_PATH' => 'tmp/monitor.log') }
+    it 'sets logger level to DEBUG' do
+      config.enable_monitor_status_logging
+      expect(config.monitor_logger.level).to be Logger::DEBUG
+    end
+  end
+
+  describe '#disable_monitor_status_logging' do
+    before { stub_const('ENV', 'MONITOR_LOG_PATH' => 'tmp/monitor.log') }
+    it 'sets logger level to INFO' do
+      config.disable_monitor_status_logging
+      expect(config.monitor_logger.level).to be Logger::INFO
     end
   end
 end

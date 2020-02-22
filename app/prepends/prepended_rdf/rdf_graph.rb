@@ -12,7 +12,7 @@ module PrependedRdf::RdfGraph
   #   Set set graph name of each loaded statement
   # @return [void]
   def load(url, graph_name: nil, **options) # rubocop:disable Metrics/MethodLength, Metrics/AbcSize
-    return super if QaServer.config.suppress_performance_gathering
+    return super if QaServer.config.suppress_performance_gathering?
 
     raise TypeError, "#{self} is immutable" if immutable?
     phid, real_url = parse_phid(url)
