@@ -65,7 +65,7 @@ module QaServer
       end
 
       def performance_table_data
-        return {} unless QaServer.config.display_performance_graph?
+        return {} unless QaServer.config.display_performance_datatable?
         QaServer::PerformanceDatatableCache.data(force: refresh_performance_table?)
       end
 

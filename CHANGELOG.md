@@ -1,3 +1,7 @@
+### 7.1.3 (2020-02-22)
+
+* fix performance datatable never displays
+
 ### 7.1.2 (2020-02-21)
 
 * make configs that return true/false end with ?
