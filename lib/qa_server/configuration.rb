@@ -63,7 +63,7 @@ module QaServer
     # @param time_period [Symbol] time period for calculating historical pass/fail (i.e., one of :month, :year, or :all)
     # @raise [ArgumentError] if time_period is not one of :month, :year, or :all
     def historical_datatable_default_time_period=(time_period)
-      raise ArgumentError, 'time_period must be one of :day, :month, or :year' unless [:month, :year, :all].include? time_period
+      raise ArgumentError, 'time_period must be one of :month, :year, or :all' unless [:month, :year, :all].include? time_period
       @historical_datatable_default_time_period = time_period
     end
 
@@ -189,17 +189,23 @@ module QaServer
     # impact and may need to be suppressed.  Performance stats will not be gathered when this config is true.
     # @param [Boolean] do not gather performance data when true (defaults to false for backward compatibitily)
     attr_writer :suppress_performance_gathering
-    def suppress_performance_gathering
+    def suppress_performance_gathering?
+      return @suppress_performance_gathering unless @suppress_performance_gathering.nil?
       @suppress_performance_gathering ||= false
     end
+    alias suppress_performance_gathering suppress_performance_gathering?
+    deprecation_deprecate suppress_performance_gathering: "use #suppress_performance_gathering? instead"
 
     # Performance data is gathered on every incoming query.  Basic stats are logged from QA.  Full stats are logged
     # by QaServer and can eat up logging realestate.  To suppress the logging of details, set this config to true.
     # @param [Boolean] do not log performance data details when true (defaults to false for backward compatibitily)
     attr_writer :suppress_logging_performance_datails
-    def suppress_logging_performance_datails
+    def suppress_logging_performance_datails?
+      return @suppress_logging_performance_datails unless @suppress_logging_performance_datails.nil?
       @suppress_logging_performance_datails ||= false
     end
+    alias suppress_logging_performance_datails suppress_logging_performance_datails?
+    deprecation_deprecate suppress_logging_performance_datails: "use #suppress_logging_performance_datails? instead"
 
     # Maximum amount of memory the performance cache can occupy before it is written to the database.
     # @param [Integer] maximum size of performance cache before flushing
@@ -246,7 +252,9 @@ module QaServer
     private
 
       def convert_size_to_bytes(size)
+        return if size.nil?
         md = size.match(/^(?<num>\d+)\s?(?<unit>\w+)?$/)
+        return md[:num].to_i if md[:unit].nil?
         md[:num].to_i *
           case md[:unit].upcase
           when 'KB'

@@ -59,7 +59,7 @@ module QaServer
       end
 
       def log(id:)
-        return if QaServer.config.suppress_logging_performance_datails
+        return if QaServer.config.suppress_logging_performance_datails?
         Rails.logger.debug("*** performance data for id: #{id} ***")
         Rails.logger.debug(@cache[id].to_yaml)
       end
