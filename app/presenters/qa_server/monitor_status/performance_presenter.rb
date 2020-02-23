@@ -2,7 +2,6 @@
 # This presenter class provides performance data needed by the view that monitors status of authorities.
 module QaServer::MonitorStatus
   class PerformancePresenter
-    include QaServer::MonitorStatus::GruffGraph
     include QaServer::MonitorStatus::PerformanceDatatableBehavior
     include QaServer::MonitorStatus::PerformanceGraphBehavior
     include QaServer::PerformanceHistoryDataKeys

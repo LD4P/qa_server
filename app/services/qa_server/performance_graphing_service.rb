@@ -4,7 +4,7 @@ module QaServer
   class PerformanceGraphingService
     class << self
       include QaServer::PerformanceHistoryDataKeys
-      include QaServer::MonitorStatus::GruffGraph
+      include QaServer::GruffGraph
 
       class_attribute :authority_list_class
       self.authority_list_class = QaServer::AuthorityListerService
@@ -14,7 +14,7 @@ module QaServer
       # @param time_period [Symbol] time period for the graph (i.e. :day, :month, :year)
       # @return [String] Path to use with <image> tags
       def performance_graph_image_path(authority_name: ALL_AUTH, action:, time_period:)
-        File.join(graph_relative_path, graph_filename(authority_name, action, time_period))
+        File.join(graph_image_path, graph_filename(authority_name, action, time_period))
       end
       alias performance_graph_file performance_graph_image_path
 
