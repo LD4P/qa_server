@@ -1,3 +1,7 @@
+### 7.2.1 (2020-02-23)
+
+* fix graph fails generation when any label is empty string
+
 ### 7.2.0 (2020-02-22)
 
 * move graphs from assets to public directory

@@ -103,7 +103,7 @@ module QaServer
           elsif ((idx + 1) % 2).zero?
             (start_hour.hour * 100).to_s
           else
-            ""
+            " "
           end
         end
 
@@ -113,7 +113,7 @@ module QaServer
           elsif ((idx + 1) % 5).zero?
             start_day.strftime("%m-%d")
           else
-            ""
+            " "
           end
         end
 
