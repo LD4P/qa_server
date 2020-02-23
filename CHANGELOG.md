@@ -1,3 +1,7 @@
+### 7.2.0 (2020-02-22)
+
+* move graphs from assets to public directory
+
 ### 7.1.3 (2020-02-22)
 
 * fix performance datatable never displays
