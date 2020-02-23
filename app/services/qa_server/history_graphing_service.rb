@@ -3,7 +3,7 @@
 module QaServer
   class HistoryGraphingService
     class << self
-      include QaServer::MonitorStatus::GruffGraph
+      include QaServer::GruffGraph
 
       HISTORICAL_GRAPH_FILENAME = 'historical_side_stacked_bar.png'
 
@@ -12,7 +12,7 @@ module QaServer
 
       # Path to use with <image> tags
       def history_graph_image_path
-        historical_graph_relative_path
+        File.join(graph_image_path, HISTORICAL_GRAPH_FILENAME)
       end
 
       # @return [Boolean] true if image for graph exists; otherwise, false
@@ -49,10 +49,6 @@ module QaServer
 
         def historical_graph_full_path
           graph_full_path(HISTORICAL_GRAPH_FILENAME)
-        end
-
-        def historical_graph_relative_path
-          File.join(graph_relative_path, HISTORICAL_GRAPH_FILENAME)
         end
 
         def rework_historical_data_for_gruff(data)

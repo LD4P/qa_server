@@ -7,7 +7,6 @@ module QaServer
 
     class << self
       include QaServer::CacheKeys
-      include QaServer::MonitorStatus::GruffGraph
 
       HISTORICAL_GRAPH_FILENAME = 'historical_side_stacked_bar.png'
 

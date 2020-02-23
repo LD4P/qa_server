@@ -3,7 +3,6 @@
 module QaServer::MonitorStatus
   module PerformanceGraphBehavior # rubocop:disable Metrics/ModuleLength
     include QaServer::PerformanceHistoryDataKeys
-    include QaServer::MonitorStatus::GruffGraph
 
     def performance_graphs
       auth_list = QaServer::AuthorityListerService.authorities_list

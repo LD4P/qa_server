@@ -2,8 +2,6 @@
 # This presenter class provides historical testing data needed by the view that monitors status of authorities.
 module QaServer::MonitorStatus
   class HistoryPresenter
-    include QaServer::MonitorStatus::GruffGraph
-
     # @param parent [QaServer::MonitorStatusPresenter] parent presenter
     # @param historical_summary_data [Array<Hash>] summary of past failuring runs per authority to drive chart
     def initialize(parent:, historical_summary_data:)
