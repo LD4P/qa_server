@@ -12,5 +12,17 @@ module QaServer
     PERFORMANCE_GRAPH_HOURLY_DATA_CACHE_KEY = "QaServer--CacheKeys--performance_graph_hourly_data"
     PERFORMANCE_GRAPH_DAILY_DATA_CACHE_KEY = "QaServer--CacheKeys--performance_graph_daily_data"
     PERFORMANCE_GRAPH_MONTHLY_DATA_CACHE_KEY = "QaServer--CacheKeys--performance_graph_monthly_data"
+
+    def hourly_cache_key_for_authority_action(authority_name:, action:)
+      "#{PERFORMANCE_GRAPH_HOURLY_DATA_CACHE_KEY}--#{authority_name}--#{action}"
+    end
+
+    def cache_key_for_force(key)
+      "#{key}--force"
+    end
+
+    def default_next_expiry
+      QaServer::CacheExpiryService.cache_expiry
+    end
   end
 end

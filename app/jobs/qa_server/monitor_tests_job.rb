@@ -13,14 +13,14 @@ module QaServer
       Rails.cache.fetch("QaServer::MonitorStatusController/latest_test_run_from_cache", expires_in: QaServer::CacheExpiryService.cache_expiry, race_condition_ttl: 5.minutes, force: true) do
         job_id = SecureRandom.uuid
         monitor_tests_job_id = job_id unless monitor_tests_job_id
-        run_tests if monitor_tests_job_id == job_id # avoid race conditions
+        run_tests(job_id) if monitor_tests_job_id == job_id # avoid race conditions
         scenario_run_registry_class.latest_run
       end
     end
 
     private
 
-      def run_tests
+      def run_tests(job_id)
         QaServer.config.monitor_logger.debug("(#{self.class}##{__method__}-#{job_id}) RUNNING monitoring tests")
         validate(authorities_list)
         log_results(authorities_list, status_log.to_a)

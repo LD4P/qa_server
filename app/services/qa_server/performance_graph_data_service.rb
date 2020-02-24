@@ -82,6 +82,7 @@ module QaServer
       #     23: { hour: 'NOW', retrieve_avg_ms: 12.3, graph_load_avg_ms: 2.1, normalization_avg_ms: 4.2, full_request_avg_ms: 16.5, etc. }}
       #   }
       def recalculate_last_hour(authority_name:, action:, averages:)
+        return calculate_last_24_hours(authority_name: authority_name, action: action) if averages.nil? || averages.empty?
         start_hour = QaServer::TimeService.current_time.beginning_of_hour
         records = records_by(authority_name, action, start_hour..start_hour.end_of_hour)
         averages[23] = calculate_from_records(records, BY_HOUR, performance_by_hour_label(23, start_hour))
