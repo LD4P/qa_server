@@ -1,9 +1,9 @@
 # frozen_string_literal: true
-# Generate graphs for the past 12 months using cached data.  Graphs are generated only if the cache has expired.
+# Cache the datetime_stamp of the last time the performance year graph was generated.  Calls job to generate the graph if expired.
 module QaServer
   class PerformanceYearGraphCache
     class << self
-      # Generates graphs for the past 30 days for :search, :fetch, and :all actions for each authority.
+      # Generates graphs for the 12 months for :search, :fetch, and :all actions for each authority.
       # @param force [Boolean] if true, run the tests even if the cache hasn't expired; otherwise, use cache if not expired
       def generate_graphs(force: false)
         Rails.cache.fetch(cache_key, expires_in: next_expiry, race_condition_ttl: 30.seconds, force: force) do

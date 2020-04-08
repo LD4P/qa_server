@@ -8,6 +8,5 @@ module QaServer
 
     PERFORMANCE_DATATABLE_DATA_CACHE_KEY = "QaServer--Cache--performance_datatable_data"
     PERFORMANCE_GRAPH_HOURLY_DATA_CACHE_KEY = "QaServer--CacheKeys--performance_graph_hourly_data"
-    PERFORMANCE_GRAPH_MONTH_DATA_CACHE_KEY = "QaServer--CacheKeys--performance_graph_month_data"
   end
 end
