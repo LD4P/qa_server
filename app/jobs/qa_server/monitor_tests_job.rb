@@ -10,10 +10,8 @@ module QaServer
     self.scenario_run_registry_class = QaServer::ScenarioRunRegistry
 
     def perform
-      Rails.cache.fetch("QaServer::MonitorStatusController/latest_test_run_from_cache", expires_in: QaServer::CacheExpiryService.cache_expiry, race_condition_ttl: 5.minutes, force: true) do
-        run_tests if QaServer::JobIdCache.active_job_id?(job_key: job_key, job_id: job_id, expires_in: 2.hours)
-        scenario_run_registry_class.latest_run
-      end
+      # checking active_job_id? prevents race conditions for long running jobs
+      run_tests if QaServer::JobIdCache.active_job_id?(job_key: job_key, job_id: job_id, expires_in: 2.hours)
     end
 
     private
