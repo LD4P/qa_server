@@ -1,3 +1,7 @@
+### 7.3.0 (2020-04-08)
+
+* move generation of graphs to background jobs
+
 ### 7.2.1 (2020-02-23)
 
 * fix graph fails generation when any label is empty string
