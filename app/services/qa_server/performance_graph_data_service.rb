@@ -73,7 +73,7 @@ module QaServer
       # @param authority_name [String] name of an authority
       # @param action [Symbol] :search, :fetch, or :all_actions
       # @param averages [Hash] existing data for each hour
-      # @returns [Hash] existing hourly data with the last hour updated
+      # @returns [Hash] existing day data with the last hour updated
       # @example returns
       #   { 0: { hour: '1400', stats: { retrieve_avg_ms: 12.3, graph_load_avg_ms: 2.1, normalization_avg_ms: 4.2, full_request_avg_ms: 16.5, etc. }},
       #     1: { hour: '1500', stats: { retrieve_avg_ms: 12.3, graph_load_avg_ms: 2.1, normalization_avg_ms: 4.2, full_request_avg_ms: 16.5, etc. }},

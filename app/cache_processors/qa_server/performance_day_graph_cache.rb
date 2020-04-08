@@ -2,7 +2,7 @@
 # Generate graphs for the past 24 hours using cached data.  The last hour of data is always calculated and all graphs
 # for are generated.
 module QaServer
-  class PerformanceHourlyGraphCache
+  class PerformanceDayGraphCache
     class_attribute :authority_list_class, :graph_data_service, :graphing_service
     self.authority_list_class = QaServer::AuthorityListerService
     self.graph_data_service = QaServer::PerformanceGraphDataService
@@ -15,7 +15,7 @@ module QaServer
       # Generates graphs for the past 24 hours for :search, :fetch, and :all actions for each authority.
       # @param force [Boolean] if true, run the tests even if the cache hasn't expired; otherwise, use cache if not expired
       def generate_graphs(force: false)
-        QaServer.config.monitor_logger.debug("(QaServer::PerformanceHourlyGraphCache) - GENERATING hourly performance graphs (force: #{force})")
+        QaServer.config.monitor_logger.debug("(QaServer::PerformanceDayGraphCache) - GENERATING performance day graphs (force: #{force})")
         QaServer.config.performance_cache.write_all
         generate_graphs_for_authorities(force: force)
       end
@@ -40,7 +40,7 @@ module QaServer
                                    expires_in: QaServer::TimeService.current_time.end_of_hour - QaServer::TimeService.current_time,
                                    race_condition_ttl: 1.hour, force: force) do
             data = graph_data_service.calculate_last_24_hours(authority_name: authority_name, action: action)
-            graphing_service.generate_hourly_graph(authority_name: authority_name, action: action, data: data)
+            graphing_service.generate_day_graph(authority_name: authority_name, action: action, data: data)
             graph_created = true
             data
           end
@@ -52,13 +52,13 @@ module QaServer
                             expires_in: QaServer::TimeService.current_time.end_of_hour - QaServer::TimeService.current_time,
                             race_condition_ttl: 1.hour, force: true) do
             data = graph_data_service.recalculate_last_hour(authority_name: authority_name, action: action, averages: data)
-            graphing_service.generate_hourly_graph(authority_name: authority_name, action: action, data: data)
+            graphing_service.generate_day_graph(authority_name: authority_name, action: action, data: data)
             data
           end
         end
 
         def cache_key_for_authority_action(authority_name:, action:)
-          "#{PERFORMANCE_GRAPH_HOURLY_DATA_CACHE_KEY}--#{authority_name}--#{action}"
+          "#{PERFORMANCE_GRAPH_DAY_DATA_CACHE_KEY}--#{authority_name}--#{action}"
         end
     end
   end

@@ -7,6 +7,6 @@ module QaServer
     SCENARIO_RUN_HISTORY_DATA_CACHE_KEY = "QaServer--CacheKeys--scenario_run_history_data"
 
     PERFORMANCE_DATATABLE_DATA_CACHE_KEY = "QaServer--Cache--performance_datatable_data"
-    PERFORMANCE_GRAPH_HOURLY_DATA_CACHE_KEY = "QaServer--CacheKeys--performance_graph_hourly_data"
+    PERFORMANCE_GRAPH_DAY_DATA_CACHE_KEY = "QaServer--CacheKeys--performance_graph_day_data"
   end
 end
