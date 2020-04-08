@@ -1,5 +1,5 @@
 # frozen_string_literal: true
-# Job to run monitoring tests
+# Job to generate the performance year graph covering the last 12 months.
 module QaServer
   class PerformanceYearGraphJob < ApplicationJob
     include QaServer::PerformanceHistoryDataKeys

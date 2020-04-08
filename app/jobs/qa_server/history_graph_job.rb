@@ -1,5 +1,5 @@
 # frozen_string_literal: true
-# Job to run monitoring tests
+# Job to generate the graph of historical test runs per authority.
 module QaServer
   class HistoryGraphJob < ApplicationJob
     queue_as :default
