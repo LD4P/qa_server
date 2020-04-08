@@ -31,7 +31,7 @@ module QaServer
       # @param action [Symbol] action performed by the request (e.g. :search, :fetch, :all_actions)
       # @param data [Hash] data to use to generate the graph
       # @see QaServer::PerformanceGraphDataService.calculate_last_12_months
-      def generate_monthly_graph(authority_name: ALL_AUTH, action:, data:)
+      def generate_year_graph(authority_name: ALL_AUTH, action:, data:)
         gruff_data = rework_performance_data_for_gruff(data, BY_MONTH)
         create_gruff_graph(gruff_data,
                            performance_graph_full_path(authority_name, action, FOR_YEAR),

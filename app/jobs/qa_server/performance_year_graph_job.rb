@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 # Job to run monitoring tests
 module QaServer
-  class PerformanceMonthlyGraphJob < ApplicationJob
+  class PerformanceYearGraphJob < ApplicationJob
     include QaServer::PerformanceHistoryDataKeys
 
     queue_as :default
@@ -19,9 +19,11 @@ module QaServer
     private
 
       def generate_graphs_for_authorities
+        QaServer.config.monitor_logger.debug("(#{self.class}##{__method__}-#{job_id}) - GENERATING performance year graph")
         auths = authority_list_class.authorities_list
         generate_graphs_for_authority(authority_name: ALL_AUTH) # generates graph for all authorities
         auths.each { |authname| generate_graphs_for_authority(authority_name: authname) }
+        QaServer.config.monitor_logger.debug("(#{self.class}##{__method__}-#{job_id}) COMPLETED performance year graph generation")
       end
 
       def generate_graphs_for_authority(authority_name:)
@@ -36,17 +38,17 @@ module QaServer
         Rails.cache.fetch(cache_key_for_authority_action(authority_name: authority_name, action: action),
                           expires_in: next_expiry, race_condition_ttl: 1.hour, force: true) do
           data = graph_data_service.calculate_last_12_months(authority_name: authority_name, action: action)
-          graphing_service.generate_monthly_graph(authority_name: authority_name, action: action, data: data)
+          graphing_service.generate_year_graph(authority_name: authority_name, action: action, data: data)
           data
         end
       end
 
       def job_key
-        "QaServer::PerformanceMonthlyGraphJob--job_id"
+        "QaServer::PerformanceYearGraphJob--job_id"
       end
 
       def cache_key_for_authority_action(authority_name:, action:)
-        "QaServer::PerformanceMonthlyGraphJob--data--#{authority_name}--#{action}"
+        "QaServer::PerformanceYearGraphJob--data--#{authority_name}--#{action}"
       end
   end
 end
