@@ -7,7 +7,7 @@ module QaServer
 
       # Run connection tests
       def run_tests(force: false)
-        Rails.cache.fetch(cache_key_for_running_tests, expires_in: next_expiry, race_condition_ttl: 30.seconds, force: force) do
+        Rails.cache.fetch(cache_key, expires_in: next_expiry, race_condition_ttl: 30.seconds, force: force) do
           QaServer.config.monitor_logger.debug("(QaServer::ScenarioRunCache) - KICKING OFF TEST RUN (force: #{force})")
           QaServer::MonitorTestsJob.perform_later
           "Test run initiated at #{QaServer::TimeService.current_time}"
@@ -16,8 +16,8 @@ module QaServer
 
       private
 
-        def cache_key_for_running_tests
-          SCENARIO_RUN_TEST_DATA_CACHE_KEY
+        def cache_key
+          "QaServer::ScenarioRunCache.run_tests--latest_run_initiated"
         end
 
         def next_expiry
