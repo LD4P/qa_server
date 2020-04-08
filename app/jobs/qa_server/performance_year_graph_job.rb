@@ -19,11 +19,11 @@ module QaServer
     private
 
       def generate_graphs_for_authorities
-        QaServer.config.monitor_logger.debug("(#{self.class}##{__method__}-#{job_id}) - GENERATING performance year graph")
+        QaServer.config.monitor_logger.debug("(#{self.class}-#{job_id}) - GENERATING performance year graph")
         auths = authority_list_class.authorities_list
         generate_graphs_for_authority(authority_name: ALL_AUTH) # generates graph for all authorities
         auths.each { |authname| generate_graphs_for_authority(authority_name: authname) }
-        QaServer.config.monitor_logger.debug("(#{self.class}##{__method__}-#{job_id}) COMPLETED performance year graph generation")
+        QaServer.config.monitor_logger.debug("(#{self.class}-#{job_id}) COMPLETED performance year graph generation")
       end
 
       def generate_graphs_for_authority(authority_name:)
@@ -33,22 +33,13 @@ module QaServer
       end
 
       def generate_12_month_graph(authority_name:, action:)
-        # real expiration or force caught by cache_expired?  So if we are here, either the cache has expired
-        # or force was requested.  We still expire the cache and use ttl to catch race conditions.
-        Rails.cache.fetch(cache_key_for_authority_action(authority_name: authority_name, action: action),
-                          expires_in: next_expiry, race_condition_ttl: 1.hour, force: true) do
-          data = graph_data_service.calculate_last_12_months(authority_name: authority_name, action: action)
-          graphing_service.generate_year_graph(authority_name: authority_name, action: action, data: data)
-          data
-        end
+        data = graph_data_service.calculate_last_12_months(authority_name: authority_name, action: action)
+        graphing_service.generate_year_graph(authority_name: authority_name, action: action, data: data)
+        data
       end
 
       def job_key
         "QaServer::PerformanceYearGraphJob--job_id"
-      end
-
-      def cache_key_for_authority_action(authority_name:, action:)
-        "QaServer::PerformanceYearGraphJob--data--#{authority_name}--#{action}"
       end
   end
 end
