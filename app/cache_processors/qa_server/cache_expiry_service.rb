@@ -8,6 +8,11 @@ module QaServer
         cache_expires_at - QaServer::TimeService.current_time
       end
 
+      def end_of_hour_expiry
+        ct = QaServer::TimeService.current_time
+        ct.end_of_hour - ct
+      end
+
       # @param key [String] cache key
       # @param force [Boolean] if true, forces cache to regenerate by returning true; otherwise, uses cache expiry to determine whether cache has expired
       # @return [Boolean] true if cache has expired or is being forced to expire

@@ -1,7 +1,7 @@
 # frozen_string_literal: true
-# Job to generate the performance year graph covering the last 12 months.
+# Job to generate the performance day graph covering the last 24 hours.
 module QaServer
-  class PerformanceYearGraphJob < ApplicationJob
+  class PerformanceDayGraphJob < ApplicationJob
     include QaServer::PerformanceHistoryDataKeys
 
     queue_as :default
@@ -19,27 +19,27 @@ module QaServer
     private
 
       def generate_graphs_for_authorities
-        QaServer.config.monitor_logger.debug("(#{self.class}-#{job_id}) - GENERATING performance year graph")
+        QaServer.config.monitor_logger.debug("(#{self.class}-#{job_id}) - GENERATING performance day graph")
         auths = authority_list_class.authorities_list
         generate_graphs_for_authority(authority_name: ALL_AUTH) # generates graph for all authorities
         auths.each { |authname| generate_graphs_for_authority(authority_name: authname) }
-        QaServer.config.monitor_logger.debug("(#{self.class}-#{job_id}) COMPLETED performance year graph generation")
+        QaServer.config.monitor_logger.debug("(#{self.class}-#{job_id}) COMPLETED performance day graph generation")
         QaServer::JobIdCache.reset_job_id(job_key: job_key)
       end
 
       def generate_graphs_for_authority(authority_name:)
         [SEARCH, FETCH, ALL_ACTIONS].each_with_object({}) do |action, hash|
-          hash[action] = generate_12_month_graph(authority_name: authority_name, action: action)
+          hash[action] = generate_24_hour_graph(authority_name: authority_name, action: action)
         end
       end
 
-      def generate_12_month_graph(authority_name:, action:)
-        data = graph_data_service.calculate_last_12_months(authority_name: authority_name, action: action)
-        graphing_service.generate_year_graph(authority_name: authority_name, action: action, data: data)
+      def generate_24_hour_graph(authority_name:, action:)
+        data = graph_data_service.calculate_last_24_hours(authority_name: authority_name, action: action)
+        graphing_service.generate_day_graph(authority_name: authority_name, action: action, data: data)
       end
 
       def job_key
-        "QaServer::PerformanceYearGraphJob--job_id"
+        "QaServer::PerformanceDayGraphJob--job_id"
       end
   end
 end
