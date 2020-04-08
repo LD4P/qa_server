@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 # Generate graphs for the past 30 days using cached data.  Graphs are generated only if the cache has expired.
 module QaServer
-  class PerformanceDailyGraphCache
+  class PerformanceMonthGraphCache
     class_attribute :authority_list_class, :graph_data_service, :graphing_service
     self.authority_list_class = QaServer::AuthorityListerService
     self.graph_data_service = QaServer::PerformanceGraphDataService
@@ -15,7 +15,7 @@ module QaServer
       # @param force [Boolean] if true, run the tests even if the cache hasn't expired; otherwise, use cache if not expired
       def generate_graphs(force: false)
         return unless QaServer::CacheExpiryService.cache_expired?(key: cache_key_for_force, force: force, next_expiry: next_expiry)
-        QaServer.config.monitor_logger.debug("(QaServer::PerformanceDailyGraphCache) - GENERATING daily performance graphs (force: #{force})")
+        QaServer.config.monitor_logger.debug("(QaServer::PerformanceMonthGraphCache) - GENERATING performance month graphs (force: #{force})")
         generate_graphs_for_authorities
       end
 
@@ -39,17 +39,17 @@ module QaServer
           Rails.cache.fetch(cache_key_for_authority_action(authority_name: authority_name, action: action),
                             expires_in: next_expiry, race_condition_ttl: 1.hour, force: true) do
             data = graph_data_service.calculate_last_30_days(authority_name: authority_name, action: action)
-            graphing_service.generate_daily_graph(authority_name: authority_name, action: action, data: data)
+            graphing_service.generate_month_graph(authority_name: authority_name, action: action, data: data)
             data
           end
         end
 
         def cache_key_for_authority_action(authority_name:, action:)
-          "#{PERFORMANCE_GRAPH_DAILY_DATA_CACHE_KEY}--#{authority_name}--#{action}"
+          "#{PERFORMANCE_GRAPH_MONTH_DATA_CACHE_KEY}--#{authority_name}--#{action}"
         end
 
         def cache_key_for_force
-          "#{PERFORMANCE_GRAPH_DAILY_DATA_CACHE_KEY}--force"
+          "#{PERFORMANCE_GRAPH_MONTH_DATA_CACHE_KEY}--force"
         end
 
         def next_expiry

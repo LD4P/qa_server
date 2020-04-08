@@ -72,7 +72,7 @@ module QaServer
       def update_performance_graphs
         return unless QaServer.config.display_performance_graph?
         QaServer::PerformanceHourlyGraphCache.generate_graphs(force: refresh_performance_graphs?)
-        QaServer::PerformanceDailyGraphCache.generate_graphs(force: refresh_performance_graphs?)
+        QaServer::PerformanceMonthGraphCache.generate_graphs(force: refresh_performance_graphs?)
         QaServer::PerformanceYearGraphCache.generate_graphs(force: refresh_performance_graphs?)
       end
 
