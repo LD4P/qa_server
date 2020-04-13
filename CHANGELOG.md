@@ -1,3 +1,7 @@
+### 7.4.0 (2020-04-13)
+
+* add size and complexity performance statistics (not auto-generated)
+
 ### 7.3.0 (2020-04-08)
 
 * move generation of graphs to background jobs
