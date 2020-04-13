@@ -38,5 +38,13 @@ module QaServer
     HIGH_NORM = :high_normalization_ms
     HIGH_ACTN = :high_action_request_ms
     HIGH_FULL = :high_full_request_ms
+
+    SRC_BYTES = :data_raw_bytes_from_source
+    BPMS_RETR = :retrieve_bytes_per_ms
+    MSPB_RETR = :retrieve_ms_per_byte
+    BPMS_GRPH = :load_graph_bytes_per_ms
+    MSPB_GRPH = :load_graph_ms_per_byte
+    BPMS_NORM = :normalization_bytes_per_ms
+    MSPB_NORM = :normalization_ms_per_byte
   end
 end
