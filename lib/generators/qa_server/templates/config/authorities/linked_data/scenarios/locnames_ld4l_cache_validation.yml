@@ -10,9 +10,6 @@ search:
     replacements:
       maxRecords: '10'
   -
-    query: 'mark twain'
-    subauth: organization
-  -
     query: Cayuga
   -
     query: 'Camden NJ'
