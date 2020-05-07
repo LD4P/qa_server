@@ -4,6 +4,13 @@ authority:
 search:
   -
     query: 'Barack Obama'
+  -  
+    query: Volleyball
+    position: 5
+    subject_uri: "http://dbpedia.org/resource/Volleyball"
+    replacements:
+      maxRecords: '10'
 term:
   -
     identifier: 'http://dbpedia.org/resource/Barack_Obama'
+

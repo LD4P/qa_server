@@ -3,8 +3,19 @@ authority:
   service: ld4l_cache
   context: true
 search:
+#  -
+#    query: malignant
   -
-    query: malignant
+    query: Malignant Hyperthermia
+    subauth: subject
+  -
+    query: Spain
+    subauth: subject
+    result_size: 75
+  -
+    query: Address
+    subauth: publication_type
+    result_size: 80
 term:
   -
     identifier: 'http://id.nlm.nih.gov/mesh/T727346'

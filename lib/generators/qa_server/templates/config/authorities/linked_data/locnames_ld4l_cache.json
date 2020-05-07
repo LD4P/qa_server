@@ -1,5 +1,6 @@
 {
-  "QA_CONFIG_VERSION": "2.1",
+  "QA_CONFIG_VERSION": "2.2",
+  "service_uri": "http://ld4l.org/ld4l_services/cache",
   "prefixes": {
     "loc":     "http://id.loc.gov/vocabulary/identifiers/",
     "madsrdf": "http://www.loc.gov/mads/rdf/v1#",
@@ -26,9 +27,9 @@
     },
     "term_id": "URI",
     "results": {
-      "id_ldpath":       "loc:lccn | madsrdf:code ::xsd:string",
-      "label_ldpath":    "skos:prefLabel ::xsd:string",
-      "altlabel_ldpath": "skos:altLabel ::xsd:string",
+      "id_ldpath":       "loc:lccn ::xsd:string",
+      "label_ldpath":    "madsrdf:authoritativeLabel ::xsd:string",
+      "altlabel_ldpath": "madsrdf:hasVariant/madsrdf:variantLabel ::xsd:string",
       "sameas_ldpath":   "skos:exactMatch ::xsd:anyURI"
     }
   },
@@ -36,7 +37,7 @@
     "url": {
       "@context": "http://www.w3.org/ns/hydra/context.jsonld",
       "@type": "IriTemplate",
-      "template": "http://services.ld4l.org/ld4l_services/loc_name_batch.jsp?{?query}&{?maxRecords}&{?entity}&{?lang}",
+      "template": "http://services.ld4l.org/ld4l_services/loc_name_batch.jsp?{?query}&{?maxRecords}&{?startRecord}&{?entity}&{?lang}",
       "variableRepresentation": "BasicRepresentation",
       "mapping": [
         {
@@ -62,6 +63,13 @@
         },
         {
           "@type": "IriTemplateMapping",
+          "variable": "startRecord",
+          "property": "hydra:freetextQuery",
+          "required": false,
+          "default": "1"
+        },
+        {
+          "@type": "IriTemplateMapping",
           "variable": "lang",
           "property": "hydra:freetextQuery",
           "required": false,
@@ -71,11 +79,14 @@
     },
     "qa_replacement_patterns": {
       "query":   "query",
-      "subauth": "entity"
+      "subauth": "entity",
+      "start_record": "startRecord",
+      "requested_records": "maxRecords"
     },
+    "total_count_ldpath": "vivo:count",
     "results": {
-      "id_ldpath":    "loc:lccn | madsrdf:code ::xsd:string",
-      "label_ldpath": "skos:prefLabel ::xsd:string",
+      "id_ldpath":    "loc:lccn ::xsd:string",
+      "label_ldpath": "madsrdf:authoritativeLabel ::xsd:string",
       "sort_ldpath":  "vivo:rank ::xsd:string"
     },
     "context": {
@@ -83,81 +94,83 @@
         "dates": {
           "group_label_i18n": "qa.linked_data.authority.locnames_ld4l_cache.dates",
           "group_label_default": "Dates"
+        },
+        "places": {
+          "group_label_i18n": "qa.linked_data.authority.locnames_ld4l_cache.places",
+          "group_label_default": "Places"
         }
       },
       "properties": [
         {
-          "property_label_i18n": "qa.linked_data.authority.locnames_ld4l_cache.authoritative_label",
-          "property_label_default": "Authoritative Label",
+          "property_label_default": "Preferred label",
+          "property_label_i18n": "qa.linked_data.authority.locnames_ld4l_cache.type_label",
           "ldpath": "madsrdf:authoritativeLabel :: xsd:string",
           "selectable": true,
           "drillable": false
         },
         {
+          "property_label_default": "Type",
+          "property_label_i18n": "qa.linked_data.authority.locnames_ld4l_cache.type_label",
+          "ldpath": "rdf:type :: xsd:string",
+          "selectable": false,
+          "drillable": false
+        },
+        {
+          "property_label_default": "Variant label",
           "property_label_i18n": "qa.linked_data.authority.locnames_ld4l_cache.variant_label",
-          "property_label_default": "Variant Label",
           "ldpath": "madsrdf:hasVariant/madsrdf:variantLabel :: xsd:string",
           "selectable": false,
           "drillable": false
         },
         {
-          "property_label_i18n": "qa.linked_data.authority.locnames_ld4l_cache.field_of_activity",
-          "property_label_default": "Field of Activity",
-          "ldpath": "(madsrdf:identifiesRWO/madsrdf:fieldOfActivity/rdfs:label) | (madsrdf:identifiesRWO/madsrdf:fieldOfActivity/madsrdf:authoritativeLabel) :: xsd:string",
+          "property_label_default": "Citation note",
+          "property_label_i18n": "qa.linked_data.authority.locnames_ld4l_cache.citation_note",
+          "ldpath": "madsrdf:hasSource/madsrdf:citation-note :: xsd:string",
           "selectable": false,
           "drillable": false
         },
         {
-          "property_label_i18n": "qa.linked_data.authority.locnames_ld4l_cache.occupation",
-          "property_label_default": "Occupation",
-          "ldpath": "madsrdf:identifiesRWO/madsrdf:occupation/madsrdf:authoritativeLabel :: xsd:string",
+          "property_label_default": "Citation source",
+          "property_label_i18n": "qa.linked_data.authority.locnames_ld4l_cache.citation_source",
+          "ldpath": "madsrdf:hasSource/madsrdf:citation-source :: xsd:string",
           "selectable": false,
           "drillable": false
         },
         {
-          "group_id": "dates",
-          "property_label_default": "Birth: ",
-          "property_label_i18n": "qa.linked_data.authority.locnames_ld4l_cache.birth_date",
-          "ldpath": "madsrdf:identifiesRWO/madsrdf:birthDate/rdfs:label :: xsd:string",
+          "property_label_default": "Citation status",
+          "property_label_i18n": "qa.linked_data.authority.locnames_ld4l_cache.citation_status",
+          "ldpath": "madsrdf:hasSource/madsrdf:citation-status :: xsd:string",
           "selectable": false,
           "drillable": false
         },
         {
-          "group_id": "dates",
-          "property_label_default": "Death: ",
-          "property_label_i18n": "qa.linked_data.authority.locnames_ld4l_cache.death_date",
-          "ldpath": "madsrdf:identifiesRWO/madsrdf:deathDate/rdfs:label :: xsd:string",
+          "property_label_default": "Earlier established form",
+          "property_label_i18n": "qa.linked_data.authority.locnames_ld4l_cache.ealier_established_form",
+          "ldpath": "madsrdf:hasEarlierEstablishedForm/madsrdf:authoritativeLabel :: xsd:string",
           "selectable": false,
-          "drillable": false
+          "drillable": false,
+          "subauth": ["conference"]
         },
         {
-          "group_id": "dates",
-          "property_label_default": "Start: ",
-          "property_label_i18n": "qa.linked_data.authority.locnames_ld4l_cache.activity_state_date",
-          "ldpath": "madsrdf:identifiesRWO/madsrdf:activityStartDate/rdfs:label :: xsd:string",
+          "property_label_default": "Later established form",
+          "property_label_i18n": "qa.linked_data.authority.locnames_ld4l_cache.later_established_form",
+          "ldpath": "madsrdf:hasLaterEstablishedForm/madsrdf:authoritativeLabel :: xsd:string",
           "selectable": false,
-          "drillable": false
+          "drillable": false,
+          "subauth": ["conference"]
         },
         {
-          "group_id": "dates",
-          "property_label_default": "End: ",
-          "property_label_i18n": "qa.linked_data.authority.locnames_ld4l_cache.activity_end_date",
-          "ldpath": "madsrdf:identifiesRWO/madsrdf:activityEndDate/rdfs:label :: xsd:string",
+          "property_label_default": "Editorial note",
+          "property_label_i18n": "qa.linked_data.authority.locnames_ld4l_cache.editorial_note",
+          "ldpath": "madsrdf:editorialNote :: xsd:string",
           "selectable": false,
           "drillable": false
         }
       ]
     },
     "subauthorities": {
-      "person":         "Person",
-      "personal_name":  "Person",
-      "organization":   "Organization",
-      "corporate_name": "Organization",
-      "place":          "Place",
-      "intangible":     "Intangible",
-      "geocoordinates": "GeoCoordinates",
-      "work":           "Work",
-      "title":          "Work"
+      "geographic":     "Geographic",
+      "conference":     "ConferenceName"
     }
   }
 }

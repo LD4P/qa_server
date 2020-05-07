@@ -1,0 +1,31 @@
+  <% if @presenter.history? && @presenter.display_history_details?%>
+      <div id="availability-history" class="status-section">
+        <h3><%= t('qa_server.monitor_status.history.title') %></h3>
+        <p class="status-update-dtstamp"><%= t('qa_server.monitor_status.history.range', from: @presenter.history_start, to: @presenter.history_end) %></p>
+        <% if @presenter.display_historical_graph? %>
+          <%= image_tag(@presenter.historical_graph, alt: 'History Graph Unavailable') %>
+        <% end %>
+
+        <% if @presenter.display_historical_datatable? %>
+          <table class="status">
+            <tr>
+              <th><%= t('qa_server.monitor_status.history.authority') %></th>
+              <th><%= t('qa_server.monitor_status.history.days_tested') %></th>
+              <th><%= t('qa_server.monitor_status.history.days_passing') %></th>
+              <th><%= t('qa_server.monitor_status.history.days_failing') %></th>
+              <th><%= t('qa_server.monitor_status.history.percent_failing') %></th>
+            </tr>
+            <% @presenter.historical_summary.each do |entry| %>
+                <tr>
+                  <td><%= @presenter.historical_data_authority_name(entry) %></td>
+                  <td class="status-neutral"><%= @presenter.days_authority_tested(entry) %></td>
+                  <td class="<%= @presenter.passing_style_class(entry) %>"><%= @presenter.days_authority_passing(entry) %></td>
+                  <td class="<%= @presenter.failure_style_class(entry) %>"><%= @presenter.days_authority_failing(entry) %></td>
+                  <td class="<%= @presenter.failure_style_class(entry) %>"><%= @presenter.percent_authority_failing_str(entry) %></td>
+                </tr>
+            <% end %>
+          </table>
+        <% end %>
+      </div>
+  <% end %>
+
