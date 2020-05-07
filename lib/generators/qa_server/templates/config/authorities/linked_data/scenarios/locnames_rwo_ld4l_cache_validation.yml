@@ -22,6 +22,22 @@ search:
     replacements:
       maxRecords: '10'
       context: true
+  -
+    query: 'Twain, Mark, 183'
+    subauth: person
+    position: 1
+    subject_uri: "http://id.loc.gov/rwo/agents/n79021164"
+    replacements:
+      maxRecords: '10'
+      context: true
+  -
+    query: 'Twain, Mark 183'
+    subauth: person
+    position: 5
+    subject_uri: "http://id.loc.gov/rwo/agents/n79021164"
+    replacements:
+      maxRecords: '10'
+      context: true
    -
     query: 'Camden, William'
     position: 10
