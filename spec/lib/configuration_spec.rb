@@ -232,14 +232,14 @@ RSpec.describe QaServer::Configuration do
     end
   end
 
-  describe '#suppress_logging_performance_datails?' do
+  describe '#suppress_logging_performance_details?' do
     it 'return default as false' do
-      expect(config.suppress_logging_performance_datails?).to eq false
+      expect(config.suppress_logging_performance_details?).to eq false
     end
 
     it 'returns set value' do
-      config.suppress_logging_performance_datails = true
-      expect(config.suppress_logging_performance_datails?).to eq true
+      config.suppress_logging_performance_details = true
+      expect(config.suppress_logging_performance_details?).to eq true
     end
   end
 

@@ -59,9 +59,21 @@ module QaServer
       end
 
       def log(id:)
-        return if QaServer.config.suppress_logging_performance_datails?
+        return if QaServer.config.suppress_logging_performance_details?
         Rails.logger.debug("*** performance data for id: #{id} ***")
         Rails.logger.debug(@cache[id].to_yaml)
+        write_to_performance_tracker(id: id)
+      end
+
+      def write_to_performance_tracker(id:)
+        data = @cache[id]
+        QaServer.config.performance_tracker.write "#{data[:authority]},"
+        QaServer.config.performance_tracker.write "#{data[:action]},"
+        QaServer.config.performance_tracker.write "#{format('%d', data[:size_bytes])},"
+        QaServer.config.performance_tracker.write "#{format('%.6f', data[:retrieve_time_ms])},"
+        QaServer.config.performance_tracker.write "#{format('%.6f', data[:graph_load_time_ms])},"
+        QaServer.config.performance_tracker.write "#{format('%.6f', data[:normalization_time_ms])},"
+        QaServer.config.performance_tracker.puts "#{format('%.6f', data[:action_time_ms])}"
       end
 
       def incomplete?(entry)

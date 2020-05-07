@@ -81,7 +81,7 @@ QaServer.config do |config|
   # Performance data is gathered on every incoming query.  Basic stats are logged from QA.  Full stats are logged
   # by QaServer and can eat up logging realestate.  To suppress the logging of details, set this config to true.
   # @param [Boolean] do not log performance data details when true (defaults to false for backward compatibitily)
-  # config.suppress_logging_performance_datails = false
+  # config.suppress_logging_performance_details = false
 
   # Maximum amount of memory the performance cache can occupy before it is written to the database.
   # @param [Integer] maximum size of performance cache before flushing

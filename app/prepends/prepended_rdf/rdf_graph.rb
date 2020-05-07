@@ -23,7 +23,6 @@ module PrependedRdf::RdfGraph
 
     end_time_s = QaServer::TimeService.current_time_s
     performance_udpates[:retrieve_time_ms] = (end_time_s - start_time_s) * 1000
-    QaServer.config.performance_tracker.write "#{format('%.6f', end_time_s - start_time_s)}, " # read data
 
     start_time_s = QaServer::TimeService.current_time_s
 
@@ -43,7 +42,6 @@ module PrependedRdf::RdfGraph
     end_time_s = QaServer::TimeService.current_time_s
     performance_udpates[:graph_load_time_ms] = (end_time_s - start_time_s) * 1000
     QaServer.config.performance_cache.update(id: phid, updates: performance_udpates)
-    QaServer.config.performance_tracker.write "#{format('%.6f', end_time_s - start_time_s)}, " # load graph
   end
 
   private
