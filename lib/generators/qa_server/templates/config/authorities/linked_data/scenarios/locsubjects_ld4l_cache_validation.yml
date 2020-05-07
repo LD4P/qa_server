@@ -3,8 +3,14 @@ authority:
   service: ld4l_cache
   context: true
 search:
+  #------------------
+  # Connection tests
+  #------------------
   -
     query: science
+  #------------------
+  #  Accuracy tests
+  #------------------
   -
     query: Guitar music (Heavy metal) # example of LCSH with parentheses
     position: 10

@@ -2,9 +2,15 @@
 authority:
   service: ld4l_cache
 search:
+  #------------------
+  # Connection tests
+  #------------------
   -
     query: 'Barack Obama'
-  -  
+  #------------------
+  #  Accuracy tests
+  #------------------
+  -
     query: Volleyball
     position: 5
     subject_uri: "http://dbpedia.org/resource/Volleyball"

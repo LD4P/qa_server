@@ -3,6 +3,9 @@ authority:
   service: ld4l_cache
   context: true
 search:
+  #------------------
+  # Connection tests
+  #------------------
   -
     query: full
     subauth: aspect_ratio
@@ -253,3 +256,7 @@ search:
     query: laser
     subauth: video_format
     result_size: 130
+  #------------------
+  #  Accuracy tests
+  #------------------
+  # TBD

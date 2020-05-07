@@ -3,6 +3,9 @@ authority:
   service: ld4l_cache
   context: true
 search:
+  #------------------
+  # Connection tests
+  #------------------
   -
     query: animation
   -
@@ -13,6 +16,9 @@ search:
   -
     query: Basketball television programs
     subauth: deprecated
+  #------------------
+  #  Accuracy tests
+  #------------------
   -
     query: Preliminary documents (Treaties)
     position: 10
