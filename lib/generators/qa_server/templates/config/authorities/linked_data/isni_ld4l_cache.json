@@ -1,0 +1,90 @@
+{
+  "QA_CONFIG_VERSION": "2.2",
+  "service_uri": "http://ld4l.org/ld4l_services/cache",
+  "prefixes": {
+    "schema": "http://schema.org/",
+    "vivo": "http://vivoweb.org/ontology/core#"
+  },
+  "term": {},
+  "search": {
+    "url": {
+      "@context": "http://www.w3.org/ns/hydra/context.jsonld",
+      "@type": "IriTemplate",
+      "template": "http://services.ld4l.org/ld4l_services/isni_batch.jsp?{?query}&{?maxRecords}&{?startRecord}&{?lang}",
+      "variableRepresentation": "BasicRepresentation",
+      "mapping": [
+        {
+          "@type": "IriTemplateMapping",
+          "variable": "query",
+          "property": "hydra:freetextQuery",
+          "required": true,
+          "encode": true
+        },
+        {
+          "@type": "IriTemplateMapping",
+          "variable": "maxRecords",
+          "property": "hydra:freetextQuery",
+          "required": false,
+          "default": "20"
+        },
+        {
+          "@type": "IriTemplateMapping",
+          "variable": "startRecord",
+          "property": "hydra:freetextQuery",
+          "required": false,
+          "default": "1"
+        },
+        {
+          "@type": "IriTemplateMapping",
+          "variable": "lang",
+          "property": "hydra:freetextQuery",
+          "required": false,
+          "default": "en"
+        }
+      ]
+    },
+    "qa_replacement_patterns": {
+      "query":   "query",
+      "start_record": "startRecord",
+      "requested_records": "maxRecords"
+    },
+    "total_count_ldpath": "vivo:count",
+    "results": {
+      "label_ldpath": "foaf:name | schema:name | skos:altLabel | schema:alternateName ::xsd:string",
+      "sort_ldpath":  "vivo:rank ::xsd:string"
+    },
+    "context": {
+      "properties": [
+        {
+          "property_label_i18n": "qa.linked_data.authority.isni_ld4l_cache.name",
+          "property_label_default": "Name",
+          "ldpath": "foaf:name | schema:name | skos:altLabel | schema:alternateName :: xsd:string",
+          "selectable": true,
+          "drillable": false
+        },
+        {
+          "property_label_i18n": "qa.linked_data.authority.isni_ld4l_cache.type",
+          "property_label_default": "Type",
+          "ldpath": "rdf:type :: xsd:string",
+          "selectable": false,
+          "drillable": false
+        },
+        {
+          "property_label_i18n": "qa.linked_data.authority.isni_ld4l_cache.isni",
+          "property_label_default": "ISNI",
+          "ldpath": "schema:identifier/schema:value :: xsd:string",
+          "selectable": false,
+          "drillable": false
+        },
+        {
+          "property_label_i18n": "qa.linked_data.authority.isni_ld4l_cache.isni_label",
+          "property_label_default": "ISNI Label",
+          "ldpath": "rdfs:label :: xsd:string",
+          "selectable": false,
+          "drillable": false
+        }
+      ]
+    }
+  }
+}
+
