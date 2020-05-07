@@ -4,6 +4,12 @@ authority:
   context: true
 search:
   -
+    query: Boston Mass
+    position: 3
+    subject_uri: "http://id.loc.gov/authorities/names/n79045553"
+    replacements:
+      maxRecords: '10'
+  -
     query: Cayuga
   -
     query: Tweedy, Jeff
