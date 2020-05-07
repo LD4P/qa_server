@@ -7,10 +7,16 @@ search:
     query: science
   -
     query: Guitar music (Heavy metal) # example of LCSH with parentheses
-      position: 10
-      subject_uri: "http://id.loc.gov/authorities/subjects/sh85059850"
-      replacements:
-        maxRecords: '20'
+    position: 10
+    subject_uri: "http://id.loc.gov/authorities/subjects/sh85059850"
+    replacements:
+      maxRecords: '20'
+  -
+    query: Cooking with bacon
+    position: 7
+    subject_uri: "http://id.loc.gov/authorities/subjects/sh85031944"
+    replacements:
+      maxRecords: '20'
 term:
   -
     identifier: 'http://id.loc.gov/authorities/subjects/sh2003008312'
