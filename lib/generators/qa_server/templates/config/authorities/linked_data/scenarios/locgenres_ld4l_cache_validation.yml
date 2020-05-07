@@ -20,6 +20,12 @@ search:
     replacements:
       maxRecords: '20'
   -
+    query: maps 
+    position: 3
+    subject_uri: "http://id.loc.gov/authorities/genreForms/gf2011026387"
+    replacements:
+      maxRecords: '10'
+  -
     query: Loose-leafs
     position: 10
     subject_uri: "http://id.loc.gov/authorities/genreForms/gf2011026373"
