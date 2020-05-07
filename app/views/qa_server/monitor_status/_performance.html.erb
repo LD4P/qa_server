@@ -1,0 +1,166 @@
+<% if @presenter.display_performance? && @presenter.performance_data? %>
+    <div id="performance-data" class="status-section">
+      <h3><%= t('qa_server.monitor_status.performance.title') %></h3>
+
+  <% if @presenter.display_performance_graph? %>
+      <script>
+        function switch_performance_view(base_id, time_period, action) {
+          document.getElementById(base_id+'<%= @presenter.performance_graph_data_section_id(action: :all_actions, time_period: :day) %>').className = 'performance-data-section-hidden';
+          document.getElementById(base_id+'<%= @presenter.performance_graph_data_section_id(action: :all_actions, time_period: :month) %>').className = 'performance-data-section-hidden';
+          document.getElementById(base_id+'<%= @presenter.performance_graph_data_section_id(action: :all_actions, time_period: :year) %>').className = 'performance-data-section-hidden';
+          document.getElementById(base_id+'<%= @presenter.performance_graph_data_section_id(action: :search, time_period: :day) %>').className = 'performance-data-section-hidden';
+          document.getElementById(base_id+'<%= @presenter.performance_graph_data_section_id(action: :search, time_period: :month) %>').className = 'performance-data-section-hidden';
+          document.getElementById(base_id+'<%= @presenter.performance_graph_data_section_id(action: :search, time_period: :year) %>').className = 'performance-data-section-hidden';
+          document.getElementById(base_id+'<%= @presenter.performance_graph_data_section_id(action: :fetch, time_period: :day) %>').className = 'performance-data-section-hidden';
+          document.getElementById(base_id+'<%= @presenter.performance_graph_data_section_id(action: :fetch, time_period: :month) %>').className = 'performance-data-section-hidden';
+          document.getElementById(base_id+'<%= @presenter.performance_graph_data_section_id(action: :fetch, time_period: :year) %>').className = 'performance-data-section-hidden';
+          document.getElementById(base_id+'-'+action+'-during-'+time_period).className = 'performance-data-section-visible';
+        }
+      </script>
+
+    <% @presenter.performance_graphs.each do |graph_info| %>
+      <% time_period = @presenter.performance_graph_time_period(graph_info) %>
+      <% action = @presenter.performance_graph_action(graph_info) %>
+      <div id="<%= @presenter.performance_graph_data_section_id(graph_info) %>" class="<%= @presenter.performance_data_section_class(graph_info) %>">
+        <div class="performance-graph-menu-section">
+          <h4><%= @presenter.performance_graph_authority(graph_info) %></h4>
+          <ul class="time-period-menu">
+            <% if @presenter.performance_day_graph?(graph_info) %>
+              <li class="selected"><%= t('qa_server.monitor_status.performance.menu_day') %></li>
+            <% else %>
+              <li class="clickable" onClick="switch_performance_view('<%= @presenter.performance_graph_data_section_base_id(graph_info) %>', 'day', '<%= action %>')">
+                <%= t('qa_server.monitor_status.performance.menu_day') %>
+              </li>
+            <% end %>
+            <% if @presenter.performance_month_graph?(graph_info) %>
+              <li class="selected"><%= t('qa_server.monitor_status.performance.menu_month') %></li>
+            <% else %>
+              <li class="clickable" onClick="switch_performance_view('<%= @presenter.performance_graph_data_section_base_id(graph_info) %>', 'month', '<%= action %>')">
+                <%= t('qa_server.monitor_status.performance.menu_month') %>
+              </li>
+            <% end %>
+            <% if @presenter.performance_year_graph?(graph_info) %>
+              <li class="selected"><%= t('qa_server.monitor_status.performance.menu_year') %></li>
+            <% else %>
+              <li class="clickable" onClick="switch_performance_view('<%= @presenter.performance_graph_data_section_base_id(graph_info) %>', 'year', '<%= action %>')">
+                <%= t('qa_server.monitor_status.performance.menu_year') %>
+              </li>
+            <% end %>
+          </ul>
+          <ul class="action-menu">
+            <% if @presenter.performance_all_actions_graph?(graph_info) %>
+              <li class="selected"><%= t('qa_server.monitor_status.performance.menu_all_actions') %></li>
+            <% else %>
+              <li class="clickable" onClick="switch_performance_view('<%= @presenter.performance_graph_data_section_base_id(graph_info) %>', '<%= time_period %>', 'all_actions')">
+                <%= t('qa_server.monitor_status.performance.menu_all_actions') %>
+              </li>
+            <% end %>
+            <% if @presenter.performance_search_graph?(graph_info) %>
+              <li class="selected"><%= t('qa_server.monitor_status.performance.menu_search') %></li>
+            <% else %>
+              <li class="clickable" onClick="switch_performance_view('<%= @presenter.performance_graph_data_section_base_id(graph_info) %>', '<%= time_period %>', 'search')">
+                <%= t('qa_server.monitor_status.performance.menu_search') %>
+              </li>
+            <% end %>
+            <% if @presenter.performance_fetch_graph?(graph_info) %>
+              <li class="selected"><%= t('qa_server.monitor_status.performance.menu_fetch') %></li>
+            <% else %>
+              <li class="clickable" onClick="switch_performance_view('<%= @presenter.performance_graph_data_section_base_id(graph_info) %>', '<%= time_period %>', 'fetch')">
+                <%= t('qa_server.monitor_status.performance.menu_fetch') %>
+              </li>
+            <% end %>
+          </ul>
+        </div>
+
+        <div id="<%= @presenter.performance_graph_id(graph_info) %>" class="performance-chart">
+          <p><%= @presenter.performance_graph_label(graph_info) %></p>
+          <%= image_tag(@presenter.performance_graph(graph_info), alt: @presenter.performance_graph_label(graph_info)) %>
+        </div>
+      </div>
+    <% end %>
+    </div>
+  <% end %>
+
+  <% if @presenter.display_performance_datatable? %>
+    <div id="performance-datatable-section">
+      <h4><%= t('qa_server.monitor_status.performance.datatable_desc') %></h4>
+      <p class="status-update-dtstamp"><%= t('qa_server.monitor_status.performance.datarange', from: @presenter.performance_data_start, to: @presenter.performance_data_end) %></p>
+      <table class="status">
+        <tr>
+          <th></th>
+          <th colspan="3" class="table_subheading"><%= t('qa_server.monitor_status.performance.search') %></th>
+          <th colspan="3" class="table_subheading"><%= t('qa_server.monitor_status.performance.fetch') %></th>
+          <th colspan="3" class="table_subheading"><%= t('qa_server.monitor_status.performance.all_actions') %></th>
+        </tr>
+        <tr>
+          <th></th>
+          <th><%= t('qa_server.monitor_status.performance.slowest_times') %></th>
+          <th><%= t('qa_server.monitor_status.performance.average_times') %></th>
+          <th><%= t('qa_server.monitor_status.performance.fastest_times') %></th>
+          <th><%= t('qa_server.monitor_status.performance.slowest_times') %></th>
+          <th><%= t('qa_server.monitor_status.performance.average_times') %></th>
+          <th><%= t('qa_server.monitor_status.performance.fastest_times') %></th>
+          <th><%= t('qa_server.monitor_status.performance.slowest_times') %></th>
+          <th><%= t('qa_server.monitor_status.performance.average_times') %></th>
+          <th><%= t('qa_server.monitor_status.performance.fastest_times') %></th>
+        </tr>
+        <% @presenter.performance_data.each do |authority_name, data| %>
+          <% search_stats = @presenter.datatable_search_stats(data) %>
+          <% fetch_stats = @presenter.datatable_fetch_stats(data) %>
+          <% all_actions_stats = @presenter.datatable_all_actions_stats(data) %>
+          <tr>
+            <td class="table_subheading" colspan="10"><%= authority_name %></td>
+          </tr>
+          <tr>
+            <th><%= t('qa_server.monitor_status.performance.retrieve_times') %></th>
+            <td class="<%= @presenter.datatable_data_style(search_stats) %>"><%= @presenter.high_retrieve(search_stats) %></td>
+            <td class="<%= @presenter.datatable_data_style(search_stats) %>"><%= @presenter.avg_retrieve(search_stats) %></td>
+            <td class="<%= @presenter.datatable_data_style(search_stats) %>"><%= @presenter.low_retrieve(search_stats) %></td>
+            <td class="<%= @presenter.datatable_data_style(fetch_stats) %>"><%= @presenter.high_retrieve(fetch_stats) %></td>
+            <td class="<%= @presenter.datatable_data_style(fetch_stats) %>"><%= @presenter.avg_retrieve(fetch_stats) %></td>
+            <td class="<%= @presenter.datatable_data_style(fetch_stats) %>"><%= @presenter.low_retrieve(fetch_stats) %></td>
+            <td class="<%= @presenter.datatable_data_style(all_actions_stats) %>"><%= @presenter.high_retrieve(all_actions_stats) %></td>
+            <td class="<%= @presenter.datatable_data_style(all_actions_stats) %>"><%= @presenter.avg_retrieve(all_actions_stats) %></td>
+            <td class="<%= @presenter.datatable_data_style(all_actions_stats) %>"><%= @presenter.low_retrieve(all_actions_stats) %></td>
+          </tr>
+          <tr>
+            <th><%= t('qa_server.monitor_status.performance.graph_load_times') %></th>
+            <td class="<%= @presenter.datatable_data_style(search_stats) %>"><%= @presenter.high_graph_load(search_stats) %></td>
+            <td class="<%= @presenter.datatable_data_style(search_stats) %>"><%= @presenter.avg_graph_load(search_stats) %></td>
+            <td class="<%= @presenter.datatable_data_style(search_stats) %>"><%= @presenter.low_graph_load(search_stats) %></td>
+            <td class="<%= @presenter.datatable_data_style(fetch_stats) %>"><%= @presenter.high_graph_load(fetch_stats) %></td>
+            <td class="<%= @presenter.datatable_data_style(fetch_stats) %>"><%= @presenter.avg_graph_load(fetch_stats) %></td>
+            <td class="<%= @presenter.datatable_data_style(fetch_stats) %>"><%= @presenter.low_graph_load(fetch_stats) %></td>
+            <td class="<%= @presenter.datatable_data_style(all_actions_stats) %>"><%= @presenter.high_graph_load(all_actions_stats) %></td>
+            <td class="<%= @presenter.datatable_data_style(all_actions_stats) %>"><%= @presenter.avg_graph_load(all_actions_stats) %></td>
+            <td class="<%= @presenter.datatable_data_style(all_actions_stats) %>"><%= @presenter.low_graph_load(all_actions_stats) %></td>
+          </tr>
+          <tr>
+            <th><%= t('qa_server.monitor_status.performance.normalization_times') %></th>
+            <td class="<%= @presenter.datatable_data_style(search_stats) %>"><%= @presenter.high_normalization(search_stats) %></td>
+            <td class="<%= @presenter.datatable_data_style(search_stats) %>"><%= @presenter.avg_normalization(search_stats) %></td>
+            <td class="<%= @presenter.datatable_data_style(search_stats) %>"><%= @presenter.low_normalization(search_stats) %></td>
+            <td class="<%= @presenter.datatable_data_style(fetch_stats) %>"><%= @presenter.high_normalization(fetch_stats) %></td>
+            <td class="<%= @presenter.datatable_data_style(fetch_stats) %>"><%= @presenter.avg_normalization(fetch_stats) %></td>
+            <td class="<%= @presenter.datatable_data_style(fetch_stats) %>"><%= @presenter.low_normalization(fetch_stats) %></td>
+            <td class="<%= @presenter.datatable_data_style(all_actions_stats) %>"><%= @presenter.high_normalization(all_actions_stats) %></td>
+            <td class="<%= @presenter.datatable_data_style(all_actions_stats) %>"><%= @presenter.avg_normalization(all_actions_stats) %></td>
+            <td class="<%= @presenter.datatable_data_style(all_actions_stats) %>"><%= @presenter.low_normalization(all_actions_stats) %></td>
+          </tr>
+          <tr>
+            <th><%= t('qa_server.monitor_status.performance.full_request_times') %></th>
+            <td class="<%= @presenter.high_full_request_style(search_stats) %>"><%= @presenter.high_full_request(search_stats) %></td>
+            <td class="<%= @presenter.avg_full_request_style(search_stats) %>"><%= @presenter.avg_full_request(search_stats) %></td>
+            <td class="<%= @presenter.low_full_request_style(search_stats) %>"><%= @presenter.low_full_request(search_stats) %></td>
+            <td class="<%= @presenter.high_full_request_style(fetch_stats) %>"><%= @presenter.high_full_request(fetch_stats) %></td>
+            <td class="<%= @presenter.avg_full_request_style(fetch_stats) %>"><%= @presenter.avg_full_request(fetch_stats) %></td>
+            <td class="<%= @presenter.low_full_request_style(fetch_stats) %>"><%= @presenter.low_full_request(fetch_stats) %></td>
+            <td class="<%= @presenter.high_full_request_style(all_actions_stats) %>"><%= @presenter.high_full_request(all_actions_stats) %></td>
+            <td class="<%= @presenter.avg_full_request_style(all_actions_stats) %>"><%= @presenter.avg_full_request(all_actions_stats) %></td>
+            <td class="<%= @presenter.low_full_request_style(all_actions_stats) %>"><%= @presenter.low_full_request(all_actions_stats) %></td>
+          </tr>
+        <% end %>
+      </table>
+    </div>
+  <% end %>
+<% end %>

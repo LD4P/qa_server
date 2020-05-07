@@ -38,6 +38,7 @@ script/log
 /public/documents
 /public/assets
 /public/sitemap.xml.gz
+/app/assets/images/qa_server/charts/*
 
 # ignore renderer file
 # shows the template being rendered in the html source

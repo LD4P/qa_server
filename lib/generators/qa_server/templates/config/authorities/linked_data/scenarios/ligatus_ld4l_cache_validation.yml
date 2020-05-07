@@ -1,0 +1,11 @@
+---
+authority:
+  service: ld4l_cache
+  context: true
+search:
+  -
+    query: binding
+    result_size: 100
+term:
+  -
+    identifier: 'http://w3id.org/lob/concept/3796'

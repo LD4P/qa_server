@@ -42,7 +42,7 @@ module QaServer
 
       def prefix_for_url(action)
         subauth = "/#{subauthority_name}" if subauthority_name.present?
-        prefix = "#{QaServer::Engine.qa_engine_mount}/#{action}/linked_data/#{authority_name.downcase}#{subauth}"
+        "#{QaServer::Engine.qa_engine_mount}/#{action}/linked_data/#{authority_name.downcase}#{subauth}"
       end
 
       # Convert identifier into URL safe version with encoding if needed.

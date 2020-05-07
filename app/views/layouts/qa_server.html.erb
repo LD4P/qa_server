@@ -47,7 +47,9 @@
 
 <div id="content-wrapper" class="container" role="main">
   <a name="skip_to_content"></a>
-  <%# = render '/flash_msg' %>
+  <% flash.each do |key, value| %>
+      <div class="alert alert-<%= key %>"><%= value %></div>
+  <% end %>
   <% if content_for?(:page_header) %>
       <div class="row">
         <div class="col-xs-12 main-header">
