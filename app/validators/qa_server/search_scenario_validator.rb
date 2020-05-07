@@ -40,9 +40,9 @@ module QaServer
 
       # Runs the accuracy test and log results
       def test_accuracy(subject_uri:, expected_by_position:)
-        dt_start = Time.now.utc
+        dt_start = QaServer::TimeService.current_time
         results = yield if block_given?
-        dt_end = Time.now.utc
+        dt_end = QaServer::TimeService.current_time
         if results.blank?
           log(status: UNKNOWN, errmsg: "Search position scenario failed; cause: no results found", expected: expected_by_position, target: subject_uri, request_run_time: (dt_end - dt_start))
           return
@@ -50,7 +50,7 @@ module QaServer
 
         check_position(results, subject_uri, expected_by_position, total_run_time: (dt_end - dt_start)) # TODO: need to get run times from results
       rescue Exception => e
-        dt_end = Time.now.utc
+        dt_end = QaServer::TimeService.current_time
         log(status: FAIL, errmsg: "Exception executing search position scenario; cause: #{e.message}",
             expected: expected_by_position, target: subject_uri, request_run_time: (dt_end - dt_start))
       end

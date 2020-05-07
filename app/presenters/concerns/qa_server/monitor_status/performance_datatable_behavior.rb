@@ -94,6 +94,28 @@ module QaServer::MonitorStatus
       end
     end
 
+    def performance_data_start
+      start_dt = case expected_time_period
+                 when :day
+                   performance_data_end_dt - 1.day
+                 when :month
+                   performance_data_end_dt - 1.month
+                 when :year
+                   performance_data_end_dt - 1.year
+                 else
+                   @parent.first_updated_dt
+                 end
+      QaServer::TimeService.pretty_date(start_dt)
+    end
+
+    def performance_data_end_dt
+      @parent.last_updated_dt
+    end
+
+    def performance_data_end
+      QaServer::TimeService.pretty_date(performance_data_end_dt)
+    end
+
     private
 
       def expected_time_period
@@ -101,12 +123,12 @@ module QaServer::MonitorStatus
       end
 
       def data_table_for(authority_data, action)
-        authority_data[action][FOR_DATATABLE]
+        authority_data[action]
       end
 
       def unsupported_action?(stats)
         values = stats.values
-        return true if values.all? &:zero?
+        return true if values.all?(&:zero?)
         values.any? { |v| v.respond_to?(:nan?) && v.nan? }
       end
 

@@ -8,3 +8,7 @@ Lint/RescueException:
 Lint/UnusedMethodArgument:
   Exclude:
     - 'app/models/qa_server/authority_scenario.rb'
+
+Style/SpecialGlobalVars:
+  Exclude:
+    - 'tasks/qa_server_dev.rake'

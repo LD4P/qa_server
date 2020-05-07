@@ -1,3 +1,134 @@
+### 7.4.0 (2020-04-13)
+
+* add size and complexity performance statistics (not auto-generated)
+
+### 7.3.0 (2020-04-08)
+
+* move generation of graphs to background jobs
+
+### 7.2.1 (2020-02-23)
+
+* fix graph fails generation when any label is empty string
+
+### 7.2.0 (2020-02-22)
+
+* move graphs from assets to public directory
+
+### 7.1.3 (2020-02-22)
+
+* fix performance datatable never displays
+
+### 7.1.2 (2020-02-21)
+
+* make configs that return true/false end with ?
+* add tests for configs that weren’t tested
+* fix bugs in config#convert_size_to_bytes in response to testing
+
+### 7.1.1 (2020-02-21)
+
+* empty performance cache after running monitor status tests
+
+### 7.1.0 (2020-02-20)
+
+* allow performance cache size to be set by environment variable 
+* move generation of history graph to cache_processors
+* log warning in monitor logger if graphs fail to create
+* monitor_status page won't try to display graphs if graph file does not exist
+
+### 7.0.0 (2020-02-19)
+
+* refactor of caching system to simplify the process
+  * rename monitor_cache_service to cache_expiry_service
+  * move generation of hourly graph to cache_processors
+  * move generation of daily and monthly graphs to cache_processors
+  * move performance datatable cache control to cache_processors
+  * move caching of summary and historical data to cache_processors
+  * move caching of test execution marker to cache_processors
+  * move performance cache of performance data to cache_processors
+  
+### 6.2.0 (2020-02-17)
+
+* use authentication for refreshing monitor tests
+* add performance cache logger
+* exceeding max performance cache size flushing the cache
+
+### 6.1.0 (2020-02-17)
+
+* change historical summary to show number of days instead of number of tests (original intent)
+* default tests to connection tests
+* update authorities to v2.2 configs
+* add authority cerl_ld4l_cache
+
+### 6.0.0 (2020-02-13)
+
+* refactor generation of performance graphs to minimize db access and calculations
+* shorten race_condition times for caching
+* rename jobs_logger to be monitor_logger
+* run monitoring tests in background
+* move methods from QaServer to services
+* use presenter to get failure data
+* move controller validation code to module include
+* limit historical data to configurable time period
+* move time_period where clause construction to service
+
+### 5.5.1 (2020-01-29)
+
+* fix - check for nil before calling .each
+
+### 5.5.0 (2020-01-10)
+
+* use caching with expiry for monitor status page
+
+### 5.4.0 (2020-01-07)
+
+* adds config hour_offset_to_expire_cache
+* deprecates config hour_offset_to_run_monitoring_tests (replaced by hour_offset_to_expire_cache)
+* updates QaServer.monitoring_expires_at to use the new hour_offset_to_expire_cache config
+* adds QaServer.cache_expiry that can be used for expiring all cached data
+* add tests and exceptions for configs
+
+### 5.3.0 (2019-12-19)
+
+* optionally log browser and platform user agent info
+* update to qa 5.3
+  * add a request id to the search and find request headers
+  * log exception for graph load failures
+  * optionally include IP info at start of search/find linked data requests
+
+### 5.2.1 (2019-12-13)
+
+* fix - add defaults to the initializer generator template for new configs
+
+### 5.2.0 (2019-12-10)
+
+* cache performance data saving once a day when monitoring runs
+* set monitoring to expire at 3am ET by default (configurable)
+* setup travis-ci to run
+
+### 5.1.0 (2019-12-10)
+
+* allow suppression of performance data gathering
+
+### 5.0.3 (2019-12-3)
+
+* bug fix - use correct parameters for search query
+
+### 5.0.2 (2019-12-3)
+
+* bug fix - move individual params into request header to avoid lost subauths during testing
+
+### 5.0.1 (2019-12-3)
+
+* bug fix - force qa to not exclued performance header when find term returns jsonld
+
+### 5.0.0 (2019-11-22)
+
+* prepends for query updated to retain response_header in results
+
+### 4.0.0 (2019-11-14)
+
+* prepends for find and query updated to process request_header parameter
+
 ### 3.0.3 (2019-10-09)
 
 * remove titles from graphs (previously set to '' which caused problems when deployed)

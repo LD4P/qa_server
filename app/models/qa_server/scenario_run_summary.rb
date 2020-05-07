@@ -1,5 +1,5 @@
 # frozen_string_literal: true
-# Abstract class that parses the authority configuration from the yml file into the parts needed by inheriting scenario types.
+# Holds test run summary data providing methods for accessing each data point.
 module QaServer
   class ScenarioRunSummary
     # @return [Integer] the id of the scenario run being summarized

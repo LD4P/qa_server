@@ -23,9 +23,10 @@ Gem::Specification.new do |spec|
   # minor version releases can include breaking changes; see
   # http://guides.rubyonrails.org/maintenance_policy.html
   spec.add_dependency 'rails', '~> 5.0' # Keep in sync with version supported by Hyrax
+  spec.add_dependency 'useragent'
 
   # Required gems for QA and linked data access
-  spec.add_development_dependency 'qa', '~> 4.2'
+  spec.add_development_dependency 'qa', '~> 5.3'
   spec.add_development_dependency 'linkeddata'
 
   # Produces dashboard charts on monitor status page
@@ -34,10 +35,25 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'better_errors' # provide debugging command line in
   spec.add_development_dependency 'binding_of_caller' # provides deep stack info used by better_errors
   spec.add_development_dependency 'bixby', '~> 1.0.0' # rubocop styleguide
-  # spec.add_development_dependency 'capybara', '~> 2.13'
+  # spec.add_development_dependency "capybara", '~> 3.29'
+  # spec.add_development_dependency 'capybara-maleficent', '~> 0.3.0'
+  # spec.add_development_dependency 'chromedriver-helper', '~> 2.1'
+  spec.add_development_dependency 'deprecation'
   spec.add_development_dependency 'engine_cart', '~> 2.0'
+  spec.add_development_dependency "factory_bot", '~> 4.4'
+  spec.add_development_dependency 'simplecov'
+  spec.add_development_dependency 'sqlite3'
+  spec.add_development_dependency 'rails-controller-testing', '~> 1'
   spec.add_development_dependency 'rspec-activemodel-mocks', '~> 1.0'
   spec.add_development_dependency 'rspec-its', '~> 1.1'
   spec.add_development_dependency 'rspec-rails', '~> 3.1'
-  # spec.add_development_dependency 'selenium-webdriver'
+  spec.add_development_dependency 'selenium-webdriver'
+  spec.add_development_dependency 'webdrivers', '~> 3.0'
+  spec.add_development_dependency 'webmock'
+
+  ########################################################
+  # Temporarily pinned dependencies. INCLUDE EXPLANATIONS.
+  #
+  # Pin sass-rails to 5.x because rails 5.x apps have this same dependency in their generated Gemfiles
+  spec.add_dependency 'sass-rails', '~> 5.0'
 end

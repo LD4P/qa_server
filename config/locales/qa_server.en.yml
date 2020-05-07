@@ -69,6 +69,7 @@ en:
       history:
         title:           Authority Connection History
         since:           'Since %{date} ET'
+        range:           'From %{from} to %{to}'
         authority:       Authority
         days_failing:    Days Failing
         days_passing:    Days Passing
@@ -95,10 +96,8 @@ en:
         y_axis_ms:       Milliseconds (ms)
         now:             NOW
         today:           TODAY
-        datatable_day_desc:   'Performance tabulated data for last 24 hours'
-        datatable_month_desc: 'Performance tabulated data for last 30 days'
-        datatable_year_desc:  'Performance tabulated data for one year'
-        datatable_all_desc:   'Performance tabulated data for all recorded data'
+        datatable_desc:       'Performance tabulated data'
+        datarange:            'From %{from} to %{to}'
         authority:            Authority
         average_times:        Average (ms)
         fastest_times:        10th percentile (ms)

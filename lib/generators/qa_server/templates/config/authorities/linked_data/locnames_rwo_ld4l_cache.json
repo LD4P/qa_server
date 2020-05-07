@@ -1,5 +1,6 @@
 {
-  "QA_CONFIG_VERSION": "2.1",
+  "QA_CONFIG_VERSION": "2.2",
+  "service_uri": "http://ld4l.org/ld4l_services/cache",
   "prefixes": {
     "loc":     "http://id.loc.gov/vocabulary/identifiers/",
     "madsrdf": "http://www.loc.gov/mads/rdf/v1#",
@@ -78,8 +79,11 @@
     },
     "qa_replacement_patterns": {
       "query":   "query",
-      "subauth": "entity"
+      "subauth": "entity",
+      "start_record": "startRecord",
+      "requested_records": "maxRecords"
     },
+    "total_count_ldpath": "vivo:count",
     "results": {
       "id_ldpath":    "^madsrdf:identifiesRWO/loc:lccn ::xsd:string",
       "label_ldpath": "rdfs:label ::xsd:string",
@@ -223,6 +227,13 @@
           "property_label_default": "Editorial note",
           "property_label_i18n": "qa.linked_data.authority.locnames_ld4l_cache.editorial_note",
           "ldpath": "^madsrdf:identifiesRWO/madsrdf:editorialNote :: xsd:string",
+          "selectable": false,
+          "drillable": false
+        },
+        {
+          "property_label_default": "Authority URI",
+          "property_label_i18n": "qa.linked_data.authority.locnames_ld4l_cache.authority_uri",
+          "ldpath": "^madsrdf:identifiesRWO :: xsd:string",
           "selectable": false,
           "drillable": false
         }

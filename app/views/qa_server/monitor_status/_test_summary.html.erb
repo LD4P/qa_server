@@ -19,7 +19,7 @@
   </table>
   <p class="status-update-dtstamp"><%= t('qa_server.monitor_status.summary.last_updated', date: @presenter.last_updated) %></p>
 
-  <% if @presenter.failures? %>
+  <% if @presenter.failures?%>
     <div id="failures" class="status-section">
       <h4><%= t('qa_server.monitor_status.failures.title') %></h4>
 
@@ -33,7 +33,7 @@
           <th><%= t('qa_server.monitor_status.failures.errmsg') %></th>
         </tr>
         <% current_authority = nil %>
-        <% @status_data.each do |status| %>
+        <% @presenter.failures.each do |status| %>
           <% unless status[:authority_name] == current_authority %>
               <% current_authority = status[:authority_name] %>
               <tr>
