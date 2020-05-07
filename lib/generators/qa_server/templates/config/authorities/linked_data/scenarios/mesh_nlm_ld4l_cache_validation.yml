@@ -1,3 +1,6 @@
+# Supported subauthorities:
+#   subject
+#   publication_type
 ---
 authority:
   service: ld4l_cache
@@ -22,7 +25,9 @@ search:
   #------------------
   #  Accuracy tests
   #------------------
-  # TBD
+  #  TBD - tests for subauths
+  #    subject
+  #    publication_type
 term:
   -
     identifier: 'http://id.nlm.nih.gov/mesh/T727346'

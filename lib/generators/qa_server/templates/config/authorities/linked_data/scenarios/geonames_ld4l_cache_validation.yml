@@ -1,3 +1,15 @@
+# Supported subauthorities:
+#   area
+#   place
+#   area_and_place
+#   water
+#   park
+#   road
+#   spot
+#   terrain
+#   undersea
+#   vegetation
+#   all
 ---
 authority:
   service: ld4l_cache
@@ -39,6 +51,22 @@ search:
   #------------------
   #  Accuracy tests
   #------------------
+  #  TBD - tests for subauths
+  #    area_and_place
+  #    water
+  #    park
+  #    road
+  #    spot
+  #    terrain
+  #    undersea
+  #    vegetation
+  #    all
+  -
+    query: New York
+    subject_uri: "http://sws.geonames.org/5128581/"
+    position: 3
+    replacements:
+      maxRecords: '8'
   -
     query: France
     subauth: area
@@ -47,14 +75,8 @@ search:
     replacements:
       maxRecords: '15'
   -
-    query: New York
-    subject_uri: "http://sws.geonames.org/5128581/"
-    position: 3
-    replacements:
-      maxRecords: '8'
-  -
     query: Chicago
-    subauth: populated place
+    subauth: place
     subject_uri: 'http://sws.geonames.org/4887398/'
     postion: 10
     replacements:
