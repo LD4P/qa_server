@@ -6,6 +6,12 @@ search:
   -
     query: Cayuga
   -
+    query: Tweedy, Jeff
+    position: 5
+    subject_uri: "http://id.loc.gov/authorities/names/no98126226"
+    replacements:
+      maxRecords: '20'
+  -
     query: 'Camden NJ'
     position: 8
     subject_uri: "http://id.loc.gov/authorities/names/n81139356"
