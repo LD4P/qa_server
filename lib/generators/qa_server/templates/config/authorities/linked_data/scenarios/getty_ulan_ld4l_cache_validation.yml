@@ -1,3 +1,6 @@
+# Supported subauthorities:
+#   person
+#   organization
 ---
 authority:
   service: ld4l_cache
@@ -16,7 +19,9 @@ search:
   #------------------
   #  Accuracy tests
   #------------------
-  # TBD
+  #  TBD - tests for subauths
+  #    person
+  #    organization
 term:
   -
     identifier: 'http://vocab.getty.edu/ulan/500020427'

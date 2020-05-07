@@ -1,3 +1,7 @@
+# Supported subauthorities:
+#   person
+#   corporate
+#   imprint
 ---
 authority:
   service: ld4l_cache
@@ -42,6 +46,13 @@ search:
     replacements:
       maxRecords: '8'
   -
+    query: Typographia Plantiniana
+    subauth: corporate
+    position: 1
+    subject_uri: "http://thesaurus.cerl.org/record/cnc00011608"
+    replacements:
+      maxRecords: '8'
+  -
     query: Jacob Winter
     subauth: imprint
     position: 4
@@ -53,13 +64,6 @@ search:
     subauth: imprint
     position: 1
     subject_uri: "http://thesaurus.cerl.org/record/cni00007649"
-    replacements:
-      maxRecords: '8'
-  -
-    query: Typographia Plantiniana
-    subauth: corporate
-    position: 1
-    subject_uri: "http://thesaurus.cerl.org/record/cnc00011608"
     replacements:
       maxRecords: '8'
 term:

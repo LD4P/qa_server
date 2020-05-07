@@ -1,3 +1,6 @@
+# Supported subauthorities:
+#   active
+#   deprecated
 ---
 authority:
   service: ld4l_cache
@@ -19,6 +22,8 @@ search:
   #------------------
   #  Accuracy tests
   #------------------
+  #  TBD - tests for subauths
+  #    active
   -
     query: Preliminary documents (Treaties)
     position: 10

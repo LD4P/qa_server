@@ -1,4 +1,4 @@
-# Possible subauthorities:
+# Supported subauthorities:
 #   person
 #   organization
 #   family
@@ -24,6 +24,9 @@ search:
   #------------------
   #  Accuracy tests
   #------------------
+  #  TBD - tests for subauths
+  #    organization
+  #    family
   -
     query: 'Twain, Mark, 1835-1910'
     subauth: person

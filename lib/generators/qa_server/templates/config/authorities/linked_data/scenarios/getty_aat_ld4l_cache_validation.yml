@@ -1,3 +1,34 @@
+# Supported subauthorities:
+#   Activities
+#   Activities__Disciplines
+#   Activities__Events
+#   Activities__Functions
+#   Activities__Physical_and_Mental
+#   Activities__Processes_and_Techniques
+#   Agents
+#   Agents__Living_Organisms
+#   Agents__Organizations
+#   Agents__People
+#   Associated_Concepts
+#   Associated_Concepts__Associated_Concepts
+#   Brand_Names
+#   Brand_Names__Brand_Names
+#   Materials
+#   Materials__Materials
+#   Objects
+#   Objects__Built_Environment
+#   Objects__Components
+#   Objects__Furnishings_and_Equipment
+#   Objects__Object_Genres
+#   Objects__Object_Groupings and Systems
+#   Objects__Visual_and_Verbal_Communication
+#   Physical_Attributes
+#   Physical_Attributes__Attributes_and_Properties
+#   Physical_Attributes__Color
+#   Physical_Attributes__Conditions_and_Effects
+#   Physical_Attributes__Design_Elements
+#   Styles_and_Periods
+#   Styles_and_Periods__Styles_and_Periods
 ---
 authority:
   service: ld4l_cache
@@ -121,6 +152,37 @@ search:
   #------------------
   #  Accuracy tests
   #------------------
+  #  TBD - tests for subauths
+  #    Activities
+  #    Activities__Disciplines
+  #    Activities__Events
+  #    Activities__Functions
+  #    Activities__Physical_and_Mental
+  #    Activities__Processes_and_Techniques
+  #    Agents
+  #    Agents__Living_Organisms
+  #    Agents__Organizations
+  #    Agents__People
+  #    Associated_Concepts
+  #    Associated_Concepts__Associated_Concepts
+  #    Brand_Names
+  #    Brand_Names__Brand_Names
+  #    Materials
+  #    Materials__Materials
+  #    Objects
+  #    Objects__Built_Environment
+  #    Objects__Components
+  #    Objects__Furnishings_and_Equipment
+  #    Objects__Object_Genres
+  #    Objects__Object_Groupings and Systems
+  #    Objects__Visual_and_Verbal_Communication
+  #    Physical_Attributes
+  #    Physical_Attributes__Attributes_and_Properties
+  #    Physical_Attributes__Color
+  #    Physical_Attributes__Conditions_and_Effects
+  #    Physical_Attributes__Design_Elements
+  #    Styles_and_Periods
+  #    Styles_and_Periods__Styles_and_Periods
   -
     query: precious
     position: 5
