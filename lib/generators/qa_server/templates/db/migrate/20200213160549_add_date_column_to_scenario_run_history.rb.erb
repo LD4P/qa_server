@@ -1,0 +1,14 @@
+class AddDateColumnToScenarioRunHistory < ActiveRecord::Migration<%= migration_version %>
+  def change
+    add_column :scenario_run_history, :date, :date
+    add_index :scenario_run_history, :date
+
+    begin
+      QaServer::ScenarioRunHistory.all.each do |entry|
+        registry = QaServer::ScenarioRunRegistry.find(entry.scenario_run_registry_id)
+        entry.date = registry.dt_stamp.to_date
+        entry.save
+      end
+    end
+  end
+end

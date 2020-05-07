@@ -29,6 +29,7 @@ module QaServer
       @leftmenu_items << { label: I18n.t("qa_server.menu.authorities"), url: authority_list_index_path }
       @leftmenu_items << { label: I18n.t("qa_server.menu.check_status"), url: check_status_index_path }
       @leftmenu_items << { label: I18n.t("qa_server.menu.monitor_status"), url: monitor_status_index_path }
+      @leftmenu_items << { label: I18n.t("qa_server.menu.fetch_term"), url: fetch_index_path }
 
       @rightmenu_items = []
       @rightmenu_items << { label: "LD4L Gateway", url: "http://ld4l.org/" }

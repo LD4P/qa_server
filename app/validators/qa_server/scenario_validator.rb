@@ -59,15 +59,15 @@ module QaServer
       # Runs the test in the block passed by the specific scenario type.
       # @return [Symbol] :good (PASS) or :unknown (UNKNOWN) based on whether enough results were returned
       def test_connection(min_expected_size: MIN_EXPECTED_SIZE, scenario_type_name:)
-        dt_start = Time.now.utc
+        dt_start = QaServer::TimeService.current_time
         results = yield if block_given?
-        dt_end = Time.now.utc
+        dt_end = QaServer::TimeService.current_time
         actual_size = results.to_s.length
         status = actual_size > min_expected_size ? PASS : UNKNOWN
         errmsg = status == PASS ? '' : "#{scenario_type_name.capitalize} scenario unknown status; cause: Results actual size (#{actual_size} < expected size (#{min_expected_size})"
         log(status: status, error_message: errmsg, normalization_run_time: (dt_end - dt_start)) # TODO: need to get run times from results
       rescue Exception => e
-        dt_end = Time.now.utc
+        dt_end = QaServer::TimeService.current_time
         log(status: FAIL, error_message: "Exception executing #{scenario_type_name} scenario; cause: #{e.message}", request_run_time: (dt_end - dt_start))
       end
 

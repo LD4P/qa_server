@@ -1,7 +1,11 @@
 # frozen_string_literal: true
 # Controller for Check Status header menu item
 module QaServer
-  class CheckStatusController < QaServer::AuthorityValidationController
+  class CheckStatusController < ApplicationController
+    layout 'qa_server'
+
+    include QaServer::AuthorityValidationBehavior
+
     ALL_AUTHORITIES = '__all__'
 
     class_attribute :presenter_class
@@ -9,6 +13,7 @@ module QaServer
 
     # Sets up presenter with data to display in the UI
     def index
+      log_header
       validate(authorities_to_validate, validation_type)
       @presenter = presenter_class.new(authorities_list: authorities_list,
                                        connection_status_data: connection_status_data_from_log,
@@ -32,7 +37,16 @@ module QaServer
 
       def authority_name
         return @authority_name if @authority_name.present?
-        @authority_name = (params.key? :authority) ? params[:authority].downcase : nil # rubocop:disable Style/TernaryParentheses
+        @authority_name = params.key?(:authority) ? params[:authority].downcase : nil
+      end
+
+      def log_header
+        QaServer.config.performance_cache_logger.debug("----------------------  check status (max_cache_size = #{max_cache_size}) ----------------------")
+        QaServer.config.performance_cache_logger.debug("(#{self.class}##{__method__}) check status page request (authority_name # #{authority_name})")
+      end
+
+      def max_cache_size
+        ActiveSupport::NumberHelper.number_to_human_size(QaServer.config.max_performance_cache_size)
       end
   end
 end

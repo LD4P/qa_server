@@ -9,6 +9,17 @@ search:
     query: France
     subauth: area
     expect: 'http://sws.geonames.org/261707/'
+    position: 10
+  -
+    query: New York
+    position: 3
+    subject_uri: "http://sws.geonames.org/5128581/"
+    replacements:
+    maxRecords: '8'
+  -
+    query: Chicago
+    subauth: populated place
+    expect: 'http://sws.geonames.org/4887398/'
     postion: 10
   -
     query: Ithaca

@@ -4,28 +4,38 @@ authority:
   context: true
 search:
   -
-    query: 'mark twain'
+    query: Cayuga
   -
-    query: 'mark twain'
-    subauth: person
-  -
-    query: 'Twain, Mark, 1835-1910'
-    subauth: person
-  -
-    query: 'mark twain'
-    subauth: organization
+    query: 'Camden NJ'
+    position: 8
+    subject_uri: "http://id.loc.gov/authorities/names/n81139356"
+    replacements:
+      maxRecords: '20'
   -
     query: Cayuga
-    subauth: place
+    subauth: geographic
   -
-    query: Cayuga
-    subauth: intangible
+    query: Madrid, Spain
+    position: 5
+    subauth: geographic
+    subject_uri: "http://id.loc.gov/authorities/names/n78089046"
+    replacements:
+      maxRecords: '15'
   -
-    query: Cayuga
-    subauth: geocoordinates
+    query: ALA
+    subauth: conference
   -
-    query: 'mark twain'
-    subauth: work
+    query: 'Camden, William'
+    position: 10
+    subject_uri: "http://id.loc.gov/authorities/names/n50031528"
+    replacements:
+      maxRecords: '20'
+  -
+    query: 'King Stephen 1947'
+    position: 5
+    subject_uri: "http://id.loc.gov/authorities/names/n79063767"
+    replacements:
+      maxRecords: '20'
 term:
   -
     identifier: 'http://id.loc.gov/authorities/names/n92016188'

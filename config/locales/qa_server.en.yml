@@ -7,6 +7,7 @@ en:
       authorities:       Authorities
       check_status:      Check Status
       monitor_status:    Monitor Status
+      fetch_term:        Fetch Term
     authority_list:
       title:             Authority List
       see_check_status_html: 'See <a href="%{href}">Check Status</a> to test whether an authority is online.'
@@ -36,6 +37,15 @@ en:
         subauthority:    Subauthority
         subject_uri:     Expected Subject
         url:             Sample URL
+    fetch:
+      title:             Fetch a Term
+      authority_field_label: Authority
+      select_authority:      Select authority...
+      format_field_label:    Format
+      uri_field_label:       URI
+      submit_button:     Fetch Term
+      wait_message:      Fetching term...
+      term_results:      Results
     monitor_status:
       title:             Monitor Status
       summary:
@@ -59,10 +69,42 @@ en:
       history:
         title:           Authority Connection History
         since:           'Since %{date} ET'
+        range:           'From %{from} to %{to}'
         authority:       Authority
         days_failing:    Days Failing
         days_passing:    Days Passing
         days_tested:     Days Tested
         percent_failing: Percent Failing
+      performance:
+        title:           Performance Metrics
+        search:          Search Only
+        fetch:           Fetch Only
+        all_actions:     All Actions
+        menu_day:        Day
+        menu_month:      Month
+        menu_year:       Year
+        menu_all_actions: All Requests
+        menu_search:      Search
+        menu_fetch:       Fetch
+        graph_load_time_ms:    Graph Load Time (ms)
+        normalization_time_ms: Normalization Time (ms)
+        retrieve_time_ms:      Retrieve Time (ms)
+        full_request_time_ms:  Full Request Time (ms)
+        x_axis_hour:     Hour
+        x_axis_day:      Day
+        x_axis_month:    Month
+        y_axis_ms:       Milliseconds (ms)
+        now:             NOW
+        today:           TODAY
+        datatable_desc:       'Performance tabulated data'
+        datarange:            'From %{from} to %{to}'
+        authority:            Authority
+        average_times:        Average (ms)
+        fastest_times:        10th percentile (ms)
+        slowest_times:        90th percentile (ms)
+        retrieve_times:       Retrieve
+        graph_load_times:     Graph Load
+        normalization_times:  Normalization
+        full_request_times:   Total
     usage:
       title:             Usage
