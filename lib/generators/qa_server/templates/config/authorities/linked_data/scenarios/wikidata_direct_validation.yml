@@ -1,0 +1,6 @@
+---
+authority:
+  service: direct
+term:
+  -
+    identifier: http://www.wikidata.org/entity/Q8495

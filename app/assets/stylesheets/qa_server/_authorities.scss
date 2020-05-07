@@ -1,3 +1,6 @@
-td.table_subheading {
+th.table_subheading, td.table_subheading {
   background-color: lightgrey;
+}
+th.table_subheading {
+  text-align: center;
 }

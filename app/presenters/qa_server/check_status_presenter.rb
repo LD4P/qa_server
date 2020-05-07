@@ -76,11 +76,11 @@ module QaServer
     end
 
     def value_check_param
-      QaServer::AuthorityValidationController::VALIDATION_TYPE_PARAM
+      QaServer::AuthorityValidationBehavior::VALIDATION_TYPE_PARAM
     end
 
     def value_check_connections
-      QaServer::AuthorityValidationController::VALIDATE_CONNECTIONS
+      QaServer::AuthorityValidationBehavior::VALIDATE_CONNECTIONS
     end
 
     def label_check_connections
@@ -88,7 +88,7 @@ module QaServer
     end
 
     def value_check_accuracy
-      QaServer::AuthorityValidationController::VALIDATE_ACCURACY
+      QaServer::AuthorityValidationBehavior::VALIDATE_ACCURACY
     end
 
     def label_check_accuracy
@@ -96,7 +96,7 @@ module QaServer
     end
 
     def value_all_checks
-      QaServer::AuthorityValidationController::ALL_VALIDATIONS
+      QaServer::AuthorityValidationBehavior::ALL_VALIDATIONS
     end
 
     def label_all_checks
