@@ -2,6 +2,9 @@
 authority:
   service: direct
 search:
+  #------------------
+  # Connection tests
+  #------------------
   -
     query: 'mark twain'
     replacements:

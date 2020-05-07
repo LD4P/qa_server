@@ -3,6 +3,9 @@ authority:
   service: ld4l_cache
   context: true
 search:
+  #------------------
+  # Connection tests
+  #------------------
   -
     query: John Winters
   -
@@ -14,6 +17,9 @@ search:
   -
     query: Typographia Plantiniana
     subauth: corporate
+  #------------------
+  #  Accuracy tests
+  #------------------
   -
     query: Joannes Philippus de Lignamine
     subauth: person

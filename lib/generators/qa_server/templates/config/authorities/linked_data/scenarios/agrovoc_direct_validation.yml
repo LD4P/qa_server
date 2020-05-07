@@ -2,8 +2,15 @@
 authority:
   service: direct
 search:
+  #------------------
+  # Connection tests
+  #------------------
   -
     query: milk
+  #------------------
+  #  Accuracy tests
+  #------------------
+  # TBD
 term:
   -
     identifier: "http://aims.fao.org/aos/agrovoc/c_9513"

@@ -3,8 +3,14 @@ authority:
   service: ld4l_cache
   context: true
 search:
+  #------------------
+  # Connection tests
+  #------------------
   -
     query: band
+  #------------------
+  #  Accuracy tests
+  #------------------
   -
     query: conductor
     position: 10

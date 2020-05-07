@@ -3,8 +3,15 @@ authority:
   service: ld4l_cache
   context: true
 search:
+  #------------------
+  # Connection tests
+  #------------------
   -
     query: memphis
+  #------------------
+  #  Accuracy tests
+  #------------------
+  # TBD
 term:
   -
     identifier: 'http://vocab.getty.edu/tgn/7017750'

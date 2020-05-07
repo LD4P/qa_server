@@ -2,6 +2,9 @@
 authority:
   service: ld4l_cache
 search:
+  #------------------
+  # Connection tests
+  #------------------
   -
     query: 'mark twain'
   -
@@ -25,6 +28,10 @@ search:
   -
     query: 'mark twain'
     subauth: work
+  #------------------
+  #  Accuracy tests
+  #------------------
+  # TBD
 term:
   -
     identifier: 'http://id.worldcat.org/fast/1914919'

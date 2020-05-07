@@ -3,9 +3,16 @@ authority:
   service: ld4l_cache
   context: true
 search:
+  #------------------
+  # Connection tests
+  #------------------
   -
     query: binding
     result_size: 100
+  #------------------
+  #  Accuracy tests
+  #------------------
+  # TBD
 term:
   -
     identifier: 'http://w3id.org/lob/concept/3796'

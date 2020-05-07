@@ -2,6 +2,9 @@
 authority:
   service: ld4l_cache
 search:
+  #------------------
+  # Connection tests
+  #------------------
   -
     query: washington
   -
@@ -10,6 +13,10 @@ search:
   -
     query: washington
     subauth: organization
+  #------------------
+  #  Accuracy tests
+  #------------------
+  # TBD
 term:
   -
     identifier: 'http://vocab.getty.edu/ulan/500020427'

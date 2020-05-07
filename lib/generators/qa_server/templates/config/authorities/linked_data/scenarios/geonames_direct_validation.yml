@@ -2,8 +2,32 @@
 authority:
   service: direct
 search:
+  #------------------
+  # Connection tests
+  #------------------
   -
     query: Ithaca
+  #------------------
+  #  Accuracy tests
+  #------------------
+  -
+    query: France
+    subject_uri: 'http://sws.geonames.org/261707/'
+    position: 10
+    replacements:
+      maxRecords: '15'
+  -
+    query: New York
+    subject_uri: "http://sws.geonames.org/5128581/"
+    position: 3
+    replacements:
+      maxRecords: '8'
+  -
+    query: Chicago
+    subject_uri: 'http://sws.geonames.org/4887398/'
+    postion: 10
+    replacements:
+      maxRecords: '15'
 term:
   -
     identifier: 'https://sws.geonames.org/261707/'

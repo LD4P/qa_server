@@ -2,17 +2,14 @@
 authority:
   service: ld4l_cache
 search:
+  #------------------
+  # Connection tests
+  #------------------
   -
     query: amphora
   -
     query: events
     subauth: Activities
-  -
-    query: precious
-    position: 5
-    subject_uri: "http://vocab.getty.edu/aat/300011054"
-    replacements:
-      maxRecords: '10'
   -
     query: film
     subauth: Activities__Disciplines
@@ -121,6 +118,15 @@ search:
     query: Contemporary
     subauth: Styles_and_Periods__Styles_and_Periods
     result_size: 190
+  #------------------
+  #  Accuracy tests
+  #------------------
+  -
+    query: precious
+    position: 5
+    subject_uri: "http://vocab.getty.edu/aat/300011054"
+    replacements:
+      maxRecords: '10'
 term:
   -
     identifier: 'http://vocab.getty.edu/aat/300265730'
