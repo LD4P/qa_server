@@ -6,6 +6,12 @@ search:
   -
     query: Cayuga
   -
+    query: 'Camden NJ'
+    position: 8
+    subject_uri: "http://id.loc.gov/authorities/names/n81139356"
+    replacements:
+      maxRecords: '20'
+  -
     query: Cayuga
     subauth: geographic
   -
