@@ -1,11 +1,16 @@
 # frozen_string_literal: true
-source 'https://rubygems.org'
-git_source(:github) { |repo| "https://github.com/#{repo}.git" }
+source "https://rubygems.org"
+# git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 # Declare your gem's dependencies in qa_server.gemspec.
 # Bundler will treat runtime dependencies like base dependencies, and
 # development dependencies will be added by default to the :development group.
-gemspec
+gemspec path: File.expand_path('..', __FILE__)
+
+group :development, :test do
+  gem 'coveralls', require: false
+  gem 'simplecov', require: false
+end
 
 # Declare any dependencies that are still in development here instead of in
 # your gemspec. These might include edge Rails or gems from your path or
@@ -15,7 +20,6 @@ gemspec
 # To use a debugger
 # gem 'byebug', group: [:development, :test]
 
-# rubocop:disable Bundler/DuplicatedGem
 # BEGIN ENGINE_CART BLOCK
 # engine_cart: 1.1.0
 # engine_cart stanza: 0.10.0
@@ -31,6 +35,7 @@ if File.exist?(file)
 else
   Bundler.ui.warn "[EngineCart] Unable to find test application dependencies in #{file}, using placeholder dependencies"
 
+  # rubocop:disable Bundler/DuplicatedGem
   if ENV['RAILS_VERSION']
     if ENV['RAILS_VERSION'] == 'edge'
       gem 'rails', github: 'rails/rails'
@@ -41,6 +46,8 @@ else
   end
 
   case ENV['RAILS_VERSION']
+  when /^5.[12]/
+    gem 'sass-rails', '~> 5.0'
   when /^4.2/
     gem 'coffee-rails', '~> 4.1.0'
     gem 'responders', '~> 2.0'
@@ -48,8 +55,8 @@ else
   when /^4.[01]/
     gem 'sass-rails', '5.1.6'
   end
+  # rubocop:enable Bundler/DuplicatedGem
 end
 # END ENGINE_CART BLOCK
-# rubocop:enable Bundler/DuplicatedGem
 
 eval_gemfile File.expand_path('spec/test_app_templates/Gemfile.extra', File.dirname(__FILE__)) unless File.exist?(file)

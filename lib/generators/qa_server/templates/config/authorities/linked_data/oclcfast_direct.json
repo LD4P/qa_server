@@ -73,6 +73,7 @@
       "geocoordinates": "oclc.geographic",
       "geographic":     "oclc.geographic",
       "event_name":     "oclc.eventName",
+      "meeting":        "oclc.meeting",
       "person":         "oclc.personalName",
       "personal_name":  "oclc.personalName",
       "organization":   "oclc.corporateName",

@@ -8,6 +8,12 @@ search:
     query: events
     subauth: Activities
   -
+    query: precious
+    position: 5
+    subject_uri: "http://vocab.getty.edu/aat/300011054"
+    replacements:
+      maxRecords: '10'
+  -
     query: film
     subauth: Activities__Disciplines
     result_size: 90

@@ -1,4 +1,5 @@
 # QaServer
+
 This rails engine can be installed into your app to serve as a Questioning Authority (QA) Server for accessing external authorities.  It is part of a larger architecture supporting linked data authority access.  From this engine, you can send a search query and get back multiple results OR you can fetch a single term.  The engine provides UI for monitoring connections to configured authorities and the ability to check the current status of a single authority to determine if it is up and running now. 
 
 ## Reference
@@ -25,6 +26,7 @@ Only required if you want to generate status charts.  Generated charts will be s
 `app/assets/images/qa_server/charts` directory.  By default status is displayed in a table.
 
 1. [ImageMagick](http://www.imagemagick.org/)
+2. job queue processor of your choice
 
 ### Installation Instructions
 
@@ -57,6 +59,57 @@ $ rake db:migrate
 ```
 
 If upgrading instead of installing, see the Release notes for steps you may need to take manually since you won't be running the installer.
+
+#### Setting up monitoring
+
+Monitoring runs once a day as a background job.  
+
+##### Configuring cache expiration
+
+There are several configurations that control when the monitoring job will execute.
+
+```
+    # Preferred time zone for reporting historical data and performance data
+    # @param [String] time zone name
+    # @see https://api.rubyonrails.org/classes/ActiveSupport/TimeZone.html for possible values of TimeZone names
+    attr_writer :preferred_time_zone_name
+    def preferred_time_zone_name
+      @preferred_time_zone_name ||= 'Eastern Time (US & Canada)'
+    end
+
+    # Set preferred hour to expire caches related to slow running calculations (e.g. monitoring tests, performance data)
+    # @param [Integer] count of hours after midnight (0-23 with 0=midnight)
+    # @raise [ArgumentError] if offset is not between 0 and 23
+    # @example
+    #   For preferred_time_zone_name of 'Eastern Time (US & Canada)', use 3 for slow down at midnight PT/3am ET
+    #   For preferred_time_zone_name of 'Pacific Time (US & Canada)', use 0 for slow down at midnight PT/3am ET
+    def hour_offset_to_expire_cache=(offset)
+      raise ArgumentError, 'offset must be between 0 and 23' unless (0..23).cover? offset
+      @hour_offset_to_expire_cache = offset
+    end
+```
+
+With the default values set for the cache configurations, the cache will expire at midnight Pacific Time/3am Eastern Time.
+
+##### Process for updating monitoring tests
+
+Monitoring works in conjuction with the cache.  When the cache expires, the monitoring tests will run the next time the monitor status page is accessed.  When the monitor status page loads, it attempts to get the data for the page from the cache.  If the cache has expired, it will get the previous day's data and kick off a background job to run the tests and update the cache.
+
+##### Controlling when tests run
+
+Because this process is launched by access to the monitor status page, it will not by default run the monitoring tests everyday.  In our system, we set up Pingdom to access the monitor status page hourly around the clock.  If an error occurs during the latest testing, the monitor status page includes a CSS class `summary-status-bad` and displays error results.  Pingdom is configured to send a notification if the `summary-status-bad` CSS class is on the page, letting us know that we need to look into a problem with authority access.
+
+##### Setting up background jobs
+
+Reference: https://guides.rubyonrails.org/active_job_basics.html
+
+Since this job is not critical for end users, you can set up jobs to be processed by the ruby provided in-memory job queue.  The risk here is that if the server restarts or some other failure occurs, jobs in that queue are lost.  If this is unacceptable for your system, then you will want to setup a 3rd party job queue ([more info...](https://guides.rubyonrails.org/active_job_basics.html#starting-the-backend)).
+
+To configure in-memory job queue, add the following to config/environments/production.rb
+
+```
+  config.active_job.queue_adapter = :async # runs in-memory; a crash will lose the job
+```
 
 #### Test the install
 
