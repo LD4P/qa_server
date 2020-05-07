@@ -24,6 +24,18 @@ search:
   -
     query: ALA
     subauth: conference
+  -
+    query: 'Camden, William'
+    position: 10
+    subject_uri: "http://id.loc.gov/authorities/names/n50031528"
+    replacements:
+      maxRecords: '20'
+  -
+    query: 'King Stephen 1947'
+    position: 5
+    subject_uri: "http://id.loc.gov/authorities/names/n79063767"
+    replacements:
+      maxRecords: '20'
 term:
   -
     identifier: 'http://id.loc.gov/authorities/names/n92016188'
