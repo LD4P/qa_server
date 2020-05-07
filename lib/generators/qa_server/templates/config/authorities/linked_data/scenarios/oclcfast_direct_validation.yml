@@ -22,9 +22,14 @@ search:
     subauth: topic
     replacements:
       maxRecords: '4'
+#  -
+#    query: War
+#    subauth: event_name
+#    replacements:
+#      maxRecords: '4'
   -
     query: Festival
-    subauth: event_name
+    subauth: meeting
     replacements:
       maxRecords: '4'
   -

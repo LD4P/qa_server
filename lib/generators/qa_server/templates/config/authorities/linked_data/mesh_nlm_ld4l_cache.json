@@ -3,7 +3,7 @@
   "service_uri": "http://ld4l.org/ld4l_services/cache",
   "prefixes": {
     "nlmmesh": "http://id.nlm.nih.gov/mesh/vocab#",
-    "vivo": "http://vivoweb.org/ontology/core#"
+    "vivo":    "http://vivoweb.org/ontology/core#"
   },
   "term": {
     "url": {
@@ -33,7 +33,7 @@
     "url": {
       "@context": "http://www.w3.org/ns/hydra/context.jsonld",
       "@type": "IriTemplate",
-      "template": "http://services.ld4l.org/ld4l_services/mesh_batch.jsp?{?query}&{?maxRecords}&{?startRecord}&{?lang}",
+      "template": "http://services.ld4l.org/ld4l_services/mesh_batch.jsp?{?query}&{?maxRecords}&{?startRecord}&{?entity}&{?lang}",
       "variableRepresentation": "BasicRepresentation",
       "mapping": [
         {
@@ -42,6 +42,13 @@
           "property": "hydra:freetextQuery",
           "required": true,
           "encode": true
+        },
+        {
+          "@type": "IriTemplateMapping",
+          "variable": "entity",
+          "property": "hydra:freetextQuery",
+          "required": false,
+          "default": ""
         },
         {
           "@type": "IriTemplateMapping",
@@ -68,14 +75,139 @@
     },
     "qa_replacement_patterns": {
       "query":   "query",
+      "subauth": "entity",
       "start_record": "startRecord",
       "requested_records": "maxRecords"
     },
     "total_count_ldpath": "vivo:count",
     "results": {
       "id_ldpath":    "nlmmesh:identifier ::xsd:string",
-      "label_ldpath": "nlmmesh:prefLabel ::xsd:string",
+      "label_ldpath": "rdfs:label ::xsd:string",
       "sort_ldpath":  "vivo:rank ::xsd:string"
+    },
+    "context": {
+      "groups": {
+        "hierarchy": {
+          "group_label_i18n": "qa.linked_data.authority.mesh_nlm_ld4l_cache.hierarchy",
+          "group_label_default": "Hierarchy"
+        }
+      },
+      "properties": [
+        {
+          "property_label_i18n": "qa.linked_data.authority.mesh_nlm_ld4l_cache.preferred_label",
+          "property_label_default": "Preferred Label",
+          "ldpath": "rdfs:label :: xsd:string",
+          "selectable": true,
+          "drillable": false
+        },
+        {
+          "property_label_i18n": "qa.linked_data.authority.mesh_nlm_ld4l_cache.variant_label",
+          "property_label_default": "Variant label",
+          "ldpath": "nlmmesh:concept/rdfs:label :: xsd:string",
+          "selectable": false,
+          "drillable": false
+        },
+        {
+          "property_label_i18n": "qa.linked_data.authority.mesh_nlm_ld4l_cache.type",
+          "property_label_default": "Type",
+          "ldpath": "rdf:type :: xsd:string",
+          "selectable": false,
+          "drillable": false
+        },
+        {
+          "property_label_i18n": "qa.linked_data.authority.mesh_nlm_ld4l_cache.annotation",
+          "property_label_default": "Annotation",
+          "ldpath": "nlmmesh:annotation :: xsd:string",
+          "selectable": false,
+          "drillable": false
+        },
+        {
+          "group_id": "hierarchy",
+          "property_label_i18n": "qa.linked_data.authority.mesh_nlm_ld4l_cache.broader",
+          "property_label_default": "Broader",
+          "ldpath": "nlmmesh:broaderDescriptor :: xsd:string",
+          "selectable": true,
+          "drillable": true,
+          "expansion_label_ldpath": "rdfs:label ::xsd:string"
+        },
+        {
+          "group_id": "hierarchy",
+          "property_label_i18n": "qa.linked_data.authority.mesh_nlm_ld4l_cache.narrower",
+          "property_label_default": "Narrower",
+          "ldpath": "^nlmmesh:broaderDescriptor :: xsd:string",
+          "selectable": true,
+          "drillable": true,
+          "expansion_label_ldpath": "rdfs:label ::xsd:string"
+        },
+        {
+          "property_label_i18n": "qa.linked_data.authority.mesh_nlm_ld4l_cache.consider_also",
+          "property_label_default": "Consider also",
+          "ldpath": "nlmmesh:considerAlso :: xsd:string",
+          "selectable": true,
+          "drillable": true,
+          "expansion_label_ldpath": "rdfs:label ::xsd:string"
+        },
+        {
+          "property_label_i18n": "qa.linked_data.authority.mesh_nlm_ld4l_cache.pharmacological_action",
+          "property_label_default": "Pharmacological action",
+          "ldpath": "nlmmesh:pharmacologicalAction/rdfs:label :: xsd:string",
+          "selectable": false,
+          "drillable": false
+        },
+        {
+          "property_label_i18n": "qa.linked_data.authority.mesh_nlm_ld4l_cache.see_also",
+          "property_label_default": "See also",
+          "ldpath": "nlmmesh:seeAlso/rdfs:label :: xsd:string",
+          "selectable": false,
+          "drillable": false
+        },
+        {
+          "property_label_i18n": "qa.linked_data.authority.mesh_nlm_ld4l_cache.entry_terms",
+          "property_label_default": "Entry terms",
+          "ldpath": "(^nlmmesh:concept/nlmmesh:broaderConcept/rdfs:label) | (^nlmmesh:preferredConcept/nlmmesh:broaderConcept/rdfs:label) | (^nlmmesh:concept/nlmmesh:narrowerConcept/rdfs:label) | (^nlmmesh:preferredConcept/nlmmesh:narrowerConcept/rdfs:label) :: xsd:string",
+          "selectable": false,
+          "drillable": false
+        },
+        {
+          "property_label_i18n": "qa.linked_data.authority.mesh_nlm_ld4l_cache.related_concept",
+          "property_label_default": "Related concept",
+          "ldpath": "(^nlmmesh:concept/nlmmesh:relatedConcept/rdfs:label) | (^nlmmesh:preferredConcept/nlmmesh:relatedConcept/rdfs:label)  :: xsd:string",
+          "selectable": false,
+          "drillable": false
+        },
+        {
+          "property_label_i18n": "qa.linked_data.authority.mesh_nlm_ld4l_cache.scope_note",
+          "property_label_default": "Scope note",
+          "ldpath": "(^nlmmesh:concept/nlmmesh:scopeNote) | (^nlmmesh:preferredConcept/nlmmesh:scopeNote) :: xsd:string",
+          "selectable": false,
+          "drillable": false
+        },
+        {
+          "property_label_i18n": "qa.linked_data.authority.mesh_nlm_ld4l_cache.related_qualified_pair",
+          "property_label_default": "Related qualified pair",
+          "ldpath": "^nlmmesh:hasDescriptor/rdfs:label :: xsd:string",
+          "selectable": false,
+          "drillable": false
+        },
+        {
+          "property_label_i18n": "qa.linked_data.authority.mesh_nlm_ld4l_cache.descriptor",
+          "property_label_default": "Descriptor",
+          "ldpath": "nlmmesh:hasDescriptor/rdfs:label :: xsd:string",
+          "selectable": false,
+          "drillable": false
+        },
+        {
+          "property_label_i18n": "qa.linked_data.authority.mesh_nlm_ld4l_cache.use_instead",
+          "property_label_default": "Use instead",
+          "ldpath": "(^nlmmesh:useInstead/rdfs:label) | (^nlmmesh:mappedTo/rdfs:label) :: xsd:string",
+          "selectable": true,
+          "drillable": false
+        }
+      ]
+    },
+    "subauthorities": {
+      "subject":          "Subject",
+      "publication_type": "FormOfWork"
     }
   }
 }

@@ -4,8 +4,8 @@
   "prefixes": {
     "rdaGr2": "http://rdvocab.info/ElementsGr2/",
     "rdaGr3": "http://rdvocab.info/ElementsGr3/",
-    "ct": "http://www.cerl.org/namespaces/thesaurus",
-    "rdaRelGr2": "http://metadataregistry.org/uri/schema/RDARelationshipsGR2",
+    "ct": "http://www.cerl.org/namespaces/thesaurus/",
+    "rdaRelGr2": "http://metadataregistry.org/uri/schema/RDARelationshipsGR2/",
     "vivo": "http://vivoweb.org/ontology/core#"
   },
   "term": {
