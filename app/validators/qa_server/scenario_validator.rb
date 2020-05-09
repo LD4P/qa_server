@@ -45,6 +45,7 @@ module QaServer
         status_info[:service] = service
         status_info[:action] = action
         status_info[:url] = url
+        status_info[:request_data] = request_data
         status_log.add(status_info)
       end
 
@@ -53,6 +54,10 @@ module QaServer
       end
 
       def run_connection_scenario
+        # ABSTRACT - must be implemented by scenario validator for specific types
+      end
+
+      def request_data
         # ABSTRACT - must be implemented by scenario validator for specific types
       end
 
@@ -71,26 +76,32 @@ module QaServer
         log(status: FAIL, error_message: "Exception executing #{scenario_type_name} scenario; cause: #{e.message}", request_run_time: (dt_end - dt_start))
       end
 
+      # @return [Qa::Authorities::LinkedData::GenericAuthority] authority instance the scenarios run against
       def authority
         scenario.authority
       end
 
+      # @return [Symbol] name of the authority (e.g. :CERL_LD4L_CACHE)
       def authority_name
         scenario.authority_name.upcase
       end
 
+      # @return [String] name of the subauthority (e.g. "person")
       def subauthority_name
         scenario.subauthority_name
       end
 
+      # @return [String] service providing the data (e.g. "ld4l_cache" or "direct")
       def service
         scenario.service
       end
 
+      # @return [String] relative URL with ready to execute (e.g. ""/authorities/search/linked_data/cerl_ld4l_cache/person?q=office")
       def url
         scenario.url
       end
 
+      # @return [String] action being tested (e.g. "search" or "term")
       def action
         # ABSTRACT - must be implemented by scenario validator for specific types
       end

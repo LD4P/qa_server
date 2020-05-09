@@ -28,6 +28,7 @@ module QaServer
     # @option service [String] identifies the primary service provider (e.g. 'ld4l_cache', 'direct', etc.)
     # @option action [String] type of scenario (i.e. 'term', 'search')
     # @option url [String] example url that was used to test a specific term fetch or search query
+    # @option request_data [String] either the query for searches or the requested id/uri for fetch
     # @option error_message [String] error message if scenario failed
     # @option expected [Integer] the expected result (e.g. min size of result OR max position of subject within results)
     # @option actual [Integer] the actual result (e.g. actual size of results OR actual position of subject within results)
@@ -44,6 +45,7 @@ module QaServer
                 service: status_info[:service] || '',
                 action: status_info[:action] || '',
                 url: status_info[:url] || '',
+                request_data: status_info[:request_data] || '',
                 expected: status_info[:expected] || nil,
                 actual: status_info[:actual] || nil,
                 target: status_info[:target] || nil,

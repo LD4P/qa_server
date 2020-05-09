@@ -31,7 +31,7 @@ search:
     replacements:
       maxRecords: '20'
   -
-    query: maps 
+    query: maps
     position: 3
     subject_uri: "http://id.loc.gov/authorities/genreForms/gf2011026387"
     replacements:

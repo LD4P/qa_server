@@ -199,13 +199,17 @@ module QaServer
     # Performance data is gathered on every incoming query.  Basic stats are logged from QA.  Full stats are logged
     # by QaServer and can eat up logging realestate.  To suppress the logging of details, set this config to true.
     # @param [Boolean] do not log performance data details when true (defaults to false for backward compatibitily)
-    attr_writer :suppress_logging_performance_datails
-    def suppress_logging_performance_datails?
-      return @suppress_logging_performance_datails unless @suppress_logging_performance_datails.nil?
-      @suppress_logging_performance_datails ||= false
+    attr_writer :suppress_logging_performance_details
+    def suppress_logging_performance_details?
+      return @suppress_logging_performance_details unless @suppress_logging_performance_details.nil?
+      @suppress_logging_performance_details ||= false
     end
-    alias suppress_logging_performance_datails suppress_logging_performance_datails?
+    alias suppress_logging_performance_datails suppress_logging_performance_details?
+    alias suppress_logging_performance_datails? suppress_logging_performance_details?
+    alias suppress_logging_performance_datails= suppress_logging_performance_details=
     deprecation_deprecate suppress_logging_performance_datails: "use #suppress_logging_performance_datails? instead"
+    deprecation_deprecate suppress_logging_performance_datails?: "use #suppress_logging_performance_details? instead"
+    # deprecation_deprecate suppress_logging_performance_datails=: "use #suppress_logging_performance_details= instead"
 
     # Maximum amount of memory the performance cache can occupy before it is written to the database.
     # @param [Integer] maximum size of performance cache before flushing
