@@ -20,7 +20,7 @@ module QaServer
     DEFAULT_SUBJECT_URI = nil
 
     # @param authority [Qa::Authorities::LinkedData::GenericAuthority] the instance of the QA authority
-    # @param authoity_name [Symbol] the name of the authority the scenario tests (e.g. :AGROVOC_DIRECT)
+    # @param authority_name [Symbol] the name of the authority the scenario tests (e.g. :AGROVOC_DIRECT)
     # @param authority_scenario_config [Hash] configurations from the yml file that pertain to all scenarios regardless of type
     # @param scenario_config [Hash] configuration from the yml file that are specific to a search scenario
     def initialize(authority:, authority_name:, authority_scenario_config:, scenario_config:)

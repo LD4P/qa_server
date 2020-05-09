@@ -62,3 +62,7 @@ def load_fixture_file(fname)
     return f.read
   end
 end
+
+QaServer.config.suppress_performance_gathering = true
+QaServer.config.suppress_logging_performance_details = true
+QaServer.config.preferred_time_zone_name = 'Eastern Time (US & Canada)'

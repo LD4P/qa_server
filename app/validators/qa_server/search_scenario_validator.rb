@@ -6,11 +6,16 @@ module QaServer
   class SearchScenarioValidator < ScenarioValidator
     SEARCH_ACTION = 'search'
 
+    # CONCRETE Implementation: Return value of request_data
+    attr_reader :request_data
+    private :request_data
+
     # @param scenario [SearchScenario] the scenario to run
     # @param status_log [ScenarioLogger] logger for recording test results
     # @param validation_type [Symbol] the type of scenarios to run (e.g. VALIDATE_CONNECTION, VALIDATE_ACCURACY, ALL_VALIDATIONS)
     def initialize(scenario:, status_log:, validation_type: DEFAULT_VALIDATION_TYPE)
       super
+      @request_data = scenario.query
     end
 
     private
@@ -19,7 +24,7 @@ module QaServer
         SEARCH_ACTION
       end
 
-      # Run the connection test and log results
+      # CONCRETE Implementation: Run the connection test and log results
       def run_connection_scenario
         test_connection(min_expected_size: scenario.min_result_size, scenario_type_name: 'search') do
           replacements = scenario.replacements.dup
@@ -29,12 +34,13 @@ module QaServer
         end
       end
 
-      # Run the accuracy test and log results
+      # CONCRETE Implementation: Run the accuracy test and log results
       def run_accuracy_scenario
         test_accuracy(subject_uri: scenario.subject_uri, expected_by_position: scenario.expected_by_position) do
+          replacements = scenario.replacements.dup
           authority.search(scenario.query,
                            subauth: scenario.subauthority_name,
-                           replacements: scenario.replacements)
+                           replacements: replacements)
         end
       end
 
