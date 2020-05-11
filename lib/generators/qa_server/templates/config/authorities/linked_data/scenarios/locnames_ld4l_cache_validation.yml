@@ -29,17 +29,31 @@ search:
   #  TBD - tests for subauths
   #    conference
   -
-    query: 'Camden NJ'
+    query: Camden NJ
+    position: 8
+    subauth: geographic
+    subject_uri: "http://id.loc.gov/authorities/names/n81139356"
+    replacements:
+      maxRecords: '20'
+   -
+    query: Camden NJ
     position: 8
     subauth: geographic
     subject_uri: "http://id.loc.gov/authorities/names/n81139356"
     replacements:
       maxRecords: '20'
   -
-    query: 'Madrid, Spain'
+    query: Madrid, Spain
     position: 5
     subauth: geographic
     subject_uri: "http://id.loc.gov/authorities/names/n78089046"
+    replacements:
+      maxRecords: '15'
+  -
+    query: Non Food Uses of Crops
+    position: 5
+    subauth: conference
+    subject_uri: "http://id.loc.gov/authorities/names/nb2014001245"
     replacements:
       maxRecords: '15'
 term:
