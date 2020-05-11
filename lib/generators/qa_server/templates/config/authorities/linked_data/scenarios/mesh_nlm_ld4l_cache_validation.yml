@@ -25,9 +25,33 @@ search:
   #------------------
   #  Accuracy tests
   #------------------
-  #  TBD - tests for subauths
-  #    subject
-  #    publication_type
+  -
+    query: Malignant Hyperthermia
+    subject_uri: 'http://id.nlm.nih.gov/mesh/D008305'
+    position: 3
+    replacements:
+      maxRecords: '5'
+  -
+    query: Heart Attack
+    subauth: subject
+    subject_uri: 'http://id.nlm.nih.gov/mesh/D009203'
+    position: 3
+    replacements:
+      maxRecords: '5'
+  -
+    query: Letter
+    subauth: publication_type
+    subject_uri: "http://id.nlm.nih.gov/mesh/D016422"
+    position: 3
+    replacements:
+      maxRecords: '8'
+  -
+    query: Email
+    subauth: subject
+    subject_uri: 'http://id.nlm.nih.gov/mesh/D034742'
+    postion: 5
+    replacements:
+      maxRecords: '10'
 term:
   -
     identifier: 'http://id.nlm.nih.gov/mesh/T727346'
