@@ -7,10 +7,33 @@ search:
   #------------------
   -
     query: milk
-  #------------------
+ #------------------
   #  Accuracy tests
   #------------------
-  # TBD
+  -
+    query: extrakce rozpouštědlem
+    position: 5
+    subject_uri: "http://aims.fao.org/aos/agrovoc/c_28368"
+    replacements:
+      maxRecords: '20'
+  -
+    query: vodka 
+    position: 1
+    subject_uri: "http://aims.fao.org/aos/agrovoc/c_23837"
+    replacements:
+      maxRecords: '1'
+  -
+    query: Mud Sunfish
+    position: 5
+    subject_uri: "http://aims.fao.org/aos/agrovoc/c_42559"
+    replacements:
+      maxRecords: '10'
+  -
+    query: Acantharchus pomotis
+    position: 1
+    subject_uri: "http://aims.fao.org/aos/agrovoc/c_42559"
+    replacements:
+      maxRecords: '10'
 term:
   -
     identifier: "http://aims.fao.org/aos/agrovoc/c_9513"
