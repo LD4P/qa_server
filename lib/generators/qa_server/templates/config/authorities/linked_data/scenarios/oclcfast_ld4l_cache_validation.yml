@@ -33,14 +33,14 @@ search:
   #------------------
   -
     query: Tralee & Dingle Railway
-    subject_uri: 'http://id.worldcat.org/fast/1733583'
+    subject_uri: "http://id.worldcat.org/fast/1733583"
     position: 3
     replacements:
       maxRecords: '5'
   -
     query: Sleep-overs
     subauth: concept
-    subject_uri: 'http://id.worldcat.org/fast/1120873'
+    subject_uri: "http://id.worldcat.org/fast/1120873"
     position: 5
     replacements:
       maxRecords: '10'
@@ -54,7 +54,7 @@ search:
   -
     query: University of Chicago Library
     subauth: organization
-    subject_uri: 'http://id.worldcat.org/fast/539173'
+    subject_uri: "http://id.worldcat.org/fast/539173"
     postion: 5
     replacements:
       maxRecords: '10'
@@ -68,14 +68,14 @@ search:
   -
     query: Sjælland
     subauth: place
-    subject_uri: 'http://id.worldcat.org/fast/1243881'
+    subject_uri: "http://id.worldcat.org/fast/1243881"
     postion: 5
     replacements:
       maxRecords: '10'
   -
     query: Scream
     subauth: work
-    subject_uri: 'http://id.worldcat.org/fast/1358031'
+    subject_uri: "http://id.worldcat.org/fast/1358031"
     postion: 5
     replacements:
       maxRecords: '10'
