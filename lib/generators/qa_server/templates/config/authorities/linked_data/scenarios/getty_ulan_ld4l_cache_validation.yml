@@ -19,9 +19,33 @@ search:
   #------------------
   #  Accuracy tests
   #------------------
-  #  TBD - tests for subauths
-  #    person
-  #    organization
+  -
+    query: Gonzalez-Torres, Felix
+    subject_uri: 'http://vocab.getty.edu/ulan/500114715'
+    position: 5
+    replacements:
+      maxRecords: '10'
+  -
+    query: Gouverneur
+    subauth: person
+    subject_uri: 'http://vocab.getty.edu/ulan/500225342'
+    position: 5
+    replacements:
+      maxRecords: '10'
+  -
+    query: Octavio Medellin
+    subauth: person
+    subject_uri: "http://vocab.getty.edu/ulan/500333005"
+    position: 3
+    replacements:
+      maxRecords: '8'
+  -
+    query: University of Chicago Library
+    subauth: organization
+    subject_uri: 'http://vocab.getty.edu/ulan/500304715'
+    postion: 5
+    replacements:
+      maxRecords: '10'
 term:
   -
     identifier: 'http://vocab.getty.edu/ulan/500020427'
