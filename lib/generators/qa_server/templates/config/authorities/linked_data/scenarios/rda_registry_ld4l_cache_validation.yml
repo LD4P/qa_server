@@ -259,4 +259,307 @@ search:
   #------------------
   #  Accuracy tests
   #------------------
-  # TBD
+  -
+    query: full
+    subauth: aspect_ratio
+    position: 3
+    subject_uri: "http://rdaregistry.info/termList/AspectRatio/1001"
+    replacements:
+      maxRecords: '20'
+  -
+    query: librettos
+    subauth: collective_title
+    position: 3
+    subject_uri: "http://rdaregistry.info/termList/CollTitle/1010"
+    replacements:
+      maxRecords: '20'
+  -
+    query: coat of arms
+    subauth: illustrative_content
+    position: 3
+    subject_uri: "http://rdaregistry.info/termList/IllusContent/1001"
+    replacements:
+      maxRecords: '20'
+  -
+    query: multipart
+    subauth: mode_of_issuance
+    position: 3
+    subject_uri: "http://rdaregistry.info/termList/ModeIssue/1002"
+    replacements:
+      maxRecords: '20'
+  -
+    query: tonic sol-fa
+    subauth: form_of_musical_notation
+    position: 3
+    subject_uri: "http://rdaregistry.info/termList/MusNotation/1009"
+    replacements:
+      maxRecords: '20'
+   -
+    query: jigsaw puzzle
+    subauth: carrier_extent_unit
+    position: 3
+    subject_uri: "http://rdaregistry.info/termList/RDACarrierEU/1017"
+    replacements:
+      maxRecords: '20'
+  -
+    query: online
+    subauth: carrier_type
+    position: 3
+    subject_uri: "http://rdaregistry.info/termList/RDACarrierType/1018"
+    replacements:
+      maxRecords: '20'
+  -
+    query: vector
+    subauth: cartographic_data_type
+    position: 3
+    subject_uri: "http://rdaregistry.info/termList/RDACartoDT/1002"
+    replacements:
+      maxRecords: '20'
+  -
+    query: polychrome
+    subauth: colour_content
+    position: 3
+    subject_uri: "http://rdaregistry.info/termList/RDACartoDT/1003"
+    replacements:
+      maxRecords: '20'
+  -
+    query: image
+    subauth: content_type
+    position: 8
+    subject_uri: "http://rdaregistry.info/termList/RDAContentType/1014"
+    replacements:
+      maxRecords: '20'
+  -
+    query: mother
+    subauth: generation
+    position: 3
+    subject_uri: "http://rdaregistry.info/termList/RDAGeneration/1008"
+    replacements:
+      maxRecords: '20'
+  -
+    query: paper
+    subauth: material
+    position: 3
+    subject_uri: "http://rdaregistry.info/termList/RDAMaterial/1025"
+    replacements:
+      maxRecords: '20'
+  -
+    query: audio
+    subauth: media_type
+    position: 3
+    subject_uri: "http://rdaregistry.info/termList/RDAMediaType/1001"
+    replacements:
+      maxRecords: '20'
+  -
+    query: mixed
+    subauth: polarity
+    position: 3
+    subject_uri: "http://rdaregistry.info/termList/RDAPolarity/1003"
+    replacements:
+      maxRecords: '20'
+  -
+    query: title
+    subauth: recording_sources
+    position: 7
+    subject_uri: "http://rdaregistry.info/termList/RDARecordingSources/1003"
+    replacements:
+      maxRecords: '20'
+  -
+    query: high
+    subauth: reduction_ratio
+    position: 3
+    subject_uri: "http://rdaregistry.info/termList/RDAReductionRatio/1005"
+    replacements:
+      maxRecords: '20'
+  -
+    query: Region 5
+    subauth: regional_encoding
+    position: 3
+    subject_uri: "http://rdaregistry.info/termList/RDARegionalEncoding/1011"
+    replacements:
+      maxRecords: '20'
+  -
+    query: self-describing manifestation
+    subauth: terms
+    position: 3
+    subject_uri: "http://rdaregistry.info/termList/RDATerms/1080"
+    replacements:
+      maxRecords: '20'
+  -
+    query: spiral
+    subauth: type_of_binding
+    position: 3
+    subject_uri: "http://rdaregistry.info/termList/RDATypeOfBinding/1003"
+    replacements:
+      maxRecords: '20'
+  -
+    query: blueline process
+    subauth: production_method
+    position: 3
+    subject_uri: "http://rdaregistry.info/termList/RDAproductionMethod/1001"
+    replacements:
+      maxRecords: '20'
+  -
+    query: braille
+    subauth: form_of_tactile_notation
+    position: 4
+    subject_uri: "http://rdaregistry.info/termList/TacNotation/1001"
+    replacements:
+      maxRecords: '20'
+  -
+    query: 48mo
+    subauth: bibliographic_format
+    position: 4
+    subject_uri: "http://rdaregistry.info/termList/bookFormat/1008"
+    replacements:
+      maxRecords: '20'
+  -
+    query: PAL
+    subauth: broadcast_standard
+    position: 4
+    subject_uri: "http://rdaregistry.info/termList/broadcastStand/1003"
+    replacements:
+      maxRecords: '20'
+  -
+    query: quadraphonic
+    subauth: config_playback_channels
+    position: 4
+    subject_uri: "http://rdaregistry.info/termList/configPlayback/1003"
+    replacements:
+      maxRecords: '20'
+  -
+    query: audio
+    subauth: file_type
+    position: 3
+    subject_uri: "http://rdaregistry.info/termList/fileType/1001"
+    replacements:
+      maxRecords: '20'
+  -
+    query: large
+    subauth: font_size
+    position: 3
+    subject_uri: "http://rdaregistry.info/termList/fontSize/1002"
+    replacements:
+      maxRecords: '20'
+  -
+    query: choir
+    subauth: format_of_notated_music
+    position: 3
+    subject_uri: "http://rdaregistry.info/termList/formatNoteMus/1001"
+    replacements:
+      maxRecords: '20'
+  -
+    query: times
+    subauth: frequency
+    position: 3
+    subject_uri: "http://rdaregistry.info/termList/frequency/1006"
+    replacements:
+      maxRecords: '20'
+  -
+    query: unknown
+    subauth: gender
+    position: 3
+    subject_uri: "http://rdaregistry.info/termList/gender/1003"
+    replacements:
+      maxRecords: '20'
+  -
+    query: fine
+    subauth: groove_pitch
+    position: 1
+    subject_uri: "http://rdaregistry.info/termList/groovePitch/1005"
+    replacements:
+      maxRecords: '10'
+  -
+    query: coarse
+    subauth: groove_width
+    position: 1
+    subject_uri: "http://rdaregistry.info/termList/grooveWidth/1001"
+    replacements:
+      maxRecords: '10'
+  -
+    query: single
+    subauth: layout
+    position: 2
+    subject_uri: "http://rdaregistry.info/termList/layout/1002"
+    replacements:
+      maxRecords: '10'
+  -
+    query: action stroke
+    subauth: form_of_notated_movement
+    position: 2
+    subject_uri: "http://rdaregistry.info/termList/noteMove/1009"
+    replacements:
+      maxRecords: '10'
+  -
+    query: imax
+    subauth: presentation_format
+    position: 2
+    subject_uri: "http://rdaregistry.info/termList/presFormat/1004"
+    replacements:
+      maxRecords: '10'
+  -
+    query: optical
+    subauth: recording_medium
+    position: 2
+    subject_uri: "http://rdaregistry.info/termList/recMedium/1003"
+    replacements:
+      maxRecords: '10'
+  -
+    query: music
+    subauth: rofch
+    position: 2
+    subject_uri: "http://rdaregistry.info/termList/rofch/T1002"
+    replacements:
+      maxRecords: '10'
+  -
+    query: varies
+    subauth: scale_designation
+    position: 2
+    subject_uri: "http://rdaregistry.info/termList/scale/1003"
+    replacements:
+      maxRecords: '10'
+  -
+    query: silent
+    subauth: sound_content
+    position: 2
+    subject_uri: "http://rdaregistry.info/termList/soundCont/1002"
+    replacements:
+      maxRecords: '10'
+  -
+    query: dolby a
+    subauth: special_playback
+    position: 4
+    subject_uri: "http://rdaregistry.info/termList/specPlayback/1005"
+    replacements:
+      maxRecords: '10'
+  -
+    query: provisional
+    subauth: status_of_identification
+    position: 4
+    subject_uri: "http://rdaregistry.info/termList/statIdentification/1002"
+    replacements:
+      maxRecords: '10'
+  -
+    query: edge
+    subauth: track_config
+    position: 4
+    subject_uri: "http://rdaregistry.info/termList/trackConfig/1002"
+    replacements:
+      maxRecords: '10'
+  -
+    query: analog
+    subauth: type_of_recording
+    position: 4
+    subject_uri: "http://rdaregistry.info/termList/typeRec/1001"
+    replacements:
+      maxRecords: '10'
+  -
+    query: Hi 8
+    subauth: video_format
+    position: 3
+    subject_uri: "http://rdaregistry.info/termList/videoFormat/1007"
+    replacements:
+      maxRecords: '10'
+term:
+  -
+    identifier: 'http://rdaregistry.info/termList/ModeIssue/1002'
