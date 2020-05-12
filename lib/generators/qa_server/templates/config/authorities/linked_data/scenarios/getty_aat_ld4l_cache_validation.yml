@@ -152,41 +152,220 @@ search:
   #------------------
   #  Accuracy tests
   #------------------
-  #  TBD - tests for subauths
-  #    Activities
-  #    Activities__Disciplines
-  #    Activities__Events
-  #    Activities__Functions
-  #    Activities__Physical_and_Mental
-  #    Activities__Processes_and_Techniques
-  #    Agents
-  #    Agents__Living_Organisms
-  #    Agents__Organizations
-  #    Agents__People
-  #    Associated_Concepts
-  #    Associated_Concepts__Associated_Concepts
-  #    Brand_Names
-  #    Brand_Names__Brand_Names
-  #    Materials
-  #    Materials__Materials
-  #    Objects
-  #    Objects__Built_Environment
-  #    Objects__Components
-  #    Objects__Furnishings_and_Equipment
-  #    Objects__Object_Genres
-  #    Objects__Object_Groupings and Systems
-  #    Objects__Visual_and_Verbal_Communication
-  #    Physical_Attributes
-  #    Physical_Attributes__Attributes_and_Properties
-  #    Physical_Attributes__Color
-  #    Physical_Attributes__Conditions_and_Effects
-  #    Physical_Attributes__Design_Elements
-  #    Styles_and_Periods
-  #    Styles_and_Periods__Styles_and_Periods
   -
     query: precious
     position: 5
     subject_uri: "http://vocab.getty.edu/aat/300011054"
+    replacements:
+      maxRecords: '10'
+  -
+    query: demonstrations
+    subauth: Activities
+    position: 5
+    subject_uri: "http://vocab.getty.edu/aat/300262795"
+    replacements:
+      maxRecords: '10'
+  -
+    query: demonstrations
+    subauth: Activities__Events
+    position: 5
+    subject_uri: "http://vocab.getty.edu/aat/300262795"
+    replacements:
+      maxRecords: '10'
+  -
+    query: ontology
+    subauth: Activities__Disciplines
+    position: 5
+    subject_uri: "http://vocab.getty.edu/aat/300054295"
+    replacements:
+      maxRecords: '10'
+  -
+    query: lobbying
+    subauth: Activities__Functions
+    position: 5
+    subject_uri: "http://vocab.getty.edu/aat/300077524"
+    replacements:
+      maxRecords: '10'
+  -
+    query: bhāvanā
+    subauth: Activities__Physical_and_Mental
+    position: 5
+    subject_uri: "http://vocab.getty.edu/aat/300264364"
+    replacements:
+      maxRecords: '10'
+  -
+    query: gestabiliseerd
+    subauth: Activities__Processes_and_Techniques
+    position: 5
+    subject_uri: "http://vocab.getty.edu/aat/300163757"
+    replacements:
+      maxRecords: '10'
+  -
+    query: disidente
+    subauth: Agents
+    position: 5
+    subject_uri: "http://vocab.getty.edu/aat/300136713"
+    replacements:
+      maxRecords: '10'
+  -
+    query: RNA
+    subauth: Agents__Living_Organisms
+    position: 5
+    subject_uri: "http://vocab.getty.edu/aat/300410331"
+    replacements:
+      maxRecords: '10'
+  -
+    query: printmaking studios
+    subauth: Agents__Organizations
+    position: 5
+    subject_uri: "http://vocab.getty.edu/aat/300312299"
+    replacements:
+      maxRecords: '10'
+  -
+    query: alter egos
+    subauth: Agents__People
+    position: 5
+    subject_uri: "http://vocab.getty.edu/aat/300435335"
+    replacements:
+      maxRecords: '10'
+  -
+    query: credit
+    subauth: Associated_Concepts
+    position: 5
+    subject_uri: "http://vocab.getty.edu/aat/300055706"
+    replacements:
+      maxRecords: '10'
+  -
+    query: palindrome
+    subauth: Associated_Concepts__Associated_Concepts
+    position: 5
+    subject_uri: "http://vocab.getty.edu/aat/300417834"
+    replacements:
+      maxRecords: '10'
+  -
+    query: Crayola Cutter (TM)
+    subauth: Brand_Names
+    position: 5
+    subject_uri: "http://vocab.getty.edu/aat/300391344"
+    replacements:
+      maxRecords: '10'
+  -
+    query: Masonite
+    subauth: Brand_Names__Brand_Names
+    position: 5
+    subject_uri: "http://vocab.getty.edu/aat/300014205"
+    replacements:
+      maxRecords: '10'
+  -
+    query: mesh
+    subauth: Materials
+    position: 5
+    subject_uri: "http://vocab.getty.edu/aat/300014654"
+    replacements:
+      maxRecords: '10'
+  -
+    query: residuos tóxicos
+    subauth: Materials__Materials
+    position: 5
+    subject_uri: "http://vocab.getty.edu/aat/300253882"
+    replacements:
+      maxRecords: '10'
+  -
+    query: lloy lloy
+    subauth: Objects
+    position: 5
+    subject_uri: "http://vocab.getty.edu/aat/300410934"
+    replacements:
+      maxRecords: '10'
+  -
+    query: areas, protected
+    subauth: Objects__Built_Environment
+    position: 5
+    subject_uri: "http://vocab.getty.edu/aat/300386975"
+    replacements:
+      maxRecords: '10'
+  -
+    query: gewelfschotels
+    subauth: Objects__Components
+    position: 5
+    subject_uri: "http://vocab.getty.edu/aat/300391167"
+    replacements:
+      maxRecords: '10'
+  -
+    query: dung-chen
+    subauth: Objects__Furnishings_and_Equipment
+    position: 5
+    subject_uri: "http://vocab.getty.edu/aat/300222195"
+    replacements:
+      maxRecords: '10'
+  -
+    query: oggetti (realia)
+    subauth: Objects__Object_Genres
+    position: 5
+    subject_uri: "http://vocab.getty.edu/aat/300265419"
+    replacements:
+      maxRecords: '10'
+  -
+    query: VistaVision (TM)
+    subauth: Objects__Object_Groupings and Systems
+    position: 5
+    subject_uri: "http://vocab.getty.edu/aat/300264671"
+    replacements:
+      maxRecords: '10'
+  -
+    query: hours
+    subauth: Objects__Visual_and_Verbal_Communication
+    position: 5
+    subject_uri: "http://vocab.getty.edu/aat/300404017"
+    replacements:
+      maxRecords: '10'
+  -
+    query: serpentiformes
+    subauth: Physical_Attributes
+    position: 5
+    subject_uri: "http://vocab.getty.edu/aat/300311305"
+    replacements:
+      maxRecords: '10'
+  -
+    query: 不穩定性
+    subauth: Physical_Attributes__Attributes_and_Properties
+    position: 5
+    subject_uri: "http://vocab.getty.edu/aat/300221189"
+    replacements:
+      maxRecords: '10'
+  -
+    query: eggplant
+    subauth: Physical_Attributes__Color
+    position: 5
+    subject_uri: "http://vocab.getty.edu/aat/300311492"
+    replacements:
+      maxRecords: '10'
+  -
+    query: microwear
+    subauth: Physical_Attributes__Conditions_and_Effects
+    position: 5
+    subject_uri: "http://vocab.getty.edu/aat/300249983"
+    replacements:
+      maxRecords: '10'
+  -
+    query: filigrana
+    subauth: Physical_Attributes__Design_Elements
+    position: 5
+    subject_uri: "http://vocab.getty.edu/aat/300220293"
+    replacements:
+      maxRecords: '10'
+  -
+    query: Ontarian
+    subauth: Styles_and_Periods
+    position: 5
+    subject_uri: "http://vocab.getty.edu/aat/300386484"
+    replacements:
+      maxRecords: '10'
+  -
+    query: old-fashioned
+    subauth: Styles_and_Periods__Styles_and_Periods
+    position: 5
+    subject_uri: "http://vocab.getty.edu/aat/300312275"
     replacements:
       maxRecords: '10'
 term:
