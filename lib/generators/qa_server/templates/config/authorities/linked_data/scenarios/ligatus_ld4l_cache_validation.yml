@@ -14,13 +14,13 @@ search:
   #------------------
   -
     query: case binding
-    subject_uri: 'http://w3id.org/lob/concept/4165'
+    subject_uri: "http://w3id.org/lob/concept/4165"
     position: 5
     replacements:
       maxRecords: '10'
   -
     query: innhengt bind
-    subject_uri: 'http://w3id.org/lob/concept/4165'
+    subject_uri: "http://w3id.org/lob/concept/4165"
     position: 5
     replacements:
       maxRecords: '10'
