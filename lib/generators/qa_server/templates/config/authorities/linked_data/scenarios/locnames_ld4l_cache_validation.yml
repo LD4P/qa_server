@@ -28,7 +28,7 @@ search:
   #------------------
   #  TBD - tests for subauths
   #    conference
-   -
+  -
     query: Camden NJ
     position: 8
     subauth: geographic
