@@ -24,51 +24,55 @@ search:
   #------------------
   #  Accuracy tests
   #------------------
-  #  TBD - tests for subauths
-  #    organization
-  #    family
   -
-    query: 'Twain, Mark, 1835-1910'
+    query: Twain, Mark, 1835-1910
     subauth: person
     position: 1
-    subject_uri: "http://id.loc.gov/rwo/agents/n79021164"
-    replacements:
-      maxRecords: '10'
-  -
-    query: 'Twain, Mark, 183'
-    subauth: person
-    position: 1
-    subject_uri: "http://id.loc.gov/rwo/agents/n79021164"
-    replacements:
-      maxRecords: '10'
-  -
-    query: 'Twain, Mark 183'
-    subauth: person
-    position: 5
     subject_uri: "http://id.loc.gov/rwo/agents/n79021164"
     replacements:
       maxRecords: '10'
    -
-    query: 'Camden, William'
+    query: Camden, William
     subauth: person
     position: 10
     subject_uri: "http://id.loc.gov/rwo/agents/n50031528"
     replacements:
       maxRecords: '20'
   -
-    query: 'King Stephen 1947'
+    query: King Stephen 1947
     subauth: person
     position: 5
-    subject_uri: "http://id.loc.gov/authorities/names/n79063767"
+    subject_uri: "http://id.loc.gov/rwo/agents/n79063767"
     replacements:
       maxRecords: '20'
   -
-    query: 'Tweedy, Jeff'
+    query: Tweedy, Jeff
     subauth: person
     position: 5
-    subject_uri: "http://id.loc.gov/authorities/names/no98126226"
+    subject_uri: "http://id.loc.gov/rwo/agents/no98126226"
     replacements:
       maxRecords: '20'
+  -
+    query: ACLU
+    subauth: organization
+    position: 20
+    subject_uri: "http://id.loc.gov/rwo/agents/n79079580"
+    replacements:
+      maxRecords: '30'
+  -
+    query: Planned Parenthood Federation of America
+    subauth: organization
+    position: 10
+    subject_uri: "http://id.loc.gov/rwo/agents/n50075375"
+    replacements:
+      maxRecords: '20'
+  -
+    query: Waterman Family
+    subauth: family
+    position: 5
+    subject_uri: "http://id.loc.gov/rwo/agents/n2012043300"
+    replacements:
+      maxRecords: '10'
 term:
   -
     identifier: 'http://id.loc.gov/rwo/agents/n79021164'
