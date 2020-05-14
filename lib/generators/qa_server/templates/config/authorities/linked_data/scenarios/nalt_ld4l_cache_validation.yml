@@ -20,13 +20,13 @@ search:
   #------------------
   -
     query: soil fertility
-    subject_uri: 'http://lod.nal.usda.gov/nalt/968'
+    subject_uri: "http://lod.nal.usda.gov/nalt/968"
     position: 5
     replacements:
       maxRecords: '10'
   -
     query: vector potential
-    subject_uri: 'http://lod.nal.usda.gov/nalt/34062'
+    subject_uri: "http://lod.nal.usda.gov/nalt/34062"
     position: 5
     replacements:
       maxRecords: '10'
@@ -38,7 +38,7 @@ search:
       maxRecords: '8'
   -
     query: recorte de los cascos
-    subject_uri: 'http://lod.nal.usda.gov/nalt/9231'
+    subject_uri: "http://lod.nal.usda.gov/nalt/9231"
     postion: 3
     replacements:
       maxRecords: '5'
