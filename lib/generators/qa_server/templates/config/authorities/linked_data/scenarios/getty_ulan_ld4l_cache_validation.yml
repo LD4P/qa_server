@@ -21,14 +21,14 @@ search:
   #------------------
   -
     query: Gonzalez-Torres, Felix
-    subject_uri: 'http://vocab.getty.edu/ulan/500114715'
+    subject_uri: "http://vocab.getty.edu/ulan/500114715"
     position: 5
     replacements:
       maxRecords: '10'
   -
     query: Gouverneur
     subauth: person
-    subject_uri: 'http://vocab.getty.edu/ulan/500225342'
+    subject_uri: "http://vocab.getty.edu/ulan/500225342"
     position: 5
     replacements:
       maxRecords: '10'
@@ -42,7 +42,7 @@ search:
   -
     query: University of Chicago Library
     subauth: organization
-    subject_uri: 'http://vocab.getty.edu/ulan/500304715'
+    subject_uri: "http://vocab.getty.edu/ulan/500304715"
     postion: 5
     replacements:
       maxRecords: '10'
