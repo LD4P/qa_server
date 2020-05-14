@@ -27,14 +27,14 @@ search:
   #------------------
   -
     query: Malignant Hyperthermia
-    subject_uri: 'http://id.nlm.nih.gov/mesh/D008305'
+    subject_uri: "http://id.nlm.nih.gov/mesh/D008305"
     position: 3
     replacements:
       maxRecords: '5'
   -
     query: Heart Attack
     subauth: subject
-    subject_uri: 'http://id.nlm.nih.gov/mesh/D009203'
+    subject_uri: "http://id.nlm.nih.gov/mesh/D009203"
     position: 3
     replacements:
       maxRecords: '5'
@@ -48,7 +48,7 @@ search:
   -
     query: Email
     subauth: subject
-    subject_uri: 'http://id.nlm.nih.gov/mesh/D034742'
+    subject_uri: "http://id.nlm.nih.gov/mesh/D034742"
     postion: 5
     replacements:
       maxRecords: '10'
