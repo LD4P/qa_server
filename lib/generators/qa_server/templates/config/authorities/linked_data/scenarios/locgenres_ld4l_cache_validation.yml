@@ -22,7 +22,6 @@ search:
   #------------------
   #  Accuracy tests
   #------------------
-  #  TBD - tests for subauths
   #    active
   -
     query: Preliminary documents (Treaties)
@@ -113,6 +112,13 @@ search:
     subauth: deprecated
     position: 10
     subject_uri: "http://id.loc.gov/authorities/genreForms/gf2011026080"
+    replacements:
+      maxRecords: '20'
+  -
+    query: Cookery
+    subauth: deprecated
+    position: 10
+    subject_uri: "http://id.loc.gov/authorities/subjects/sh2010025047"
     replacements:
       maxRecords: '20'
 term:
