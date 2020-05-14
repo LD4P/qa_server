@@ -70,14 +70,21 @@ search:
   -
     query: France
     subauth: area
-    subject_uri: 'http://sws.geonames.org/261707/'
+    subject_uri: "http://sws.geonames.org/3017382"
     position: 10
     replacements:
       maxRecords: '15'
   -
     query: Chicago
     subauth: place
-    subject_uri: 'http://sws.geonames.org/4887398/'
+    subject_uri: "http://sws.geonames.org/4887398/"
+    postion: 10
+    replacements:
+      maxRecords: '15'
+  -
+    query: Ithaca Island
+    subauth: terrain
+    subject_uri: "http://sws.geonames.org/261707/"
     postion: 10
     replacements:
       maxRecords: '15'
