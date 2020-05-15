@@ -9,7 +9,7 @@ search:
   #------------------
   # Connection tests
   #------------------
-  -
+  - 
     query: animation
   -
     query: Basketball television programs
@@ -47,7 +47,7 @@ search:
     subject_uri: "http://id.loc.gov/authorities/genreForms/gf2011026115"
     replacements:
       maxRecords: '10'
-   -
+  -
     query: Casebooks
     position: 10
     subject_uri: "http://id.loc.gov/authorities/genreForms/gf2011026115"

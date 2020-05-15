@@ -9,7 +9,7 @@ RSpec.describe 'Accuracy test' do # rubocop:disable RSpec/DescribeClass
   let(:authority_list) { QaServer::AuthorityListerService.authorities_list }
   let(:authority_name) { :CERL_LD4L_CACHE }
 
-  describe 'for authority' do
+  describe 'for authority:' do
     @status_log = QaServer::ScenarioLogger.new
     QaServer::AuthorityListerService.authorities_list.each do |authority_name| # rubocop:disable Style/MultilineIfModifier
       QaServer::AuthorityValidatorService.run(authority_name: authority_name,
@@ -17,12 +17,11 @@ RSpec.describe 'Accuracy test' do # rubocop:disable RSpec/DescribeClass
                                               validation_type: QaServer::ScenarioValidator::VALIDATE_ACCURACY)
     end unless ENV['TRAVIS']
     @status_log.each do |test_result|
-      context "'#{test_result[:authority_name]}/#{test_result[:subauthority_name]}' with query '#{test_result[:request_data]}'" do
-        it "finds a result" do
-          expect(test_result[:actual]).not_to be_nil
-        end
-
+      context "#{test_result[:authority_name]}:#{test_result[:subauthority_name]}:#{test_result[:request_data]}:" do
         it "finds actual <= expected" do
+          expect(test_result[:err_message]).to be_empty
+          expect(test_result[:request_data]).not_to be_empty
+          expect(test_result[:actual]).not_to be_nil
           expect(test_result[:actual]).to be <= test_result[:expected]
         end
       end
@@ -30,3 +29,4 @@ RSpec.describe 'Accuracy test' do # rubocop:disable RSpec/DescribeClass
   end
 end
 # rubocop:enable RSpec/InstanceVariable
+
