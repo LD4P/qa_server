@@ -18,7 +18,7 @@ search:
     replacements:
       maxRecords: '10'
   -
-    query: Boulder, CO 
+    query: Boulder, CO
     position: 9
     subject_uri: "http://vocab.getty.edu/tgn/2000198"
     replacements:

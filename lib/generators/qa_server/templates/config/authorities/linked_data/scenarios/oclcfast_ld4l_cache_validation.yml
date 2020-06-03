@@ -58,7 +58,7 @@ search:
     postion: 5
     replacements:
       maxRecords: '10'
-       -
+  -
     query: Taylor, Charles Hollis
     subauth: person
     subject_uri: "http://id.worldcat.org/fast/1616125"

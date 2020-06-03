@@ -31,7 +31,7 @@ search:
     subject_uri: "http://id.loc.gov/rwo/agents/n79021164"
     replacements:
       maxRecords: '10'
-   -
+  -
     query: Camden, William
     subauth: person
     position: 10

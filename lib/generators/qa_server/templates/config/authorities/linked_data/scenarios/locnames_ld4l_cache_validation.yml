@@ -26,8 +26,6 @@ search:
   #------------------
   #  Accuracy tests
   #------------------
-  #  TBD - tests for subauths
-  #    conference
   -
     query: Camden NJ
     position: 8
