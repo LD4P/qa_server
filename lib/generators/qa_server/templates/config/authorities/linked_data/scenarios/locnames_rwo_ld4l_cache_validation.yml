@@ -74,6 +74,104 @@ search:
     replacements:
       maxRecords: '20'
   -
+    query: Endalageta Kabada
+    subauth: person
+    position: 5
+    subject_uri: "http://id.loc.gov/rwo/agents/no2003094541"
+    replacements:
+      maxRecords: '20'
+  -
+    query: ʼEndālagétā Kabada
+    subauth: person
+    position: 5
+    subject_uri: "http://id.loc.gov/rwo/agents/no2003094541"
+    replacements:
+      maxRecords: '20'
+  -
+    query: Genkai Shosetsu Kenkyukai
+    subauth: person
+    position: 5
+    subject_uri: "http://id.loc.gov/rwo/agents/n2013003006"
+    replacements:
+      maxRecords: '20'
+  -
+    query: Genkai Shōsetsu Kenkyūkai
+    subauth: person
+    position: 5
+    subject_uri: "http://id.loc.gov/rwo/agents/n2013003006"
+    replacements:
+      maxRecords: '20'
+  -
+    query: 限界小說研究会
+    subauth: person
+    position: 5
+    subject_uri: "http://id.loc.gov/rwo/agents/n2013003006"
+    replacements:
+      maxRecords: '20'
+  -
+    query: Tolstoy, Leo
+    subauth: person
+    position: 5
+    subject_uri: "http://id.loc.gov/rwo/agents/n79068416"
+    replacements:
+      maxRecords: '20'
+  -
+    query: tolstoi, lev
+    subauth: person
+    position: 5
+    subject_uri: "http://id.loc.gov/rwo/agents/n79068416"
+    replacements:
+      maxRecords: '20'
+  -
+    query: Tolstoĭ, Lev
+    subauth: person
+    position: 5
+    subject_uri: "http://id.loc.gov/rwo/agents/n79068416"
+    replacements:
+      maxRecords: '20'
+  -
+    query: Толстой, Лев
+    subauth: person
+    position: 5
+    subject_uri: "http://id.loc.gov/rwo/agents/n79068416"
+    replacements:
+      maxRecords: '20'
+  -
+    query: Толстой, Лев, граф, 1828-1910
+    subauth: person
+    position: 5
+    subject_uri: "http://id.loc.gov/rwo/agents/n79068416"
+    replacements:
+      maxRecords: '20'
+  -
+    query: טאלסטאי, ליעװ
+    subauth: person
+    position: 5
+    subject_uri: "http://id.loc.gov/rwo/agents/n79068416"
+    replacements:
+      maxRecords: '20'
+  -
+    query: レオ.トルストイ
+    subauth: person
+    position: 5
+    subject_uri: "http://id.loc.gov/rwo/agents/n79068416"
+    replacements:
+      maxRecords: '20'
+  -
+    query: لئون تولستوى
+    subauth: person
+    position: 5
+    subject_uri: "http://id.loc.gov/rwo/agents/n79068416"
+    replacements:
+      maxRecords: '20'
+  -
+    query: 托爾斯泰, 列夫
+    subauth: person
+    position: 5
+    subject_uri: "http://id.loc.gov/rwo/agents/n79068416"
+    replacements:
+      maxRecords: '20'
+  -
     query: ACLU
     subauth: organization
     position: 20
