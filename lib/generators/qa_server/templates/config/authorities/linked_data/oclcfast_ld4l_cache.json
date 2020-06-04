@@ -92,13 +92,10 @@
       "concept":        "Concept",
       "event":          "Event",
       "person":         "Person",
-      "personal_name":  "Person",
       "organization":   "Organization",
-      "corporate_name": "Organization",
       "place":          "Place",
       "intangible":     "Intangible",
-      "work":           "Work",
-      "creative_work":  "Work"
+      "work":           "Work"
     }
   }
 }

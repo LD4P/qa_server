@@ -7,7 +7,7 @@ search:
   #------------------
   -
     query: milk
- #------------------
+  #------------------
   #  Accuracy tests
   #------------------
   -
@@ -17,7 +17,7 @@ search:
     replacements:
       maxRecords: '20'
   -
-    query: vodka 
+    query: vodka
     position: 1
     subject_uri: "http://aims.fao.org/aos/agrovoc/c_23837"
     replacements:
