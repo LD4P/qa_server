@@ -53,6 +53,27 @@ search:
     replacements:
       maxRecords: '20'
   -
+    query: Tanaka, Shōzō
+    subauth: person
+    position: 5
+    subject_uri: "http://id.loc.gov/rwo/agents/n81047749"
+    replacements:
+      maxRecords: '20'
+  -
+    query: Tanaka, Shozo
+    subauth: person
+    position: 5
+    subject_uri: "http://id.loc.gov/rwo/agents/n81047749"
+    replacements:
+      maxRecords: '20'
+  -
+    query: 田中正造
+    subauth: person
+    position: 5
+    subject_uri: "http://id.loc.gov/rwo/agents/n81047749"
+    replacements:
+      maxRecords: '20'
+  -
     query: ACLU
     subauth: organization
     position: 20
