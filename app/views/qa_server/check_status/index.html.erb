@@ -75,6 +75,7 @@
     <tr>
       <th><%= t('qa_server.check_status.status_table.expected_by_position') %></th>
       <th><%= t('qa_server.check_status.status_table.actual_position') %></th>
+      <th><%= t('qa_server.check_status.status_table.request_data') %></th>
       <th><%= t('qa_server.check_status.status_table.subject_uri') %></th>
       <th><%= t('qa_server.check_status.status_table.authority') %></th>
       <th><%= t('qa_server.check_status.status_table.subauthority') %></th>
@@ -87,6 +88,7 @@
     <tr>
       <td class="position <%= @presenter.status_style_class(status) %>"><%= status[:expected] %></td>
       <td class="position <%= @presenter.status_style_class(status) %>"><%= status[:actual] %></td>
+      <td><%= status[:request_data] %></td>
       <td><a href="<%= status[:target] %>"><%= status[:target] %></a></td>
       <td><%= status[:authority_name] %></td>
       <td><%= status[:subauthority_name] %></td>

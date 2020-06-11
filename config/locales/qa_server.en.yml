@@ -32,6 +32,7 @@ en:
         authority:       Authority
         errmsg:          Errors
         expected_by_position: Expected by Position
+        request_data:    Query
         service:         Service
         status:          Status
         subauthority:    Subauthority
