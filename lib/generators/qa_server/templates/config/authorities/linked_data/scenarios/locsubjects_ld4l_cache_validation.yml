@@ -18,6 +18,12 @@ search:
     replacements:
       maxRecords: '20'
   -
+    query: Guitar music Heavy metal # example of LCSH with parentheses
+    position: 5
+    subject_uri: "http://id.loc.gov/authorities/subjects/sh85059850"
+    replacements:
+      maxRecords: '10'
+  -
     query: Cooking with bacon
     position: 7
     subject_uri: "http://id.loc.gov/authorities/subjects/sh85031944"
