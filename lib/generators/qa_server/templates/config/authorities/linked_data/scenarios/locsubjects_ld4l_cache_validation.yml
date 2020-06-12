@@ -23,6 +23,18 @@ search:
     subject_uri: "http://id.loc.gov/authorities/subjects/sh85031944"
     replacements:
       maxRecords: '20'
+  -
+    query: History
+    position: 5
+    subject_uri: "http://id.loc.gov/authorities/subjects/sh85061212"
+    replacements:
+      maxRecords: '20'
+    -
+    query: History
+    position: 5
+    subject_uri: "http://id.loc.gov/authorities/subjects/sh85061212"
+    replacements:
+      maxRecords: '20'
 term:
   -
     identifier: 'http://id.loc.gov/authorities/subjects/sh2003008312'
