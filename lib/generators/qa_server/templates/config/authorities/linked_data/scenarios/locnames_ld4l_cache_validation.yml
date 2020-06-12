@@ -34,6 +34,13 @@ search:
     replacements:
       maxRecords: '20'
   -
+    query: Boston Mass
+    position: 5
+    subauth: geographic
+    subject_uri: "http://id.loc.gov/authorities/names/n79045553"
+    replacements:
+      maxRecords: '10'
+  -
     query: Madrid, Spain
     position: 5
     subauth: geographic
