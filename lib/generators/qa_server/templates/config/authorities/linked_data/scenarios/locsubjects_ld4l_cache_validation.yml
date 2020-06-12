@@ -35,7 +35,7 @@ search:
     subject_uri: "http://id.loc.gov/authorities/subjects/sh85061212"
     replacements:
       maxRecords: '20'
-    -
+  -
     query: History
     position: 5
     subject_uri: "http://id.loc.gov/authorities/subjects/sh85061212"
