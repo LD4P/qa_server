@@ -41,6 +41,20 @@ search:
     replacements:
       maxRecords: '15'
   -
+    query: seattle
+    position: 5
+    subauth: geographic
+    subject_uri: "http://id.loc.gov/authorities/names/n79041965"
+    replacements:
+      maxRecords: '15'
+  -
+    query: seattle (wash.)
+    position: 5
+    subauth: geographic
+    subject_uri: "http://id.loc.gov/authorities/names/n79041965"
+    replacements:
+      maxRecords: '15'
+  -
     query: Non Food Uses of Crops
     position: 5
     subauth: conference
