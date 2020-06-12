@@ -23,6 +23,18 @@ search:
     subject_uri: "http://dbpedia.org/resource/Volleyball"
     replacements:
       maxRecords: '10'
+  -
+    query: Volleyb
+    position: 5
+    subject_uri: "http://dbpedia.org/resource/Volleyball"
+    replacements:
+      maxRecords: '10'
+  -
+    query: volleyb
+    position: 5
+    subject_uri: "http://dbpedia.org/resource/Volleyball"
+    replacements:
+      maxRecords: '10'
 term:
   -
     identifier: 'http://dbpedia.org/resource/Barack_Obama'
