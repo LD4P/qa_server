@@ -81,6 +81,20 @@ search:
     replacements:
       maxRecords: '30'
   -
+    query: University of Pennsylvania
+    subauth: organization
+    position: 5
+    subject_uri: "http://id.loc.gov/rwo/agents/n79065482"
+    replacements:
+      maxRecords: '20'
+  -
+    query: university of pennsylvania
+    subauth: organization
+    position: 5
+    subject_uri: "http://id.loc.gov/rwo/agents/n79065482"
+    replacements:
+      maxRecords: '20'
+  -
     query: Planned Parenthood Federation of America
     subauth: organization
     position: 10
