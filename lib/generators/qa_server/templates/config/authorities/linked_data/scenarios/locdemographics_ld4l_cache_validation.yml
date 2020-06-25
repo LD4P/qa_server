@@ -57,7 +57,13 @@ search:
   -
     query: African Americans
     position: 5
-    subject_uri: "http://id.loc.gov/authorities/demographicTerms/dg2015060859"
+    subject_uri: "http://id.loc.gov/authorities/demographicTerms/dg2015060362"
+    replacements:
+      maxRecords: '10'
+  -
+    query: Dancers
+    position: 3
+    subject_uri: "http://id.loc.gov/authorities/demographicTerms/dg2015060747"
     replacements:
       maxRecords: '10'
   -
