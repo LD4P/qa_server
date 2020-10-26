@@ -319,7 +319,7 @@ search:
     query: polychrome
     subauth: colour_content
     position: 3
-    subject_uri: "http://rdaregistry.info/termList/RDACartoDT/1003"
+    subject_uri: "http://rdaregistry.info/termList/RDAColourContent/1003"
     replacements:
       maxRecords: '20'
   -
