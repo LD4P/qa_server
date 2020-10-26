@@ -25,16 +25,16 @@ search:
   #  Accuracy tests
   #------------------
   -
-    query: Joannes Philippus de Lignamine
+    query: Johannes Philippus de Lignamine
     subauth: person
-    position: 1
+    position: 4
     subject_uri: "http://thesaurus.cerl.org/record/cnp00372755"
     replacements:
       maxRecords: '8'
   -
-    query: Joannes Philippus de Lignamine
+    query: Johannes Philippus de Lignamine
     subauth: person
-    position: 2
+    position: 4
     subject_uri: "http://thesaurus.cerl.org/record/cnp00895966"
     replacements:
       maxRecords: '8'
