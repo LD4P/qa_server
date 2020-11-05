@@ -14,27 +14,27 @@ search:
   -
     query: Gouverneur
     position: 3
-    subject_uri: "http://vocab.getty.edu/tgn/2069433"
+    subject_uri: "http://vocab.getty.edu/tgn/2069433-place"
     replacements:
       maxRecords: '10'
   -
     query: Boulder, CO
     position: 9
-    subject_uri: "http://vocab.getty.edu/tgn/2000198"
+    subject_uri: "http://vocab.getty.edu/tgn/2000198-place"
     replacements:
       maxRecords: '10'
   -
     query: Paris, France
     position: 30
-    subject_uri: "http://vocab.getty.edu/tgn/7008038"
+    subject_uri: "http://vocab.getty.edu/tgn/7008038-place"
     replacements:
       maxRecords: '100'
   -
     query: Nile River
     position: 3
-    subject_uri: "http://vocab.getty.edu/tgn/1127805"
+    subject_uri: "http://vocab.getty.edu/tgn/1127805-place"
     replacements:
       maxRecords: '10'
 term:
   -
-    identifier: 'http://vocab.getty.edu/tgn/7017750'
+    identifier: 'http://vocab.getty.edu/tgn/7017750-place'
