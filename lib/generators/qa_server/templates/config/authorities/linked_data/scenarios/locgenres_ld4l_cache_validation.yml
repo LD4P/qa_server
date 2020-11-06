@@ -117,10 +117,10 @@ search:
   -
     query: Cookery
     subauth: deprecated
-    position: 10
-    subject_uri: "http://id.loc.gov/authorities/subjects/sh2010025047"
+    position: 5
+    subject_uri: "http://id.loc.gov/authorities/genreForms/gf2011026169"
     replacements:
-      maxRecords: '20'
+      maxRecords: '10'
 term:
   -
     identifier: "http://id.loc.gov/authorities/genreForms/gf2011026141"
