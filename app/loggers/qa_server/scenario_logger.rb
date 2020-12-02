@@ -51,7 +51,8 @@ module QaServer
                 target: status_info[:target] || nil,
                 err_message: status_info[:error_message] || '',
                 request_run_time: status_info[:request_run_time] || nil,
-                normalization_run_time: status_info[:normalization_run_time] || nil }
+                normalization_run_time: status_info[:normalization_run_time] || nil,
+                pending: status_info[:pending] || false }
     end
 
     # Delete from the log any tests that passed.

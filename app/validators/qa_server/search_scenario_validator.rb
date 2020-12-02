@@ -36,7 +36,7 @@ module QaServer
 
       # CONCRETE Implementation: Run the accuracy test and log results
       def run_accuracy_scenario
-        test_accuracy(subject_uri: scenario.subject_uri, expected_by_position: scenario.expected_by_position) do
+        test_accuracy(subject_uri: scenario.subject_uri, expected_by_position: scenario.expected_by_position, pending: scenario.pending?) do
           replacements = scenario.replacements.dup
           authority.search(scenario.query,
                            subauth: scenario.subauthority_name,
@@ -45,20 +45,21 @@ module QaServer
       end
 
       # Runs the accuracy test and log results
-      def test_accuracy(subject_uri:, expected_by_position:)
+      def test_accuracy(subject_uri:, expected_by_position:, pending: false)
         dt_start = QaServer::TimeService.current_time
         results = yield if block_given?
         dt_end = QaServer::TimeService.current_time
         if results.blank?
-          log(status: UNKNOWN, errmsg: "Search position scenario failed; cause: no results found", expected: expected_by_position, target: subject_uri, request_run_time: (dt_end - dt_start))
+          log(status: UNKNOWN, errmsg: "Search position scenario failed; cause: no results found", expected: expected_by_position,
+              target: subject_uri, request_run_time: (dt_end - dt_start), pending: pending)
           return
         end
 
-        check_position(results, subject_uri, expected_by_position, total_run_time: (dt_end - dt_start)) # TODO: need to get run times from results
+        check_position(results, subject_uri, expected_by_position, total_run_time: (dt_end - dt_start), pending: pending) # TODO: need to get run times from results
       rescue Exception => e
         dt_end = QaServer::TimeService.current_time
         log(status: FAIL, errmsg: "Exception executing search position scenario; cause: #{e.message}",
-            expected: expected_by_position, target: subject_uri, request_run_time: (dt_end - dt_start))
+            expected: expected_by_position, target: subject_uri, request_run_time: (dt_end - dt_start), pending: pending)
       end
 
       def accuracy_scenario?
@@ -71,27 +72,27 @@ module QaServer
         !accuracy_scenario?
       end
 
-      def check_position(results, subject_uri, expected_by_position, total_run_time)
-        actual_position = subject_position(results, subject_uri, total_run_time)
+      def check_position(results, subject_uri, expected_by_position, total_run_time:, pending:)
+        actual_position = subject_position(results, subject_uri, total_run_time, pending)
         return if actual_position.blank?
 
         actual_position += 1
         if actual_position <= expected_by_position
           log(status: PASS, expected: expected_by_position, actual: actual_position, target: subject_uri,
-              normalization_run_time: total_run_time) # TODO: need to get run times from results
+              normalization_run_time: total_run_time, pending: pending) # TODO: need to get run times from results
         else
           log(status: UNKNOWN, errmsg: 'Subject URI not found by the expected position.',
               expected: expected_by_position, actual: actual_position, target: subject_uri,
-              normalization_run_time: total_run_time) # TODO: need to get run times from results
+              normalization_run_time: total_run_time, pending: pending) # TODO: need to get run times from results
         end
       end
 
-      def subject_position(results, subject_uri, total_run_time)
+      def subject_position(results, subject_uri, total_run_time, pending)
         0.upto(results.size - 1) do |position|
           return position if results[position][:uri] == subject_uri
         end
         log(status: UNKNOWN, errmsg: "Search position scenario failed; cause: subject uri (#{subject_uri}) not found in results",
-            expected: scenario.expected_by_position, target: subject_uri, normalization_run_time: total_run_time) # TODO: need to get run times from results
+            expected: scenario.expected_by_position, target: subject_uri, normalization_run_time: total_run_time, pending: pending) # TODO: need to get run times from results
         nil
       end
   end

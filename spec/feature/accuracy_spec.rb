@@ -19,6 +19,7 @@ RSpec.describe 'Accuracy test' do # rubocop:disable RSpec/DescribeClass
     @status_log.each do |test_result|
       context "#{test_result[:authority_name]}:#{test_result[:subauthority_name]}:#{test_result[:request_data]}:" do
         it "finds actual <= expected" do
+          pending 'test is known to fail' if test_result[:pending]
           expect(test_result[:err_message]).to be_empty
           expect(test_result[:request_data]).not_to be_empty
           expect(test_result[:actual]).not_to be_nil
