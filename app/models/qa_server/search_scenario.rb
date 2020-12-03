@@ -23,7 +23,7 @@ module QaServer
     # @param authority_name [Symbol] the name of the authority the scenario tests (e.g. :AGROVOC_DIRECT)
     # @param authority_scenario_config [Hash] configurations from the yml file that pertain to all scenarios regardless of type
     # @param scenario_config [Hash] configuration from the yml file that are specific to a search scenario
-    def initialize(authority:, authority_name:, authority_scenario_config:, scenario_config:)
+    def initialize(authority:, authority_name:, authority_scenario_config:, scenario_config:) # rubocop:disable Metrics/CyclomaticComplexity
       super
       @query = scenario_config['query']
       @subauthority_name = scenario_config['subauth'] || DEFAULT_SUBAUTH
