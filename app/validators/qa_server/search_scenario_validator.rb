@@ -76,7 +76,6 @@ module QaServer
         actual_position = subject_position(results, subject_uri, total_run_time, pending)
         return if actual_position.blank?
 
-        actual_position += 1
         if actual_position <= expected_by_position
           log(status: PASS, expected: expected_by_position, actual: actual_position, target: subject_uri,
               normalization_run_time: total_run_time, pending: pending) # TODO: need to get run times from results
@@ -89,7 +88,7 @@ module QaServer
 
       def subject_position(results, subject_uri, total_run_time, pending)
         0.upto(results.size - 1) do |position|
-          return position if results[position][:uri] == subject_uri
+          return position + 1 if results[position][:uri] == subject_uri
         end
         log(status: UNKNOWN, errmsg: "Search position scenario failed; cause: subject uri (#{subject_uri}) not found in results",
             expected: scenario.expected_by_position, target: subject_uri, normalization_run_time: total_run_time, pending: pending) # TODO: need to get run times from results

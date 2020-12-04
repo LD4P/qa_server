@@ -8,6 +8,7 @@ module QaServer
 
     VALIDATE_CONNECTION = :connection
     VALIDATE_ACCURACY = :accuracy
+    VALIDATE_ACCURACY_COMPARISON = :accuracy_comparison
     ALL_VALIDATIONS = :all_validations
     DEFAULT_VALIDATION_TYPE = VALIDATE_CONNECTION
 
@@ -118,7 +119,7 @@ module QaServer
       end
 
       def validating_accuracy?
-        return true if validation_type == VALIDATE_ACCURACY || validation_type == ALL_VALIDATIONS
+        return true if [VALIDATE_ACCURACY, VALIDATE_ACCURACY_COMPARISON, ALL_VALIDATIONS].include? validation_type
         false
       end
 
