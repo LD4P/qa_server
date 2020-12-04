@@ -1,10 +1,13 @@
 <script>
-  function validate_authority(form) {
-    form.submit();
-    document.getElementById('status-loading-message').style.display = 'block';
+  function hide_data() {
     document.getElementById('connection-status-section').style.display = 'none';
     document.getElementById('accuracy-status-section').style.display = 'none';
     document.getElementById('example-url-warning').style.display = 'none';
+  }
+  function validate_authority(form) {
+    hide_data();
+    form.submit;
+    document.getElementById('status-loading-message').style.display = 'block';
   }
 </script>
 
@@ -13,23 +16,27 @@
   <h2><%= t('qa_server.check_status.title') %></h2>
 
   <%= form_tag({ action: 'index' }, { method: :get }) do %>
-  <select name="authority" id="authority" class="string multi-value optional form-control form-control multi-text-field" value="" aria-labelledby="authority" onchange="validate_authority(this.form)">
-    <option value=""><%= t('qa_server.check_status.select_authority') %></option>
-    <option disabled>──────────</option>
-    <option value="<%= @presenter.value_all_collections %>"><%= t('qa_server.check_status.show_all') %></option>
-    <option disabled>──────────</option>
-    <% @authorities_list.each do |auth_name| %>
-        <option value="<%= auth_name %>"><%= auth_name.upcase %></option>
-    <% end %>
-  </select>
-  <div class="validation-types">
-    <%= radio_button_tag(@presenter.value_check_param, @presenter.value_check_connections, :selected) %>
-    <%= label_tag(@presenter.label_check_connections, t('qa_server.check_status.connections'), class: 'horizontal-list') %>
-    <%= radio_button_tag(@presenter.value_check_param, @presenter.value_check_accuracy) %>
-    <%= label_tag(@presenter.label_check_accuracy, t('qa_server.check_status.accuracy'), class: 'horizontal-list') %>
-    <%= radio_button_tag(@presenter.value_check_param, @presenter.value_all_checks) %>
-    <%= label_tag(@presenter.label_all_checks, t('qa_server.check_status.all_checks'), class: 'horizontal-list') %>
-  </div>
+    <div id="authority-selector">
+      <select name="authority" id="authority" class="string optional form-control form-control" value="" aria-labelledby="authority" onchange="hide_data()">
+        <option value=""><%= t('qa_server.check_status.select_authority') %></option>
+        <option disabled>──────────</option>
+        <option value="<%= @presenter.value_all_collections %>"><%= t('qa_server.check_status.show_all') %></option>
+        <option disabled>──────────</option>
+        <% @authorities_list.each do |auth_name| %>
+            <option value="<%= auth_name %>"><%= auth_name.upcase %></option>
+        <% end %>
+      </select>
+    </div>
+
+    <div class="validation-types">
+      <%= radio_button_tag(@presenter.value_check_param, @presenter.value_check_connections, @presenter.connection_tests_checked, onClick: "hide_comparison_selector()") %>
+      <%= label_tag(@presenter.label_check_connections, t('qa_server.check_status.connections'), class: 'horizontal-list') %>
+      <%= radio_button_tag(@presenter.value_check_param, @presenter.value_check_accuracy, @presenter.accuracy_tests_checked, onClick: "hide_comparison_selector()") %>
+      <%= label_tag(@presenter.label_check_accuracy, t('qa_server.check_status.accuracy'), class: 'horizontal-list') %>
+      <%= radio_button_tag(@presenter.value_check_param, @presenter.value_all_checks, false, onClick: "hide_comparison_selector()") %>
+      <%= label_tag(@presenter.label_all_checks, t('qa_server.check_status.all_checks'), class: 'horizontal-list') %>
+    </div>
+    <button type="submit" class="btn btn-primary" id="check-status-go" onclick="validate_authority(this.form)">GO</button>
   <% end %>
 
 

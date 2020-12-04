@@ -87,12 +87,20 @@ module QaServer
       "#{value_check_param}_#{value_check_connections}".downcase.to_sym
     end
 
+    def connection_tests_checked
+      connection_status_data?
+    end
+
     def value_check_accuracy
       QaServer::AuthorityValidationBehavior::VALIDATE_ACCURACY
     end
 
     def label_check_accuracy
       "#{value_check_param}_#{value_check_accuracy}".downcase.to_sym
+    end
+
+    def accuracy_tests_checked
+      accuracy_status_data?
     end
 
     def value_all_checks
