@@ -13,9 +13,9 @@ before_install:
   - google-chrome-stable --headless --disable-gpu --no-sandbox --remote-debugging-port=9222 http://localhost &
 
 rvm:
-  - 2.4.6
-  - 2.5.5
-  - 2.6.3
+  - 2.5.8
+  - 2.6.6
+  - 2.7.1
 
 env:
   global:
@@ -26,8 +26,7 @@ env:
   # It should be sufficient to test only the latest of the patch versions for a minor version, they
   # should be compatible across patch versions (only bug fixes are released in patch versions).
   matrix:
-    - "RAILS_VERSION=5.1.7"
-    - "RAILS_VERSION=5.2.3"
+    - "RAILS_VERSION=5.2.4"
 
 services:
   - redis-server
