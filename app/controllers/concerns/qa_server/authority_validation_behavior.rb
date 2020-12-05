@@ -6,6 +6,7 @@ module QaServer
     VALIDATION_TYPE_PARAM = :validation_type
     VALIDATE_CONNECTIONS = 'connections'
     VALIDATE_ACCURACY = 'accuracy'
+    VALIDATE_ACCURACY_COMPARISON = 'accuracy_comparison'
     ALL_VALIDATIONS = 'all_checks'
 
     included do
@@ -34,7 +35,9 @@ module QaServer
 
       def validate(authorities_list, validation_type = validator_class::DEFAULT_VALIDATION_TYPE)
         return if authorities_list.blank?
-        authorities_list.each { |auth_name| validate_authority(auth_name, validation_type) }
+        result = []
+        authorities_list.each { |auth_name| result << validate_authority(auth_name, validation_type) }
+        result
       end
 
       def validate_authority(auth_name, validation_type)
@@ -50,13 +53,13 @@ module QaServer
         lister_class.scenarios_list(authority_name: auth_name, status_log: status_log)
       end
 
-      def validating_connections?
-        return true if validation_type == VALIDATE_CONNECTIONS || validation_type == ALL_VALIDATIONS
+      def validating_accuracy?
+        return true if validation_type == validator_class::VALIDATE_ACCURACY
         false
       end
 
-      def validating_accuracy?
-        return true if validation_type == VALIDATE_ACCURACY || validation_type == ALL_VALIDATIONS
+      def comparing_accuracy?
+        return true if validation_type == validator_class::VALIDATE_ACCURACY_COMPARISON
         false
       end
 
@@ -69,6 +72,8 @@ module QaServer
           validator_class::VALIDATE_CONNECTIONS
         when VALIDATE_ACCURACY
           validator_class::VALIDATE_ACCURACY
+        when VALIDATE_ACCURACY_COMPARISON
+          validator_class::VALIDATE_ACCURACY_COMPARISON
         else
           validator_class::DEFAULT_VALIDATION_TYPE
         end

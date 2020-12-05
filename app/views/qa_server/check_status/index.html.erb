@@ -2,12 +2,20 @@
   function hide_data() {
     document.getElementById('connection-status-section').style.display = 'none';
     document.getElementById('accuracy-status-section').style.display = 'none';
+    document.getElementById('comparison-status-section').style.display = 'none';
+    document.getElementById('comparison-authority-selector').style.display = 'none';
     document.getElementById('example-url-warning').style.display = 'none';
   }
   function validate_authority(form) {
     hide_data();
     form.submit;
     document.getElementById('status-loading-message').style.display = 'block';
+  }
+  function show_comparison_selector() {
+    document.getElementById('comparison-authority-selector').style.display = 'block';
+  }
+  function hide_comparison_selector() {
+    document.getElementById('comparison-authority-selector').style.display = 'none';
   }
 </script>
 
@@ -28,11 +36,24 @@
       </select>
     </div>
 
+    <div id="comparison-authority-selector">
+      Compare with:
+      <select name="compare_with" id="compare-with" class="string optional form-control form-control" value="" aria-labelledby="authority" onchange="validate_authority(this.form)">
+        <option value=""><%= t('qa_server.check_status.select_authority') %></option>
+        <option disabled>──────────</option>
+        <% @authorities_list.each do |auth_name| %>
+            <option value="<%= auth_name %>"><%= auth_name.upcase %></option>
+        <% end %>
+      </select>
+    </div>
+
     <div class="validation-types">
       <%= radio_button_tag(@presenter.value_check_param, @presenter.value_check_connections, @presenter.connection_tests_checked, onClick: "hide_comparison_selector()") %>
       <%= label_tag(@presenter.label_check_connections, t('qa_server.check_status.connections'), class: 'horizontal-list') %>
       <%= radio_button_tag(@presenter.value_check_param, @presenter.value_check_accuracy, @presenter.accuracy_tests_checked, onClick: "hide_comparison_selector()") %>
       <%= label_tag(@presenter.label_check_accuracy, t('qa_server.check_status.accuracy'), class: 'horizontal-list') %>
+      <%= radio_button_tag(@presenter.value_check_param, @presenter.value_check_comparison, @presenter.comparison_tests_checked, onClick: "show_comparison_selector()") %>
+      <%= label_tag(@presenter.label_check_comparison, t('qa_server.check_status.comparison'), class: 'horizontal-list') %>
       <%= radio_button_tag(@presenter.value_check_param, @presenter.value_all_checks, false, onClick: "hide_comparison_selector()") %>
       <%= label_tag(@presenter.label_all_checks, t('qa_server.check_status.all_checks'), class: 'horizontal-list') %>
     </div>
@@ -63,7 +84,7 @@
           </tr>
       <% end %>
       <tr>
-        <td class="<%= @presenter.status_style_class(status) %>"><%= @presenter.status_label(status) %></td>
+        <td class="<%= @presenter.status_style_class(status[:status]) %>"><%= @presenter.status_label(status[:status]) %></td>
         <td><%= status[:subauthority_name] %></td>
         <td><%= status[:service] %></td>
         <td><%= status[:action] %></td>
@@ -93,8 +114,8 @@
     </tr>
     <% @presenter.accuracy_status_data.each do |status| %>
     <tr>
-      <td class="position <%= @presenter.status_style_class(status) %>"><%= status[:expected] %></td>
-      <td class="position <%= @presenter.status_style_class(status) %>"><%= status[:actual] %></td>
+      <td class="position <%= @presenter.status_style_class(status[:status]) %>"><%= status[:expected] %></td>
+      <td class="position <%= @presenter.status_style_class(status[:status]) %>"><%= status[:actual] %></td>
       <td><%= status[:request_data] %></td>
       <td><a href="<%= status[:target] %>"><%= status[:target] %></a></td>
       <td><%= status[:authority_name] %></td>
@@ -102,6 +123,49 @@
       <td><%= status[:service] %></td>
       <td><%= status[:action] %></td>
       <td><a href="<%= status[:url] %>"><%= status[:url] %></a></td>
+      <td><%= status[:err_message] %></td>
+    </tr>
+    <% end %>
+  </table>
+</div>
+<% end %>
+
+<% if @presenter.comparison_status_data? %>
+<div id="comparison-status-section" class="status-section">
+  <h3><%= t('qa_server.check_status.comparison_checks') %></h3>
+  <% auth_before =  @presenter.comparison_status_data.first[:authority_name][0]%>
+  <% auth_after =  @presenter.comparison_status_data.first[:authority_name][1]%>
+  <table class="status">
+    <tr>
+      <th class="comparison-header comparison-before" colspan=2><%= auth_before %><br><%= t('qa_server.check_status.status_table.before') %></th>
+      <th class="comparison-header comparison-after" colspan=2><%= auth_after %><br><%= t('qa_server.check_status.status_table.after') %></th>
+      <th class="comparison-header" colspan=7></th>
+    </tr>
+    <tr>
+      <th><%= t('qa_server.check_status.status_table.expected_by_position') %></th>
+      <th><%= t('qa_server.check_status.status_table.actual_position') %></th>
+      <th><%= t('qa_server.check_status.status_table.expected_by_position') %></th>
+      <th><%= t('qa_server.check_status.status_table.actual_position') %></th>
+      <th><%= t('qa_server.check_status.status_table.request_data') %></th>
+      <th><%= t('qa_server.check_status.status_table.subject_uri') %></th>
+      <th><%= t('qa_server.check_status.status_table.subauthority') %></th>
+      <th><%= t('qa_server.check_status.status_table.service') %></th>
+      <th><%= t('qa_server.check_status.status_table.action') %></th>
+      <th><%= t('qa_server.check_status.status_table.url') %></th>
+      <th><%= t('qa_server.check_status.status_table.errmsg') %></th>
+    </tr>
+    <% @presenter.comparison_status_data.each do |status| %>
+    <tr>
+      <td class="position <%= @presenter.status_style_class(status[:status][0]) %>"><%= status[:expected][0] %></td>
+      <td class="position <%= @presenter.status_style_class(status[:status][0]) %>"><%= status[:actual][0] %></td>
+      <td class="position <%= @presenter.status_style_class(status[:status][1]) %>"><%= status[:expected][1] %></td>
+      <td class="position <%= @presenter.status_style_class(status[:status][1]) %>"><%= status[:actual][1] %></td>
+      <td><%= status[:request_data] %></td>
+      <td><a href="<%= status[:target] %>"><%= status[:target] %></a></td>
+      <td><%= status[:subauthority_name] %></td>
+      <td><%= status[:service] %></td>
+      <td><%= status[:action] %></td>
+      <td><a href="<%= status[:url][0] %>"><%= status[:url][0] %></a>, <a href="<%= status[:url][1] %>"><%= status[:url][1] %></a></td>
       <td><%= status[:err_message] %></td>
     </tr>
     <% end %>

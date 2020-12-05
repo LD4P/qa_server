@@ -33,6 +33,15 @@ div#authority-selector {
   width: 40%;
 }
 
+div#comparison-authority-selector {
+  display: none;
+  margin-top: 20px;
+  margin-bottom: 0px;
+  margin-left: 20px;
+  margin-right: 20px;
+  width: 40%;
+}
+
 div.status-section {
   margin-top: 50px;
 }
@@ -49,6 +58,18 @@ table {
 table, th, td {
   border: 1px solid darkgray;
   padding: 5px;
+}
+
+th.comparison-header {
+  background-color: #2e2c2c;
+}
+
+th.comparison-before {
+  color: #f4f360;
+}
+
+th.comparison-after {
+  color: #7df34c;
 }
 
 th {

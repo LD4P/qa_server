@@ -70,9 +70,76 @@ module QaServer
     end
 
     # @return selected scenario test results data as an array limited to the specified type or all scenarios if type is nil
-    def filter(type: nil)
+    # @example ungrouped
+    #   [ { type: :accuracy_test,
+    #       status: :PASS,
+    #       authority_name: 'CERL_LD4L_CACHE',
+    #       subauthority_name: 'imprint',
+    #       service: 'ld4l_cache',
+    #       action: 'search',
+    #       url: '/qa/search/linked_data/cerl_ld4l_cache/imprint?q=Plantin&maxRecords=8',
+    #       request_data: 'Plantin',
+    #       expected: 1,
+    #       actual: 1,
+    #       target: 'http://thesaurus.cerl.org/record/cni00007649',
+    #       err_message: '',
+    #       request_run_time: 0.032,
+    #       normalization_run_time: 0.011,
+    #       pending: false },
+    #       ... ]
+    # @example grouped
+    #   { CERL_LD4L_CACHE =
+    #       [ { type: :accuracy_test,
+    #           status: :PASS,
+    #           authority_name: 'CERL_LD4L_CACHE',
+    #           subauthority_name: 'imprint',
+    #           service: 'ld4l_cache',
+    #           action: 'search',
+    #           url: '/qa/search/linked_data/cerl_ld4l_cache/imprint?q=Plantin&maxRecords=8',
+    #           request_data: 'Plantin',
+    #           expected: 1,
+    #           actual: 1,
+    #           target: 'http://thesaurus.cerl.org/record/cni00007649',
+    #           err_message: '',
+    #           request_run_time: 0.032,
+    #           normalization_run_time: 0.011,
+    #           pending: false },
+    #           ... # all others for CERL_LD4L_CACHE
+    #       ],
+    #     CERL_NEW_LD4L_CACHE =
+    #       [ { type: :accuracy_test,
+    #           status: :PASS,
+    #           authority_name: 'CERL_NEW_LD4L_CACHE',
+    #           subauthority_name: 'imprint',
+    #           service: 'ld4l_cache',
+    #           action: 'search',
+    #           url: '/qa/search/linked_data/cerl_new_ld4l_cache/imprint?q=Plantin&maxRecords=8',
+    #           request_data: 'Plantin',
+    #           expected: 1,
+    #           actual: 1,
+    #           target: 'http://thesaurus.cerl.org/record/cni00007649',
+    #           err_message: '',
+    #           request_run_time: 0.022,
+    #           normalization_run_time: 0.011,
+    #           pending: false },
+    #           ... # all others for CERL_NEW_LD4L_CACHE
+    #       ]
+    #   }
+    def filter(type: nil, group: false)
+      return group_data(@log) if group && type.blank?
       return @log if type.blank?
-      @log.select { |entry| entry[:type] == type }
+      filtered_log = @log.select { |entry| entry[:type] == type }
+      group ? group_data(filtered_log) : filtered_log
+    end
+
+    def group_data(log)
+      grouped_data = {}
+      log.each do |datum|
+        auth_name = datum[:authority_name]
+        grouped_data[auth_name] = [] unless grouped_data.key? auth_name
+        grouped_data[auth_name] << datum
+      end
+      grouped_data
     end
 
     # @return the scenario test results data as an array
