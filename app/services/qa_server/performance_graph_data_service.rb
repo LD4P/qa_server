@@ -88,39 +88,39 @@ module QaServer
         averages
       end
 
-      private
+    private
 
-        def records_by(authority_name, action, time_period)
-          where_clause = { dt_stamp: time_period }
-          where_clause[:authority] = authority_name unless authority_name.nil? || authority_name == ALL_AUTH
-          where_clause[:action] = action unless action.nil? || action == ALL_ACTIONS
-          performance_data_class.where(where_clause)
-        end
+      def records_by(authority_name, action, time_period)
+        where_clause = { dt_stamp: time_period }
+        where_clause[:authority] = authority_name unless authority_name.nil? || authority_name == ALL_AUTH
+        where_clause[:action] = action unless action.nil? || action == ALL_ACTIONS
+        performance_data_class.where(where_clause)
+      end
 
-        def performance_by_hour_label(idx, start_hour)
-          if idx == 23
-            I18n.t('qa_server.monitor_status.performance.now')
-          elsif ((idx + 1) % 2).zero?
-            (start_hour.hour * 100).to_s
-          else
-            " "
-          end
+      def performance_by_hour_label(idx, start_hour)
+        if idx == 23
+          I18n.t('qa_server.monitor_status.performance.now')
+        elsif ((idx + 1) % 2).zero?
+          (start_hour.hour * 100).to_s
+        else
+          " "
         end
+      end
 
-        def performance_by_day_label(idx, start_day)
-          if idx == 29
-            I18n.t('qa_server.monitor_status.performance.today')
-          elsif ((idx + 1) % 5).zero?
-            start_day.strftime("%m-%d")
-          else
-            " "
-          end
+      def performance_by_day_label(idx, start_day)
+        if idx == 29
+          I18n.t('qa_server.monitor_status.performance.today')
+        elsif ((idx + 1) % 5).zero?
+          start_day.strftime("%m-%d")
+        else
+          " "
         end
+      end
 
-        def calculate_from_records(records, range_idx, range_label)
-          stats = stats_calculator_class.new(records).calculate_average_stats
-          { STATS => stats, range_idx => range_label }
-        end
+      def calculate_from_records(records, range_idx, range_label)
+        stats = stats_calculator_class.new(records).calculate_average_stats
+        { STATS => stats, range_idx => range_label }
+      end
     end
   end
 end

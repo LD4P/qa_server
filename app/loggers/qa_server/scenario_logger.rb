@@ -63,7 +63,7 @@ module QaServer
     # Append a log to this log.
     # @param [ScenarioLog] the log to append to this log
     def append(other)
-      return unless other.present?
+      return if other.blank?
       @log += other.to_a
       @test_count += other.test_count
       @failure_count += other.failure_count

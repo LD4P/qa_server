@@ -47,18 +47,18 @@ module QaServer
       @pending
     end
 
-    private
+  private
 
-      # Convert replacements hash into URL parameters
-      def url_replacements
-        return "&maxRecords=#{MAX_RECORDS}" unless replacements
-        param_replacements = ""
-        replacements.each { |k, v| param_replacements += "&#{k}=#{v}" }
-        param_replacements
-      end
+    # Convert replacements hash into URL parameters
+    def url_replacements
+      return "&maxRecords=#{MAX_RECORDS}" unless replacements
+      param_replacements = ""
+      replacements.each { |k, v| param_replacements += "&#{k}=#{v}" }
+      param_replacements
+    end
 
-      def subauthority?
-        subauthority_name.present?
-      end
+    def subauthority?
+      subauthority_name.present?
+    end
   end
 end

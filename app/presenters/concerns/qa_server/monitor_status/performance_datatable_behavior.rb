@@ -116,44 +116,44 @@ module QaServer::MonitorStatus
       QaServer::TimeService.pretty_date(performance_data_end_dt)
     end
 
-    private
+  private
 
-      def expected_time_period
-        QaServer.config.performance_datatable_default_time_period
-      end
+    def expected_time_period
+      QaServer.config.performance_datatable_default_time_period
+    end
 
-      def data_table_for(authority_data, action)
-        authority_data[action]
-      end
+    def data_table_for(authority_data, action)
+      authority_data[action]
+    end
 
-      def unsupported_action?(stats)
-        values = stats.values
-        return true if values.all?(&:zero?)
-        values.any? { |v| v.respond_to?(:nan?) && v.nan? }
-      end
+    def unsupported_action?(stats)
+      values = stats.values
+      return true if values.all?(&:zero?)
+      values.any? { |v| v.respond_to?(:nan?) && v.nan? }
+    end
 
-      def format_stat(stats, idx)
-        return '' if stats[idx].nil? || unsupported_action?(stats)
-        format("%0.1f", stats[idx])
-      end
+    def format_stat(stats, idx)
+      return '' if stats[idx].nil? || unsupported_action?(stats)
+      format("%0.1f", stats[idx])
+    end
 
-      def performance_style_class(stats, stat_key)
-        return "status-not-supported" if unsupported_action?(stats)
-        return "status-bad" if max_threshold_exceeded(stats, stat_key)
-        return "status-unknown" if desired_threshold_not_met(stats, stat_key)
-        "status-good"
-      end
+    def performance_style_class(stats, stat_key)
+      return "status-not-supported" if unsupported_action?(stats)
+      return "status-bad" if max_threshold_exceeded(stats, stat_key)
+      return "status-unknown" if desired_threshold_not_met(stats, stat_key)
+      "status-good"
+    end
 
-      def max_threshold_exceeded(stats, stat_key)
-        return false if stats[stat_key].nil?
-        return true if stats[stat_key] > QaServer.config.performance_datatable_max_threshold
-        false
-      end
+    def max_threshold_exceeded(stats, stat_key)
+      return false if stats[stat_key].nil?
+      return true if stats[stat_key] > QaServer.config.performance_datatable_max_threshold
+      false
+    end
 
-      def desired_threshold_not_met(stats, stat_key)
-        return false if stats[stat_key].nil?
-        return true unless stats[stat_key] < QaServer.config.performance_datatable_warning_threshold
-        false
-      end
+    def desired_threshold_not_met(stats, stat_key)
+      return false if stats[stat_key].nil?
+      return true unless stats[stat_key] < QaServer.config.performance_datatable_warning_threshold
+      false
+    end
   end
 end

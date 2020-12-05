@@ -50,22 +50,22 @@ module QaServer
       end
     end
 
-    private
+  private
 
-      def migrations
-        Dir.chdir(self.class.migrations_dir) { Dir.glob('db/migrate/[0-9]*_*.rb.erb') }.sort
-      end
+    def migrations
+      Dir.chdir(self.class.migrations_dir) { Dir.glob('db/migrate/[0-9]*_*.rb.erb') }.sort
+    end
 
-      def parse_basename_from(filename)
-        # Add engine name to filename to mimic ``ActiveRecord::Migration.copy` behavior
-        filename.slice(/(?<dateprefix>\d)+_(?<basename>.+)\.erb/, 'basename').sub('.', '.qa_server.')
-      end
+    def parse_basename_from(filename)
+      # Add engine name to filename to mimic ``ActiveRecord::Migration.copy` behavior
+      filename.slice(/(?<dateprefix>\d)+_(?<basename>.+)\.erb/, 'basename').sub('.', '.qa_server.')
+    end
 
-      def migration_version
-        # Don't use AR migration versioning in Rails 4
-        return if Rails.version < '5.0.0'
-        # Specify the current major.minor version of Rails for AR migrations
-        "[#{Rails::VERSION::MAJOR}.#{Rails::VERSION::MINOR}]"
-      end
+    def migration_version
+      # Don't use AR migration versioning in Rails 4
+      return if Rails.version < '5.0.0'
+      # Specify the current major.minor version of Rails for AR migrations
+      "[#{Rails::VERSION::MAJOR}.#{Rails::VERSION::MINOR}]"
+    end
   end
 end

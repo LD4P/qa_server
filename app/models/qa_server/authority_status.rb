@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 # Provide access to the authority_status database table which tracks a summary of status data over time.
 module QaServer
-  class AuthorityStatus < ActiveRecord::Base
+  class AuthorityStatus < ApplicationRecord
     self.table_name = 'authority_status'
-    has_many :authority_status_failure, foreign_key: :authority_status_id
+    has_many :authority_status_failure, dependent: :destroy
 
     # Get the latest saved status.
     def self.latest

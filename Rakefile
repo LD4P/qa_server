@@ -9,7 +9,7 @@ end
 Bundler::GemHelper.install_tasks
 
 # Set up the test application prior to running jasmine tasks.
-task :setup_test_server do
+task setup_test_server: :environment do
   require 'engine_cart'
   EngineCart.load_application!
 end

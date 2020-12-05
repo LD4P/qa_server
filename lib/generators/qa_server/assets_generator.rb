@@ -28,9 +28,9 @@ class QaServer::AssetsGenerator < Rails::Generators::Base
     end
   end
 
-  private
+private
 
-    def qa_server_javascript_installed?
-      IO.read("app/assets/javascripts/application.js").include?('qa_server')
-    end
+  def qa_server_javascript_installed?
+    IO.read("app/assets/javascripts/application.js").include?('qa_server')
+  end
 end

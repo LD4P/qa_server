@@ -26,41 +26,41 @@ module QaServer
       authority.term_id_expects_uri? ? fetch_url : show_url
     end
 
-    private
+  private
 
-      # Generate an example URL that can be called in a browser or through curl
-      # @return [String] the example URL
-      def show_url
-        "#{prefix_for_url('show')}/#{url_identifier}"
-      end
+    # Generate an example URL that can be called in a browser or through curl
+    # @return [String] the example URL
+    def show_url
+      "#{prefix_for_url('show')}/#{url_identifier}"
+    end
 
-      # Generate an example URL that can be called in a browser or through curl
-      # @return [String] the example URL
-      def fetch_url
-        "#{prefix_for_url('fetch')}?uri=#{url_identifier}"
-      end
+    # Generate an example URL that can be called in a browser or through curl
+    # @return [String] the example URL
+    def fetch_url
+      "#{prefix_for_url('fetch')}?uri=#{url_identifier}"
+    end
 
-      def prefix_for_url(action)
-        subauth = "/#{subauthority_name}" if subauthority_name.present?
-        "#{QaServer::Engine.qa_engine_mount}/#{action}/linked_data/#{authority_name.downcase}#{subauth}"
-      end
+    def prefix_for_url(action)
+      subauth = "/#{subauthority_name}" if subauthority_name.present?
+      "#{QaServer::Engine.qa_engine_mount}/#{action}/linked_data/#{authority_name.downcase}#{subauth}"
+    end
 
-      # Convert identifier into URL safe version with encoding if needed.
-      def url_identifier
-        return uri_encode(identifier) if encode?
-        identifier
-      end
+    # Convert identifier into URL safe version with encoding if needed.
+    def url_identifier
+      return uri_encode(identifier) if encode?
+      identifier
+    end
 
-      def subauthority?
-        subauthority_name.present?
-      end
+    def subauthority?
+      subauthority_name.present?
+    end
 
-      def encode?
-        authority.term_id_expects_uri?
-      end
+    def encode?
+      authority.term_id_expects_uri?
+    end
 
-      def uri_encode(uri)
-        url_encode(uri).gsub(".", "%2E")
-      end
+    def uri_encode(uri)
+      url_encode(uri).gsub(".", "%2E")
+    end
   end
 end

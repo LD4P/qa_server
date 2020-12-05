@@ -13,15 +13,15 @@ module QaServer
         end
       end
 
-      private
+    private
 
-        def cache_key
-          "QaServer::PerformanceDayGraphCache.generate_graphs--latest_generation_initiated"
-        end
+      def cache_key
+        "QaServer::PerformanceDayGraphCache.generate_graphs--latest_generation_initiated"
+      end
 
-        def next_expiry
-          QaServer::CacheExpiryService.end_of_hour_expiry
-        end
+      def next_expiry
+        QaServer::CacheExpiryService.end_of_hour_expiry
+      end
     end
   end
 end

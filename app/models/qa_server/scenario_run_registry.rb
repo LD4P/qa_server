@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 # Provide access to the scenario_run_registry database table which registers each run of tests made over time.
 module QaServer
-  class ScenarioRunRegistry < ActiveRecord::Base
+  class ScenarioRunRegistry < ApplicationRecord
     self.table_name = 'scenario_run_registry'
-    has_many :scenario_run_history, foreign_key: :scenario_run_registry_id
+    has_many :scenario_run_history, dependent: :destroy
 
     # @return [ScenarioRunRegistry] registry data for latest run (e.g. id, dt_stamp)
     def self.latest_run

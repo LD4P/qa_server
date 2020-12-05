@@ -22,24 +22,24 @@ module QaServer
         authority
       end
 
-      private
+    private
 
-        def authority_key(authority_name)
-          authority_name.upcase.to_sym
-        end
+      def authority_key(authority_name)
+        authority_name.upcase.to_sym
+      end
 
-        def load_authority(authority_name, status_log)
-          authority = Qa::Authorities::LinkedData::GenericAuthority.new(authority_key(authority_name))
-          if authority.blank?
-            if status_log.present?
-              status_log.add(authority_name: authority_name,
-                             status: QaServer::ScenarioValidator::FAIL,
-                             error_message: "Unable to load authority '#{authority_name}'; cause: UNKNOWN")
-            end
-            return nil
+      def load_authority(authority_name, status_log)
+        authority = Qa::Authorities::LinkedData::GenericAuthority.new(authority_key(authority_name))
+        if authority.blank?
+          if status_log.present?
+            status_log.add(authority_name: authority_name,
+                           status: QaServer::ScenarioValidator::FAIL,
+                           error_message: "Unable to load authority '#{authority_name}'; cause: UNKNOWN")
           end
-          authority
+          return nil
         end
+        authority
+      end
     end
   end
 end

@@ -12,3 +12,9 @@ Lint/UnusedMethodArgument:
 Style/SpecialGlobalVars:
   Exclude:
     - 'tasks/qa_server_dev.rake'
+
+Layout/AccessModifierIndentation:
+  EnforcedStyle: outdent
+
+#Layout/IndentationWidth:
+#  Enabled: false

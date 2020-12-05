@@ -26,15 +26,15 @@ module QaServer
         end
       end
 
-      private
+    private
 
-        def cache_key_for_run_summary(id)
-          "#{SCENARIO_RUN_SUMMARY_DATA_CACHE_KEY}--#{id}"
-        end
+      def cache_key_for_run_summary(id)
+        "#{SCENARIO_RUN_SUMMARY_DATA_CACHE_KEY}--#{id}"
+      end
 
-        def next_expiry
-          QaServer::CacheExpiryService.cache_expiry
-        end
+      def next_expiry
+        QaServer::CacheExpiryService.cache_expiry
+      end
     end
   end
 end

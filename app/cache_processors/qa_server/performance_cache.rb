@@ -49,45 +49,45 @@ module QaServer
       cache_to_write = nil # free cache for garbage collection
     end
 
-    private
+  private
 
-      def swap_cache_hash
-        cache_to_write = @cache
-        @cache = {} # reset main cache so new items after write begins are cached in the main cache
-        QaServer.config.performance_cache_logger.debug("#{self.class}##{__method__} - cache memory BEFORE write: #{ObjectSpace.memsize_of(cache_to_write)}")
-        cache_to_write
-      end
+    def swap_cache_hash
+      cache_to_write = @cache
+      @cache = {} # reset main cache so new items after write begins are cached in the main cache
+      QaServer.config.performance_cache_logger.debug("#{self.class}##{__method__} - cache memory BEFORE write: #{ObjectSpace.memsize_of(cache_to_write)}")
+      cache_to_write
+    end
 
-      def log(id:)
-        return if QaServer.config.suppress_logging_performance_datails?
-        Rails.logger.debug("*** performance data for id: #{id} ***")
-        Rails.logger.debug(@cache[id].to_yaml)
-      end
+    def log(id:)
+      return if QaServer.config.suppress_logging_performance_datails?
+      Rails.logger.debug("*** performance data for id: #{id} ***")
+      Rails.logger.debug(@cache[id].to_yaml)
+    end
 
-      def incomplete?(entry)
-        required_keys.each { |k| return true unless entry.key? k }
-        false
-      end
+    def incomplete?(entry)
+      required_keys.each { |k| return true unless entry.key? k }
+      false
+    end
 
-      def required_keys
-        [:dt_stamp,
-         :authority,
-         :action,
-         :action_time_ms,
-         :size_bytes,
-         :retrieve_time_ms,
-         :graph_load_time_ms,
-         :normalization_time_ms]
-      end
+    def required_keys
+      [:dt_stamp,
+       :authority,
+       :action,
+       :action_time_ms,
+       :size_bytes,
+       :retrieve_time_ms,
+       :graph_load_time_ms,
+       :normalization_time_ms]
+    end
 
-      def log_write_all(prefix, size_before, cache_size)
-        if size_before.positive?
-          QaServer.config.performance_cache_logger.debug("#{prefix} 0 of #{size_before} performance data records were saved") if size_before == cache_size
-          QaServer.config.performance_cache_logger.debug("#{prefix} #{size_before - cache_size} of #{size_before} performance data records were saved") if size_before > cache_size
-        else
-          QaServer.config.performance_cache_logger.debug("#{prefix} 0 of 0 performance data records were saved")
-        end
-        QaServer.config.performance_cache_logger.debug("#{prefix} - cache memory AFTER write: #{ObjectSpace.memsize_of @cache}")
+    def log_write_all(prefix, size_before, cache_size)
+      if size_before.positive?
+        QaServer.config.performance_cache_logger.debug("#{prefix} 0 of #{size_before} performance data records were saved") if size_before == cache_size
+        QaServer.config.performance_cache_logger.debug("#{prefix} #{size_before - cache_size} of #{size_before} performance data records were saved") if size_before > cache_size
+      else
+        QaServer.config.performance_cache_logger.debug("#{prefix} 0 of 0 performance data records were saved")
       end
+      QaServer.config.performance_cache_logger.debug("#{prefix} - cache memory AFTER write: #{ObjectSpace.memsize_of @cache}")
+    end
   end
 end

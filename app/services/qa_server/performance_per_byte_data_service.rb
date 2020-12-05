@@ -28,14 +28,14 @@ module QaServer
         stats_calculator_class.new(records: records, n: n).calculate
       end
 
-      private
+    private
 
-        def records_by(authority_name, action)
-          where_clause = {}
-          where_clause[:authority] = authority_name unless authority_name.nil? || authority_name == ALL_AUTH
-          where_clause[:action] = action unless action.nil? || action == ALL_ACTIONS
-          performance_data_class.where(where_clause)
-        end
+      def records_by(authority_name, action)
+        where_clause = {}
+        where_clause[:authority] = authority_name unless authority_name.nil? || authority_name == ALL_AUTH
+        where_clause[:action] = action unless action.nil? || action == ALL_ACTIONS
+        performance_data_class.where(where_clause)
+      end
     end
   end
 end

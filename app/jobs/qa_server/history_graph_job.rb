@@ -12,17 +12,17 @@ module QaServer
       generate_graph(data) if QaServer::JobIdCache.active_job_id?(job_key: job_key, job_id: job_id)
     end
 
-    private
+  private
 
-      def generate_graph(data)
-        QaServer.config.monitor_logger.debug("(#{self.class}##{__method__}-#{job_id}) - GENERATING historical summary graph")
-        graphing_service.generate_graph(data)
-        QaServer.config.monitor_logger.debug("(#{self.class}##{__method__}-#{job_id}) COMPLETED historical summary graph generation")
-        QaServer::JobIdCache.reset_job_id(job_key: job_key)
-      end
+    def generate_graph(data)
+      QaServer.config.monitor_logger.debug("(#{self.class}##{__method__}-#{job_id}) - GENERATING historical summary graph")
+      graphing_service.generate_graph(data)
+      QaServer.config.monitor_logger.debug("(#{self.class}##{__method__}-#{job_id}) COMPLETED historical summary graph generation")
+      QaServer::JobIdCache.reset_job_id(job_key: job_key)
+    end
 
-      def job_key
-        "QaServer::HistoryGraphJob--job_id"
-      end
+    def job_key
+      "QaServer::HistoryGraphJob--job_id"
+    end
   end
 end
