@@ -1,11 +1,11 @@
 # frozen_string_literal: true
 # Provide access to the scenario_run_history database table which tracks scenario runs over time.
 module QaServer
-  class ScenarioRunHistory < ActiveRecord::Base
+  class ScenarioRunHistory < ApplicationRecord
     self.table_name = 'scenario_run_history'
     belongs_to :scenario_run_registry
-    enum scenario_type: [:connection, :accuracy, :performance], _suffix: :type
-    enum status: [:good, :bad, :unknown], _suffix: true
+    enum scenario_type: { connection: 0, accuracy: 1, performance: 2 }, _suffix: :type
+    enum status: { good: 0, bad: 1, unknown: 2 }, _suffix: true
 
     GOOD_MARKER = '√'
     BAD_MARKER = 'X'

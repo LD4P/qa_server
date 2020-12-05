@@ -32,7 +32,7 @@ module QaServer
 
     def self.load_config(authority_name, status_log)
       scenarios_config = YAML.load_file(scenario_path(authority_name))
-      unless scenarios_config.present?
+      if scenarios_config.blank?
         status_log.add(authority_name: authority_name,
                        status: QaServer::ScenarioValidator::FAIL,
                        error_message: "Unable to load scenarios for authority '#{authority_name}'; cause: UNKNOWN")

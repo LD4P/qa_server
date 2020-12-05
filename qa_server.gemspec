@@ -34,7 +34,7 @@ Gem::Specification.new do |spec|
 
   spec.add_development_dependency 'better_errors' # provide debugging command line in
   spec.add_development_dependency 'binding_of_caller' # provides deep stack info used by better_errors
-  spec.add_development_dependency 'bixby', '~> 1.0.0' # rubocop styleguide
+  spec.add_development_dependency 'bixby', '~> 3.0.0' # rubocop styleguide
   # spec.add_development_dependency "capybara", '~> 3.29'
   # spec.add_development_dependency 'capybara-maleficent', '~> 0.3.0'
   # spec.add_development_dependency 'chromedriver-helper', '~> 2.1'

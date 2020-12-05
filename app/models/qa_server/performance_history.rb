@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 # Provide access to the scenario_results_history database table which tracks specific scenario runs over time.
 module QaServer
-  class PerformanceHistory < ActiveRecord::Base
+  class PerformanceHistory < ApplicationRecord
     self.table_name = 'performance_history'
 
-    enum action: [:fetch, :search]
+    enum action: { fetch: 0, search: 1 }
 
     class_attribute :datatable_data_service_class, :graph_data_service_class
     self.datatable_data_service_class = QaServer::PerformanceDatatableService
