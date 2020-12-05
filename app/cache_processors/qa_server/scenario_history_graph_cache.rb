@@ -13,15 +13,15 @@ module QaServer
         end
       end
 
-      private
+    private
 
-        def cache_key
-          "QaServer::ScenarioHistoryGraphCache.generate_graph--latest_generation_initiated"
-        end
+      def cache_key
+        "QaServer::ScenarioHistoryGraphCache.generate_graph--latest_generation_initiated"
+      end
 
-        def next_expiry
-          QaServer::CacheExpiryService.cache_expiry
-        end
+      def next_expiry
+        QaServer::CacheExpiryService.cache_expiry
+      end
     end
   end
 end

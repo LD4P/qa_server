@@ -16,33 +16,33 @@ module QaServer
       @request_data = scenario.identifier
     end
 
-    private
+  private
 
-      # CONCRETE Implementation: Run a term scenario and log results.
-      def run_connection_scenario
-        test_connection(min_expected_size: scenario.min_result_size, scenario_type_name: 'term') do
-          authority.find(scenario.identifier,
-                         subauth: scenario.subauthority_name)
-        end
+    # CONCRETE Implementation: Run a term scenario and log results.
+    def run_connection_scenario
+      test_connection(min_expected_size: scenario.min_result_size, scenario_type_name: 'term') do
+        authority.find(scenario.identifier,
+                       subauth: scenario.subauthority_name)
       end
+    end
 
-      # CONCRETE Implementation: Run a term scenario and log results.
-      def run_accuracy_scenario
-        # no accuracy scenarios defined for terms at this time
-      end
+    # CONCRETE Implementation: Run a term scenario and log results.
+    def run_accuracy_scenario
+      # no accuracy scenarios defined for terms at this time
+    end
 
-      def action
-        TERM_ACTION
-      end
+    def action
+      TERM_ACTION
+    end
 
-      def accuracy_scenario?
-        # At this time, all scenarios are connection scenarios for terms.
-        false
-      end
+    def accuracy_scenario?
+      # At this time, all scenarios are connection scenarios for terms.
+      false
+    end
 
-      def connection_scenario?
-        # At this time, all scenarios are connection scenarios for terms.
-        true
-      end
+    def connection_scenario?
+      # At this time, all scenarios are connection scenarios for terms.
+      true
+    end
   end
 end

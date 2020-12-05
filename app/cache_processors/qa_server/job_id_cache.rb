@@ -19,11 +19,11 @@ module QaServer
         Rails.cache.delete(cache_key(job_key))
       end
 
-      private
+    private
 
-        def cache_key(job_key)
-          "#{job_key}-job_id"
-        end
+      def cache_key(job_key)
+        "#{job_key}-job_id"
+      end
     end
   end
 end

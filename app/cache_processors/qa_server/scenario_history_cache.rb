@@ -21,15 +21,15 @@ module QaServer
         end
       end
 
-      private
+    private
 
-        def cache_key_for_historical_data
-          SCENARIO_RUN_HISTORY_DATA_CACHE_KEY
-        end
+      def cache_key_for_historical_data
+        SCENARIO_RUN_HISTORY_DATA_CACHE_KEY
+      end
 
-        def next_expiry
-          QaServer::CacheExpiryService.cache_expiry
-        end
+      def next_expiry
+        QaServer::CacheExpiryService.cache_expiry
+      end
     end
   end
 end

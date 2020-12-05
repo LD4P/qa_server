@@ -14,15 +14,15 @@ module QaServer
         end
       end
 
-      private
+    private
 
-        def cache_key
-          "QaServer::ScenarioRunCache.run_tests--latest_run_initiated"
-        end
+      def cache_key
+        "QaServer::ScenarioRunCache.run_tests--latest_run_initiated"
+      end
 
-        def next_expiry
-          QaServer::CacheExpiryService.cache_expiry
-        end
+      def next_expiry
+        QaServer::CacheExpiryService.cache_expiry
+      end
     end
   end
 end

@@ -46,12 +46,12 @@ module PrependedRdf::RdfGraph
     QaServer.config.performance_tracker.write "#{format('%.6f', end_time_s - start_time_s)}, " # load graph
   end
 
-  private
+private
 
-    def parse_phid(url)
-      i = url.rindex('&phid=')
-      phid = url[(i + 6)..url.length]
-      adjusted_url = url[0..(i - 1)]
-      [phid, adjusted_url]
-    end
+  def parse_phid(url)
+    i = url.rindex('&phid=')
+    phid = url[(i + 6)..url.length]
+    adjusted_url = url[0..(i - 1)]
+    [phid, adjusted_url]
+  end
 end

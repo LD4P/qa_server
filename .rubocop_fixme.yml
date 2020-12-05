@@ -13,8 +13,8 @@ Style/SpecialGlobalVars:
   Exclude:
     - 'tasks/qa_server_dev.rake'
 
-Layout/IndentationConsistency:
-  Enabled: false
+Layout/AccessModifierIndentation:
+  EnforcedStyle: outdent
 
-Layout/IndentationWidth:
-  Enabled: false
+#Layout/IndentationWidth:
+#  Enabled: false

@@ -63,31 +63,31 @@ module QaServer
         where_with_authority(where_clause, auth_name, auth_table)
       end
 
-      private
+    private
 
-        def where_for_dt_stamp(dt_table, dt_column, time_period)
-          end_range = QaServer::TimeService.current_time
-          start_range = end_range - time_period
-          where_clause = { dt_column => start_range..end_range }
-          where_clause = { dt_table => where_clause } unless dt_table.nil?
-          where_clause
-        end
+      def where_for_dt_stamp(dt_table, dt_column, time_period)
+        end_range = QaServer::TimeService.current_time
+        start_range = end_range - time_period
+        where_clause = { dt_column => start_range..end_range }
+        where_clause = { dt_table => where_clause } unless dt_table.nil?
+        where_clause
+      end
 
-        def where_with_authority(where_clause, auth_name, auth_table)
-          return where_clause if auth_name.nil?
-          if auth_table.nil?
-            where_clause[:authority] = auth_name
-          else
-            where_clause[auth_table] = { authority: auth_name }
-          end
-          where_clause
+      def where_with_authority(where_clause, auth_name, auth_table)
+        return where_clause if auth_name.nil?
+        if auth_table.nil?
+          where_clause[:authority] = auth_name
+        else
+          where_clause[auth_table] = { authority: auth_name }
         end
+        where_clause
+      end
 
-        def validate_params(auth_name, auth_table, dt_table)
-          raise ArgumentError, "Do not specify auth_table when auth_name is not specified" if auth_table.present? && auth_name.nil?
-          return if auth_name.nil?
-          raise ArgumentError, "Either both table names need to be specified or neither" if auth_table.present? ^ dt_table.present?
-        end
+      def validate_params(auth_name, auth_table, dt_table)
+        raise ArgumentError, "Do not specify auth_table when auth_name is not specified" if auth_table.present? && auth_name.nil?
+        return if auth_name.nil?
+        raise ArgumentError, "Either both table names need to be specified or neither" if auth_table.present? ^ dt_table.present?
+      end
     end
   end
 end

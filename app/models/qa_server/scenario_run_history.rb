@@ -96,66 +96,66 @@ module QaServer
         end
       end
 
-      private
+    private
 
-        def day_count(auth, days)
-          days&.key?(auth) ? days[auth] : 0
-        end
+      def day_count(auth, days)
+        days&.key?(auth) ? days[auth] : 0
+      end
 
-        def count_days(status)
-          where = time_period_where
-          where[:status] = status
-          auths = QaServer::ScenarioRunHistory.where(where).select("authority_name").group("date, authority_name")
-                                              .order("authority_name").pluck(:authority_name)
-          auths.each_with_object({}) do |auth, hash|
-            hash[auth] = 0 unless hash.key? auth
-            hash[auth] += 1
-          end
+      def count_days(status)
+        where = time_period_where
+        where[:status] = status
+        auths = QaServer::ScenarioRunHistory.where(where).select("authority_name").group("date, authority_name")
+                                            .order("authority_name").pluck(:authority_name)
+        auths.each_with_object({}) do |auth, hash|
+          hash[auth] = 0 unless hash.key? auth
+          hash[auth] += 1
         end
+      end
 
-        def authorities_in_run(run_id:)
-          QaServer::ScenarioRunHistory.where(scenario_run_registry_id: run_id).pluck(:authority_name).uniq
-        end
+      def authorities_in_run(run_id:)
+        QaServer::ScenarioRunHistory.where(scenario_run_registry_id: run_id).pluck(:authority_name).uniq
+      end
 
-        def authorities_with_failures_in_run(run_id:)
-          QaServer::ScenarioRunHistory.where(scenario_run_registry_id: run_id).where.not(status: 'good').pluck('authority_name').uniq
-        end
+      def authorities_with_failures_in_run(run_id:)
+        QaServer::ScenarioRunHistory.where(scenario_run_registry_id: run_id).where.not(status: 'good').pluck('authority_name').uniq
+      end
 
-        # @return [Hash] status counts across all authorities (used for current test summary)
-        # @example { "good" => 23, "bad" => 3, "unknown" => 0 }
-        def status_counts_in_run(run_id:)
-          status = QaServer::ScenarioRunHistory.group('status').where(scenario_run_registry_id: run_id).count
-          status["good"] = 0 unless status.key? "good"
-          status["bad"] = 0 unless status.key? "bad"
-          status["unknown"] = 0 unless status.key? "unknown"
-          status
-        end
+      # @return [Hash] status counts across all authorities (used for current test summary)
+      # @example { "good" => 23, "bad" => 3, "unknown" => 0 }
+      def status_counts_in_run(run_id:)
+        status = QaServer::ScenarioRunHistory.group('status').where(scenario_run_registry_id: run_id).count
+        status["good"] = 0 unless status.key? "good"
+        status["bad"] = 0 unless status.key? "bad"
+        status["unknown"] = 0 unless status.key? "unknown"
+        status
+      end
 
-        def runs_per_authority_for_time_period
-          status = QaServer::ScenarioRunHistory.joins(:scenario_run_registry).where(time_period_where).group('authority_name', 'status').count
-          status.each_with_object({}) do |(k, v), hash|
-            h = hash[k[0]] || { "good" => 0, "bad" => 0 } # initialize for an authority if it doesn't already exist
-            h[k[1]] = v
-            hash[k[0]] = h
-          end
+      def runs_per_authority_for_time_period
+        status = QaServer::ScenarioRunHistory.joins(:scenario_run_registry).where(time_period_where).group('authority_name', 'status').count
+        status.each_with_object({}) do |(k, v), hash|
+          h = hash[k[0]] || { "good" => 0, "bad" => 0 } # initialize for an authority if it doesn't already exist
+          h[k[1]] = v
+          hash[k[0]] = h
         end
+      end
 
-        def expected_time_period
-          QaServer.config.historical_datatable_default_time_period
-        end
+      def expected_time_period
+        QaServer.config.historical_datatable_default_time_period
+      end
 
-        def time_period_where
-          case expected_time_period
-          when :day
-            QaServer::TimePeriodService.where_clause_for_last_24_hours(dt_table: :scenario_run_history, dt_column: :date)
-          when :month
-            QaServer::TimePeriodService.where_clause_for_last_30_days(dt_table: :scenario_run_history, dt_column: :date)
-          when :year
-            QaServer::TimePeriodService.where_clause_for_last_12_months(dt_table: :scenario_run_history, dt_column: :date)
-          else
-            all_records
-          end
+      def time_period_where
+        case expected_time_period
+        when :day
+          QaServer::TimePeriodService.where_clause_for_last_24_hours(dt_table: :scenario_run_history, dt_column: :date)
+        when :month
+          QaServer::TimePeriodService.where_clause_for_last_30_days(dt_table: :scenario_run_history, dt_column: :date)
+        when :year
+          QaServer::TimePeriodService.where_clause_for_last_12_months(dt_table: :scenario_run_history, dt_column: :date)
+        else
+          all_records
         end
+      end
     end
   end
 end

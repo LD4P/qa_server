@@ -253,23 +253,23 @@ module QaServer
       @monitor_logger ||= Logger.new(ENV['MONITOR_LOG_PATH'] || File.join("log", "monitor.log"))
     end
 
-    private
+  private
 
-      def convert_size_to_bytes(size)
-        return if size.nil?
-        md = size.match(/^(?<num>\d+)\s?(?<unit>\w+)?$/)
-        return md[:num].to_i if md[:unit].nil?
-        md[:num].to_i *
-          case md[:unit].upcase
-          when 'KB'
-            1024
-          when 'MB'
-            1024**2
-          when 'GB'
-            1024**3
-          else
-            1
-          end
-      end
+    def convert_size_to_bytes(size)
+      return if size.nil?
+      md = size.match(/^(?<num>\d+)\s?(?<unit>\w+)?$/)
+      return md[:num].to_i if md[:unit].nil?
+      md[:num].to_i *
+        case md[:unit].upcase
+        when 'KB'
+          1024
+        when 'MB'
+          1024**2
+        when 'GB'
+          1024**3
+        else
+          1
+        end
+    end
   end
 end
