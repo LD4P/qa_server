@@ -96,7 +96,7 @@ module QaServer
     def authorities_to_validate
       return [] if authority_name.blank?
       authority_names = authority_name == ALL_AUTHORITIES ? authorities_list : [authority_name]
-      authority_names << compare_with if compare_with.present?
+      authority_names << compare_with if comparing_accuracy? && compare_with.present?
       authority_names
     end
 

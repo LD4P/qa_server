@@ -96,6 +96,17 @@ module QaServer
       end
     end
 
+    def selected_authority
+      return comparison_status_data.first[:authority_name][0].to_sym if comparison_status_data?
+      return connection_status_data.first[:authority_name].to_sym if connection_status_data?
+      return accuracy_status_data.first[:authority_name].to_sym if accuracy_status_data?
+      ""
+    end
+
+    def selected_comparison
+      comparison_status_data? ? comparison_status_data.first[:authority_name][1].to_sym : ""
+    end
+
     def value_all_collections
       QaServer::CheckStatusController::ALL_AUTHORITIES
     end
