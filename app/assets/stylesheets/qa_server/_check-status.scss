@@ -65,10 +65,12 @@ th.comparison-header {
 }
 
 th.comparison-before {
+  text-align: center;
   color: #f4f360;
 }
 
 th.comparison-after {
+  text-align: center;
   color: #7df34c;
 }
 
@@ -79,6 +81,11 @@ th {
 
 td.position {
   text-align: center;
+}
+
+th.bold-left-border,
+td.bold-left-border {
+  border-left: 2px solid black;
 }
 
 .status-good {
