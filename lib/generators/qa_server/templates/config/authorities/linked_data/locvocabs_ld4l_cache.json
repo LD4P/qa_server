@@ -1,0 +1,117 @@
+{
+  "QA_CONFIG_VERSION": "2.2",
+  "service_uri": "http://ld4l.org/ld4l_services/cache",
+  "prefixes": {
+    "loc":     "http://id.loc.gov/vocabulary/identifiers/",
+    "madsrdf": "http://www.loc.gov/mads/rdf/v1#",
+    "vivo":    "http://vivoweb.org/ontology/core#"
+  },
+  "term": {
+  },
+  "search": {
+    "url": {
+      "@context": "http://www.w3.org/ns/hydra/context.jsonld",
+      "@type": "IriTemplate",
+      "template": "http://wintermute.info-science.uiowa.edu:8081/ld4l_services/loc_vocab_batch.jsp?{?query}&{?entity}&{?maxRecords}&{?startRecord}&{?lang}",
+      "variableRepresentation": "BasicRepresentation",
+      "mapping": [
+        {
+          "@type": "IriTemplateMapping",
+          "variable": "query",
+          "property": "hydra:freetextQuery",
+          "required": true,
+          "encode": true
+        },
+        {
+          "@type": "IriTemplateMapping",
+          "variable": "entity",
+          "property": "hydra:freetextQuery",
+          "required": false,
+          "default": ""
+        },
+        {
+          "@type": "IriTemplateMapping",
+          "variable": "maxRecords",
+          "property": "hydra:freetextQuery",
+          "required": false,
+          "default": "20"
+        },
+        {
+          "@type": "IriTemplateMapping",
+          "variable": "startRecord",
+          "property": "hydra:freetextQuery",
+          "required": false,
+          "default": "1"
+        },
+        {
+          "@type": "IriTemplateMapping",
+          "variable": "lang",
+          "property": "hydra:freetextQuery",
+          "required": false,
+          "default": "en"
+        }
+      ]
+    },
+    "qa_replacement_patterns": {
+      "query":   "query",
+      "subauth": "entity",
+      "start_record": "startRecord",
+      "requested_records": "maxRecords"
+    },
+    "total_count_ldpath": "vivo:count",
+    "results": {
+      "label_ldpath":    "madsrdf:authoritativeLabel ::xsd:string",
+      "sort_ldpath":     "vivo:rank ::xsd:string"
+    },
+    "subauthorities": {
+      "carriers":            "carriers",
+      "content_types":       "contentTypes",
+      "description_conventions": "descriptionConventions",
+      "frequencies":         "frequencies",
+      "issuance":            "issuance",
+      "marcauthen":          "marcauthen",
+      "maspect":             "maspect",
+      "maudience":           "maudience",
+      "mbroadstd":           "mbroadstd",
+      "mcapturestorage":     "mcapturestorage",
+      "mcolor":              "mcolor",
+      "media_types":         "mediaTypes",
+      "mencformat":          "mencformat",
+      "menclvl":             "menclvl",
+      "mfiletype":           "mfiletype",
+      "mfont":               "mfont",
+      "mgeneration":         "mgeneration",
+      "mgovtpubtype":        "mgovtpubtype",
+      "mgroove":             "mgroove",
+      "millus":              "millus",
+      "mlayout":             "mlayout",
+      "mmaterial":           "mmaterial",
+      "mmusicformat":        "mmusicformat",
+      "mmusnotation":        "mmusnotation",
+      "mplayback":           "mplayback",
+      "mplayspeed":          "mplayspeed",
+      "mpolarity":           "mpolarity",
+      "mpresformat":         "mpresformat",
+      "mproduction":         "mproduction",
+      "mprojection":         "mprojection",
+      "mpunctuation_conventions": "mpunctuationConventions",
+      "mrecmedium":          "mrecmedium",
+      "mrectype":            "mrectype",
+      "mreductionratio":     "mreductionratio",
+      "mregencoding":        "mregencoding",
+      "mrelief":             "mrelief",
+      "mscale":              "mscale",
+      "mscript":             "mscript",
+      "msoundcontent":       "msoundcontent",
+      "mspecplayback":       "mspecplayback",
+      "mstatus":             "mstatus",
+      "msupplcont":          "msupplcont",
+      "mtactile":            "mtactile",
+      "mtapeconfig":         "mtapeconfig",
+      "mtechnique":          "mtechnique",
+      "mvidformat":          "mvidformat",
+      "relators":            "relators",
+      "resource_components": "resourceComponents"
+    }
+  }
+}
