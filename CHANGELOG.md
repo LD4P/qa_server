@@ -1,3 +1,23 @@
+### 7.5.0 (2020-12-07)
+
+* UI improvements of check_status page
+  * pre-populate selection fields with most recently submitted authorities
+  * add ability to compare two authorities' accuracy tests in UI
+  * update check_status UI to require GO button click to start processing
+  * fix javascript to avoid referencing missing elements
+* accuracy test updates
+  * accuracy tests default to `context=false` since it is not required for testing
+  * allow accuracy tests through rspec to be marked pending (allows for better regression testing)
+  * add pending to failing validation tests such that accuracy_spec passes
+  * sync tests with production accuracy tests
+  * fix typo in `position` and a few syntax errors
+  * adjust result_size for validations where passing tests return less than 200 chars
+  * split locnames_rwo_ld4l_cache into 3 sets of tests of about 9 each to avoid time out
+  * add extended context for getty_aat_ld4l_cache and getty_tgn_ld4l_cache
+  * add authority locvocabs_ld4l_cache
+* add request_data to status_logger (e.g. query for search, identifier for term)
+* update to latest bixby v3.0
+
 ### 7.4.0 (2020-04-13)
 
 * add size and complexity performance statistics (not auto-generated)
