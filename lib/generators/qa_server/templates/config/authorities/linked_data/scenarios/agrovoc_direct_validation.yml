@@ -11,6 +11,7 @@ search:
   #  Accuracy tests
   #------------------
   -
+    pending: true
     query: extrakce rozpouštědlem
     position: 5
     subject_uri: "http://aims.fao.org/aos/agrovoc/c_28368"

@@ -222,6 +222,7 @@ search:
     replacements:
       maxRecords: '10'
   -
+    pending: true
     query: alter egos
     subauth: Agents__People
     position: 5
@@ -236,6 +237,7 @@ search:
     replacements:
       maxRecords: '10'
   -
+    pending: true
     query: palindrome
     subauth: Associated_Concepts__Associated_Concepts
     position: 5
@@ -271,6 +273,7 @@ search:
     replacements:
       maxRecords: '10'
   -
+    pending: true
     query: lloy lloy
     subauth: Objects
     position: 5

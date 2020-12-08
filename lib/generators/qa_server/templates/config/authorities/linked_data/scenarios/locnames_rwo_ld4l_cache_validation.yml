@@ -22,7 +22,7 @@ search:
     query: 'twain'
     subauth: family
   #------------------
-  #  Accuracy tests
+  #  Accuracy tests - Part 1 (1-9)
   #------------------
   -
     query: Twain, Mark, 1835-1910
@@ -32,6 +32,7 @@ search:
     replacements:
       maxRecords: '10'
   -
+    pending: true
     query: Camden, William
     subauth: person
     position: 10
@@ -60,6 +61,7 @@ search:
     replacements:
       maxRecords: '20'
   -
+    pending: true
     query: Tanaka, Shozo
     subauth: person
     position: 5
@@ -74,6 +76,7 @@ search:
     replacements:
       maxRecords: '20'
   -
+    pending: true
     query: Endalageta Kabada
     subauth: person
     position: 5
@@ -87,125 +90,6 @@ search:
     subject_uri: "http://id.loc.gov/rwo/agents/no2003094541"
     replacements:
       maxRecords: '20'
-  -
-    query: Tolstoy, Leo
-    subauth: person
-    position: 5
-    subject_uri: "http://id.loc.gov/rwo/agents/n79068416"
-    replacements:
-      maxRecords: '20'
-  -
-    query: tolstoi, lev
-    subauth: person
-    position: 5
-    subject_uri: "http://id.loc.gov/rwo/agents/n79068416"
-    replacements:
-      maxRecords: '20'
-  -
-    query: Tolstoĭ, Lev
-    subauth: person
-    position: 5
-    subject_uri: "http://id.loc.gov/rwo/agents/n79068416"
-    replacements:
-      maxRecords: '20'
-  -
-    query: Толстой, Лев
-    subauth: person
-    position: 5
-    subject_uri: "http://id.loc.gov/rwo/agents/n79068416"
-    replacements:
-      maxRecords: '20'
-  -
-    query: Толстой, Лев, граф, 1828-1910
-    subauth: person
-    position: 5
-    subject_uri: "http://id.loc.gov/rwo/agents/n79068416"
-    replacements:
-      maxRecords: '20'
-  -
-    query: טאלסטאי, ליעװ
-    subauth: person
-    position: 5
-    subject_uri: "http://id.loc.gov/rwo/agents/n79068416"
-    replacements:
-      maxRecords: '20'
-  -
-    query: レオ.トルストイ
-    subauth: person
-    position: 5
-    subject_uri: "http://id.loc.gov/rwo/agents/n79068416"
-    replacements:
-      maxRecords: '20'
-  -
-    query: لئون تولستوى
-    subauth: person
-    position: 5
-    subject_uri: "http://id.loc.gov/rwo/agents/n79068416"
-    replacements:
-      maxRecords: '20'
-  -
-    query: 托爾斯泰, 列夫
-    subauth: person
-    position: 5
-    subject_uri: "http://id.loc.gov/rwo/agents/n79068416"
-    replacements:
-      maxRecords: '20'
-  -
-    query: ACLU
-    subauth: organization
-    position: 20
-    subject_uri: "http://id.loc.gov/rwo/agents/n79079580"
-    replacements:
-      maxRecords: '30'
-  -
-    query: University of Pennsylvania
-    subauth: organization
-    position: 5
-    subject_uri: "http://id.loc.gov/rwo/agents/n79065482"
-    replacements:
-      maxRecords: '20'
-  -
-    query: university of pennsylvania
-    subauth: organization
-    position: 5
-    subject_uri: "http://id.loc.gov/rwo/agents/n79065482"
-    replacements:
-      maxRecords: '20'
-  -
-    query: Planned Parenthood Federation of America
-    subauth: organization
-    position: 10
-    subject_uri: "http://id.loc.gov/rwo/agents/n50075375"
-    replacements:
-      maxRecords: '20'
-  -
-    query: Genkai Shosetsu Kenkyukai
-    subauth: organization
-    position: 5
-    subject_uri: "http://id.loc.gov/rwo/agents/n2013003006"
-    replacements:
-      maxRecords: '20'
-  -
-    query: Genkai Shōsetsu Kenkyūkai
-    subauth: organization
-    position: 5
-    subject_uri: "http://id.loc.gov/rwo/agents/n2013003006"
-    replacements:
-      maxRecords: '20'
-  -
-    query: 限界小說研究会
-    subauth: organization
-    position: 5
-    subject_uri: "http://id.loc.gov/rwo/agents/n2013003006"
-    replacements:
-      maxRecords: '20'
-  -
-    query: Waterman Family
-    subauth: family
-    position: 5
-    subject_uri: "http://id.loc.gov/rwo/agents/n2012043300"
-    replacements:
-      maxRecords: '10'
 term:
   -
     identifier: 'http://id.loc.gov/rwo/agents/n79021164'

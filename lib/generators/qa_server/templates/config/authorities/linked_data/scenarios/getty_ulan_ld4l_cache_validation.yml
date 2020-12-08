@@ -44,7 +44,7 @@ search:
     subauth: organization
     result_size: 100
     subject_uri: "http://vocab.getty.edu/ulan/500304715"
-    postion: 5
+    position: 5
     replacements:
       maxRecords: '10'
 term:

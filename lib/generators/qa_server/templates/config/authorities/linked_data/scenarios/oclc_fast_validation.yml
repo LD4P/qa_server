@@ -61,6 +61,64 @@ search:
     subauth: alt_lc
     replacements:
       maximumRecords: '4'
+  #------------------
+  #  Accuracy tests
+  #------------------
+  -
+    query: Tralee & Dingle Railway
+    subject_uri: "http://id.worldcat.org/fast/1733583"
+    position: 3
+    replacements:
+      maxRecords: '5'
+  -
+    pending: true
+    query: Sleep-overs
+    subauth: concept
+    subject_uri: "http://id.worldcat.org/fast/1120873"
+    position: 5
+    replacements:
+      maxRecords: '10'
+  -
+    pending: true
+    query: People's International Tribunal on the Rights of Indigenous Hawaiians
+    subauth: event
+    subject_uri: "http://id.worldcat.org/fast/1410299"
+    position: 3
+    replacements:
+      maxRecords: '8'
+  -
+    pending: true
+    query: University of Chicago Library
+    subauth: organization
+    subject_uri: "http://id.worldcat.org/fast/539173"
+    position: 5
+    replacements:
+      maxRecords: '10'
+  -
+    pending: true
+    query: Taylor, Charles Hollis
+    subauth: person
+    subject_uri: "http://id.worldcat.org/fast/1616125"
+    position: 15
+    replacements:
+      maxRecords: '20'
+  -
+    pending: true
+    query: Sjælland
+    subauth: place
+    result_size: 190
+    subject_uri: "http://id.worldcat.org/fast/1243881"
+    position: 5
+    replacements:
+      maxRecords: '10'
+  -
+    pending: true
+    query: Scream
+    subauth: work
+    subject_uri: "http://id.worldcat.org/fast/1358031"
+    position: 5
+    replacements:
+      maxRecords: '10'
 term:
   -
     identifier: '1914919'
