@@ -39,7 +39,7 @@ search:
   -
     query: recorte de los cascos
     subject_uri: "http://lod.nal.usda.gov/nalt/9231"
-    postion: 3
+    position: 3
     replacements:
       maxRecords: '5'
 term:

@@ -10,12 +10,6 @@ search:
   # Connection tests
   #------------------
   -
-    query: Boston Mass
-    position: 3
-    subject_uri: "http://id.loc.gov/authorities/names/n79045553"
-    replacements:
-      maxRecords: '10'
-  -
     query: Cayuga
   -
     query: Cayuga
@@ -27,13 +21,14 @@ search:
   #  Accuracy tests
   #------------------
   -
-    query: Camden NJ
-    position: 8
-    subauth: geographic
-    subject_uri: "http://id.loc.gov/authorities/names/n81139356"
+    pending: true
+    query: Boston Mass
+    position: 3
+    subject_uri: "http://id.loc.gov/authorities/names/n79045553"
     replacements:
-      maxRecords: '20'
+      maxRecords: '10'
   -
+    pending: true
     query: Boston Mass
     position: 5
     subauth: geographic
@@ -41,6 +36,15 @@ search:
     replacements:
       maxRecords: '10'
   -
+    pending: true
+    query: Camden NJ
+    position: 8
+    subauth: geographic
+    subject_uri: "http://id.loc.gov/authorities/names/n81139356"
+    replacements:
+      maxRecords: '20'
+  -
+    pending: true
     query: Madrid, Spain
     position: 5
     subauth: geographic
@@ -48,6 +52,7 @@ search:
     replacements:
       maxRecords: '15'
   -
+    pending: true
     query: Chicago, Ill
     position: 5
     subauth: geographic
@@ -55,6 +60,7 @@ search:
     replacements:
       maxRecords: '15'
   -
+    pending: true
     query: seattle
     position: 5
     subauth: geographic
@@ -62,6 +68,7 @@ search:
     replacements:
       maxRecords: '15'
   -
+    pending: true
     query: seattle (wash.)
     position: 5
     subauth: geographic

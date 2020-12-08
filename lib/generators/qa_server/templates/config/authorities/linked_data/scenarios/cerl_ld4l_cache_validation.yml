@@ -39,6 +39,7 @@ search:
     replacements:
       maxRecords: '8'
   -
+    pending: true
     query: Jacob Winter
     subauth: person
     position: 2
@@ -60,6 +61,7 @@ search:
     replacements:
       maxRecords: '8'
   -
+    pending: true
     query: Plantin
     subauth: imprint
     position: 1

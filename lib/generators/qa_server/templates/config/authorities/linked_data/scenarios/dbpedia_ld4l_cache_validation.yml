@@ -24,12 +24,14 @@ search:
     replacements:
       maxRecords: '10'
   -
+    pending: true
     query: Volleyb
     position: 5
     subject_uri: "http://dbpedia.org/resource/Volleyball"
     replacements:
       maxRecords: '10'
   -
+    pending: true
     query: volleyb
     position: 5
     subject_uri: "http://dbpedia.org/resource/Volleyball"

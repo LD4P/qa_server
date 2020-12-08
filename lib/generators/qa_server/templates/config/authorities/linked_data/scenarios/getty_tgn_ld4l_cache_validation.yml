@@ -12,24 +12,28 @@ search:
   #  Accuracy tests
   #------------------
   -
+    pending: true
     query: Gouverneur
     position: 3
     subject_uri: "http://vocab.getty.edu/tgn/2069433-place"
     replacements:
       maxRecords: '10'
   -
+    pending: true
     query: Boulder, CO
     position: 9
     subject_uri: "http://vocab.getty.edu/tgn/2000198-place"
     replacements:
       maxRecords: '10'
   -
+    pending: true
     query: Paris, France
     position: 30
     subject_uri: "http://vocab.getty.edu/tgn/7008038-place"
     replacements:
       maxRecords: '100'
   -
+    pending: true
     query: Nile River
     position: 3
     subject_uri: "http://vocab.getty.edu/tgn/1127805-place"
