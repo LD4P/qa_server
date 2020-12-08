@@ -1,3 +1,9 @@
+### 7.5.1 (2020-12-08)
+
+* define missing i18n translations
+* add i18n-tasks gem for managing translations
+* add spec test to check for missing translations
+
 ### 7.5.0 (2020-12-07)
 
 * UI improvements of check_status page

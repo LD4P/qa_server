@@ -1,6 +1,12 @@
 ---
 en:
   qa_server:
+    application_name:    "Replace with your application's name"
+    application_version: "Replace with your application's version"
+    footer:
+      attribution_html:  This service is supported by work on <a href="http://ld4l.org" class="navbar-link" target="_blank">Linked Data for Libraries - Labs</a> and <br>  <a href="https://wiki.duraspace.org/x/9xgRBg" class="navbar-link" target="_blank">Linked Data for Production</a> funded by <a href="https://mellon.org/" class="navbar-link" target="_blank">Andrew W. Mellon Foundation</a>, <br>and by work on Questioning Authority in <a href="http://samvera.org" class="navbar-link" target="_blank">Samvera</a>, an open source community.
+      copyright_html:    <strong>Copyright &copy; 2018-2020 Your Institution</strong> Licensed under the Apache License, Version 2.0
+      service_html:      A service of <a href="http://your.institution.website/" class="navbar-link" target="_blank">Your Institution Name</a>.
     menu:
       home:              Home
       usage:             Usage
@@ -22,11 +28,15 @@ en:
       show_all:          ALL Authorities (SLOW)
       connections:       Check Connection Status only
       accuracy:          Check Accuracy only
+      comparison:        Compare Accuracy
       all_checks:        Run all checks
       wait_message:      "Please wait while the status is verified.  This will be slow if you selected ALL Authorities."
       connection_checks: Connection Checks
       accuracy_checks:   Accuracy Checks for Search Results
+      comparison_checks: Comparison of Accuracy Checks
       status_table:
+        before:          Before
+        after:           After
         action:          Action
         actual_position: Actual Position
         authority:       Authority
@@ -98,6 +108,10 @@ en:
         now:             NOW
         today:           TODAY
         datatable_desc:       'Performance tabulated data'
+        datatable_all_desc:   'All Data'
+        datatable_day_desc:   'Day'
+        datatable_month_desc: 'Month'
+        datatable_year_desc:  'Year'
         datarange:            'From %{from} to %{to}'
         authority:            Authority
         average_times:        Average (ms)
