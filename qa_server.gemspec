@@ -41,6 +41,7 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'deprecation'
   spec.add_development_dependency 'engine_cart', '~> 2.0'
   spec.add_development_dependency "factory_bot", '~> 4.4'
+  spec.add_development_dependency 'i18n-tasks'
   spec.add_development_dependency 'simplecov'
   spec.add_development_dependency 'sqlite3'
   spec.add_development_dependency 'rails-controller-testing', '~> 1'
