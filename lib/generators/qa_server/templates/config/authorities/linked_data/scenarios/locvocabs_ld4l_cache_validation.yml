@@ -1,0 +1,184 @@
+# Supported subauthorities:
+#   carriers
+#   content_types
+---
+authority:
+  service: ld4l_cache
+  context: false
+search:
+  -
+    query: audio
+    subauth: carriers
+  -
+    query: image
+    subauth: content_types
+  -
+    query: rare books
+    subauth: description_conventions
+  -
+    query: daily
+    subauth: frequencies
+    result_size: 120
+  -
+    query: serial
+    subauth: issuance
+    result_size: 110
+  -
+    query: ISSN
+    subauth: marcauthen
+  -
+    query: full
+    subauth: maspect
+    result_size: 110
+  -
+    query: general
+    subauth: maudience
+    result_size: 110
+  -
+    query: pal
+    subauth: mbroadstd
+    result_size: 110
+  -
+    query: electrical
+    subauth: mcapturestorage
+  -
+    query: gray
+    subauth: mcolor
+    result_size: 110
+  -
+    query: video
+    subauth: media_types
+    result_size: 110
+  -
+    query: dvd
+    subauth: mencformat
+  -
+    query: core
+    subauth: menclvl
+    result_size: 100
+  -
+    query: data
+    subauth: mfiletype
+    result_size: 110
+  -
+    query: print
+    subauth: mfont
+  -
+    query: original
+    subauth: mgeneration
+  -
+    query: state
+    subauth: mgovtpubtype
+    result_size: 110
+  -
+    query: fine
+    subauth: mgroove
+    result_size: 110
+  -
+    query: music
+    subauth: millus
+    result_size: 110
+  -
+    query: paragraph
+    subauth: mlayout
+    result_size: 110
+  -
+    query: vinyl
+    subauth: mmaterial
+    result_size: 110
+  -
+    query: score
+    subauth: mmusicformat
+  -
+    query: tablature
+    subauth: mmusnotation
+    result_size: 100
+  -
+    query: mixed
+    subauth: mplayback
+    result_size: 100
+  -
+    query: 160
+    subauth: mplayspeed
+    result_size: 100
+  -
+    query: negative
+    subauth: mpolarity
+    result_size: 100
+  -
+    query: multiscreen
+    subauth: mpresformat
+    result_size: 100
+  -
+    query: etching
+    subauth: mproduction
+    result_size: 100
+  -
+    query: miller
+    subauth: mprojection
+  -
+    query: isbd
+    subauth: mpunctuation_conventions
+    result_size: 100
+  -
+    query: optical
+    subauth: mrecmedium
+    result_size: 100
+  -
+    query: analog
+    subauth: mrectype
+    result_size: 100
+  -
+    query: high
+    subauth: mreductionratio
+  -
+    query: region 8
+    subauth: mregencoding
+    result_size: 100
+  -
+    query: land
+    subauth: mrelief
+    result_size: 100
+  -
+    query: scale
+    subauth: mscale
+    result_size: 100
+  -
+    query: chinese
+    subauth: mscript
+    result_size: 100
+  -
+    query: silent
+    subauth: msoundcontent
+    result_size: 100
+  -
+    query: audio
+    subauth: mspecplayback
+  -
+    query: invalid
+    subauth: mstatus
+    result_size: 100
+  -
+    query: index
+    subauth: msupplcont
+  -
+    query: braille
+    subauth: mtactile
+  -
+    query: half
+    subauth: mtapeconfig
+    result_size: 100
+  -
+    query: action
+    subauth: mtechnique
+  -
+    query: laser
+    subauth: mvidformat
+    result_size: 100
+  -
+    query: actor
+    subauth: relators
+  -
+    query: sound
+    subauth: resource_components
+    result_size: 100

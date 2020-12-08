@@ -68,6 +68,7 @@ search:
   -
     query: Sjælland
     subauth: place
+    result_size: 190
     subject_uri: "http://id.worldcat.org/fast/1243881"
     postion: 5
     replacements:
