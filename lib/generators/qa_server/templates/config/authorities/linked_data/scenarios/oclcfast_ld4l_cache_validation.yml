@@ -78,7 +78,7 @@ search:
     query: Scream
     subauth: work
     subject_uri: "http://id.worldcat.org/fast/1358031"
-    position: 5
+    position: 10
     replacements:
       maxRecords: '10'
 
