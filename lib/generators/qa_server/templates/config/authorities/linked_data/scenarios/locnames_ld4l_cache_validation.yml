@@ -40,7 +40,7 @@ search:
     query: Camden NJ
     position: 8
     subauth: geographic
-    subject_uri: "http://id.loc.gov/authorities/names/n81139356"
+    subject_uri: "http://id.loc.gov/authorities/names/n80010449"
     replacements:
       maxRecords: '20'
   -
