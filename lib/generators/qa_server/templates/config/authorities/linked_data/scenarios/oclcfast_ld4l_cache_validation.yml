@@ -80,7 +80,7 @@ search:
     subject_uri: "http://id.worldcat.org/fast/1358031"
     position: 10
     replacements:
-      maxRecords: '10'
+      maxRecords: '20'
 
 term:
   -
