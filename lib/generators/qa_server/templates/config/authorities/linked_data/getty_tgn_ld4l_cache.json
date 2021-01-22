@@ -28,10 +28,9 @@
     "term_id": "URI",
     "results": {
       "id_ldpath":       "dc:identifier ::xsd:string",
-      "label_ldpath":    "skos:prefLabel ::xsd:string",
-      "altlabel_ldpath": "skos:altLabel ::xsd:string",
-      "broader_ldpath":  "skos:broader ::xsd:anyURI",
-      "narrower_ldpath": "skos:narrower ::xsd:anyURI",
+      "label_ldpath":    "^foaf:focus/xl:prefLabel/xl:literalForm :: xsd:string",
+      "altlabel_ldpath": "^foaf:focus/xl:altLabel/xl:literalForm :: xsd:string",
+      "broader_ldpath":  "^foaf:focus/gvp:broaderPreferred ::xsd:anyURI",
       "sameas_ldpath":   "skos:exactMatch ::xsd:anyURI"
     }
   },
@@ -80,7 +79,7 @@
     "total_count_ldpath": "vivo:count",
     "results": {
       "id_ldpath":    "dc:identifier ::xsd:string",
-      "label_ldpath": "skos:prefLabel ::xsd:string",
+      "label_ldpath": "^foaf:focus/xl:prefLabel/xl:literalForm :: xsd:string",
       "sort_ldpath":  "vivo:rank ::xsd:string"
     },
     "context": {
