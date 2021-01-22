@@ -63,7 +63,7 @@ search:
   #    all
   -
     pending: true
-    query: New York
+    query: New York City
     subject_uri: "http://sws.geonames.org/5128581/"
     position: 3
     replacements:
