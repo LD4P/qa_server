@@ -115,14 +115,7 @@ search:
     subject_uri: "http://id.loc.gov/authorities/genreForms/gf2011026080"
     replacements:
       maxRecords: '20'
-  -
-    pending: true
-    query: Cookery
-    subauth: deprecated
-    position: 5
-    subject_uri: "http://id.loc.gov/authorities/genreForms/gf2011026169"
-    replacements:
-      maxRecords: '10'
+ 
 term:
   -
     identifier: "http://id.loc.gov/authorities/genreForms/gf2011026141"
