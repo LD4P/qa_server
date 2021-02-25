@@ -76,6 +76,7 @@ search:
     replacements:
       maxRecords: '20'
   -
+    # The ʼ diacritic in ʼEndālagétā Kabada can't simply be removed; it would change the letter in the search.
     pending: true
     query: Endalageta Kabada
     subauth: person
