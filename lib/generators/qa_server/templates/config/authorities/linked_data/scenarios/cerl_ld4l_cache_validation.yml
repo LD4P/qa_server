@@ -42,7 +42,7 @@ search:
     pending: true
     query: Jacob Winter
     subauth: person
-    position: 2
+    position: 3
     subject_uri: "http://thesaurus.cerl.org/record/cnp02081773"
     replacements:
       maxRecords: '8'
