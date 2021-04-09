@@ -26,7 +26,7 @@ env:
   # It should be sufficient to test only the latest of the patch versions for a minor version, they
   # should be compatible across patch versions (only bug fixes are released in patch versions).
   matrix:
-    - "RAILS_VERSION=5.2.4"
+    - "RAILS_VERSION=5.2.5"
 
 services:
   - redis-server
