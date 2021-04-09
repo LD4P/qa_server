@@ -30,7 +30,6 @@ search:
     replacements:
       maxRecords: '20'
   -
-    pending: true
     query: maps
     position: 3
     subject_uri: "http://id.loc.gov/authorities/genreForms/gf2011026387"
@@ -115,7 +114,6 @@ search:
     subject_uri: "http://id.loc.gov/authorities/genreForms/gf2011026080"
     replacements:
       maxRecords: '20'
- 
 term:
   -
     identifier: "http://id.loc.gov/authorities/genreForms/gf2011026141"

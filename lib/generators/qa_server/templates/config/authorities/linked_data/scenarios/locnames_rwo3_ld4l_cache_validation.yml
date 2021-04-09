@@ -1,0 +1,73 @@
+# Supported subauthorities:
+#   person
+#   organization
+#   family
+---
+authority:
+  service: ld4l_cache
+  context: true
+search:
+  #------------------
+  #  Accuracy tests - part 3 (19-26)
+  #------------------
+  -
+    pending: true
+    query: ACLU
+    subauth: organization
+    position: 20
+    subject_uri: "http://id.loc.gov/rwo/agents/n79079580"
+    replacements:
+      maxRecords: '30'
+  -
+    query: University of Pennsylvania
+    subauth: organization
+    position: 5
+    subject_uri: "http://id.loc.gov/rwo/agents/n79065482"
+    replacements:
+      maxRecords: '20'
+  -
+    query: university of pennsylvania
+    subauth: organization
+    position: 5
+    subject_uri: "http://id.loc.gov/rwo/agents/n79065482"
+    replacements:
+      maxRecords: '20'
+  -
+    query: Planned Parenthood Federation of America
+    subauth: organization
+    position: 10
+    subject_uri: "http://id.loc.gov/rwo/agents/n50075375"
+    replacements:
+      maxRecords: '20'
+  -
+    query: Genkai Shosetsu Kenkyukai
+    subauth: organization
+    position: 5
+    subject_uri: "http://id.loc.gov/rwo/agents/n2013003006"
+    replacements:
+      maxRecords: '20'
+  -
+    query: Genkai Shōsetsu Kenkyūkai
+    subauth: organization
+    position: 5
+    subject_uri: "http://id.loc.gov/rwo/agents/n2013003006"
+    replacements:
+      maxRecords: '20'
+  -
+    query: 限界小說研究会
+    subauth: organization
+    position: 5
+    subject_uri: "http://id.loc.gov/rwo/agents/n2013003006"
+    replacements:
+      maxRecords: '20'
+  -
+    query: Waterman Family
+    subauth: family
+    result_size: 110
+    position: 5
+    subject_uri: "http://id.loc.gov/rwo/agents/n2012043300"
+    replacements:
+      maxRecords: '10'
+term:
+  -
+    identifier: 'http://id.loc.gov/rwo/agents/n79021164'

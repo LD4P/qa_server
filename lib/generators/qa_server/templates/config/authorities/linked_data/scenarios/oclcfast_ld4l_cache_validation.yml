@@ -32,7 +32,6 @@ search:
   #  Accuracy tests
   #------------------
   -
-    pending: true
     query: Tralee & Dingle Railway
     subject_uri: "http://id.worldcat.org/fast/1733583"
     position: 3
@@ -53,6 +52,7 @@ search:
     replacements:
       maxRecords: '8'
   -
+    pending: true
     query: University of Chicago Library
     subauth: organization
     subject_uri: "http://id.worldcat.org/fast/539173"
@@ -75,13 +75,19 @@ search:
     replacements:
       maxRecords: '10'
   -
+    query: 'mark twain'
+    subauth: intangible
+    subject_uri: "http://id.worldcat.org/fast/1200561"
+    position: 3
+    replacements:
+      maxRecords: '10'
+  -
     query: Scream
     subauth: work
     subject_uri: "http://id.worldcat.org/fast/1358031"
     position: 10
     replacements:
       maxRecords: '20'
-
 term:
   -
     identifier: 'http://id.worldcat.org/fast/1914919'

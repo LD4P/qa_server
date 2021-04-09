@@ -62,14 +62,12 @@ search:
   #    vegetation
   #    all
   -
-    pending: true
     query: New York City
     subject_uri: "http://sws.geonames.org/5128581/"
     position: 3
     replacements:
       maxRecords: '8'
   -
-    pending: true
     query: France
     subauth: area
     subject_uri: "http://sws.geonames.org/3017382/"
@@ -77,7 +75,6 @@ search:
     replacements:
       maxRecords: '15'
   -
-    pending: true
     query: Chicago
     subauth: place
     subject_uri: "http://sws.geonames.org/4887398/"

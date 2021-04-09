@@ -32,49 +32,47 @@ search:
     replacements:
       maxRecords: '10'
   -
-    pending: true
     query: Camden, William
     subauth: person
-    position: 10
+    position: 5
     subject_uri: "http://id.loc.gov/rwo/agents/n50031528"
     replacements:
-      maxRecords: '20'
+      maxRecords: '10'
   -
     query: King Stephen 1947
     subauth: person
     position: 5
     subject_uri: "http://id.loc.gov/rwo/agents/n79063767"
     replacements:
-      maxRecords: '20'
+      maxRecords: '10'
   -
     query: Tweedy, Jeff
     subauth: person
     position: 5
     subject_uri: "http://id.loc.gov/rwo/agents/no98126226"
     replacements:
-      maxRecords: '20'
+      maxRecords: '10'
   -
     query: Tanaka, Shōzō
     subauth: person
     position: 5
     subject_uri: "http://id.loc.gov/rwo/agents/n81047749"
     replacements:
-      maxRecords: '20'
+      maxRecords: '10'
   -
-    pending: true
     query: Tanaka, Shozo
     subauth: person
     position: 5
     subject_uri: "http://id.loc.gov/rwo/agents/n81047749"
     replacements:
-      maxRecords: '20'
+      maxRecords: '10'
   -
     query: 田中正造
     subauth: person
     position: 5
     subject_uri: "http://id.loc.gov/rwo/agents/n81047749"
     replacements:
-      maxRecords: '20'
+      maxRecords: '10'
   -
     # The ʼ diacritic in ʼEndālagétā Kabada can't simply be removed; it would change the letter in the search.
     pending: true
@@ -90,7 +88,7 @@ search:
     position: 5
     subject_uri: "http://id.loc.gov/rwo/agents/no2003094541"
     replacements:
-      maxRecords: '20'
+      maxRecords: '10'
 term:
   -
     identifier: 'http://id.loc.gov/rwo/agents/n79021164'
