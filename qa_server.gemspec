@@ -22,24 +22,24 @@ Gem::Specification.new do |spec|
   # Note: rails does not follow sem-ver conventions, it's
   # minor version releases can include breaking changes; see
   # http://guides.rubyonrails.org/maintenance_policy.html
-  spec.add_dependency 'rails', '~> 5.0' # Keep in sync with version supported by Hyrax
+  spec.add_dependency 'rails', '~> 5.2', '>= 5.2.5' # v5.2.5 required to address mimemagic gem yank
   spec.add_dependency 'useragent'
 
   # Required gems for QA and linked data access
-  spec.add_development_dependency 'qa', '~> 5.3'
-  spec.add_development_dependency 'linkeddata'
+  spec.add_dependency 'qa', '~> 5.5', '>= 5.5.1' # questioning_authority
+  spec.add_dependency 'linkeddata'
 
   # Produces dashboard charts on monitor status page
   spec.add_dependency 'gruff'
 
   spec.add_development_dependency 'better_errors' # provide debugging command line in
   spec.add_development_dependency 'binding_of_caller' # provides deep stack info used by better_errors
-  spec.add_development_dependency 'bixby', '~> 3.0.0' # rubocop styleguide
+  spec.add_development_dependency 'bixby', '~> 3.0', ">= 3.0.2" # rubocop styleguide
   # spec.add_development_dependency "capybara", '~> 3.29'
   # spec.add_development_dependency 'capybara-maleficent', '~> 0.3.0'
   # spec.add_development_dependency 'chromedriver-helper', '~> 2.1'
   spec.add_development_dependency 'deprecation'
-  spec.add_development_dependency 'engine_cart', '~> 2.0'
+  spec.add_development_dependency 'engine_cart', '~> 2.2'
   spec.add_development_dependency "factory_bot", '~> 4.4'
   spec.add_development_dependency 'i18n-tasks'
   spec.add_development_dependency 'simplecov'
@@ -49,7 +49,7 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'rspec-its', '~> 1.1'
   spec.add_development_dependency 'rspec-rails', '~> 3.1'
   spec.add_development_dependency 'selenium-webdriver'
-  spec.add_development_dependency 'webdrivers', '~> 3.0'
+  spec.add_development_dependency 'webdrivers', '~> 4.4'
   spec.add_development_dependency 'webmock'
 
   ########################################################
