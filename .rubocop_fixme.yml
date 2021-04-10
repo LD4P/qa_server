@@ -15,6 +15,3 @@ Style/SpecialGlobalVars:
 
 Layout/AccessModifierIndentation:
   EnforcedStyle: outdent
-
-#Layout/IndentationWidth:
-#  Enabled: false

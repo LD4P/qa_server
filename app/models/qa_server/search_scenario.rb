@@ -60,5 +60,11 @@ module QaServer
     def subauthority?
       subauthority_name.present?
     end
+
+    def context?
+      # don't include context for accuracy tests
+      return false if expected_by_position.present?
+      super
+    end
   end
 end
