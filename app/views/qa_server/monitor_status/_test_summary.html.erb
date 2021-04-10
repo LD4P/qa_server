@@ -17,7 +17,7 @@
       <td class="status-neutral"><%= @presenter.tests_count %></td>
     </tr>
   </table>
-  <p class="status-update-dtstamp"><%= t('qa_server.monitor_status.summary.last_updated', date: @presenter.last_updated) %></p>
+  <p class="status-update-dtstamp"><%= @presenter.last_updated %></p>
 
   <% if @presenter.failures?%>
     <div id="failures" class="status-section">
