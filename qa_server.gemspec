@@ -26,8 +26,8 @@ Gem::Specification.new do |spec|
   spec.add_dependency 'useragent'
 
   # Required gems for QA and linked data access
-  spec.add_dependency 'qa', '~> 5.5', '>= 5.5.1' # questioning_authority
-  spec.add_dependency 'linkeddata'
+  spec.add_development_dependency 'qa', '~> 5.5', '>= 5.5.1' # questioning_authority
+  spec.add_development_dependency 'linkeddata'
 
   # Produces dashboard charts on monitor status page
   spec.add_dependency 'gruff'
