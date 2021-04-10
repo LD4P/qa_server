@@ -25,11 +25,12 @@ search:
     subauth: topic
     replacements:
       maxRecords: '4'
-  -
-    query: tribunal
-    subauth: event_name
-    replacements:
-      maxRecords: '4'
+#  -
+#    # This is an event at OCLCFAST web-search, but a meeting through OCLCFAST API.
+#    query: Bronze Night
+#    subauth: event_name
+#    replacements:
+#      maxRecords: '4'
   -
     query: convention
     subauth: meeting
@@ -78,6 +79,7 @@ search:
     replacements:
       maxRecords: '10'
   -
+    # This is a meeting in OCLCFAST_DIRECT, but event in OCLCFAST_LD4L_CACHE.
     pending: true
     query: People's International Tribunal on the Rights of Indigenous Hawaiians
     subauth: event
