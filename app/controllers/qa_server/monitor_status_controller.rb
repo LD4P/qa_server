@@ -21,7 +21,7 @@ module QaServer
                                        historical_summary_data: historical_data,
                                        performance_data: performance_table_data)
       QaServer.config.monitor_logger.debug("~~~~~~~~ DONE rendering monitor status")
-      render 'index', status: :internal_server_error if latest_summary.failing_authority_count.positive?
+      render 'index', status: :internal_server_error if latest_summary&.failing_authority_count&.positive?
     end
 
   private
@@ -43,13 +43,13 @@ module QaServer
 
     # @returns [QaServer::ScenarioRunSummary] summary statistics on the latest run
     def latest_summary
-      QaServer::ScenarioRunSummaryCache.summary_for_run(run: latest_test_run)
+      latest_test_run ? QaServer::ScenarioRunSummaryCache.summary_for_run(run: latest_test_run) : nil
     end
 
     # @returns [Array<Hash>] scenario details for any failing scenarios in the latest run
     # @see QaServer::ScenarioRunHistory#run_failures for structure of output
     def latest_failures
-      QaServer::ScenarioRunFailuresCache.failures_for_run(run: latest_test_run)
+      latest_test_run ? QaServer::ScenarioRunFailuresCache.failures_for_run(run: latest_test_run) : nil
     end
 
     # Get a summary level of historical data

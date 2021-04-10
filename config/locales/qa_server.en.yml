@@ -68,6 +68,7 @@ en:
         failing_tests:   Failing Tests
         total_tests:     TOTAL Tests
         last_updated:    'Status last updated %{date} ET'
+        no_data:         'No Data Available (Common Cause: first time tests are running)'
       failures:
         title:           Failures During Latest Status Update
         status:          Status
