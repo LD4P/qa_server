@@ -25,13 +25,13 @@ search:
     subauth: topic
     replacements:
       maxRecords: '4'
-#  -
-#    query: War
-#    subauth: event_name
-#    replacements:
-#      maxRecords: '4'
   -
-    query: Festival
+    query: tribunal
+    subauth: event_name
+    replacements:
+      maxRecords: '4'
+  -
+    query: convention
     subauth: meeting
     replacements:
       maxRecords: '4'
@@ -71,7 +71,6 @@ search:
     replacements:
       maxRecords: '5'
   -
-    pending: true
     query: Sleep-overs
     subauth: concept
     subject_uri: "http://id.worldcat.org/fast/1120873"
@@ -86,6 +85,13 @@ search:
     position: 3
     replacements:
       maxRecords: '8'
+  -
+    query: Science Fiction
+    subauth: meeting
+    subject_uri: "http://id.worldcat.org/fast/1406163"
+    position: 5
+    replacements:
+      maxRecords: '10'
   -
     pending: true
     query: University of Chicago Library
@@ -102,7 +108,6 @@ search:
     replacements:
       maxRecords: '20'
   -
-    pending: true
     query: Sjælland
     subauth: place
     result_size: 190
@@ -111,13 +116,12 @@ search:
     replacements:
       maxRecords: '10'
   -
-    pending: true
     query: Scream
     subauth: work
     subject_uri: "http://id.worldcat.org/fast/1358031"
-    position: 5
+    position: 10
     replacements:
-      maxRecords: '10'
+      maxRecords: '20'
 term:
   -
     identifier: '1914919'

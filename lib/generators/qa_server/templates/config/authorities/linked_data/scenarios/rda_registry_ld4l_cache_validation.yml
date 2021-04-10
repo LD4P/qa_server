@@ -316,7 +316,6 @@ search:
     replacements:
       maxRecords: '20'
   -
-    pending: true
     query: polychrome
     subauth: colour_content
     position: 3
@@ -457,7 +456,6 @@ search:
     replacements:
       maxRecords: '20'
   -
-    pending: true
     query: unknown
     subauth: gender
     position: 3
@@ -556,7 +554,6 @@ search:
     replacements:
       maxRecords: '10'
   -
-    pending: true
     query: Hi 8
     subauth: video_format
     position: 3

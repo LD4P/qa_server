@@ -14,6 +14,9 @@ search:
     query: tribunal
     subauth: event
   -
+    query: convention
+    subauth: meeting
+  -
     query: 'mark twain'
     subauth: person
   -
@@ -32,7 +35,6 @@ search:
   #  Accuracy tests
   #------------------
   -
-    pending: true
     query: Tralee & Dingle Railway
     subject_uri: "http://id.worldcat.org/fast/1733583"
     position: 3
@@ -53,6 +55,14 @@ search:
     replacements:
       maxRecords: '8'
   -
+    query: Science Fiction
+    subauth: meeting
+    subject_uri: "http://id.worldcat.org/fast/1406163"
+    position: 5
+    replacements:
+      maxRecords: '10'
+  -
+    pending: true
     query: University of Chicago Library
     subauth: organization
     subject_uri: "http://id.worldcat.org/fast/539173"
@@ -81,7 +91,13 @@ search:
     position: 10
     replacements:
       maxRecords: '20'
-
+  -
+    query: 'mark twain'
+    subauth: intangible
+    subject_uri: "http://id.worldcat.org/fast/1200561"
+    position: 3
+    replacements:
+      maxRecords: '10'
 term:
   -
     identifier: 'http://id.worldcat.org/fast/1914919'

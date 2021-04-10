@@ -26,7 +26,6 @@ search:
   #  Accuracy tests
   #------------------
   -
-    pending: true
     query: Malignant Hyperthermia
     subject_uri: "http://id.nlm.nih.gov/mesh/D008305"
     position: 3

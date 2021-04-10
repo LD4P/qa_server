@@ -1,0 +1,78 @@
+# Supported subauthorities:
+#   person
+#   organization
+#   family
+---
+authority:
+  service: ld4l_cache
+  context: true
+search:
+  #------------------
+  #  Accuracy tests - part 2 (10-18)
+  #------------------
+  -
+    query: Tolstoy, Leo
+    subauth: person
+    position: 5
+    subject_uri: "http://id.loc.gov/rwo/agents/n79068416"
+    replacements:
+      maxRecords: '20'
+  -
+    query: tolstoi, lev
+    subauth: person
+    position: 5
+    subject_uri: "http://id.loc.gov/rwo/agents/n79068416"
+    replacements:
+      maxRecords: '20'
+  -
+    query: Tolstoĭ, Lev
+    subauth: person
+    position: 5
+    subject_uri: "http://id.loc.gov/rwo/agents/n79068416"
+    replacements:
+      maxRecords: '20'
+  -
+    query: Толстой, Лев
+    subauth: person
+    position: 5
+    subject_uri: "http://id.loc.gov/rwo/agents/n79068416"
+    replacements:
+      maxRecords: '20'
+  -
+    query: Толстой, Лев, граф, 1828-1910
+    subauth: person
+    position: 5
+    subject_uri: "http://id.loc.gov/rwo/agents/n79068416"
+    replacements:
+      maxRecords: '20'
+  -
+    query: טאלסטאי, ליעװ
+    subauth: person
+    position: 5
+    subject_uri: "http://id.loc.gov/rwo/agents/n79068416"
+    replacements:
+      maxRecords: '20'
+  -
+    query: レオ.トルストイ
+    subauth: person
+    position: 5
+    subject_uri: "http://id.loc.gov/rwo/agents/n79068416"
+    replacements:
+      maxRecords: '20'
+  -
+    query: لئون تولستوى
+    subauth: person
+    position: 5
+    subject_uri: "http://id.loc.gov/rwo/agents/n79068416"
+    replacements:
+      maxRecords: '20'
+  -
+    query: 托爾斯泰, 列夫
+    subauth: person
+    position: 5
+    subject_uri: "http://id.loc.gov/rwo/agents/n79068416"
+    replacements:
+      maxRecords: '20'
+term:
+  -
+    identifier: 'http://id.loc.gov/rwo/agents/n79021164'

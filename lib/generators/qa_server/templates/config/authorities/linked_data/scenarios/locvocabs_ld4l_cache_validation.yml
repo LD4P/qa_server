@@ -6,6 +6,9 @@ authority:
   service: ld4l_cache
   context: false
 search:
+  #------------------
+  # Connection tests
+  #------------------
   -
     query: audio
     subauth: carriers
@@ -182,3 +185,246 @@ search:
     query: sound
     subauth: resource_components
     result_size: 100
+  #------------------
+  #  Accuracy tests
+  #------------------
+  -
+    query: audio
+    subauth: carriers
+    position: 4
+    subject_uri: "http://id.loc.gov/vocabulary/carriers/sq"
+  -
+    query: image
+    subauth: content_types
+    position: 4
+    subject_uri: "http://id.loc.gov/vocabulary/contentTypes/sti"
+  -
+    query: rare books
+    subauth: description_conventions
+    position: 4
+    subject_uri: "http://id.loc.gov/vocabulary/descriptionConventions/bdrb"
+  -
+    query: daily
+    subauth: frequencies
+    position: 4
+    subject_uri: "http://id.loc.gov/vocabulary/frequencies/dyl"
+  -
+    query: serial
+    subauth: issuance
+    position: 4
+    subject_uri: "http://id.loc.gov/vocabulary/issuance/serl"
+  -
+    query: ISSN
+    subauth: marcauthen
+    position: 4
+    subject_uri: "http://id.loc.gov/vocabulary/marcauthen/isdsc"
+  -
+    query: full
+    subauth: maspect
+    position: 4
+    subject_uri: "http://id.loc.gov/vocabulary/maspect/full"
+  -
+    query: general
+    subauth: maudience
+    position: 4
+    subject_uri: "http://id.loc.gov/vocabulary/maudience/gen"
+  -
+    query: pal
+    subauth: mbroadstd
+    position: 4
+    subject_uri: "http://id.loc.gov/vocabulary/mbroadstd/pal"
+  -
+    query: electrical
+    subauth: mcapturestorage
+    position: 4
+    subject_uri: "http://id.loc.gov/vocabulary/mcapturestorage/dist"
+  -
+    query: gray
+    subauth: mcolor
+    position: 4
+    subject_uri: "http://id.loc.gov/vocabulary/mcolor/gry"
+  -
+    query: video
+    subauth: media_types
+    position: 4
+    subject_uri: "http://id.loc.gov/vocabulary/mediaTypes/v"
+  -
+    query: dvd
+    subauth: mencformat
+    position: 4
+    subject_uri: "http://id.loc.gov/vocabulary/mencformat/dvdv"
+  -
+    query: core
+    subauth: menclvl
+    position: 4
+    subject_uri: "http://id.loc.gov/vocabulary/menclvl/4"
+  -
+    query: data
+    subauth: mfiletype
+    position: 4
+    subject_uri: "http://id.loc.gov/vocabulary/mfiletype/data"
+  -
+    query: print
+    subauth: mfont
+    position: 4
+    subject_uri: "http://id.loc.gov/vocabulary/mfont/lp"
+  -
+    query: original
+    subauth: mgeneration
+    position: 4
+    subject_uri: "http://id.loc.gov/vocabulary/mgeneration/originalneg"
+  -
+    query: state
+    subauth: mgovtpubtype
+    position: 4
+    subject_uri: "http://id.loc.gov/vocabulary/mgovtpubtype/s"
+  -
+    query: fine
+    subauth: mgroove
+    position: 4
+    subject_uri: "http://id.loc.gov/vocabulary/mgroove/finepitch"
+  -
+    query: music
+    subauth: millus
+    position: 4
+    subject_uri: "http://id.loc.gov/vocabulary/millus/mus"
+  -
+    query: paragraph
+    subauth: mlayout
+    position: 4
+    subject_uri: "http://id.loc.gov/vocabulary/mlayout/para"
+  -
+    query: vinyl
+    subauth: mmaterial
+    position: 4
+    subject_uri: "http://id.loc.gov/vocabulary/mmaterial/vny"
+  -
+    query: score
+    subauth: mmusicformat
+    position: 4
+    subject_uri: "http://id.loc.gov/vocabulary/mmusicformat/pianoscore"
+  -
+    query: tablature
+    subauth: mmusnotation
+    position: 4
+    subject_uri: "http://id.loc.gov/vocabulary/mmusnotation/tabla"
+  -
+    query: mixed
+    subauth: mplayback
+    position: 4
+    subject_uri: "http://id.loc.gov/vocabulary/mplayback/mix"
+  -
+    query: 160
+    subauth: mplayspeed
+    position: 4
+    subject_uri: "http://id.loc.gov/vocabulary/mplayspeed/i"
+  -
+    query: negative
+    subauth: mpolarity
+    position: 4
+    subject_uri: "http://id.loc.gov/vocabulary/mpolarity/neg"
+  -
+    query: multiscreen
+    subauth: mpresformat
+    position: 4
+    subject_uri: "http://id.loc.gov/vocabulary/mpresformat/mscreen"
+  -
+    query: etching
+    subauth: mproduction
+    position: 4
+    subject_uri: "http://id.loc.gov/vocabulary/mproduction/etch"
+  -
+    query: miller
+    subauth: mprojection
+    position: 4
+    subject_uri: "http://id.loc.gov/vocabulary/mprojection/de"
+  -
+    query: isbd
+    subauth: mpunctuation_conventions
+    position: 4
+    subject_uri: "http://id.loc.gov/vocabulary/mpunctuationConventions/isbd"
+  -
+    query: optical
+    subauth: mrecmedium
+    position: 4
+    subject_uri: "http://id.loc.gov/vocabulary/mrecmedium/opt"
+  -
+    query: analog
+    subauth: mrectype
+    position: 4
+    subject_uri: "http://id.loc.gov/vocabulary/mrectype/analog"
+  -
+    query: high
+    subauth: mreductionratio
+    position: 4
+    subject_uri: "http://id.loc.gov/vocabulary/mreductionratio/veryhigh"
+  -
+    query: region 8
+    subauth: mregencoding
+    position: 4
+    subject_uri: "http://id.loc.gov/vocabulary/mregencoding/region8"
+  -
+    query: land
+    subauth: mrelief
+    position: 4
+    subject_uri: "http://id.loc.gov/vocabulary/mrelief/land"
+  -
+    query: scale
+    subauth: mscale
+    position: 4
+    subject_uri: "http://id.loc.gov/vocabulary/mscale/notdrawn"
+  -
+    query: chinese
+    subauth: mscript
+    position: 4
+    subject_uri: "http://id.loc.gov/vocabulary/mscript/e"
+  -
+    query: silent
+    subauth: msoundcontent
+    position: 4
+    subject_uri: "http://id.loc.gov/vocabulary/msoundcontent/silent"
+  -
+    query: audio
+    subauth: mspecplayback
+    position: 4
+    subject_uri: "http://id.loc.gov/vocabulary/mspecplayback/dtshd51"
+  -
+    query: invalid
+    subauth: mstatus
+    position: 4
+    subject_uri: "http://id.loc.gov/vocabulary/mstatus/cancinv"
+  -
+    query: index
+    subauth: msupplcont
+    position: 4
+    subject_uri: "http://id.loc.gov/vocabulary/msupplcont/thematicindex"
+  -
+    query: braille
+    subauth: mtactile
+    position: 4
+    subject_uri: "http://id.loc.gov/vocabulary/mtactile/math"
+  -
+    query: half
+    subauth: mtapeconfig
+    position: 4
+    subject_uri: "http://id.loc.gov/vocabulary/mtapeconfig/half"
+  -
+    query: action
+    subauth: mtechnique
+    position: 4
+    subject_uri: "http://id.loc.gov/vocabulary/mtechnique/animlive"
+  -
+    query: laser
+    subauth: mvidformat
+    position: 4
+    subject_uri: "http://id.loc.gov/vocabulary/mvidformat/laser"
+  -
+    query: actor
+    subauth: relators
+    position: 4
+    subject_uri: "http://id.loc.gov/vocabulary/relators/vac"
+  -
+    query: sound
+    subauth: resource_components
+    position: 4
+    subject_uri: "http://id.loc.gov/vocabulary/resourceComponents/str"

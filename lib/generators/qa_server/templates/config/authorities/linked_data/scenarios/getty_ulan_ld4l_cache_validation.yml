@@ -20,14 +20,12 @@ search:
   #  Accuracy tests
   #------------------
   -
-    pending: true
     query: Gonzalez-Torres, Felix
     subject_uri: "http://vocab.getty.edu/ulan/500114715-agent"
     position: 5
     replacements:
       maxRecords: '10'
   -
-    pending: true
     query: Gouverneur
     subauth: person
     subject_uri: "http://vocab.getty.edu/ulan/500225342-agent"
@@ -35,7 +33,6 @@ search:
     replacements:
       maxRecords: '10'
   -
-    pending: true
     query: Octavio Medellin
     subauth: person
     subject_uri: "http://vocab.getty.edu/ulan/500333005-agent"
@@ -43,7 +40,6 @@ search:
     replacements:
       maxRecords: '8'
   -
-    pending: true
     query: University of Chicago Library
     subauth: organization
     result_size: 100

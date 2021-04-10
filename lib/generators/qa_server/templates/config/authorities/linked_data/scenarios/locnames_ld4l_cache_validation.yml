@@ -21,14 +21,12 @@ search:
   #  Accuracy tests
   #------------------
   -
-    pending: true
     query: Boston Mass
     position: 3
     subject_uri: "http://id.loc.gov/authorities/names/n79045553"
     replacements:
       maxRecords: '10'
   -
-    pending: true
     query: Boston Mass
     position: 5
     subauth: geographic
@@ -44,7 +42,6 @@ search:
     replacements:
       maxRecords: '20'
   -
-    pending: true
     query: Madrid, Spain
     position: 5
     subauth: geographic
@@ -52,7 +49,6 @@ search:
     replacements:
       maxRecords: '15'
   -
-    pending: true
     query: Chicago, Ill
     position: 5
     subauth: geographic
@@ -60,7 +56,6 @@ search:
     replacements:
       maxRecords: '15'
   -
-    pending: true
     query: seattle
     position: 5
     subauth: geographic
@@ -68,7 +63,6 @@ search:
     replacements:
       maxRecords: '15'
   -
-    pending: true
     query: seattle (wash.)
     position: 5
     subauth: geographic

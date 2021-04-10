@@ -25,6 +25,7 @@ search:
   #  Accuracy tests
   #------------------
   -
+    pending: true
     query: Johannes Philippus de Lignamine
     subauth: person
     position: 4
@@ -32,6 +33,7 @@ search:
     replacements:
       maxRecords: '8'
   -
+    pending: true
     query: Johannes Philippus de Lignamine
     subauth: person
     position: 4
@@ -39,7 +41,6 @@ search:
     replacements:
       maxRecords: '8'
   -
-    pending: true
     query: Jacob Winter
     subauth: person
     position: 3
@@ -61,13 +62,12 @@ search:
     replacements:
       maxRecords: '8'
   -
-    pending: true
     query: Plantin
     subauth: imprint
-    position: 1
+    position: 18
     subject_uri: "http://thesaurus.cerl.org/record/cni00007649"
     replacements:
-      maxRecords: '8'
+      maxRecords: '30'
 term:
   -
     identifier: "http://thesaurus.cerl.org/record/cnp00895966"

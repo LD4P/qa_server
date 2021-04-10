@@ -91,6 +91,7 @@
     "subauthorities": {
       "concept":        "Concept",
       "event":          "Event",
+      "meeting":        "Meeting",
       "person":         "Person",
       "organization":   "Organization",
       "place":          "Place",
