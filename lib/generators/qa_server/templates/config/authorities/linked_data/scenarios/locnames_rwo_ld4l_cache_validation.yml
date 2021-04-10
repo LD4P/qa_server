@@ -19,8 +19,9 @@ search:
     query: 'mark twain'
     subauth: organization
   -
-    query: 'twain'
+    query: 'waterman'
     subauth: family
+    result_size: 100
   #------------------
   #  Accuracy tests - Part 1 (1-9)
   #------------------
