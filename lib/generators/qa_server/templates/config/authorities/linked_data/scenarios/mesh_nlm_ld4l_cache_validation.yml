@@ -15,10 +15,6 @@ search:
     query: Malignant Hyperthermia
     subauth: subject
   -
-    query: Spain
-    subauth: subject
-    result_size: 75
-  -
     query: Address
     subauth: publication_type
     result_size: 80
@@ -43,6 +39,14 @@ search:
     query: Letter
     subauth: publication_type
     subject_uri: "http://id.nlm.nih.gov/mesh/D016422"
+    position: 3
+    replacements:
+      maxRecords: '8'
+  -
+    pending: true
+    query: Spain
+    subauth: subject
+    subject_uri: "http://id.nlm.nih.gov/mesh/D013030"
     position: 3
     replacements:
       maxRecords: '8'
