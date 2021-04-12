@@ -2,6 +2,9 @@
 # This presenter class provides historical testing data needed by the view that monitors status of authorities.
 module QaServer::MonitorStatus
   class HistoryPresenter
+    CAUTION_THRESHOLD = 0.05
+    WARNING_THRESHOLD = 0.1
+
     # @param parent [QaServer::MonitorStatusPresenter] parent presenter
     # @param historical_summary_data [Array<Hash>] summary of past failuring runs per authority to drive chart
     def initialize(parent:, historical_summary_data:)
@@ -94,8 +97,8 @@ module QaServer::MonitorStatus
     end
 
     def failure_style_class(historical_entry)
-      return "status-neutral" if days_authority_failing(historical_entry) <= 0
-      percent_authority_failing(historical_entry) < 0.10 ? "status-unknown" : "status-bad"
+      return "status-neutral" if days_authority_failing(historical_entry) <= CAUTION_THRESHOLD
+      percent_authority_failing(historical_entry) < WARNING_THRESHOLD ? "status-unknown" : "status-bad"
     end
 
     def passing_style_class(historical_entry)
