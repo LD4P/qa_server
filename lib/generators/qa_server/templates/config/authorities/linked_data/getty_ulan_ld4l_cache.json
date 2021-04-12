@@ -2,6 +2,9 @@
   "QA_CONFIG_VERSION": "2.2",
   "service_uri": "http://ld4l.org/ld4l_services/cache",
   "prefixes": {
+    "getty":   "http://vocab.getty.edu/ontology#",
+    "schema":  "https://schema.org/",
+    "skosxl":  "http://www.w3.org/2008/05/skos-xl#",
     "vivo":    "http://vivoweb.org/ontology/core#"
   },
   "term": {
@@ -26,11 +29,9 @@
     "term_id": "URI",
     "results": {
       "id_ldpath":       "dc:identifier ::xsd:string",
-      "label_ldpath":    "skos:prefLabel ::xsd:string",
-      "altlabel_ldpath": "skos:altLabel ::xsd:string",
-      "broader_ldpath":  "skos:broader ::xsd:anyURI",
-      "narrower_ldpath": "skos:narrower ::xsd:anyURI",
-      "sameas_ldpath":   "skos:exactMatch ::xsd:anyURI"
+      "label_ldpath":    "^foaf:focus / skosxl:prefLabel / skosxl:literalForm ::xsd:string",
+      "altlabel_ldpath": "^foaf:focus/skosxl:altLabel/skosxl:literalForm :: xsd:string",
+      "broader_ldpath":  "^foaf:focus/getty:broaderPreferred/skosxl:altLabel/skosxl:literalForm ::xsd:anyURI"
     }
   },
   "search": {
@@ -85,9 +86,105 @@
     },
     "total_count_ldpath": "vivo:count",
     "results": {
-      "id_ldpath":    "dc:identifier ::xsd:string",
-      "label_ldpath": "skos:prefLabel ::xsd:string",
+      "label_ldpath": "^foaf:focus / skosxl:prefLabel / skosxl:literalForm ::xsd:string",
       "sort_ldpath":  "vivo:rank ::xsd:string"
+    },
+    "context": {
+      "properties": [
+        {
+          "property_label_i18n": "qa.linked_data.authority.getty_tgn_ld4l_cache.preferred_label",
+          "property_label_default": "Preferred label",
+          "ldpath": "^foaf:focus/skosxl:prefLabel/skosxl:literalForm :: xsd:string",
+          "selectable": true,
+          "drillable": false
+        },
+        {
+          "property_label_i18n": "qa.linked_data.authority.getty_tgn_ld4l_cache.variant_label",
+          "property_label_default": "Variant label",
+          "ldpath": "^foaf:focus/skosxl:altLabel/skosxl:literalForm :: xsd:string",
+          "selectable": false,
+          "drillable": false
+        },
+        {
+          "property_label_i18n": "qa.linked_data.authority.getty_tgn_ld4l_cache.description",
+          "property_label_default": "Description",
+          "ldpath": "getty:biographyPreferred / schema:description :: xsd:string",
+          "selectable": false,
+          "drillable": false
+        },
+        {
+          "property_label_i18n": "qa.linked_data.authority.getty_tgn_ld4l_cache.start_date",
+          "property_label_default": "Start date",
+          "ldpath": "getty:biographyPreferred / getty:estStart",
+          "selectable": false,
+          "drillable": false
+        },
+        {
+          "property_label_i18n": "qa.linked_data.authority.getty_tgn_ld4l_cache.end_date",
+          "property_label_default": "End date",
+          "ldpath": "getty:biographyPreferred / getty:estEnd",
+          "selectable": false,
+          "drillable": false
+        },
+        {
+          "property_label_i18n": "qa.linked_data.authority.getty_tgn_ld4l_cache.foundation_location",
+          "property_label_default": "Foundation location",
+          "ldpath": "getty:biographyPreferred/schema:foundationLocation / ^foaf:focus / getty:parentString :: xsd:string",
+          "selectable": false,
+          "drillable": false
+        },
+        {
+          "property_label_i18n": "qa.linked_data.authority.getty_tgn_ld4l_cache.nationality",
+          "property_label_default": "Nationality",
+          "ldpath": "schema:nationality / skosxl:prefLabel / skosxl:literalForm :: xsd:string",
+          "selectable": false,
+          "drillable": false
+        },
+        {
+          "property_label_i18n": "qa.linked_data.authority.getty_tgn_ld4l_cache.birth_place",
+          "property_label_default": "Birth place",
+          "ldpath": "getty:biographyPreferred / schema:birthPlace / ^foaf:focus / skosxl:prefLabel / skosxl:literalForm :: xsd:string",
+          "selectable": false,
+          "drillable": false
+        },
+        {
+          "property_label_i18n": "qa.linked_data.authority.getty_tgn_ld4l_cache.death_place",
+          "property_label_default": "Death place",
+          "ldpath": "getty:biographyPreferred / schema:deathPlace / ^foaf:focus / skosxl:prefLabel / skosxl:literalForm :: xsd:string",
+          "selectable": false,
+          "drillable": false
+        },
+        {
+          "property_label_i18n": "qa.linked_data.authority.getty_tgn_ld4l_cache.agent_type",
+          "property_label_default": "Agent type",
+          "ldpath": "^foaf:focus / getty:agentType / skosxl:altLabel / skosxl:literalForm :: xsd:string",
+          "selectable": false,
+          "drillable": false
+        },
+        {
+          "property_label_i18n": "qa.linked_data.authority.getty_tgn_ld4l_cache.gender",
+          "property_label_default": "Gender",
+          "ldpath": "getty:biographyPreferred/schema:gender / skosxl:prefLabel / skosxl:literalForm :: xsd:string",
+          "selectable": false,
+          "drillable": false
+        },
+        {
+          "property_label_i18n": "qa.linked_data.authority.getty_aat_ld4l_cache.broader",
+          "property_label_default": "Broader",
+          "ldpath": "^foaf:focus/getty:broaderPreferred :: xsd:string",
+          "selectable": false,
+          "drillable": true,
+          "expansion_label_ldpath": "skos:prefLabel ::xsd:string",
+          "expansion_id_ldpath": "dc:identifier ::xsd:string"
+        },
+        {
+          "property_label_i18n": "qa.linked_data.authority.getty_aat_ld4l_cache.scope_note",
+          "property_label_default": "Scope note",
+          "ldpath": "^foaf:focus/skos:scopeNote :: xsd:string",
+          "selectable": false,
+          "drillable": false
+        }
+      ]
     },
     "subauthorities": {
       "person":            "Person",
@@ -95,4 +192,3 @@
     }
   }
 }
-

@@ -3,8 +3,8 @@
   "service_uri": "http://ld4l.org/ld4l_services/cache",
   "prefixes": {
     "getty":   "http://vocab.getty.edu/ontology#",
-    "vivo":    "http://vivoweb.org/ontology/core#",
-    "xl":      "http://www.w3.org/2008/05/skos-xl#"
+    "skosxl":  "http://www.w3.org/2008/05/skos-xl#",
+    "vivo":    "http://vivoweb.org/ontology/core#"
   },
   "term": {
     "url": {
@@ -28,10 +28,9 @@
     "term_id": "URI",
     "results": {
       "id_ldpath":       "dc:identifier ::xsd:string",
-      "label_ldpath":    "^foaf:focus/xl:prefLabel/xl:literalForm :: xsd:string",
-      "altlabel_ldpath": "^foaf:focus/xl:altLabel/xl:literalForm :: xsd:string",
-      "broader_ldpath":  "^foaf:focus/gvp:broaderPreferred ::xsd:anyURI",
-      "sameas_ldpath":   "skos:exactMatch ::xsd:anyURI"
+      "label_ldpath":    "^foaf:focus/skosxl:prefLabel/skosxl:literalForm :: xsd:string",
+      "altlabel_ldpath": "^foaf:focus/skosxl:altLabel/skosxl:literalForm :: xsd:string",
+      "broader_ldpath":  "^foaf:focus/getty:broaderPreferred ::xsd:anyURI"
     }
   },
   "search": {
@@ -78,8 +77,7 @@
     },
     "total_count_ldpath": "vivo:count",
     "results": {
-      "id_ldpath":    "dc:identifier ::xsd:string",
-      "label_ldpath": "^foaf:focus/xl:prefLabel/xl:literalForm :: xsd:string",
+      "label_ldpath": "^foaf:focus/skosxl:prefLabel/skosxl:literalForm :: xsd:string",
       "sort_ldpath":  "vivo:rank ::xsd:string"
     },
     "context": {
@@ -87,28 +85,42 @@
         {
           "property_label_i18n": "qa.linked_data.authority.getty_tgn_ld4l_cache.preferred_label",
           "property_label_default": "Preferred label",
-          "ldpath": "^foaf:focus/xl:prefLabel/xl:literalForm :: xsd:string",
+          "ldpath": "^foaf:focus/skosxl:prefLabel/skosxl:literalForm :: xsd:string",
           "selectable": true,
           "drillable": false
         },
         {
           "property_label_i18n": "qa.linked_data.authority.getty_tgn_ld4l_cache.variant_label",
           "property_label_default": "Variant Label",
-          "ldpath": "^foaf:focus/xl:altLabel/xl:literalForm :: xsd:string",
+          "ldpath": "^foaf:focus/skosxl:altLabel/skosxl:literalForm :: xsd:string",
+          "selectable": false,
+          "drillable": false
+        },
+        {
+          "property_label_i18n": "qa.linked_data.authority.getty_tgn_ld4l_cache.parent_body",
+          "property_label_default": "Parent body",
+          "ldpath": "^foaf:focus/getty:parentString :: xsd:string",
+          "selectable": false,
+          "drillable": false
+        },
+        {
+          "property_label_i18n": "qa.linked_data.authority.getty_tgn_ld4l_cache.parent_body_abbreviation",
+          "property_label_default": "Parent body (abbreviation)",
+          "ldpath": "^foaf:focus/getty:parentStringAbbrev :: xsd:string",
           "selectable": false,
           "drillable": false
         },
         {
           "property_label_i18n": "qa.linked_data.authority.getty_tgn_ld4l_cache.place_type",
           "property_label_default": "Place type",
-          "ldpath": "^foaf:focus/gvp:placeTypePreferred :: xsd:string",
+          "ldpath": "^foaf:focus/getty:placeTypePreferred :: xsd:string",
           "selectable": false,
           "drillable": false
         },
         {
           "property_label_i18n": "qa.linked_data.authority.getty_aat_ld4l_cache.broader",
           "property_label_default": "Broader",
-          "ldpath": "^foaf:focus/gvp:broaderPreferred/xl:altLabel/xl:literalForm :: xsd:string",
+          "ldpath": "^foaf:focus/getty:broaderPreferred :: xsd:string",
           "selectable": false,
           "drillable": true,
           "expansion_label_ldpath": "skos:prefLabel ::xsd:string",
@@ -118,4 +130,3 @@
     }
   }
 }
-
