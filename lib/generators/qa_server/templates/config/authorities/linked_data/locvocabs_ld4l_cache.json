@@ -12,7 +12,7 @@
     "url": {
       "@context": "http://www.w3.org/ns/hydra/context.jsonld",
       "@type": "IriTemplate",
-      "template": "http://wintermute.info-science.uiowa.edu:8081/ld4l_services/loc_vocab_batch.jsp?{?query}&{?entity}&{?maxRecords}&{?startRecord}&{?lang}",
+      "template": "http://services.ld4l.org/ld4l_services/loc_vocab_batch.jsp?{?query}&{?entity}&{?maxRecords}&{?startRecord}&{?lang}",
       "variableRepresentation": "BasicRepresentation",
       "mapping": [
         {
