@@ -1,3 +1,10 @@
+### 7.6.0 (2021-04-12)
+
+* update authority configs and test scenarios to use the new cache indexing with results stored as blobs in the index
+* update to Rails 5.2.5
+* update dependencies
+* fix exception when first time running monitor status
+
 ### 7.5.1 (2020-12-08)
 
 * define missing i18n translations
