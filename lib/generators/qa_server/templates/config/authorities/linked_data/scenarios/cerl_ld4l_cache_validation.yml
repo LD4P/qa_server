@@ -64,10 +64,10 @@ search:
   -
     query: Plantin
     subauth: imprint
-    position: 18
+    position: 1
     subject_uri: "http://thesaurus.cerl.org/record/cni00007649"
     replacements:
-      maxRecords: '30'
+      maxRecords: '8'
 term:
   -
     identifier: "http://thesaurus.cerl.org/record/cnp00895966"
