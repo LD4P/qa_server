@@ -1,3 +1,11 @@
+### 7.7.0 (2021-04-13)
+
+* remove unused translations
+* show notification when refreshing starts on monitor status page
+* hide data in Authority Connection History for non-active authorities
+* loosen threshold for caution in historical uptime table
+* minor tweaks missed in original sync
+
 ### 7.6.0 (2021-04-12)
 
 * update authority configs and test scenarios to use the new cache indexing with results stored as blobs in the index
