@@ -76,7 +76,6 @@ en:
       failures:
         title:           Failures During Latest Status Update
         status:          Status
-        authority:       Authority
         subauthority:    Subauthority
         service:         Service
         action:          Action
@@ -84,7 +83,6 @@ en:
         errmsg:          Errors
       history:
         title:           Authority Connection History
-        since:           'Since %{date} ET'
         range:           'From %{from} to %{to}'
         authority:       Authority
         days_failing:    Days Failing
@@ -105,7 +103,6 @@ en:
         graph_load_time_ms:    Graph Load Time (ms)
         normalization_time_ms: Normalization Time (ms)
         retrieve_time_ms:      Retrieve Time (ms)
-        full_request_time_ms:  Full Request Time (ms)
         x_axis_hour:     Hour
         x_axis_day:      Day
         x_axis_month:    Month
@@ -118,7 +115,6 @@ en:
         datatable_month_desc: 'Month'
         datatable_year_desc:  'Year'
         datarange:            'From %{from} to %{to}'
-        authority:            Authority
         average_times:        Average (ms)
         fastest_times:        10th percentile (ms)
         slowest_times:        90th percentile (ms)
