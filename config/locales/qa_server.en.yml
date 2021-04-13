@@ -58,7 +58,11 @@ en:
       wait_message:      Fetching term...
       term_results:      Results
     monitor_status:
-      title:             Monitor Status
+      title:               Monitor Status
+      permission_denied:   'Permission denied. Unable to %{action}.'
+      refreshing_tests:    Refreshing tests.
+      refreshing_history:  Refreshing connection history.
+      refreshing_performance: Refreshing performance metrics.
       summary:
         title:           Latest Monitored Status
         summary_table:   Summary
