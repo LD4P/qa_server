@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 # Provide access to the scenario_run_history database table which tracks scenario runs over time.
 module QaServer
-  class ScenarioRunHistory < ApplicationRecord
+  class ScenarioRunHistory < ApplicationRecord # rubocop:disable Metrics/ClassLength
     self.table_name = 'scenario_run_history'
     belongs_to :scenario_run_registry
     enum scenario_type: { connection: 0, accuracy: 1, performance: 2 }, _suffix: :type
@@ -11,9 +11,9 @@ module QaServer
     BAD_MARKER = 'X'
     UNKNOWN_MARKER = '?'
 
-    class_attribute :summary_class
-
+    class_attribute :summary_class, :authority_lister_class
     self.summary_class = QaServer::ScenarioRunSummary
+    self.authority_lister_class = QaServer::AuthorityListerService
 
     class << self
       # Save a scenario result
@@ -92,11 +92,20 @@ module QaServer
         days_unknown = count_days(:unknown)
         keys = (days_good.keys + days_bad.keys + days_unknown.keys).uniq.sort
         keys.each_with_object({}) do |auth, hash|
+          next unless active_authority? auth
           hash[auth] = { good: day_count(auth, days_good), bad: day_count(auth, days_bad) + day_count(auth, days_unknown) }
         end
       end
 
     private
+
+      def active_authority?(auth)
+        active_authorities.include? auth.to_sym
+      end
+
+      def active_authorities
+        @active_authorities = authority_lister_class.authorities_list
+      end
 
       def day_count(auth, days)
         days&.key?(auth) ? days[auth] : 0
