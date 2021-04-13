@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 # Controller for Monitor Status header menu item
 module QaServer
-  class MonitorStatusController < ApplicationController
+  class MonitorStatusController < ApplicationController # rubocop:disable Metrics/ClassLength
     layout 'qa_server'
 
     include QaServer::AuthorityValidationBehavior
@@ -77,7 +77,8 @@ module QaServer
     end
 
     def refresh?
-      params.key?(:refresh) && validate_auth_reload_token("refresh status")
+      return @refresh unless @refresh.nil?
+      @refresh ||= params.key?(:refresh) && validate_auth_reload_token("refresh status")
     end
 
     def refresh_all?
@@ -86,15 +87,36 @@ module QaServer
     end
 
     def refresh_tests?
-      refresh? ? (refresh_all? || params[:refresh].casecmp?('tests')) : false
+      return @refresh_tests unless @refresh_tests.nil?
+      @refresh_tests = refresh? && (refresh_all? || params[:refresh].casecmp?('tests'))
+      if @refresh_tests
+        msg = I18n.t('qa_server.monitor_status.refreshing_tests')
+        logger.info msg
+        flash.now[:success] = msg
+      end
+      @refresh_tests
     end
 
     def refresh_history?
-      refresh? ? (refresh_all? || params[:refresh].casecmp?('history')) : false
+      return @refresh_history unless @refresh_history.nil?
+      @refresh_history = refresh? && (refresh_all? || params[:refresh].casecmp?('history'))
+      if @refresh_history
+        msg = I18n.t('qa_server.monitor_status.refreshing_history')
+        logger.info msg
+        flash.now[:success] = msg
+      end
+      @refresh_history
     end
 
     def refresh_performance?
-      refresh? ? (refresh_all? || params[:refresh].casecmp?('performance')) : false
+      return @refresh_performance unless @refresh_performance.nil?
+      @refresh_performance = refresh? && (refresh_all? || params[:refresh].casecmp?('performance'))
+      if @refresh_performance
+        msg = I18n.t('qa_server.monitor_status.refreshing_performance')
+        logger.info msg
+        flash.now[:success] = msg
+      end
+      @refresh_performance
     end
 
     def refresh_performance_table?
@@ -117,7 +139,7 @@ module QaServer
       token = params.key?(:auth_token) ? params[:auth_token] : nil
       valid = Qa.config.valid_authority_reload_token?(token)
       return true if valid
-      msg = "Permission denied. Unable to #{action}."
+      msg = I18n.t('qa_server.monitor_status.permission_denied', action: action)
       logger.warn msg
       flash.now[:error] = msg
       false
