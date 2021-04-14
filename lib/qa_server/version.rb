@@ -1,4 +1,4 @@
 # frozen_string_literal: true
 module QaServer
-  VERSION = '7.7.1'
+  VERSION = '7.8.0'
 end

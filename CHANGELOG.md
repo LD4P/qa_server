@@ -1,3 +1,7 @@
+### 7.8.0 (2021-04-14)
+
+* add geographic subauth for Mesh-NLM
+
 ### 7.7.1 (2021-04-14)
 
 * fix background colors in historical uptime table
