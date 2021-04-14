@@ -15,3 +15,7 @@ Style/SpecialGlobalVars:
 
 Layout/AccessModifierIndentation:
   EnforcedStyle: outdent
+
+Layout/HashAlignment:
+  Exclude:
+    - 'spec/presenters/qa_server/monitor_status/history_presenter_spec.rb'
