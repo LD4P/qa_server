@@ -44,8 +44,6 @@
       <select name="authority" id="authority" class="string optional form-control form-control" value="" aria-labelledby="authority" onchange="hide_data()">
         <option value=""><%= t('qa_server.check_status.select_authority') %></option>
         <option disabled>──────────</option>
-        <option value="<%= @presenter.value_all_collections %>"><%= t('qa_server.check_status.show_all') %></option>
-        <option disabled>──────────</option>
         <% @authorities_list.each do |auth_name| %>
           <option value="<%= auth_name %>"<%= " selected" if auth_name == selected_authority %>><%= auth_name.upcase %></option>
         <% end %>
@@ -77,7 +75,10 @@
   <% end %>
 
 
-<div id="status-loading-message" class="wait-message"><%= t('qa_server.check_status.wait_message') %></div>
+<div id="status-loading-message" class="wait-message">
+  <%= t('qa_server.check_status.wait_message_ln1') %><br>
+  <%= t('qa_server.check_status.wait_message_ln2') %>
+</div>
 
 <% if @presenter.connection_status_data? %>
 <div id="connection-status-section" class="status-section">
@@ -100,7 +101,7 @@
           </tr>
       <% end %>
       <tr>
-        <td class="<%= @presenter.status_style_class(status[:status]) %>"><%= @presenter.status_label(status[:status]) %></td>
+        <td class="<%= @presenter.status_style_class(status) %>"><%= @presenter.status_label(status[:status]) %></td>
         <td><%= status[:subauthority_name] %></td>
         <td><%= status[:service] %></td>
         <td><%= status[:action] %></td>
@@ -137,8 +138,8 @@
         </tr>
       <% end %>
     <tr>
-      <td class="position <%= @presenter.status_style_class(status[:status]) %>"><%= status[:expected] %></td>
-      <td class="position <%= @presenter.status_style_class(status[:status]) %>"><%= status[:actual] %></td>
+      <td class="position <%= @presenter.status_style_class(status) %>"><%= status[:expected] %></td>
+      <td class="position <%= @presenter.status_style_class(status) %>"><%= status[:actual] %></td>
       <td><%= status[:request_data] %></td>
       <td><a href="<%= status[:target] %>"><%= status[:target] %></a></td>
       <td><%= status[:authority_name] %></td>

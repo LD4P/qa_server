@@ -88,6 +88,10 @@ td.bold-left-border {
   border-left: 2px solid black;
 }
 
+.status-dogear {
+  background: linear-gradient(135deg, #333 0%, #333 10%, transparent 10%, transparent 100%);
+}
+
 .status-good {
   text-align: center;
   background-color: #ccffcc;
