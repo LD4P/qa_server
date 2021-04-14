@@ -206,6 +206,7 @@
       ]
     },
     "subauthorities": {
+      "geographic":       "Geographic",
       "subject":          "Subject",
       "publication_type": "FormOfWork"
     }
