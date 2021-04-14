@@ -25,12 +25,12 @@ en:
     check_status:
       title:             Check Status
       select_authority:  Select authority...
-      show_all:          ALL Authorities (SLOW)
       connections:       Check Connection Status only
       accuracy:          Check Accuracy only
       comparison:        Compare Accuracy
       all_checks:        Run all checks
-      wait_message:      "Please wait while the status is verified.  This will be slow if you selected ALL Authorities."
+      wait_message_ln1:  "Please wait while the status is verified."
+      wait_message_ln2:  "This may be slow for large authorities or ones with a lot of tests."
       connection_checks: Connection Checks
       accuracy_checks:   Accuracy Checks for Search Results
       comparison_checks: Comparison of Accuracy Checks
