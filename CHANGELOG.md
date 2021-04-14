@@ -1,3 +1,7 @@
+### 7.7.1 (2021-04-14)
+
+* fix background colors in historical uptime table
+
 ### 7.7.0 (2021-04-13)
 
 * remove unused translations
