@@ -45,7 +45,7 @@ search:
   -
     pending: true
     query: Spain
-    subauth: subject
+    subauth: Geographic
     subject_uri: "http://id.nlm.nih.gov/mesh/D013030"
     position: 3
     replacements:
