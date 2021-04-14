@@ -7,6 +7,11 @@ module QaServer::MonitorStatus
 
     # @param parent [QaServer::MonitorStatusPresenter] parent presenter
     # @param historical_summary_data [Array<Hash>] summary of past failuring runs per authority to drive chart
+    # @example historical_summary_data
+    # {
+    #   "AGROVOC_DIRECT"=>{:good=>4, :bad=>0},
+    #   "AGROVOC_LD4L_CACHE"=>{:good=>4, :bad=>0}
+    # }
     def initialize(parent:, historical_summary_data:)
       @parent = parent
       @historical_summary_data = historical_summary_data
@@ -14,8 +19,10 @@ module QaServer::MonitorStatus
 
     # @return [Array<Hash>] historical test data to be displayed (authname, failing, passing)
     # @example
-    #   [ [ 'agrovoc', 0, 24 ],
-    #     [ 'geonames_ld4l_cache', 2, 22 ] ... ]
+    # {
+    #   "AGROVOC_DIRECT"=>{:good=>4, :bad=>0},
+    #   "AGROVOC_LD4L_CACHE"=>{:good=>4, :bad=>0}
+    # }
     def historical_summary
       @historical_summary_data
     end
@@ -72,47 +79,88 @@ module QaServer::MonitorStatus
       end
     end
 
+    # @param historical_entry [Array<String,Hash>] data for a single authority including name, # passing tests (good), # failing tests (bad)
+    # @return [String] name of the authority (e.g. 'AUTH_NAME')
+    # @example historical_entry
+    #   [ 'AUTH_NAME',  { good: 949, bad: 51 } ]
     def historical_data_authority_name(historical_entry)
       historical_entry[0]
     end
 
+    # @param historical_entry [Array<String,Hash>] data for a single authority including name, # passing tests (good), # failing tests (bad)
+    # @return [Integer] number of days with passing tests (e.g. 949)
+    # @example historical_entry
+    #   [ 'AUTH_NAME',  { good: 949, bad: 51 } ]
     def days_authority_passing(historical_entry)
       historical_entry[1][:good]
     end
 
+    # @param historical_entry [Array<String,Hash>] data for a single authority including name, # passing tests (good), # failing tests (bad)
+    # @return [Integer] number of days with failing tests (e.g. 51)
+    # @example historical_entry
+    #   [ 'AUTH_NAME',  { good: 949, bad: 51 } ]
     def days_authority_failing(historical_entry)
       historical_entry[1][:bad]
     end
 
+    # @param historical_entry [Array<String,Hash>] data for a single authority including name, # passing tests (good), # failing tests (bad)
+    # @return [Integer] number of days tested (e.g. 1000)
+    # @example historical_entry
+    #   [ 'AUTH_NAME',  { good: 949, bad: 51 } ]
     def days_authority_tested(historical_entry)
       days_authority_passing(historical_entry) + days_authority_failing(historical_entry)
     end
 
+    # @param historical_entry [Array<String,Hash>] data for a single authority including name, # passing tests (good), # failing tests (bad)
+    # @return [Float] percent of failing to passing tests (e.g. 0.05374 )
+    # @example historical_entry
+    #   [ 'AUTH_NAME',  { good: 949, bad: 51 } ]
     def percent_authority_failing(historical_entry)
       days_authority_failing(historical_entry).to_f / days_authority_tested(historical_entry)
     end
 
+    # @param historical_entry [Array<String,Hash>] data for a single authority including name, # passing tests (good), # failing tests (bad)
+    # @return [String] percent of failing to passing tests (e.g. '5.4%')
+    # @example historical_entry
+    #   [ 'AUTH_NAME',  { good: 949, bad: 51 } ]
     def percent_authority_failing_str(historical_entry)
       ActiveSupport::NumberHelper.number_to_percentage(percent_authority_failing(historical_entry) * 100, precision: 1)
     end
 
+    # @param historical_entry [Array<String,Hash>] data for a single authority including name, # passing tests (good), # failing tests (bad)
+    # @return [String] css class for background in Days Failing and Percent Failing columns (e.g. 'status-neutral', 'status-unknown', 'status-bad')
+    # @example historical_entry
+    #   [ 'AUTH_NAME',  { good: 949, bad: 51 } ]
     def failure_style_class(historical_entry)
-      return "status-neutral" if days_authority_failing(historical_entry) <= CAUTION_THRESHOLD
-      percent_authority_failing(historical_entry) < WARNING_THRESHOLD ? "status-unknown" : "status-bad"
+      case percent_authority_failing(historical_entry)
+      when 0.0...CAUTION_THRESHOLD
+        "status-neutral"
+      when CAUTION_THRESHOLD...WARNING_THRESHOLD
+        "status-unknown"
+      else
+        "status-bad"
+      end
     end
 
+    # @param historical_entry [Array<String,Hash>] data for a single authority including name, # passing tests (good), # failing tests (bad)
+    # @return [String] css class for background in Days Passing column (e.g. 'status-good', 'status-bad')
+    # @example historical_entry
+    #   [ 'AUTH_NAME',  { good: 949, bad: 51 } ]
     def passing_style_class(historical_entry)
       days_authority_passing(historical_entry) <= 0 ? "status-bad" : "status-good"
     end
 
+    # @return [Boolean] true if historical section should be visible; otherwise false
     def display_history_details?
       display_historical_graph? || display_historical_datatable?
     end
 
+    # @return [Boolean] true if historical graph should be visible; otherwise false
     def display_historical_graph?
       QaServer.config.display_historical_graph? && QaServer::HistoryGraphingService.history_graph_image_exists?
     end
 
+    # @return [Boolean] true if historical datatable should be visible; otherwise false
     def display_historical_datatable?
       QaServer.config.display_historical_datatable?
     end
