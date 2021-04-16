@@ -53,3 +53,48 @@ div#performance-by-the-day {
 div#performance-by-the-month {
   display: none;
 }
+
+table.up-down-history {
+  border: none;
+}
+
+td.up-down-history {
+  font-size: .8em;
+  font-style: italic;
+  border: none;
+}
+th.up-down-history {
+  width: 20px;
+  border: none;
+}
+
+td.connection-up-down {
+  border-right: 8px white solid;
+  border-left: 8px white solid;
+  border-top: none;
+  border-bottom: 3px white solid;
+}
+
+td.connection-no-data {
+  background-color: white;
+}
+
+td.connection-fully-up {
+  background-color: #19AE19;
+}
+
+td.connection-mostly-up {
+  background-color: #19AEA7;
+}
+
+td.connection-timeouts {
+  background-color: #EDF908;
+}
+
+td.connection-barely-up {
+  background-color: #AE7619;
+}
+
+td.connection-down {
+  background-color: #CE0303;
+}

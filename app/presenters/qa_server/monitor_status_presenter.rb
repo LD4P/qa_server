@@ -7,10 +7,12 @@ module QaServer
     # @param current_summary [ScenarioRunSummary] summary status of the latest run of test scenarios
     # @param current_data [Array<Hash>] current set of failures for the latest test run, if any
     # @param historical_summary_data [Array<Hash>] summary of past failuring runs per authority to drive chart
+    # @param historical_up_down_data [Hash<Array>] status of queries for the last 30 days
     # @param performance_data [Hash<Hash>] performance datatable data
-    def initialize(current_summary:, current_failure_data:, historical_summary_data:, performance_data:)
+    def initialize(current_summary:, current_failure_data:, historical_summary_data:, historical_up_down_data:, performance_data:)
       @current_status_presenter = QaServer::MonitorStatus::CurrentStatusPresenter.new(parent: self, current_summary: current_summary, current_failure_data: current_failure_data)
       @history_presenter = QaServer::MonitorStatus::HistoryPresenter.new(parent: self, historical_summary_data: historical_summary_data)
+      @history_up_down_presenter = QaServer::MonitorStatus::HistoryUpDownPresenter.new(parent: self, historical_up_down_data: historical_up_down_data)
       @performance_presenter = QaServer::MonitorStatus::PerformancePresenter.new(parent: self, performance_data: performance_data)
     end
 
@@ -22,6 +24,8 @@ module QaServer
                    :historical_data_authority_name, :days_authority_passing, :days_authority_failing, :days_authority_tested,
                    :percent_authority_failing, :percent_authority_failing_str, :failure_style_class, :passing_style_class,
                    :display_history_details?, :display_historical_graph?, :display_historical_datatable?, :history_start, :history_end
+
+    def_delegators :@history_up_down_presenter, :historical_up_down_data, :display_historical_up_down?, :historical_up_down_status_class
 
     def_delegators :@performance_presenter, :performance_data, :performance_data?, :display_performance?, :display_performance_graph?,
                    :display_performance_datatable?, :performance_data_authority_name, :performance_for_day_graph, :performance_for_month_graph,

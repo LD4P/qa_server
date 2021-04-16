@@ -2,8 +2,9 @@
 # Maintain a cache of data for Authority Connection History table displayed on Monitor Status page
 module QaServer
   class ScenarioHistoryCache
-    class_attribute :scenario_history_class
+    class_attribute :scenario_history_class, :scenario_up_down_class
     self.scenario_history_class = QaServer::ScenarioRunHistory
+    self.scenario_up_down_class = QaServer::HistoryUpDownService
 
     class << self
       include QaServer::CacheKeys
@@ -21,10 +22,27 @@ module QaServer
         end
       end
 
+      # Get a status for each of the last 30 days for queries that succeeded or failed.
+      # @param force [Boolean] if true, run the tests even if the cache hasn't expired; otherwise, use cache if not expired
+      # @returns [Hash<Array>] status for the last 30 days for each authority
+      # @example { auth_name => [:fully_up, :fully_up, :down, :mostly_up, ... ], ... }
+      #   { 'agrovoc' => [ :fully_up, :fully_up, :down, :mostly_up, ...],
+      #     'geonames_ld4l_cache' => [ :fully_up, :mostly_up, :down, :fully_up, :timeouts, ...] }
+      def historical_up_down_data(force: false)
+        Rails.cache.fetch(cache_key_for_historical_up_down_data, expires_in: next_expiry, race_condition_ttl: 30.seconds, force: force) do
+          QaServer.config.monitor_logger.debug("(QaServer::ScenarioHistoryCache) - CALCULATING UP-DOWN STATUS HISTORY of scenario runs (force: #{force})")
+          scenario_up_down_class.new.last_30_days
+        end
+      end
+
     private
 
       def cache_key_for_historical_data
         SCENARIO_RUN_HISTORY_DATA_CACHE_KEY
+      end
+
+      def cache_key_for_historical_up_down_data
+        SCENARIO_RUN_HISTORY_UP_DOWN_DATA_CACHE_KEY
       end
 
       def next_expiry
