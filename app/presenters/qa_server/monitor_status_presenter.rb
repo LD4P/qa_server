@@ -5,7 +5,7 @@ module QaServer
     extend Forwardable
 
     # @param current_summary [ScenarioRunSummary] summary status of the latest run of test scenarios
-    # @param current_data [Array<Hash>] current set of failures for the latest test run, if any
+    # @param current_failure_data [Array<Hash>] current set of failures for the latest test run, if any
     # @param historical_summary_data [Array<Hash>] summary of past failuring runs per authority to drive chart
     # @param historical_up_down_data [Hash<Array>] status of queries for the last 30 days
     # @param performance_data [Hash<Hash>] performance datatable data
@@ -25,7 +25,8 @@ module QaServer
                    :percent_authority_failing, :percent_authority_failing_str, :failure_style_class, :passing_style_class,
                    :display_history_details?, :display_historical_graph?, :display_historical_datatable?, :history_start, :history_end
 
-    def_delegators :@history_up_down_presenter, :historical_up_down_data, :display_historical_up_down?, :historical_up_down_status_class
+    def_delegators :@history_up_down_presenter, :historical_up_down_data, :display_historical_up_down?, :historical_up_down_status_class,
+                   :up_down_start, :up_down_end
 
     def_delegators :@performance_presenter, :performance_data, :performance_data?, :display_performance?, :display_performance_graph?,
                    :display_performance_datatable?, :performance_data_authority_name, :performance_for_day_graph, :performance_for_month_graph,

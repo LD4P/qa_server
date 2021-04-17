@@ -21,7 +21,21 @@ module QaServer::MonitorStatus
       @parent = parent
       @historical_up_down_data = historical_up_down_data
     end
-    
+
+    # Return the last date of data represented in the history graph and data table
+    # @return [ActiveSupport::TimeWithZone] date time stamp
+    def up_down_start
+      QaServer::TimeService.pretty_date(up_down_end_dt - 29.days)
+    end
+
+    def up_down_end
+      QaServer::TimeService.pretty_date(up_down_end_dt)
+    end
+
+    def up_down_end_dt
+      @parent.last_updated_dt
+    end
+
     # @param status [Symbol] :fully_up, :mostly_up, :timeouts, :barely_up, :down
     # @param day [Integer] retrieve the status for this day
     # @return [String] name of the css class for the status
