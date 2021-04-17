@@ -19,6 +19,7 @@ module QaServer
       @presenter = presenter_class.new(current_summary: latest_summary,
                                        current_failure_data: latest_failures,
                                        historical_summary_data: historical_data,
+                                       historical_up_down_data: historical_up_down_data,
                                        performance_data: performance_table_data)
       QaServer.config.monitor_logger.debug("~~~~~~~~ DONE rendering monitor status")
       render 'index', status: :internal_server_error if latest_summary&.failing_authority_count&.positive?
@@ -57,6 +58,13 @@ module QaServer
     # @see QaServer::ScenarioRunHistory#historical_summary for structure of output
     def historical_data
       @historical_data ||= QaServer::ScenarioHistoryCache.historical_summary(force: refresh_history?)
+    end
+
+    # Get a summary level of historical data
+    # @returns [Array<Hash>] summary of passing/failing tests for each authority
+    # @see QaServer::ScenarioRunHistory#historical_summary for structure of output
+    def historical_up_down_data
+      @historical_up_down_data ||= QaServer::ScenarioHistoryCache.historical_up_down_data(force: refresh_history?)
     end
 
     def update_historical_graph

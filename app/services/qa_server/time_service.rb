@@ -24,6 +24,12 @@ module QaServer
       def pretty_date(dt)
         dt.in_time_zone(QaServer.config.preferred_time_zone_name).strftime("%m/%d/%Y")
       end
+
+      # @param dt [ActiveSupport::TimeWithZone] date time stamp
+      # @return [String] string version of date formatted with just date (e.g. "2020-02-01")
+      def pretty_query_date(dt)
+        dt.in_time_zone(QaServer.config.preferred_time_zone_name).strftime("%Y-%m-%d")
+      end
     end
   end
 end

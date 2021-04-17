@@ -1,0 +1,30 @@
+  <% if @presenter.history? && @presenter.display_history_details?%>
+      <div id="availability-history" class="status-section">
+        <h3><%= t('qa_server.monitor_status.history.title') %></h3>
+        <% if @presenter.display_historical_graph? %>
+          <p class="status-update-dtstamp"><%= t('qa_server.monitor_status.history.range', from: @presenter.history_start, to: @presenter.history_end) %></p>
+          <%= image_tag(@presenter.historical_graph, alt: 'History Graph Unavailable') %>
+        <% end %>
+
+        <% if @presenter.display_historical_up_down? %>
+          <p class="status-update-dtstamp"><%= t('qa_server.monitor_status.history.range', from: @presenter.up_down_start, to: @presenter.up_down_end) %></p>
+          <table class="up-down-history">
+            <tr>
+              <th class="up-down-history"><%= t('qa_server.monitor_status.history.authority') %></th>
+              <% 0.upto(29) do %>
+              <th class='up-down-history'></th>
+              <% end %>
+              <td class='up-down-history'>Most Recent</td>
+            </tr>
+            <% @presenter.historical_up_down_data.each do |authority_name, status| %>
+                <tr>
+                  <td class="connection-up-down"><%= authority_name %></td>
+                  <% 29.downto(0) do |day| %>
+                    <td class="connection-up-down <%= @presenter.historical_up_down_status_class(status, day) %>"></td>
+                  <% end %>
+                </tr>
+            <% end %>
+          </table>
+        <% end %>
+      </div>
+  <% end %>

@@ -86,6 +86,28 @@ RSpec.describe QaServer::Configuration do
     end
   end
 
+  describe '#up_down_data_timeouts_max_threshold' do
+    it 'return default as 0.3 (e.g. 30%)' do
+      expect(config.up_down_data_timeouts_max_threshold).to eq 0.3
+    end
+
+    it 'returns set value' do
+      config.up_down_data_timeouts_max_threshold = 0.25
+      expect(config.up_down_data_timeouts_max_threshold).to eq 0.25
+    end
+  end
+
+  describe '#up_down_data_mostly_up_threshold' do
+    it 'return default as 0.95 (e.g. 95%)' do
+      expect(config.up_down_data_mostly_up_threshold).to eq 0.95
+    end
+
+    it 'returns set value' do
+      config.up_down_data_mostly_up_threshold = 0.98
+      expect(config.up_down_data_mostly_up_threshold).to eq 0.98
+    end
+  end
+
   describe '#display_performance_graph?' do
     it 'return default as false' do
       expect(config.display_performance_graph?).to eq false
