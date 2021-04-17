@@ -1,3 +1,7 @@
+### 7.9.0 (2021-04-16)
+
+* Add chart showing simulated graph (in table) of the last 30 days of up-down connection data
+
 ### 7.8.0 (2021-04-14)
 
 * add geographic subauth for Mesh-NLM
