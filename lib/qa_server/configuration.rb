@@ -73,6 +73,20 @@ module QaServer
       @historical_datatable_default_time_period ||= :year
     end
 
+    # Threshold for percentage of queries that timed out after which it gets marked in the Authority Connection up-down History
+    # @param [Float] percentage of queries that are ok to timeout
+    attr_writer :up_down_data_timeouts_max_threshold
+    def up_down_data_timeouts_max_threshold
+      @up_down_data_timeouts_max_threshold ||= 0.3
+    end
+
+    # Threshold for percentage of queries that are passing, below which are marked in the Authority Connection up-down History as barely_up
+    # @param [Float] required percentage of queries passing to be considered mostly-up when there are some failures
+    attr_writer :up_down_data_mostly_up_threshold
+    def up_down_data_mostly_up_threshold
+      @up_down_data_mostly_up_threshold ||= 0.95
+    end
+
     # Displays a graph of performance test data when true
     # @param [Boolean] display performance graph when true
     attr_writer :display_performance_graph

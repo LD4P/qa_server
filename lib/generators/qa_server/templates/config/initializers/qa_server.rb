@@ -24,6 +24,14 @@ QaServer.config do |config|
   # @param [Symbol] time period for calculating historical pass/fail (i.e., one of :month, :year, or :all)
   # config.historical_datatable_default_time_period = :year
 
+  # Threshold for percentage of queries that timed out after which it gets marked in the Authority Connection up-down History
+  # @param [Float] percentage of queries that are ok to timeout
+  # config.up_down_data_timeouts_max_threshold = 0.3
+
+  # Threshold for percentage of queries that are passing, below which are marked in the Authority Connection up-down History as barely_up
+  # @param [Float] required percentage of queries passing to be considered mostly-up when there are some failures
+  # config.up_down_data_mostly_up_threshold = 0.95
+
   # Displays a graph of performance test data when true
   # @param [Boolean] display performance graph when true
   # config.display_performance_graph = false

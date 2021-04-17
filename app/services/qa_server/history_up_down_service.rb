@@ -9,8 +9,8 @@ module QaServer
     BARELY_UP           = :barely_up
     DOWN                = :down
 
-    MOSTLY_UP_THRESHOLD = 0.95
-    TIMEOUT_THRESHOLD   = 0.5
+    MOSTLY_UP_THRESHOLD = QaServer.config.up_down_data_mostly_up_threshold
+    TIMEOUT_THRESHOLD   = QaServer.config.up_down_data_timeouts_max_threshold
 
     class_attribute :authority_lister, :scenario_history_class, :time_service
     self.authority_lister = QaServer::AuthorityListerService
