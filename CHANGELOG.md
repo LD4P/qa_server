@@ -1,3 +1,7 @@
+### 7.9.1 (2021-06-10)
+
+* fix compare accuracy fails if either has pending tests
+
 ### 7.9.0 (2021-04-16)
 
 * Add chart showing simulated graph (in table) of the last 30 days of up-down connection data
