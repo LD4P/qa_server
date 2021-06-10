@@ -1,3 +1,7 @@
+### 7.9.2 (2021-06-10)
+
+* fix: only check for dogear if status is a Hash
+
 ### 7.9.1 (2021-06-10)
 
 * fix compare accuracy fails if either has pending tests
