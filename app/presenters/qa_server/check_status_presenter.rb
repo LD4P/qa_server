@@ -81,6 +81,7 @@ module QaServer
 
     # @return [String] the name of the css style class to use for the status cell based on the status of the scenario test.
     def status_style_class(status)
+      return "status-#{status}" if status.is_a? Symbol
       status[:pending] ? "status-dogear status-#{status[:status]}" : "status-#{status[:status]}"
     end
 
