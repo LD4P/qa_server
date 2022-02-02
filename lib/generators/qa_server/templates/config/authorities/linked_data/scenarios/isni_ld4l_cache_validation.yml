@@ -8,3 +8,41 @@ search:
   #------------------
   -
     query: picard
+    
+  -
+    query: washington
+    subauth: person
+  -
+    query: washington
+    subauth: organization
+    
+  #------------------
+  #  Accuracy tests
+  #------------------
+  -
+    query: Gonzalez-Torres, Felix
+    subject_uri: "https://isni.org/isni/0000000115805416"
+    position: 5
+    replacements:
+      maxRecords: '10'
+  -
+    query: Johan Goeverneur
+    subauth: person
+    subject_uri: "https://isni.org/isni/0000000063969856"
+    position: 5
+    replacements:
+      maxRecords: '10'
+  -
+    query: 0000 0000 6396 9856
+    subauth: person
+    subject_uri: "https://isni.org/isni/0000000063969856"
+    position: 3
+    replacements:
+      maxRecords: '8'
+  -
+    query: University of Chicago Library
+    subauth: organization
+    subject_uri: "https://isni.org/isni/0000000406464287"
+    position: 5
+    replacements:
+      maxRecords: '10'
