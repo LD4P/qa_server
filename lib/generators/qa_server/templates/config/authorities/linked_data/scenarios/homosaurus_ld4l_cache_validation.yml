@@ -1,0 +1,58 @@
+# Supported subauthorities: none
+---
+authority:
+  service: homosaurus
+  context: true
+search:
+  #------------------
+  # Connection tests
+  #------------------
+  -
+    query: Dating applications
+  -
+    query: Dating applications
+
+  #------------------
+  #  Accuracy tests
+  #------------------
+  -
+    query: Dating apps
+    position: 3
+    subject_uri: "https://homosaurus.org/v3/homoit0000328"
+    replacements:
+      maxRecords: '5'
+  -
+    query: LGBTQ+
+    position: 10
+    subject_uri: "https://homosaurus.org/v3/homoit0001717"
+    replacements:
+      maxRecords: '20'
+  -
+    query: LGBTQ+
+    position: 15
+    subject_uri: "https://homosaurus.org/v3/homoit0000806"
+    replacements:
+      maxRecords: '20'
+  -
+    query: E (Pronouns)
+    position: 3
+    subject_uri: "https://homosaurus.org/v3/homoit0001676"
+    replacements:
+      maxRecords: '15'
+  -
+    query: pronouns
+    position: 15
+    subject_uri: "https://homosaurus.org/v3/homoit0001692"
+    replacements:
+      maxRecords: '20'
+  -
+    query: drug use recreational
+    position: 5
+    subject_uri: "https://homosaurus.org/v3/homoit0001235"
+    replacements:
+      maxRecords: '10'
+  -
+
+term:
+  -
+    identifier: 'https://homosaurus.org/v3/homoit0000806'
