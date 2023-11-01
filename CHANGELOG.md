@@ -1,3 +1,6 @@
+### 8.0.0 (2023-11-01)
+* Update Rails dependency to 7.0
+
 ### 7.9.2 (2021-06-10)
 
 * fix: only check for dogear if status is a Hash
