@@ -17,8 +17,8 @@ This rails engine can be installed into your app to serve as a Questioning Autho
 
 Tested with...
 
-* Ruby 2.4.3
-* Rails 5.1.6
+* Ruby 3.1.2
+* Rails 7.0.8
 
 ### Optional Prerequisites
 

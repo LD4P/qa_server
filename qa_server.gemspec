@@ -22,7 +22,7 @@ Gem::Specification.new do |spec|
   # Note: rails does not follow sem-ver conventions, it's
   # minor version releases can include breaking changes; see
   # http://guides.rubyonrails.org/maintenance_policy.html
-  spec.add_dependency 'rails', '~> 5.2', '>= 5.2.5' # v5.2.5 required to address mimemagic gem yank
+  spec.add_dependency 'rails', '~> 7.0'
   spec.add_dependency 'useragent'
 
   # Required gems for QA and linked data access
