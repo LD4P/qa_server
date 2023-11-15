@@ -19,7 +19,8 @@ module PrependedRdf::RdfGraph
     performance_udpates = {}
     start_time_s = QaServer::TimeService.current_time_s
 
-    reader = RDF::Reader.open(real_url, { base_uri: real_url }.merge(options))
+    reader_options = { base_uri: real_url }.merge(options)
+    reader = RDF::Reader.open(real_url, **reader_options)
 
     end_time_s = QaServer::TimeService.current_time_s
     performance_udpates[:retrieve_time_ms] = (end_time_s - start_time_s) * 1000
