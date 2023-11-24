@@ -93,11 +93,19 @@ search:
       maxRecords: '20'
   -
     query: 'mark twain'
-    subauth: intangible
+    subauth: topic
     subject_uri: "http://id.worldcat.org/fast/1200561"
     position: 3
     replacements:
       maxRecords: '10'
+  -
+    query: 'Popup books'
+    subauth: form
+    subject_uri: "http://id.worldcat.org/fast/1919955"
+    position: 3
+    replacements:
+      maxRecords: '10'
+
 term:
   -
     identifier: 'http://id.worldcat.org/fast/1914919'
