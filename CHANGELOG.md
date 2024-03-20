@@ -1,3 +1,6 @@
+### 8.0.1 (2023-11-15)
+* Update RDF reader to fix bug relating to Ruby 3 changes
+
 ### 8.0.0 (2023-11-01)
 * Update Rails dependency to 7.0 
 
